@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL")
+  directUrl         = env("POSTGRES_URL_NON_POOLING")
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Order {
+  id              String    @id
+  orderDate       DateTime
+  rentalStartDate DateTime?
+  rentalEndDate   DateTime?
+  orderStatus     String
+  userId          String
+  publicationId   String
+}
+
+model OrderDetail {
+  id            String @id
+  orderId       String
+  publicationId String
+  quantity      Int
+  price         Float
+  subtotal      Float
+}
+
+model Payment {
+  id            String   @id
+  paymentDate   DateTime
+  amountPaid    Float
+  userId        String
+  publicationId String
+}
+
+model Photo {
+  id            String      @id
+  url           String
+  userId        String      @unique
+  publicationId String
+  createdAt     DateTime    @default(now())
+  Publication   Publication @relation(fields: [publicationId], references: [id])
+  User          User        @relation(fields: [userId], references: [id])
+}
+
+model Publication {
+  id             String   @id
+  name           String
+  description    String
+  category       String
+  pricePerDay    Float?
+  promotionPrice Float?
+  type           Type
+  available      Boolean
+  ownerId        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+  Photo          Photo[]
+  User           User     @relation(fields: [ownerId], references: [id])
+  Review         Review[]
+}
+
+model Review {
+  id            String      @id
+  userId        String
+  publicationId String
+  comment       String
+  rating        Int
+  Publication   Publication @relation(fields: [publicationId], references: [id])
+}
+
+model User {
+  id          String        @id
+  firstName   String
+  lastName    String
+  email       String        @unique
+  password    String
+  phoneNumber String?
+  address     String?
+  city        String?
+  country     String?
+  Photo       Photo?
+  Publication Publication[]
+}
+
+enum Type {
+  RENT
+  SALE
+}
