@@ -10,7 +10,7 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   firstname   String
   lastname    String
   email       String    @unique
@@ -20,6 +20,7 @@ model User {
   hidden      Boolean   @default(false)
   phoneNumber String?
   zipCode     String?
+  reports     String[]
   orders      Order[]   @relation("userOrders")
   payments    Payment[] @relation("userPayments")
   posts       Post[]    @relation("userPosts")
@@ -27,7 +28,7 @@ model User {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   title     String
   content   String
   photo     String
@@ -35,7 +36,7 @@ model Post {
   price     Float
   type      Type     @default(SALE)
   hidden    Boolean  @default(false)
-  authorId  Int
+  authorId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   author    User     @relation("userPosts", fields: [authorId], references: [id])
@@ -43,13 +44,13 @@ model Post {
 }
 
 model Review {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   title     String
   content   String
   rating    Float
   hidden    Boolean  @default(false)
-  authorId  Int
-  postId    Int
+  authorId  String
+  postId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   author    User     @relation("userReviews", fields: [authorId], references: [id])
@@ -57,24 +58,24 @@ model Review {
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   status    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    Int
-  postId    Int
-  paymentId Int      @unique
+  userId    String
+  postId    String
+  paymentId String   @unique
   payment   Payment  @relation("orderPayment", fields: [paymentId], references: [id])
   user      User     @relation("userOrders", fields: [userId], references: [id])
 }
 
 model Payment {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   amount    Float
   currency  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    Int
+  userId    String
   order     Order?   @relation("orderPayment")
   user      User     @relation("userPayments", fields: [userId], references: [id])
 }

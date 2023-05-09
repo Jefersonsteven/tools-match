@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
       const payment = await prisma.payment.findUnique({
         where: {
-          id: parseInt(id),
+          id: id,
         },
         include: {
           user: true,
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     try {
       const payment = await prisma.payment.update({
         where: {
-          id: parseInt(id),
+          id: id,
         },
         data: {
           amount,

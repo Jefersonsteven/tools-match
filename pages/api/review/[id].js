@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
       const review = await prisma.review.findUnique({
         where: {
-          id: Number(id),
+          id: id,
         },
         include: {
           author: true,
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     try {
       const review = await prisma.review.update({
         where: {
-          id: Number(id),
+          id: id,
         },
         data: {
           title,
