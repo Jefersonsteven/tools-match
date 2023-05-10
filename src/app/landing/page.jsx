@@ -1,9 +1,20 @@
+"use client"; 
 
 import style from './page.module.css';
 import Image from 'next/image';
-
+import Link from 'next/link';
+import { useState } from 'react';
+import Modal from "./modal/modal";
 
 export default function LandingPage() {
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+      setModalOpen(true);
+    };
+
+
     const teamMembers = [
         {
           name: 'Axel',
@@ -41,12 +52,14 @@ export default function LandingPage() {
     return (
         <div className={style.landingPageContainer}>
             <div className={style.nabvarContainer}>
+                <div className={style.navbarLogo}>
                 <p>TOOLS MATCH</p>
-                <nav className={style.nabvarLinks}>
-                    <ul>
-                        <li></li>
-                    </ul>
-                </nav>
+                </div>
+                <div className={style.navbarMenu}>
+                <button>Publicaciones</button>
+                <button>Contacto</button>
+                <Link href='form/login' className={style.navbarMenuLogin}>Iniciar Sesión</Link>
+                </div>
             </div>
             <section className={style.mainInfo}>
                 <div className={style.mainInfoApp}>
@@ -92,9 +105,16 @@ export default function LandingPage() {
                 </div>
                 </section>
             <footer className={style.footer}>
-                <div className={style.footerLogo}></div>
-                <div className={style.footerRights}></div>
-                <div className={style.footerTerms}></div>
+                <div className={style.footerLogo}>
+                    <p>TOOLS MATCH</p>
+                </div>
+                <div className={style.footerRights}>
+                    <p>Copyright - ToolsMatch</p>
+                </div>
+                <div className={style.footerTerms}>
+                    <Link href="javascript:void(0)"  onClick={handleOpenModal}>Términos y Condiciones</Link>
+                </div>
+                {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
             </footer>
         </div>
     )
