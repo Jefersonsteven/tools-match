@@ -45,8 +45,12 @@ export default function FilterBar() {
       return a.price.alquiler - b.price.alquiler;
     } else if (sortBy === 'priceAlqDesc') {
       return b.price.alquiler - a.price.alquiler;
-    } else {
+    } else if (sortBy === 'ratingAsc') {
+      return a.rating - b.rating;
+    } else if (sortBy === 'ratingDesc') {
       return b.rating - a.rating;
+    } else {
+      return 0;
     }
   });
 
@@ -67,10 +71,12 @@ export default function FilterBar() {
       <div><button onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button></div>
       <div><button onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button></div>
       <div><button onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button></div>
+      <div><button onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button></div>
+      <div><button onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button></div>  
             <ul>
         {filteredTools.map((tool) => (
           <li key={tool.name}>
-            {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día
+            {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día - {tool.rating} Jeffersons
           </li>
         ))}
       </ul>
