@@ -8,6 +8,7 @@ import Modal from "./modal/modal";
 
 export default function LandingPage() {
 
+
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleOpenModal = () => {
@@ -51,17 +52,18 @@ export default function LandingPage() {
     ];
     return (
         <div className={style.landingPageContainer}>
-            <div className={style.nabvarContainer}>
+            <header className={style.nabvarContainer}>
                 <div className={style.navbarLogo}>
                 <Link href='#'><Image src='/../public/images-landing/toolsMatch.jpg' width={100} height={100}></Image></Link>
+
                 </div>
                 <div className={style.navbarMenu}>
                     <button>Publicaciones</button>
                     <button>Contacto</button>
                     <Link href='form/login' className={style.navbarMenuLogin}>Iniciar Sesión</Link>
                 </div>
-            </div>
-            <section className={style.mainInfo}>
+            </header>
+            <main className={style.mainInfo}>
                 <div className={style.mainInfoApp}>
                     <h1> ToolsMatch es una aplicación innovadora que se centra en satisfacer
                         las necesidades de las comunidades en cuanto a la compra y el arriendo
@@ -72,7 +74,7 @@ export default function LandingPage() {
                         Si está buscando una forma práctica y segura de compartir herramientas con
                         sus vecinos, ToolsMatch es una excelente opción.</h1>
                 </div>
-            </section>
+            </main>
             <section className={style.teamContainer}>
                 <div className={style.infoTeam}>
                     <p className={style.teamTitle}>EQUIPO</p>

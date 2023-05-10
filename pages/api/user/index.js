@@ -1,4 +1,5 @@
 import prisma from "../../../prisma/client";
+const bcrypt = require('bcryptjs')
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -7,7 +8,6 @@ export default async function handler(req, res) {
         firstname,
         lastname,
         email,
-        password,
         admin,
         logged,
         hidden,
@@ -15,6 +15,11 @@ export default async function handler(req, res) {
         zipCode,
         reports,
       } = req.body;
+      let { 
+        password 
+      } = req.body
+      const rondasDeSal = 10
+      password = await bcrypt.hash(password, rondasDeSal)
       const user = await prisma.user.create({
         data: {
           firstname,
