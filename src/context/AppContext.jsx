@@ -1,7 +1,5 @@
 'use client'
-
 import { createContext, useState } from "react";
-import { images } from "../../next.config";
 
 const AppContext = createContext();
 
@@ -51,5 +49,4 @@ function AppProvider({ children }) {
     );
 }
 
-export { AppProvider, AppContext };
 export { AppProvider, AppContext };
