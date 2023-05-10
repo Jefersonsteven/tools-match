@@ -1,0 +1,249 @@
+/* form page styles */
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.container > div {
+  width: 50%;
+}
+
+.left {
+  background-color: #131713;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right {
+  background-color: #dcf1d9;
+  padding-top: 80px;
+
+  padding-left: 72px;
+  padding-right: 94px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  padding: 20px;
+  gap: 22px;
+}
+
+.activeLink {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px;
+  gap: 10px;
+  width: 178px;
+  height: 44px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.1em;
+  background: #21bf60;
+  color: #dcf1d9;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px;
+  gap: 10px;
+  width: 178px;
+  height: 44px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.1em;
+
+  color: #535e53;
+}
+
+.buttons > span {
+  width: 10px;
+  height: 18px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+
+  color: #000000;
+}
+
+.image {
+  width: 90%;
+  height: auto;
+}
+
+/* SigIn and LogIn styles */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 37px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.inputContainer > input {
+  margin-top: 16px;
+
+  width: 100%;
+  height: 48px;
+  background: #dcf1d9;
+  border-bottom: 1px solid #131713;
+  padding: 16px;
+}
+
+.inputContainer > p {
+  margin-top: 11px;
+  margin-bottom: 40px;
+
+  height: 20px;
+}
+
+.pwd {
+  position: absolute;
+  bottom: 85px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.label {
+  color: #000000;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+}
+
+.label > input {
+  margin-right: 16.5px;
+}
+
+.label > input:checked {
+  accent-color: #21bf60;
+
+  border-radius: 2px;
+}
+
+.submitContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  gap: 10px;
+}
+
+.submitContainer > a {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  color: #535e53;
+}
+
+.buttonSubmit {
+  width: 183px;
+  height: 49px;
+  margin-bottom: 40px;
+  margin-top: 43px;
+  background: #131713;
+  border-radius: 30px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+  color: #dcf1d9;
+  cursor: pointer;
+}
+
+.buttonSubmitDisabled {
+  opacity: 0.3;
+  cursor: auto;
+}
+
+.twoInputsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Recover Styles */
+
+.recover__message {
+  margin-bottom: 32px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.recover__submitContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: end;
+  padding: 0px;
+  gap: 28px;
+  margin-top: 64px;
+}
+
+.recover__buttonSubmit {
+  padding: 15px 30px;
+  gap: 10px;
+  width: 263px;
+  height: 49px;
+  background: #131713;
+  border-radius: 30px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+  color: #dcf1d9;
+}
+
+.recover__buttonCancel {
+  padding: 15px 30px;
+  gap: 10px;
+  width: 140px;
+  height: 49px;
+  background: #f0960e;
+  border-radius: 30px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+  color: #dcf1d9;
+}
+
+/* Styles of errors or success */
+.success {
+  color: #21bf60;
+}
+
+.error {
+  color: red;
+}
