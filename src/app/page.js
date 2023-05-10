@@ -1,5 +1,10 @@
-export default function Home() {
+import Header from "@/components/Header/Header";
+import LandingPage from "./landing/Landing";
+
+export default function Landing() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    <>
+      <LandingPage />;
+    </>
   );
 }
