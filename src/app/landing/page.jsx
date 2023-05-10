@@ -2,6 +2,7 @@
 import style from './page.module.css';
 import Image from 'next/image';
 
+
 export default function LandingPage() {
     const teamMembers = [
         {
