@@ -1,0 +1,98 @@
+.userContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+}
+
+.contenedorPadre {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 15px;
+    padding: 0 120px;
+}
+
+.searchBar {
+    display: grid;
+    justify-items: center;
+    border-width: 2px;
+    border: 5px solid;
+    border-color: #D9D9D9;
+    border-radius: 20px;
+    transition: 0.5s;
+}
+
+.searchBar:hover {
+    border:5px solid;
+    border-color: #c2c2c2;
+}
+
+.searchBar input {
+    background-color: rgb(216, 216, 216);
+    color: black;
+    padding-left: 10px;
+    border: none;
+    border-radius: 20px;
+}
+
+.searchbarContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.searchbarContainer h2 {
+    font-size: xxx-large;
+}
+
+.botonDelete {
+    cursor: pointer;
+    color: #f80101;
+    border: 2px solid rgba(255, 67, 67, 0.802);
+    background-color: rgba(255, 255, 255, 0.612);
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    padding: 2px;
+}
+
+.botonDelete:hover {
+    background-color: rgba(255, 0, 0, 0.537);
+    color: white
+}
+
+.table {
+    color:rgb(0, 0, 0);
+}
+
+.table th {
+    text-align: left;
+    padding-right: 10px;
+    min-height: 200px;
+}
+
+.namesTable{
+    color: rgb(54, 54, 54);
+}
+
+.namesTable td {
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    font-size: smaller;
+}
+
+.contenedorTable {
+    background-color: rgba(0, 0, 0, 0.193);
+    padding: 18px;
+    margin-top: 0px;
+    margin-right: auto;
+    border-radius: 3px;
+    padding-left: 60px;
+    padding-right: 40px;
+}

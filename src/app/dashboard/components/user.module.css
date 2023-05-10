@@ -1,0 +1,15 @@
+.userContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+}
+
+.userButton {
+  border: 2px solid red;
+  padding: 5px 1px;
+  color: white;
+  background-color: red;
+  border-radius: 5px;
+
+}
