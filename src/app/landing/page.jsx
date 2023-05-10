@@ -4,7 +4,7 @@ import style from './page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import Modal from "./modal/modal";
+import Modal from "./modal";
 
 export default function LandingPage() {
 
@@ -54,7 +54,9 @@ export default function LandingPage() {
         <div className={style.landingPageContainer}>
             <header className={style.nabvarContainer}>
                 <div className={style.navbarLogo}>
-                <Link href='#'><Image src='/../public/images-landing/toolsMatch.jpg' width={100} height={100}></Image></Link>
+                <Link href='#'>
+                    <Image src='/../public/images-landing/toolsMatch.jpg' alt='logo' width={100} height={100}/>
+                </Link>
 
                 </div>
                 <div className={style.navbarMenu}>
@@ -75,7 +77,12 @@ export default function LandingPage() {
                         sus vecinos, ToolsMatch es una excelente opción.</h1>
                 </div>
             </main>
-            <section className={style.teamContainer}>
+            <section className={style.sponsorsContainer}>
+                <div className={style.infoTitle}>
+
+                </div>
+            </section>
+            {/* <section className={style.teamContainer}>
                 <div className={style.infoTeam}>
                     <p className={style.teamTitle}>EQUIPO</p>
                     <p className={style.teamSubTitle}>Somos un equipo de colaboradores detrás de ToolsMatch demostrando un alto
@@ -105,10 +112,12 @@ export default function LandingPage() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
             <footer className={style.footer}>
                 <div className={style.footerLogo}>
-                <Link href='#'><Image src='/../public/images-landing/toolsMatch.jpg' width={70} height={70}></Image></Link>
+                <Link href='#'>
+                    <Image src='/../public/images-landing/toolsMatch.jpg' alt='logo' width={70} height={70}/>
+                    </Link>
                 </div>
                 <div className={style.footerRights}>
                     <p>Copyright - ToolsMatch</p>
