@@ -16,6 +16,7 @@ function AppProvider({ children }) {
             id: 1,
             username: 'JuanPerez88',
             rating: 1.0,
+            image_perfil: 'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'
         },
         images: [
             'https://us.123rf.com/450wm/godruma/godruma1802/godruma180200012/95380266-taladro-manual-o-m%C3%A1quina-de-perforaci%C3%B3n-equipada-con-un-accesorio-de-herramienta-de-corte-o-de.jpg',
