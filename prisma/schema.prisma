@@ -9,84 +9,78 @@ datasource db {
   shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Order {
-  id              String    @id
-  orderDate       DateTime
-  rentalStartDate DateTime?
-  rentalEndDate   DateTime?
-  orderStatus     String
-  userId          String
-  publicationId   String
+model User {
+  id          String    @id @default(uuid())
+  firstname   String
+  lastname    String
+  email       String    @unique
+  password    String
+  admin       Boolean   @default(false)
+  logged      Boolean   @default(false)
+  hidden      Boolean   @default(false)
+  phoneNumber String?
+  zipCode     String?
+  reports     String[]
+  orders      Order[]   @relation("userOrders")
+  payments    Payment[] @relation("userPayments")
+  posts       Post[]    @relation("userPosts")
+  reviews     Review[]  @relation("userReviews")
 }
 
-model OrderDetail {
-  id            String @id
-  orderId       String
-  publicationId String
-  quantity      Int
-  price         Float
-  subtotal      Float
-}
-
-model Payment {
-  id            String   @id
-  paymentDate   DateTime
-  amountPaid    Float
-  userId        String
-  publicationId String
-}
-
-model Photo {
-  id            String      @id
-  url           String
-  userId        String      @unique
-  publicationId String
-  createdAt     DateTime    @default(now())
-  Publication   Publication @relation(fields: [publicationId], references: [id])
-  User          User        @relation(fields: [userId], references: [id])
-}
-
-model Publication {
-  id             String   @id
-  name           String
-  description    String
-  category       String
-  pricePerDay    Float?
-  promotionPrice Float?
-  type           Type
-  available      Boolean
-  ownerId        String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime
-  Photo          Photo[]
-  User           User     @relation(fields: [ownerId], references: [id])
-  Review         Review[]
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  photo     String
+  category  String
+  price     Float
+  type      Type     @default(SALE)
+  hidden    Boolean  @default(false)
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation("userPosts", fields: [authorId], references: [id])
+  reviews   Review[] @relation("postReviews")
 }
 
 model Review {
-  id            String      @id
-  userId        String
-  publicationId String
-  comment       String
-  rating        Int
-  Publication   Publication @relation(fields: [publicationId], references: [id])
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  rating    Float
+  hidden    Boolean  @default(false)
+  authorId  String
+  postId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation("userReviews", fields: [authorId], references: [id])
+  post      Post     @relation("postReviews", fields: [postId], references: [id])
 }
 
-model User {
-  id          String        @id
-  firstName   String
-  lastName    String
-  email       String        @unique
-  password    String
-  phoneNumber String?
-  address     String?
-  city        String?
-  country     String?
-  Photo       Photo?
-  Publication Publication[]
+model Order {
+  id        String   @id @default(uuid())
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  postId    String
+  paymentId String   @unique
+  payment   Payment  @relation("orderPayment", fields: [paymentId], references: [id])
+  user      User     @relation("userOrders", fields: [userId], references: [id])
+}
+
+model Payment {
+  id        String   @id @default(uuid())
+  amount    Float
+  currency  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  order     Order?   @relation("orderPayment")
+  user      User     @relation("userPayments", fields: [userId], references: [id])
 }
 
 enum Type {
-  RENT
+  RENTAL
   SALE
 }
