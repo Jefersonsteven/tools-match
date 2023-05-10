@@ -14,6 +14,8 @@ const [selectedCategory, setSelectedCategory] = useState('');
 
     return (
         <AppContext.Provider value={{
+            selectedCategory,
+            setSelectedCategory,
             rent,
             setRent,
             sale,

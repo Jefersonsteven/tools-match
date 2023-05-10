@@ -19,13 +19,7 @@ const tools = [
 
 export default function FilterBar() {
   const {selectedCategory, setSelectedCategory, rent, setRent, sale, setSale, sortBy, setSortBy, name, setName} = useContext(AppContext)
-  // const [selectedCategory, setSelectedCategory] = useContext(AppContext);
-  // const [rent, setRent] = useContext(AppContext);
-  // const [sale, setSale] = useContext(AppContext);
-  // const [sortBy, setSortBy] = useContext(AppContext);
-  // const [name, setName] = useContext(AppContext);
- 
-
+  
   const filteredTools = tools
     .filter(
       (tool) =>
