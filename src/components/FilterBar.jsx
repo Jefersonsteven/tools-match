@@ -3,6 +3,8 @@ import CategoryFilter from './CategoryFilter';
 import RentFilter from './RentFilter';
 import SaleFilter from './SaleFilter';
 import SearchBar from './SearchBar';
+import { AppContext, AppProvider } from "@/context/AppContext";
+import { useContext } from 'react';
 
 const tools = [
   { name: 'Martillo', category: 'Carpintería', rating: 4, price: { venta: 0, alquiler: 5 } },
@@ -16,11 +18,12 @@ const tools = [
 ];
 
 export default function FilterBar() {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [rent, setRent] = useState('');
-  const [sale, setSale] = useState(false);
-  const [sortBy, setSortBy] = useState('');
-  const [name, setName] = useState('');
+  const {selectedCategory, setSelectedCategory, rent, setRent, sale, setSale, sortBy, setSortBy, name, setName} = useContext(AppContext)
+  // const [selectedCategory, setSelectedCategory] = useContext(AppContext);
+  // const [rent, setRent] = useContext(AppContext);
+  // const [sale, setSale] = useContext(AppContext);
+  // const [sortBy, setSortBy] = useContext(AppContext);
+  // const [name, setName] = useContext(AppContext);
  
 
   const filteredTools = tools
@@ -56,6 +59,7 @@ export default function FilterBar() {
 
 
   return (
+    <AppProvider>
     <div>
       <SearchBar name={name} onNameChange={setName} />
       <CategoryFilter
@@ -81,5 +85,6 @@ export default function FilterBar() {
         ))}
       </ul>
     </div>
+    </AppProvider>
   );
 }

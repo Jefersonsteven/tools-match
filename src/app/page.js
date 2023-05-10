@@ -1,6 +1,5 @@
 "use client"
 import FilterBar from "@/components/FilterBar";
-import ToolList from "@/components/FilterBar";
 
 export default function Home() {
   return (
