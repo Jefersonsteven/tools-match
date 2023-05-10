@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const order = await prisma.order.findUnique({
-        where: { id: parseInt(id) },
+        where: { id: id },
         include: {
           payment: true,
           user: true,
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
     try {
       const updatedOrder = await prisma.order.update({
-        where: { id: parseInt(id) },
+        where: { id },
         data: {
           status,
           userId,
