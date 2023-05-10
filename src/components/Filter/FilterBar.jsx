@@ -73,13 +73,13 @@ export default function FilterBar() {
         <div><button onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button></div>
         <div><button onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button></div>
         <div><button onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button></div>
-        {/* <ul>
-        {filteredTools.map((tool) => (
-          <li key={tool.name}>
-            {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día - {tool.rating} Jeffersons
-          </li>
-        ))}
-      </ul> */}
+        <ul>
+          {filteredTools.map((tool) => (
+            <li key={tool.name}>
+              {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día - {tool.rating} Jeffersons
+            </li>
+          ))}
+        </ul>
       </div>
     </AppProvider>
   );
