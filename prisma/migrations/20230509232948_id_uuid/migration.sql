@@ -3,7 +3,7 @@ CREATE TYPE "Type" AS ENUM ('RENTAL', 'SALE');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "firstname" TEXT NOT NULL,
     "lastname" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -13,13 +13,14 @@ CREATE TABLE "User" (
     "hidden" BOOLEAN NOT NULL DEFAULT false,
     "phoneNumber" TEXT,
     "zipCode" TEXT,
+    "reports" TEXT[],
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
@@ -27,7 +28,7 @@ CREATE TABLE "Post" (
     "price" DOUBLE PRECISION NOT NULL,
     "type" "Type" NOT NULL DEFAULT 'SALE',
     "hidden" BOOLEAN NOT NULL DEFAULT false,
-    "authorId" INTEGER NOT NULL,
+    "authorId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -36,13 +37,13 @@ CREATE TABLE "Post" (
 
 -- CreateTable
 CREATE TABLE "Review" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "rating" DOUBLE PRECISION NOT NULL,
     "hidden" BOOLEAN NOT NULL DEFAULT false,
-    "authorId" INTEGER NOT NULL,
-    "postId" INTEGER NOT NULL,
+    "authorId" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -51,25 +52,25 @@ CREATE TABLE "Review" (
 
 -- CreateTable
 CREATE TABLE "Order" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" INTEGER NOT NULL,
-    "postId" INTEGER NOT NULL,
-    "paymentId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
+    "paymentId" TEXT NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Payment" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
     "currency" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
 );
