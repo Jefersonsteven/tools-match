@@ -73,8 +73,11 @@
     border-radius: 50%;
     max-width: 1000px;
     margin: 1rem;
+    text-align: center;
 }
+
 .teamImage {
+    display: inline-table;
     width: 100%;
     height: auto;
   }
@@ -115,7 +118,7 @@
     background-color: #0d4491;
   }
   .github{
-    width: 35px;
+    width: 45px;
   }
   .linkedin{
     height: 40px;
