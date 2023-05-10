@@ -1,7 +1,9 @@
+import FilterBar from "@/components/Filter/FilterBar";
+
 function Home() {
     return (
         <div>
-            <h1>Home</h1>
+            <FilterBar />
         </div>
     );
 }

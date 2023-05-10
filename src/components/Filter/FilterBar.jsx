@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+'use client'
+import React from 'react';
 import CategoryFilter from './CategoryFilter';
 import RentFilter from './RentFilter';
 import SaleFilter from './SaleFilter';
-import SearchBar from './SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 import { AppContext, AppProvider } from "@/context/AppContext";
 import { useContext } from 'react';
 
@@ -18,17 +19,17 @@ const tools = [
 ];
 
 export default function FilterBar() {
-  const {selectedCategory, setSelectedCategory, rent, setRent, sale, setSale, sortBy, setSortBy, name, setName} = useContext(AppContext);
+  const { selectedCategory, setSelectedCategory, rent, setRent, sale, setSale, sortBy, setSortBy, name, setName } = useContext(AppContext);
 
-   
+
   const filteredTools = tools
     .filter(
       (tool) =>
-      (!selectedCategory || tool.category === selectedCategory) &&
-      (!rent || (rent === 'rental' ? tool.price.alquiler > 0 : tool.price.alquiler === 0)) &&
-      (!sale || tool.price.venta > 0) &&
-      (!name || tool.name.toLowerCase().includes(name.toLowerCase()))
-  )
+        (!selectedCategory || tool.category === selectedCategory) &&
+        (!rent || (rent === 'rental' ? tool.price.alquiler > 0 : tool.price.alquiler === 0)) &&
+        (!sale || tool.price.venta > 0) &&
+        (!name || tool.name.toLowerCase().includes(name.toLowerCase()))
+    )
 
   const sortedTools = filteredTools.sort((a, b) => {
     if (sortBy === 'nameAsc') {
@@ -55,31 +56,31 @@ export default function FilterBar() {
 
   return (
     <AppProvider>
-    <div className="fixed top-0 left-0 h-full w-1/4 p-4 bg-gray-100">
-      <SearchBar name={name} onNameChange={setName} />
-      <CategoryFilter
-        categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      />
-      <RentFilter rent={rent} onRentChange={setRent} />
-      <SaleFilter sale={sale} onSaleChange={setSale} />
-      <div><button onClick={() => setSortBy('nameAsc')}>Ordenar A-Z</button></div>
-      <div><button onClick={() => setSortBy('nameDesc')}>Ordenar Z-A</button></div>
-      <div><button onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button></div>
-      <div><button onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button></div>
-      <div><button onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button></div>
-      <div><button onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button></div>
-      <div><button onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button></div>
-      <div><button onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button></div>  
-            {/* <ul>
+      <div>
+        <SearchBar name={name} onNameChange={setName} />
+        <CategoryFilter
+          categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
+        <RentFilter rent={rent} onRentChange={setRent} />
+        <SaleFilter sale={sale} onSaleChange={setSale} />
+        <div><button onClick={() => setSortBy('nameAsc')}>Ordenar A-Z</button></div>
+        <div><button onClick={() => setSortBy('nameDesc')}>Ordenar Z-A</button></div>
+        <div><button onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button></div>
+        <div><button onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button></div>
+        <div><button onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button></div>
+        <div><button onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button></div>
+        <div><button onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button></div>
+        <div><button onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button></div>
+        {/* <ul>
         {filteredTools.map((tool) => (
           <li key={tool.name}>
             {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día - {tool.rating} Jeffersons
           </li>
         ))}
       </ul> */}
-    </div>
+      </div>
     </AppProvider>
   );
 }
