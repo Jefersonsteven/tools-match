@@ -32,17 +32,23 @@ export default function FilterBar() {
       (!name || tool.name.toLowerCase().includes(name.toLowerCase()))
   )
 
-    const sortedTools = filteredTools.sort((a, b) => {
-      if (sortBy === 'nameAsc') {
-        return a.name.localeCompare(b.name);
-      } else if (sortBy === 'nameDesc') {
-        return b.name.localeCompare(a.name);
-      } else if (sortBy === 'price') {
-        return a.price.venta - b.price.venta;
-      } else {
-        return b.rating - a.rating;
-      }
-    });  
+  const sortedTools = filteredTools.sort((a, b) => {
+    if (sortBy === 'nameAsc') {
+      return a.name.localeCompare(b.name);
+    } else if (sortBy === 'nameDesc') {
+      return b.name.localeCompare(a.name);
+    } else if (sortBy === 'priceAsc') {
+      return a.price.venta - b.price.venta;
+    } else if (sortBy === 'priceDesc') {
+      return b.price.venta - a.price.venta;
+    } else if (sortBy === 'priceAlqAsc') {
+      return a.price.alquiler - b.price.alquiler;
+    } else if (sortBy === 'priceAlqDesc') {
+      return b.price.alquiler - a.price.alquiler;
+    } else {
+      return b.rating - a.rating;
+    }
+  });
 
 
   return (
@@ -55,10 +61,13 @@ export default function FilterBar() {
       />
       <RentFilter rent={rent} onRentChange={setRent} />
       <SaleFilter sale={sale} onSaleChange={setSale} />
-      <button onClick={() => setSortBy('nameAsc')}>Ordenar A-Z</button>
-      <button onClick={() => setSortBy('nameDesc')}>Ordenar Z-A</button>
-      {/* <PriceSorter sortBy={sortBy} onSortByChange={setSortBy} /> */}
-      <ul>
+      <div><button onClick={() => setSortBy('nameAsc')}>Ordenar A-Z</button></div>
+      <div><button onClick={() => setSortBy('nameDesc')}>Ordenar Z-A</button></div>
+      <div><button onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button></div>
+      <div><button onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button></div>
+      <div><button onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button></div>
+      <div><button onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button></div>
+            <ul>
         {filteredTools.map((tool) => (
           <li key={tool.name}>
             {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día
