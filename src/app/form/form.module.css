@@ -21,7 +21,7 @@
   background-color: #dcf1d9;
   padding-top: 80px;
 
-  padding-left: 72px;
+  padding-left: 92px;
   padding-right: 94px;
 }
 
@@ -97,6 +97,16 @@
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.inputContainer > label {
+  text-transform: uppercase;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
 }
 
 .inputContainer > input {

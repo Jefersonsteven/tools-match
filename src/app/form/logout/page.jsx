@@ -11,6 +11,7 @@ export default function Logout() {
   const [registerData, setRegisterData] = useState({
     name: "",
     surname: "",
+    phoneNumber: "",
     email: "",
     password: "",
   });
@@ -20,6 +21,7 @@ export default function Logout() {
     surname: "",
     email: "",
     password: "",
+    phoneNumber: "",
     flag: true,
   });
 
@@ -37,42 +39,51 @@ export default function Logout() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.twoInputsContainer}>
-        <div className={styles.inputContainer}>
-          <label htmlFor="name">NOMBRE</label>
-          <input
-            type="text"
-            name="name"
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          <p
-            className={
-              errors.name.includes("✔️") ? styles.success : styles.error
-            }
-          >
-            {errors.name && errors.name}
-          </p>
-        </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="surname">APELLIDO</label>
-          <input
-            type="text"
-            name="surname"
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          <p
-            className={
-              errors.surname.includes("✔️") ? styles.success : styles.error
-            }
-          >
-            {errors.surname && errors.surname}
-          </p>
-        </div>
+      <div className={styles.inputContainer}>
+        <label htmlFor="name">nombre</label>
+        <input
+          type="text"
+          name="name"
+          onChange={handleChange}
+          autoComplete="off"
+        />
+        <p
+          className={errors.name.includes("✔️") ? styles.success : styles.error}
+        >
+          {errors.name && errors.name}
+        </p>
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="">CORREO</label>
+        <label htmlFor="surname">apellido</label>
+        <input
+          type="text"
+          name="surname"
+          onChange={handleChange}
+          autoComplete="off"
+        />
+        <p
+          className={
+            errors.surname.includes("✔️") ? styles.success : styles.error
+          }
+        >
+          {errors.surname && errors.surname}
+        </p>
+      </div>
+      <div className={styles.inputContainer}>
+        <label htmlFor="phoneNumber">celular</label>
+        <input
+          type="text"
+          name="phoneNumber"
+          onChange={handleChange}
+          autoComplete="off"
+        />
+        <p className={styles.error}>
+          {errors.phoneNumber && errors.phoneNumber}
+        </p>
+      </div>
+
+      <div className={styles.inputContainer}>
+        <label htmlFor="">correo</label>
         <input
           type="text"
           name="email"
@@ -88,7 +99,7 @@ export default function Logout() {
         </p>
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="">CONTRASEÑA</label>
+        <label htmlFor="">contraseña</label>
         <input
           type={viewPwd ? "text" : "password"}
           name="password"
