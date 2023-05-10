@@ -41,7 +41,7 @@ export default function LandingPage() {
     return (
         <div className={style.landingPageContainer}>
             <div className={style.nabvarContainer}>
-                <Image  src="" alt="logo" className={style.nabvarLogo} />
+                <p>TOOLS MATCH</p>
                 <nav className={style.nabvarLinks}>
                     <ul>
                         <li></li>
