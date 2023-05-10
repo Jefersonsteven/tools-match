@@ -13,6 +13,7 @@ export default async function handler(req, res) {
         hidden,
         phoneNumber,
         zipCode,
+        reports,
       } = req.body;
       const user = await prisma.user.create({
         data: {
@@ -25,6 +26,7 @@ export default async function handler(req, res) {
           hidden,
           phoneNumber,
           zipCode,
+          reports,
         },
       });
       res.status(200).json(user);

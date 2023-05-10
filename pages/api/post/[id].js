@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     const post = await prisma.post.findUnique({
       where: {
-        id: parseInt(id),
+        id: id,
       },
       include: {
         author: true,
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       req.body;
     const post = await prisma.post.update({
       where: {
-        id: parseInt(id),
+        id: id,
       },
       data: {
         title,
