@@ -28,15 +28,19 @@ export default function ToolList() {
         (!rent || (rent === 'rental' ? tool.price.alquiler > 0 : tool.price.alquiler === 0)) &&
         (!sale || tool.price.venta > 0)
     )
-    .sort((a, b) => {
-      if (sortBy === 'name') {
+
+    const sortedTools = filteredTools.sort((a, b) => {
+      if (sortBy === 'nameAsc') {
         return a.name.localeCompare(b.name);
+      } else if (sortBy === 'nameDesc') {
+        return b.name.localeCompare(a.name);
       } else if (sortBy === 'price') {
         return a.price.venta - b.price.venta;
       } else {
         return b.rating - a.rating;
       }
     });
+    
 
   return (
     <div>
@@ -47,6 +51,8 @@ export default function ToolList() {
       />
       <RentFilter rent={rent} onRentChange={setRent} />
       <SaleFilter sale={sale} onSaleChange={setSale} />
+      <button onClick={() => setSortBy('nameAsc')}>Ordenar A-Z</button>
+      <button onClick={() => setSortBy('nameDesc')}>Ordenar Z-A</button>
       {/* <PriceSorter sortBy={sortBy} onSortByChange={setSortBy} /> */}
       <ul>
         {filteredTools.map((tool) => (
