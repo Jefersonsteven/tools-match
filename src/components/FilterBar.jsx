@@ -18,8 +18,9 @@ const tools = [
 ];
 
 export default function FilterBar() {
-  const {selectedCategory, setSelectedCategory, rent, setRent, sale, setSale, sortBy, setSortBy, name, setName} = useContext(AppContext)
-  
+  const {selectedCategory, setSelectedCategory, rent, setRent, sale, setSale, sortBy, setSortBy, name, setName} = useContext(AppContext);
+
+   
   const filteredTools = tools
     .filter(
       (tool) =>
@@ -54,7 +55,7 @@ export default function FilterBar() {
 
   return (
     <AppProvider>
-    <div>
+    <div className="fixed top-0 left-0 h-full w-1/4 p-4 bg-gray-100">
       <SearchBar name={name} onNameChange={setName} />
       <CategoryFilter
         categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
@@ -71,13 +72,13 @@ export default function FilterBar() {
       <div><button onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button></div>
       <div><button onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button></div>
       <div><button onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button></div>  
-            <ul>
+            {/* <ul>
         {filteredTools.map((tool) => (
           <li key={tool.name}>
             {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día - {tool.rating} Jeffersons
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
     </AppProvider>
   );
