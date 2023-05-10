@@ -1,52 +1,55 @@
 import prisma from "../../../prisma/client";
 
 export default async function handler(req, res) {
-  const { method } = req;
-
-  switch (method) {
-    case "GET":
-      try {
-        const users = await prisma.user.findMany();
-        res.status(200).json(users);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-      break;
-    case "POST":
+  if (req.method === "POST") {
+    try {
       const {
-        firstName,
-        lastName,
+        firstname,
+        lastname,
         email,
         password,
+        admin,
+        logged,
+        hidden,
         phoneNumber,
-        adress,
-        city,
-        country,
-        profilePhoto,
-        publications,
+        zipCode,
+        reports,
       } = req.body;
-      try {
-        const user = await prisma.user.create({
-          data: {
-            firstName,
-            lastName,
-            email,
-            password,
-            phoneNumber,
-            adress,
-            city,
-            country,
-            profilePhoto,
-            publications,
-          },
-        });
-        res.status(200).json(user);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-      break;
-    default:
-      res.setHeader("Allow", ["GET", "POST"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      const user = await prisma.user.create({
+        data: {
+          firstname,
+          lastname,
+          email,
+          password,
+          admin,
+          logged,
+          hidden,
+          phoneNumber,
+          zipCode,
+          reports,
+        },
+      });
+      res.status(200).json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error creating user." });
+    }
+  } else if (req.method === "GET") {
+    try {
+      const users = await prisma.user.findMany({
+        include: {
+          posts: true,
+          reviews: true,
+          orders: true,
+          payments: true,
+        },
+      });
+      res.status(200).json(users);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error retrieving users." });
+    }
+  } else {
+    res.status(400).json({ error: "Invalid method." });
   }
 }
