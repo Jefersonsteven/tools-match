@@ -53,7 +53,7 @@ export default function LandingPage() {
         <div className={style.landingPageContainer}>
             <div className={style.nabvarContainer}>
                 <div className={style.navbarLogo}>
-                <p>TOOLS MATCH</p>
+                <Link href='#'><p>TOOLS MATCH</p></Link>
                 </div>
                 <div className={style.navbarMenu}>
                 <button>Publicaciones</button>

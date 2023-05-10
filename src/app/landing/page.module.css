@@ -19,6 +19,7 @@
 .navbarMenu{
     display: flex;
     gap: 20px;
+    color: #DCF1D9;
 }
 .navbarMenuLogin{
     background: #21BF60;
@@ -178,14 +179,19 @@
     height: 111px;
     justify-content: space-evenly;
     align-items: center;
+    
+}
+.footerRights, .footerTerms{
+   color:#DCF1D9; 
 }
 
 .footerLogo{
     color: yellow;
     font-size: 1rem;
 }
+
 .footerTerms Link:hover{
     color: yellow;
     cursor: pointer;
-    
+
 }
