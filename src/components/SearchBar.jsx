@@ -1,26 +1,20 @@
-import React, { useState } from 'react';
-import { BiSearch } from 'react-icons/bi';
+import React from 'react';
 
-const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
+export default function SearchBar(props) {
+  const { name, onNameChange } = props;
 
-  const handleInputChange = (event) => {
-    setQuery(event.target.value);
-    onSearch(event.target.value);
+  const handleNameChange = (event) => {
+    onNameChange(event.target.value);
   };
 
   return (
-    <div className="flex items-center space-x-2 rounded-lg bg-gray-100 p-2">
-      <BiSearch className="text-gray-500" />
+    <div>
       <input
         type="text"
-        value={query}
-        onChange={handleInputChange}
-        placeholder="Buscar herramientas"
-        className="bg-transparent outline-none text-gray-700 flex-grow"
+        placeholder="Buscar herramienta..."
+        value={name}
+        onChange={handleNameChange}
       />
     </div>
   );
-};
-
-export default SearchBar;
+}

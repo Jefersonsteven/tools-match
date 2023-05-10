@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CategoryFilter from './CategoryFilter';
 import RentFilter from './RentFilter';
 import SaleFilter from './SaleFilter';
-//import PriceSorter from './PriceSorter';
+import SearchBar from './SearchBar';
 
 const tools = [
   { name: 'Martillo', category: 'Carpintería', rating: 4, price: { venta: 0, alquiler: 5 } },
@@ -15,19 +15,22 @@ const tools = [
   { name: 'Tijeras de podar', category: 'Jardinería', rating: 0, price: { venta: 0, alquiler: 5 } }
 ];
 
-export default function ToolList() {
+export default function FilterBar() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [rent, setRent] = useState('');
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState('');
+  const [name, setName] = useState('');
+ 
 
   const filteredTools = tools
     .filter(
       (tool) =>
-        (!selectedCategory || tool.category === selectedCategory) &&
-        (!rent || (rent === 'rental' ? tool.price.alquiler > 0 : tool.price.alquiler === 0)) &&
-        (!sale || tool.price.venta > 0)
-    )
+      (!selectedCategory || tool.category === selectedCategory) &&
+      (!rent || (rent === 'rental' ? tool.price.alquiler > 0 : tool.price.alquiler === 0)) &&
+      (!sale || tool.price.venta > 0) &&
+      (!name || tool.name.toLowerCase().includes(name.toLowerCase()))
+  )
 
     const sortedTools = filteredTools.sort((a, b) => {
       if (sortBy === 'nameAsc') {
@@ -39,11 +42,12 @@ export default function ToolList() {
       } else {
         return b.rating - a.rating;
       }
-    });
-    
+    });  
+
 
   return (
     <div>
+      <SearchBar name={name} onNameChange={setName} />
       <CategoryFilter
         categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
         selectedCategory={selectedCategory}
