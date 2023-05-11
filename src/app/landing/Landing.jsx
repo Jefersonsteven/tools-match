@@ -4,7 +4,7 @@ import style from './landing.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import Modal from "./modal";
+import Modal from "./modal/Modal";
 
 
 export default function LandingPage() {
@@ -15,42 +15,7 @@ export default function LandingPage() {
     const handleOpenModal = () => {
         setModalOpen(true);
     };
-
-
-    const teamMembers = [
-        {
-            name: 'Axel',
-            image: 'Axel.jpg',
-        },
-        {
-            name: 'Celes',
-            image: 'Celeste.jpg',
-        },
-        {
-            name: 'Ema',
-            image: 'Emanuel.jpg',
-        },
-        {
-            name: 'Franco',
-            image: 'Franco.jpg',
-        },
-        {
-            name: 'Adri',
-            image: 'Adriana.jpg',
-        },
-        {
-            name: 'Jean',
-            image: 'Jean.jpg',
-        },
-        {
-            name: 'Yael',
-            image: 'Yael.jpg',
-        },
-        {
-            name: 'Jeffer',
-            image: 'Jeffer.jpg',
-        },
-    ];
+    
     return (
         <div className={style.landingPageContainer}>
             <header className={style.nabvarContainer}>
@@ -112,7 +77,3 @@ export default function LandingPage() {
         </div>
     )
 }
-
-
-// javascript:void(0)
-  

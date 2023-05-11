@@ -3,6 +3,7 @@ import styles from './Header.module.css';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
 import Image from 'next/image';
 
+
 function Header() {
     return (
         <header className={styles.header}>
