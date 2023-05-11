@@ -1,0 +1,46 @@
+.header {
+    display: flex;
+    padding: 20px 50px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--black);
+    color: var(--white);
+    height: 100px;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    font-size: 1.6rem;
+    width: 100%;
+}
+
+.nav ul {
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.nav div {
+    width: 100px;
+}
+
+.route {
+    padding: 3px 5px;
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 5px;
+}
+
+.nav ul li:hover {
+    padding: 3px 5px;
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.home {
+    display: flex;
+}
