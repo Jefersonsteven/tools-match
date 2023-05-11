@@ -1,6 +1,6 @@
 "use client";
 
-import style from './page.module.css';
+import style from './landing.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -77,8 +77,3 @@ export default function LandingPage() {
         </div>
     )
 }
-
-
-// javascript:void(0)
-
-         
