@@ -1,3 +1,5 @@
+"use client";
+
 import style from './team.module.css';
 import Image from 'next/image';
 
