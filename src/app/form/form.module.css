@@ -3,11 +3,12 @@
 .container {
   display: flex;
   justify-content: space-between;
-  min-height: 100vh;
+  max-height: 100vh;
 }
 
 .container > div {
   width: 50%;
+  height: inherit;
 }
 
 .left {
@@ -19,7 +20,7 @@
 
 .right {
   background-color: #dcf1d9;
-  padding-top: 80px;
+  padding-top: 45px;
 
   padding-left: 92px;
   padding-right: 94px;
@@ -68,18 +69,6 @@
   color: #535e53;
 }
 
-.buttons > span {
-  width: 10px;
-  height: 18px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 18px;
-  letter-spacing: 0.1em;
-
-  color: #000000;
-}
-
 .image {
   width: 90%;
   height: auto;
@@ -91,6 +80,15 @@
   display: flex;
   flex-direction: column;
   margin-top: 37px;
+}
+
+.inputsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputsContainer > .inputContainer {
+  width: 40%;
 }
 
 .inputContainer {
@@ -121,15 +119,22 @@
 
 .inputContainer > p {
   margin-top: 11px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   height: 20px;
 }
 
 .pwd {
   position: absolute;
-  bottom: 85px;
-  right: 15px;
+  bottom: 75px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.pwdInLogin {
+  position: absolute;
+  bottom: 18px;
+  right: 10px;
   cursor: pointer;
 }
 
@@ -155,11 +160,11 @@
 
 .submitContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 15px 30px;
-  gap: 10px;
+  gap: 30px;
 }
 
 .submitContainer > a {
@@ -256,4 +261,38 @@
 
 .error {
   color: red;
+}
+
+.socialSignIn {
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  height: 49px;
+  background: white;
+  border-radius: 30px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+  color: #535e53;
+}
+
+.socialSignIn:hover,
+.socialSignIn:focus {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: 0.2s ease;
+}
+
+.icon {
+  width: auto;
+  height: 30px;
+}
+
+.linkContainer {
+  display: flex;
+  justify-content: center;
 }

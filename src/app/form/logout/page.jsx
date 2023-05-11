@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
 import styles from "../form.module.css";
-import { useState } from "react";
-import { validate } from "../assets/validateSignUp";
+import { useEffect, useState } from "react";
+import { validateSignIn } from "../assets/validateForms";
 import { useRouter } from "next/navigation";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
-
+import { FcGoogle } from "react-icons//fc";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/firebase/firebase.config";
 
@@ -23,23 +23,31 @@ export default function Logout() {
     phoneNumber: "",
     email: "",
     password: "",
+    passwordRepeat: "",
   });
 
   const [errors, setErrors] = useState({
     name: "",
     surname: "",
     email: "",
-    password: "",
     phoneNumber: "",
+    password: "",
+    passwordRepeat: "",
     flag: true,
   });
+
+  useEffect(() => {
+    setErrors(validateSignIn(registerData));
+  }, [registerData]);
 
   const handleChange = (event) => {
     const value = event.target.value;
     const name = event.target.name;
 
-    setRegisterData({ ...registerData, [name]: value });
-    setErrors(validate(registerData));
+    setRegisterData((prevRegisterData) => ({
+      ...prevRegisterData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (event) => {
@@ -65,13 +73,18 @@ export default function Logout() {
       );
 
       console.log(response);
-      router.push("/form/login");
+
+      console.log(response);
+      response.status == 200
+        ? router.push("/")
+        : new Error("no se obtuvo un 200");
     } catch (error) {
       console.error("Error en la solicitud POST", error);
     }
   };
 
-  const callLoginGoogle = () => {
+  const callLoginGoogle = (event) => {
+    event.preventDefault();
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -89,6 +102,7 @@ export default function Logout() {
         console.log("URL de la foto de perfil:", photoURL);
         console.log("UID del usuario:", uid);
         console.log("Datos del proveedor de identidad:", providerData);
+        router.push("/");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -102,89 +116,121 @@ export default function Logout() {
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputContainer}>
-          <label htmlFor="name">nombre</label>
-          <input
-            type="text"
-            name="name"
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          <p
-            className={
-              errors.name.includes("✔️") ? styles.success : styles.error
-            }
-          >
-            {errors.name && errors.name}
-          </p>
+        <div className={styles.inputsContainer}>
+          <div className={styles.inputContainer}>
+            <label htmlFor="name">nombre*</label>
+            <input
+              type="text"
+              name="name"
+              onChange={handleChange}
+              autoComplete="off"
+            />
+            <p
+              className={
+                errors.name.includes("✔️") ? styles.success : styles.error
+              }
+            >
+              {errors.name && errors.name}
+            </p>
+          </div>
+          <div className={styles.inputContainer}>
+            <label htmlFor="surname">apellido *</label>
+            <input
+              type="text"
+              name="surname"
+              onChange={handleChange}
+              autoComplete="off"
+            />
+            <p
+              className={
+                errors.surname.includes("✔️") ? styles.success : styles.error
+              }
+            >
+              {errors.surname && errors.surname}
+            </p>
+          </div>
         </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="surname">apellido</label>
-          <input
-            type="text"
-            name="surname"
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          <p
-            className={
-              errors.surname.includes("✔️") ? styles.success : styles.error
-            }
-          >
-            {errors.surname && errors.surname}
-          </p>
-        </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="phoneNumber">celular</label>
-          <input
-            type="text"
-            name="phoneNumber"
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          <p className={styles.error}>
-            {errors.phoneNumber && errors.phoneNumber}
-          </p>
-        </div>
+        <div className={styles.inputsContainer}>
+          <div className={styles.inputContainer}>
+            <label htmlFor="phoneNumber">celular *</label>
+            <input
+              type="text"
+              name="phoneNumber"
+              onChange={handleChange}
+              autoComplete="off"
+            />
+            <p
+              className={
+                errors.phoneNumber.includes("✔️")
+                  ? styles.success
+                  : styles.error
+              }
+            >
+              {errors.phoneNumber && errors.phoneNumber}
+            </p>
+          </div>
 
-        <div className={styles.inputContainer}>
-          <label htmlFor="">correo</label>
-          <input
-            type="text"
-            name="email"
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          <p
-            className={
-              errors.email.includes("✔️") ? styles.success : styles.error
-            }
-          >
-            {errors.email && errors.email}
-          </p>
+          <div className={styles.inputContainer}>
+            <label htmlFor="email">correo *</label>
+            <input
+              type="text"
+              name="email"
+              onChange={handleChange}
+              autoComplete="off"
+            />
+            <p
+              className={
+                errors.email.includes("✔️") ? styles.success : styles.error
+              }
+            >
+              {errors.email && errors.email}
+            </p>
+          </div>
         </div>
-        <div className={styles.inputContainer}>
-          <label htmlFor="">contraseña</label>
-          <input
-            type={viewPwd ? "text" : "password"}
-            name="password"
-            onChange={handleChange}
-          />
-          <p
-            className={
-              errors.password.includes("✔️") ? styles.success : styles.error
-            }
-          >
-            {errors.password && errors.password}
-          </p>
-          <div className={styles.pwd} onClick={() => setViewPwd(!viewPwd)}>
-            {viewPwd ? svgView : svgHide}
+        <div className={styles.inputsContainer}>
+          <div className={styles.inputContainer}>
+            <label htmlFor="">contraseña *</label>
+            <input
+              type={viewPwd ? "text" : "password"}
+              name="password"
+              onChange={handleChange}
+            />
+            <p
+              className={
+                errors.password.includes("✔️") ? styles.success : styles.error
+              }
+            >
+              {errors.password && errors.password}
+            </p>
+            <div className={styles.pwd} onClick={() => setViewPwd(!viewPwd)}>
+              {viewPwd ? svgView : svgHide}
+            </div>
+          </div>
+          <div className={styles.inputContainer}>
+            <label htmlFor="passwordRepeat">confirmar contraseña *</label>
+            <input
+              type={viewPwd ? "text" : "passwordRepeat"}
+              name="passwordRepeat"
+              onChange={handleChange}
+            />
+            <p
+              className={
+                errors.passwordRepeat.includes("✔️")
+                  ? styles.success
+                  : styles.error
+              }
+            >
+              {errors.passwordRepeat && errors.passwordRepeat}
+            </p>
+            <div className={styles.pwd} onClick={() => setViewPwd(!viewPwd)}>
+              {viewPwd ? svgView : svgHide}
+            </div>
           </div>
         </div>
         <div>
           <label className={styles.label}>
             <input type="checkbox" name="test" value="test" />
-            Términos y condiciones
+            <Link href="">Términos y condiciones</Link>
           </label>
         </div>
         <div className={styles.submitContainer}>
@@ -197,12 +243,16 @@ export default function Logout() {
           >
             Registrarse
           </button>
-          <Link href="">Términos y condiciones</Link>
+          <span>|</span>
+          <button
+            className={`${styles.socialSignIn}`}
+            onClick={callLoginGoogle}
+          >
+            Iniciar con
+            <FcGoogle className={styles.icon} />
+          </button>
         </div>
       </form>
-      <button className={`${styles.buttonSubmit}`} onClick={callLoginGoogle}>
-        Registrarse con Google
-      </button>
     </>
   );
 }

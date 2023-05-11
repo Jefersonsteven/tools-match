@@ -2,7 +2,7 @@
 import Link from "next/link";
 import styles from "../form.module.css";
 import { useState } from "react";
-import { validate } from "../assets/validateLogin";
+import { validateLogIn } from "../assets/validateForms";
 
 export default function Login() {
   const [viewPwd, setViewPwd] = useState(false);
@@ -23,7 +23,7 @@ export default function Login() {
     const name = event.target.name;
 
     setLoginData({ ...loginData, [name]: value });
-    setErrors(validate(loginData));
+    setErrors(validateLogIn(loginData));
   };
 
   const handleSubmit = (event) => {

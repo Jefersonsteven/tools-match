@@ -1,11 +1,16 @@
 "use client";
 import Link from "next/link";
 import styles from "../form.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { validate } from "../assets/validateLogin";
+import { validateLogIn } from "../assets/validateForms";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
+import { FcGoogle } from "react-icons//fc";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "@/firebase/firebase.config";
+
+const provider = new GoogleAuthProvider();
 
 export default function Login() {
   const router = useRouter();
@@ -27,8 +32,11 @@ export default function Login() {
     const name = event.target.name;
 
     setLoginData({ ...loginData, [name]: value });
-    setErrors(validate(loginData));
   };
+
+  useEffect(() => {
+    setErrors(validateLogIn(loginData));
+  }, [loginData]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,16 +52,51 @@ export default function Login() {
           password: loginData.password,
         }),
       };
-      const response = await fetch(
+      let response = await fetch(
         `http://localhost:3000/api/loginValidate?email=${loginData.email}&password=${loginData.password}`,
         config
       );
+      response = await response.json();
 
       console.log(response);
-      router.push("/");
+
+      console.log(response);
+      response.status == 200
+        ? router.push("/")
+        : new Error("no se obtuvo un 200");
     } catch (error) {
       console.error("Error en la solicitud POST", error);
     }
+  };
+
+  const callLoginGoogle = (event) => {
+    event.preventDefault();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        console.log(token);
+        const user = result.user;
+        const displayName = user.displayName;
+        const email = user.email;
+        const photoURL = user.photoURL;
+        const uid = user.uid;
+        const providerData = user.providerData;
+
+        console.log("Nombre completo:", displayName);
+        console.log("Correo electrónico:", email);
+        console.log("URL de la foto de perfil:", photoURL);
+        console.log("UID del usuario:", uid);
+        console.log("Datos del proveedor de identidad:", providerData);
+        router.push("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
   };
 
   return (
@@ -81,14 +124,8 @@ export default function Login() {
           name="password"
           onChange={handleChange}
         />
-        <p
-          className={
-            errors.password.includes("✔️") ? styles.success : styles.error
-          }
-        >
-          {errors.password && errors.password}
-        </p>
-        <div className={styles.pwd} onClick={() => setViewPwd(!viewPwd)}>
+
+        <div className={styles.pwdInLogin} onClick={() => setViewPwd(!viewPwd)}>
           {viewPwd ? svgView : svgHide}
         </div>
       </div>
@@ -100,8 +137,15 @@ export default function Login() {
           type="submit"
           disabled={errors.flag}
         >
-          Iniciar Sesión
+          Iniciar sesión
         </button>
+        <span>|</span>
+        <button className={`${styles.socialSignIn}`} onClick={callLoginGoogle}>
+          Iniciar con
+          <FcGoogle className={styles.icon} />
+        </button>
+      </div>
+      <div className={styles.linkContainer}>
         <Link href="/form/recover">Olvide mi contraseña</Link>
       </div>
     </form>
