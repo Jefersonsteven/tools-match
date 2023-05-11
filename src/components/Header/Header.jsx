@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from './Header.module.css';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
 
+
 function Header() {
     return (
         <header className={styles.header}>
