@@ -3,49 +3,7 @@ import style from "./users.module.css";
 import User from "../components/User";
 import { Fragment, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa"
-
-const usuarios = [
-  {
-    nombre: "Juan",
-    telefono: "123",
-    email: "juan@ho1424tmail.com",
-    reportes: 3,
-    ordenes: 5,
-    id: 1,
-  },
-  {
-    nombre: "Jefferson",
-    telefono: "121241243",
-    email: "juan@ho1424tmail.com",
-    reportes: 3,
-    ordenes: 4,
-    id: 2,
-  },
-  {
-    nombre: "Ema",
-    telefono: "121241243",
-    email: "juan@ho1424tmail.com",
-    reportes: 3,
-    ordenes: 4,
-    id: 2,
-  },
-  {
-    nombre: "Adriana",
-    telefono: "121241243",
-    email: "juan@ho1424tmail.com",
-    reportes: 3,
-    ordenes: 4,
-    id: 2,
-  },
-  {
-    nombre: "Axel",
-    telefono: "121241243",
-    email: "juan@ho1424tmail.com",
-    reportes: 3,
-    ordenes: 4,
-    id: 2,
-  },
-];
+import Form from "../components/Form"
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -61,31 +19,54 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
 
 function Users() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [columns, setColums] = useState([]);
+  const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
 
   useEffect(() => {
-    setColums(Object.keys(usuarios[0]).map((column) => column.toUpperCase()));
-    setRecords(usuarios);
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        const users = await response.json();
+  
+        if (users.length > 0) {
+          const columns = Object.keys(users[0]).map((column) => column.toUpperCase());
+          setColumns(columns);
+          setRecords(users);
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+  
+    fetchUsers();
   }, []);
 
+
   const filteredUsuarios = records.filter((usuario) => {
-    return usuario.nombre.toLowerCase().includes(searchTerm.toLowerCase());
+    return usuario.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   const handleDeleteUser = (id) => {
-    console.log(`Eliminando usuario con id ${id}`);
+    const updatedRecords = records.filter((user)=> user.id !== id);
+    setRecords(updatedRecords)
+      alert("Usuario eliminado con exito")  
   };
 
-  const handleClick = (id) => {
-    alert(`Editar usuario ${id}`)
-  }
+  const handleClick = (user) => {
+    setShowForm(true);
+  };
 
-  const handleDeleteClick = (name) => {
+  const handleCancel = () => {
+    setShowForm(false);
+  };
+
+  const handleDeleteClick = (name, id) => {
     if (
       window.confirm(`Estas por eliminar al usuario "${name}" estas seguro?`)
     ) {
-      handleDeleteUser(name);
+      handleDeleteUser(id);
     }
   };
 
@@ -113,21 +94,21 @@ function Users() {
              
             {filteredUsuarios.map((d, i) => (
               <tr className={style.namesTable} key={i}>
-                <td>{d.nombre}</td>
-                <td>{d.telefono}</td>
+                <td>{d.name}</td>
+                <td>{d.phone}</td>
                 <td>{d.email}</td>
-                <td>{d.reportes}</td>
-                <td>{d.ordenes}</td>
+                <td>{d.username}</td>
+                <td>{d.phone}</td>
                 <td>
                   <button
                   className={style.botonEditar}
-                    onClick={()=> handleClick(d.nombre)}>Editar
+                    onClick={()=> handleClick(d.id)}>Editar
                     </button>
                   <button
                     className={style.botonDelete}
-                    onClick={() => handleDeleteClick(d.nombre)}
+                    onClick={() => handleDeleteClick(d.name, d.id)}
                   >
-                    Eliminar
+                    Bannear
                   </button>
                 </td>
               </tr>
@@ -139,6 +120,13 @@ function Users() {
         </table>
       ):(
         <div className={style.noUsuarios}><p>No hay Usuarios</p></div>
+      )}
+      {showForm && (
+        <div className={style.modal}>
+          <div className={style.modalContent}>
+            <Form onCancel={handleCancel} />
+          </div>
+        </div>
       )}
       </div>
     </div>
