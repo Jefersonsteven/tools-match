@@ -7,7 +7,7 @@ const notNumbers = /^[A-Za-z]+$/;
 export function validateLogIn(inputs) {
   const errors = {
     email: "Email correcto ✔️",
-    password: "Contraseña correcta ✔️",
+
     flag: false,
   };
 
@@ -18,14 +18,6 @@ export function validateLogIn(inputs) {
 
   !inputs.email && (errors.email = "");
 
-  if (!passwordRegex.test(inputs.password)) {
-    errors.password =
-      "Tú contraseña debe contener un número y una longitud de al menos 6 caracteres *";
-    errors.flag = true;
-  }
-
-  !inputs.password && (errors.password = "");
-
   return errors;
 }
 
@@ -33,8 +25,8 @@ export function validateLogIn(inputs) {
 
 export function validateSignIn(inputs) {
   const errors = {
-    name: "Nombre válido✔️",
-    surname: "Apellido válido✔️",
+    name: "válido✔️",
+    surname: "válido✔️",
     email: "Email válido ✔️",
     password: "Contraseña válida ✔️",
     passwordRepeat: "Las constraseñas coinciden ✔️",

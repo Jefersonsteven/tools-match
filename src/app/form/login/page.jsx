@@ -23,7 +23,6 @@ export default function Login() {
 
   const [errors, setErrors] = useState({
     email: "",
-    password: "",
     flag: true,
   });
 

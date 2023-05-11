@@ -65,8 +65,12 @@
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.1em;
-
   color: #535e53;
+  transition: all 0.4s ease-in-out;
+}
+
+.link:hover {
+  background-color: #21bf6060;
 }
 
 .image {
