@@ -32,19 +32,20 @@ function Header() {
                 </Link>
               </li>
               <li>
-                <Link href="/crear-publicaciones">Crear Publicaciones</Link>
+                {pathname !== "/" && <Link href="/crear-publicaciones">Crear Publicaciones</Link>}
               </li>
             </ul>
 
-            <div className={styles.nav}>
-              <FaUserCircle color="white" />
-              <Link href="/team">
-                <FaShoppingCart color="white" />
-              </Link>
-            </div>
+            {pathname !== "/" &&
+              <div className={styles.nav}>
+                <FaUserCircle color="white" />
+                <Link href="/team">
+                  <FaShoppingCart color="white" />
+                </Link>
+              </div>}
           </>
         ) : (
-          <ul>
+          <ul className={styles.home}>
             <li>
               <Link href="/home">Home</Link>
             </li>
