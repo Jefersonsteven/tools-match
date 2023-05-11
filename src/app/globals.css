@@ -32,3 +32,6 @@ body {
   color: var(--black);
   background: var(--white);
 }
+ul li{
+  list-style: none;
+}
