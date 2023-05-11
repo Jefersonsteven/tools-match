@@ -38,10 +38,16 @@
 }
 
 .body {
-    display:flex;
     width: 100vw;
     height: 100vh;
-    background-color: rgb(255, 255, 255);
-    color: black;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(0, 0, 0);
+    display: flex;
 }
 
+.Footer {
+    background-color: #ff0000;
+    color: rgb(255, 0, 0);
+    height: 1000px;
+    width: 100%;
+  }

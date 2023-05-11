@@ -1,11 +1,12 @@
 "use client";
 import style from "./users.module.css";
 import User from "../components/User";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa"
 
 const usuarios = [
   {
-    name: "Juan",
+    nombre: "Juan",
     telefono: "123",
     email: "juan@ho1424tmail.com",
     reportes: 3,
@@ -13,7 +14,7 @@ const usuarios = [
     id: 1,
   },
   {
-    name: "Jefferson",
+    nombre: "Jefferson",
     telefono: "121241243",
     email: "juan@ho1424tmail.com",
     reportes: 3,
@@ -21,7 +22,7 @@ const usuarios = [
     id: 2,
   },
   {
-    name: "Ema",
+    nombre: "Ema",
     telefono: "121241243",
     email: "juan@ho1424tmail.com",
     reportes: 3,
@@ -29,7 +30,7 @@ const usuarios = [
     id: 2,
   },
   {
-    name: "Adriana",
+    nombre: "Adriana",
     telefono: "121241243",
     email: "juan@ho1424tmail.com",
     reportes: 3,
@@ -37,7 +38,7 @@ const usuarios = [
     id: 2,
   },
   {
-    name: "Axel",
+    nombre: "Axel",
     telefono: "121241243",
     email: "juan@ho1424tmail.com",
     reportes: 3,
@@ -53,6 +54,7 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   return (
     <div className={style.searchBar}>
       <input type="text" value={searchTerm} onChange={handleSearchTermChange} />
+      <FaSearch/>
     </div>
   );
 }
@@ -68,28 +70,35 @@ function Users() {
   }, []);
 
   const filteredUsuarios = records.filter((usuario) => {
-    return usuario.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return usuario.nombre.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   const handleDeleteUser = (id) => {
     console.log(`Eliminando usuario con id ${id}`);
   };
 
+  const handleClick = (id) => {
+    alert(`Editar usuario ${id}`)
+  }
+
   const handleDeleteClick = (name) => {
-    // if (
-    //   window.confirm(`Estas por eliminar al usuario "${name}" estas seguro?`)
-    // ) {
-    //   handleDeleteUser(name);
-    // }
+    if (
+      window.confirm(`Estas por eliminar al usuario "${name}" estas seguro?`)
+    ) {
+      handleDeleteUser(name);
+    }
   };
+
+
 
   return (
     <div className={style.contenedorPadre}>
       <div className={style.searchbarContainer}>
-        <h2>USERS</h2>
+        <h2>Usuarios</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
       <div className={style.contenedorTable}>
+      {filteredUsuarios.length > 0 ? (
         <table className={style.table}>
           <tbody>
             <tr>
@@ -98,27 +107,39 @@ function Users() {
                 .map((c, i) => {
                   return <th key={i}>{c}</th>;
                 })}
-            </tr>
-
+           </tr>     
+ {/* ACA */}
+            
+             
             {filteredUsuarios.map((d, i) => (
               <tr className={style.namesTable} key={i}>
-                <td>{d.name}</td>
+                <td>{d.nombre}</td>
                 <td>{d.telefono}</td>
                 <td>{d.email}</td>
                 <td>{d.reportes}</td>
                 <td>{d.ordenes}</td>
                 <td>
                   <button
+                  className={style.botonEditar}
+                    onClick={()=> handleClick(d.nombre)}>Editar
+                    </button>
+                  <button
                     className={style.botonDelete}
-                    onClick={() => handleDeleteClick(d.name)}
+                    onClick={() => handleDeleteClick(d.nombre)}
                   >
-                    Eliminar Usuario
+                    Eliminar
                   </button>
                 </td>
               </tr>
             ))}
+          
+
+  {/* HASTA ACA */}
           </tbody>
         </table>
+      ):(
+        <div className={style.noUsuarios}><p>No hay Usuarios</p></div>
+      )}
       </div>
     </div>
   );

@@ -15,7 +15,10 @@
 }
 
 .searchBar {
-    display: grid;
+    padding-right: 10px;
+    align-items: center;
+    background-color: #D9D9D9;
+    display: flex;
     justify-items: center;
     border-width: 2px;
     border: 5px solid;
@@ -26,7 +29,7 @@
 
 .searchBar:hover {
     border:5px solid;
-    border-color: #c2c2c2;
+    border-color: #9b9b9b;
 }
 
 .searchBar input {
@@ -48,6 +51,9 @@
 
 .searchbarContainer h2 {
     font-size: xxx-large;
+    color: rgb(46, 46, 46);
+    -webkit-text-fill-color: rgb(35, 35, 35);
+    -webkit-text-stroke: 1px black;
 }
 
 .botonDelete {
@@ -96,3 +102,34 @@
     padding-left: 60px;
     padding-right: 40px;
 }
+
+
+.botonEditar {
+    cursor: pointer;
+    color: rgba(16, 50, 58, 0.802);
+    border: 2px solid rgba(0, 140, 255, 0.537);
+    background-color: rgba(255, 255, 255, 0.612);
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    padding: 2px;
+    margin-right: 8px;
+}
+
+.botonEditar:hover {
+    background-color: rgba(0, 140, 255, 0.472);
+    color: white
+}
+/* 
+.noUsuarios{
+   
+    color: #f80101;
+    -webkit-text-fill-color: rgb(255, 0, 0);
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
+    padding: 1rem;
+    font-weight: bold;
+    text-align: center;
+    padding-left: 230px;
+    padding-right: 250px;
+    margin-left: 30px;
+
+} */

@@ -1,29 +1,30 @@
-"use client"
 
 import Link from "next/link";
-
+import styles from "./dashboard.module.css";
 
 export default function DashboardLayout({ children }) {
   return (
     <html lang="en">
-      <body >
-        <div >
-          <div > 
-            <p>Dashboard</p>
+      <body>
+        <div className={styles.body}>
+        <div className={styles.contenedor}>
+          <div className={styles.title}> 
+            <p>Admin Panel</p>
           </div>
           <div>
-            <div >
-              <Link href="/dashboard/users">Users</Link>
+            <div className={styles.boton}>
+              <Link href="/dashboard/users">Usuarios</Link>
             </div>
-            <div >
-              <Link href="/dashboard/payments">Payments</Link>
+            <div className={styles.boton}>
+              <Link href="/dashboard/payments">Pagos</Link>
             </div>
-            <div >
-              <Link href="/dashboard/publications">Publications</Link>
+            <div className={styles.boton}>
+              <Link href="/dashboard/publications">Publicaciones</Link>
             </div>
           </div>
         </div>
         {children}
+        </div>
       </body>
     </html>
   );
