@@ -55,6 +55,7 @@ const Cards = () => {
               name={tool.name}
               price={`${tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler}`}
               saleType={`${tool.price.alquiler > 0 ? "Arriendo" : "Venta"}`}
+              perDay={`${tool.price.alquiler > 0 ? "Por dia" : ""}`}
                           />
           </div>
         ))}

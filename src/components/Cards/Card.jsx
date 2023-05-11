@@ -1,29 +1,19 @@
 import React from 'react';
 import styles from './Card.module.css';
 
-const Card = ({ name, description, imageUrl, price, sale, rental, saleType }) => {
+const Card = ({ name, description, imageUrl, price, saleType, perDay }) => {
   return (
     <div className={`${styles.cardContainer} bg-white rounded-md p-4`}>
       <img src={imageUrl} alt={name} className={`${styles.cardImage} rounded-md`} />
       <div className={styles.cardContent}>
         <h2 className={styles.cardName}>{name}</h2>               
         <h2 className={styles.cardPrice}>
-        <span className={styles.cardPrice}> ${price} </span>
-        {rental > 0 ? (
-          <span className="text-sm text-gray-500">
-            Alquiler {rental} {rental === 1 ? 'día' : 'días'} {rental > 0 && sale > 0 && '|'}
-          </span>
-        ) : null}
-        {sale > 0 ? (
-          <span className="text-sm text-gray-500">
-            Venta {sale} {sale === 1 ? 'día' : 'días'}
-          </span>
-        ) : null}
-        {rental > 0 && <span className="text-sm text-gray-500">por día</span>}
-      </h2>
+        <span className={styles.cardPrice}> ${price} </span>        
+        </h2>
       </div>  
-      <div className={styles.saleType}>
-      <p className={saleType === 'Arriendo' ? 'text-yellow-500' : 'text-green-500'}>{saleType}</p> 
+      <div className={styles.saleTypeContent}>        
+      <p className={saleType === 'Arriendo' ? 'text-yellow-500' : 'text-green-500'}>{saleType}</p>
+      <p >{perDay}</p> 
       </div>     
     </div>
   );

@@ -41,8 +41,10 @@
     margin: 0;
   }
 
-  .saleType{       
+  .saleTypeContent{       
     padding: 4%;
+    display: flex;
+    justify-content: space-between;
   }
 
   
