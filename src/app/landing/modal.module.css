@@ -11,14 +11,14 @@
 .modalTitle{
     background-color: #F0960E;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 .modalButton{
     background-color: #F0960E;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 2rem;
     cursor: pointer;
     margin: 10px 10px;
 }

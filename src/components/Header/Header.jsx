@@ -2,13 +2,17 @@ import Link from "next/link";
 import styles from './Header.module.css';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa';
 import { usePathname } from "next/navigation";
+import Image from 'next/image';
+
 
 function Header() {
     const pathname = usePathname();
     return (
         <header className={styles.header}>
             <figure>
-                <h5>TOOLS MATCH</h5>
+                <Link href='/'>
+                    <Image src='/../public/images/logo/toolsMatch.jpg' alt='logo' width={70} height={70} />
+                </Link>
             </figure>
             <nav className={styles.nav}>
                 <ul className={styles.nav}>
