@@ -56,31 +56,25 @@ export default function FilterBar() {
 
   return (
     <AppProvider>
-      <div>
-        <SearchBar name={name} onNameChange={setName} />
-        <CategoryFilter
-          categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-        />
-        <RentFilter rent={rent} onRentChange={setRent} />
-        <SaleFilter sale={sale} onSaleChange={setSale} />
-        <div><button onClick={() => setSortBy('nameAsc')}>Ordenar A-Z</button></div>
-        <div><button onClick={() => setSortBy('nameDesc')}>Ordenar Z-A</button></div>
-        <div><button onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button></div>
-        <div><button onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button></div>
-        <div><button onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button></div>
-        <div><button onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button></div>
-        <div><button onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button></div>
-        <div><button onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button></div>
-        <ul>
-          {filteredTools.map((tool) => (
-            <li key={tool.name}>
-              {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día - {tool.rating} Jeffersons
-            </li>
-          ))}
-        </ul>
-      </div>
+      <div className="flex flex-col w-64 bg-gray-100">
+  <SearchBar name={name} onNameChange={setName} />
+  <CategoryFilter
+    categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
+    selectedCategory={selectedCategory}
+    onCategoryChange={setSelectedCategory}
+  />
+  <RentFilter rent={rent} onRentChange={setRent} />
+  <SaleFilter sale={sale} onSaleChange={setSale} />
+  <div className="py-2 px-4 bg-gray-200 font-medium">Ordenar por:</div>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameAsc')}>Nombre (A-Z)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameDesc')}>Nombre (Z-A)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button>
+</div>
     </AppProvider>
   );
 }
