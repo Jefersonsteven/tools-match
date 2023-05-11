@@ -4,7 +4,6 @@ import FilterBar from "@/components/Filter/FilterBar";
 function Home() {
     return (
         <div>
-            <Cards/>
             <FilterBar/>
         </div>
     );
