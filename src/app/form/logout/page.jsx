@@ -76,7 +76,7 @@ export default function Logout() {
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-
+        console.log(token);
         const user = result.user;
         const displayName = user.displayName;
         const email = user.email;
