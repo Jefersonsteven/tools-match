@@ -1,0 +1,34 @@
+/*--------------------NAVBAR--------------------*/
+.nabvarContainer{
+    display: flex;
+    background: #131713;
+    width: 100%;
+    height: 111px;
+    align-items: center;
+}
+.navbarLogo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    height: 50%;
+    color: yellow;
+    font-size: 1.5rem;
+}
+.navbarMenu{
+    display: flex;
+    gap: 20px;
+    color: #DCF1D9;
+    margin-inline-start: auto;
+    gap: 50px;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.navbarMenuLogin{
+    background: #21BF60;
+    height: 40px;
+    border-radius: 10px;
+    padding: 5px 25px;
+}
