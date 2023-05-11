@@ -11,6 +11,7 @@ datasource db {
 
 model User {
   id          String    @id @default(uuid())
+  photo       String?
   firstname   String
   lastname    String
   email       String    @unique
@@ -31,7 +32,7 @@ model Post {
   id        String   @id @default(uuid())
   title     String
   content   String
-  photo     String
+  photo     String[]
   category  String
   price     Float
   type      Type     @default(SALE)
