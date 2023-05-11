@@ -4,6 +4,7 @@ CREATE TYPE "Type" AS ENUM ('RENTAL', 'SALE');
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
+    "photo" TEXT,
     "firstname" TEXT NOT NULL,
     "lastname" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE "Post" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "content" TEXT NOT NULL,
-    "photo" TEXT NOT NULL,
+    "photo" TEXT[],
     "category" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
     "type" "Type" NOT NULL DEFAULT 'SALE',

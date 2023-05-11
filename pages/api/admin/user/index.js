@@ -4,6 +4,9 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const users = await prisma.user.findMany({
+        where: {
+          hidden: false,
+        },
         include: {
           posts: true,
           reviews: true,
