@@ -27,3 +27,6 @@ body {
   color: rgb(var(--foreground-rgb));
   background: var(--white);
 }
+ul li{
+  list-style: none;
+}
