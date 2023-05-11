@@ -26,6 +26,5 @@ export function validate(inputs) {
     errors.password = "Campo requerido";
   }
 
-  console.log(inputs);
   return errors;
 }

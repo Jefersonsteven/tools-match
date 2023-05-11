@@ -8,7 +8,7 @@ export function validate(inputs) {
     surname: "✔️",
     email: "Email válido ✔️",
     password: "Contraseña válida ✔️",
-    phoneNumber: "",
+    phoneNumber: "✔️",
     flag: false,
   };
 
@@ -24,8 +24,8 @@ export function validate(inputs) {
     errors.surname = "No se admiten números o caracteres especiales";
   }
 
-  if (!inputs.name) {
-    errors.name = "Campo requerido";
+  if (!inputs.surname) {
+    errors.surname = "Campo requerido";
   }
 
   if (!emailRegex.test(inputs.email)) {

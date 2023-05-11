@@ -2,11 +2,13 @@
 import Link from "next/link";
 import styles from "../form.module.css";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { validate } from "../assets/validateLogin";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
 
 export default function Login() {
+  const router = useRouter();
   const [viewPwd, setViewPwd] = useState(false);
 
   const [loginData, setLoginData] = useState({
@@ -28,8 +30,30 @@ export default function Login() {
     setErrors(validate(loginData));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      console.log("Entrando en try catch");
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: loginData.email,
+          password: loginData.password,
+        }),
+      };
+      const response = await fetch(
+        `http://localhost:3000/api/loginValidate?email=${loginData.email}&password=${loginData.password}`,
+        config
+      );
+
+      console.log(response);
+      router.push("/");
+    } catch (error) {
+      console.error("Error en la solicitud POST", error);
+    }
   };
 
   return (

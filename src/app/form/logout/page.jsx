@@ -3,9 +3,12 @@ import Link from "next/link";
 import styles from "../form.module.css";
 import { useState } from "react";
 import { validate } from "../assets/validateSignUp";
+import { useRouter } from "next/navigation";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
 export default function Logout() {
+  const router = useRouter();
+
   const [viewPwd, setViewPwd] = useState(false);
 
   const [registerData, setRegisterData] = useState({
@@ -33,8 +36,33 @@ export default function Logout() {
     setErrors(validate(registerData));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      console.log("Entrando en try catch");
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstname: registerData.name,
+          lastname: registerData.surname,
+          email: registerData.email,
+          password: registerData.password,
+          phoneNumber: registerData.phoneNumber,
+        }),
+      };
+      const response = await fetch(
+        "http://localhost:3000/api/registerUser",
+        config
+      );
+
+      console.log(response);
+      router.push("/form/login");
+    } catch (error) {
+      console.error("Error en la solicitud POST", error);
+    }
   };
 
   return (
