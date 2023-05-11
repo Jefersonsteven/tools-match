@@ -8,52 +8,23 @@ import Modal from "./modal";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [showNavbarMenu, setShowNavbarMenu] = useState(false);
 
   const handleOpenModal = () => {
     setModalOpen(true);
   };
 
-  const teamMembers = [
-    {
-      name: "Axel",
-      image: "Axel.jpg",
-    },
-    {
-      name: "Celes",
-      image: "Celeste.jpg",
-    },
-    {
-      name: "Ema",
-      image: "Emmanuel.jpg",
-    },
-    {
-      name: "Franco",
-      image: "Franco.jpg",
-    },
-    {
-      name: "Adri",
-      image: "Adriana.jpg",
-    },
-    {
-      name: "Jean",
-      image: "Jean.jpg",
-    },
-    {
-      name: "Yael",
-      image: "Yael.jpg",
-    },
-    {
-      name: "Jeffer",
-      image: "Jeffer.jpg",
-    },
-  ];
+  const toggleNavbarMenu = () => {
+    setShowNavbarMenu(!showNavbarMenu);
+  };
+
   return (
     <div className={style.landingPageContainer}>
       <header className={style.nabvarContainer}>
         <div className={style.navbarLogo}>
           <Link href="/home">
             <Image
-              src="/../public/images/logo/toolsMatch.jpg"
+              src="/images/logo/toolsMatch.jpg"
               alt="logo"
               width={100}
               height={100}
@@ -61,10 +32,13 @@ export default function LandingPage() {
           </Link>
         </div>
         <div className={style.navbarMenu}>
-          <Link href="/home">
-            <button>Home</button>
+          <div className={style.menuButton} onClick={toggleNavbarMenu}>
+            <i className="fas fa-bars"></i>
+          </div>
+          <Link href="/home">Home</Link>
+          <Link className={style.contact} href="">
+            Contacto
           </Link>
-          <button>Contacto</button>
           <Link href="form/login" className={style.navbarMenuLogin}>
             Iniciar Sesión
           </Link>
@@ -85,55 +59,65 @@ export default function LandingPage() {
             <br />
             Esto no solo ayuda a los vecinos a ahorrar dinero, sino que también
             fomenta una cultura de colaboración y compartición de recursos en la
-            comunidad. Si está buscando una forma práctica y segura de compartir
+            comunidad.
+            <br />
+            <br />
+            Si estás buscando una forma práctica y segura de compartir
             herramientas de construcción y otros equipos necesarios para el
-            hogar entre sus vecinos, y/ó realizar una excelente inversión
-            vendiendo sus herramientas usadas en buen estado o rentarlas,
-            ToolsMatch es una excelente opción.
+            hogar entre vecinos, y/ó realizar una excelente inversión vendiendo
+            sus herramientas usadas en buen estado o rentarlas.
+            <br />
+            <br />
+            <p className={style.toolsM}>
+              No esperes más en ToolsMatch es tu mejor opción.
+            </p>
           </h1>
+          <div className={style.mainGoHome}>
+            <Link href="/home">Ingresar Ahora</Link>
+          </div>
         </div>
       </main>
       <section className={style.sponsorsContainer}>
         <h2 className={style.sponsorsTitle}>Nuestros Patrocinadores</h2>
         <div className={style.sponsorsLogos}>
           <Image
-            src="/../public/images/sponsors/dewaltt.png"
+            src="/images/sponsors/dewaltt.png"
             alt="sponsors"
             width={200}
             height={200}
           />
           <Image
-            src="/../public/images/sponsors/bosch.png"
+            src="/images/sponsors/bosch.png"
             alt="sponsors"
             width={150}
             height={200}
           />
           <Image
-            src="/../public/images/sponsors/dremel.png"
+            src="/images/sponsors/dremel.png"
             alt="sponsors"
             width={200}
             height={200}
           />
           <Image
-            src="/../public/images/sponsors/karcher.png"
+            src="/images/sponsors/karcher.png"
             alt="sponsors"
             width={200}
             height={200}
           />
           <Image
-            src="/../public/images/sponsors/makita.png"
+            src="/images/sponsors/makita.png"
             alt="sponsors"
             width={200}
             height={200}
           />
           <Image
-            src="/../public/images/sponsors/stanley.png"
+            src="/images/sponsors/stanley.png"
             alt="sponsors"
             width={200}
             height={200}
           />
           <Image
-            src="/../public/images/sponsors/castellari.png"
+            src="/images/sponsors/castellari.png"
             alt="sponsors"
             width={230}
             height={200}
@@ -144,7 +128,7 @@ export default function LandingPage() {
         <div className={style.footerLogo}>
           <Link href="/home">
             <Image
-              src="/../public/images/logo/toolsMatch.jpg"
+              src="/images/logo/toolsMatch.jpg"
               alt="logo"
               width={70}
               height={70}
@@ -164,5 +148,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-// javascript:void(0)
