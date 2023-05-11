@@ -1,5 +1,4 @@
-import prisma from "../../../prisma/client";
-
+import prisma from "../../../../prisma/client";
 export default async function handler(req, res) {
   const { id } = req.query;
 
@@ -10,6 +9,7 @@ export default async function handler(req, res) {
           id: id,
         },
         include: {
+          author: true,
           post: true,
         },
       });
@@ -20,17 +20,17 @@ export default async function handler(req, res) {
       res.status(500).json({ message: "Error retrieving review" });
     }
   } else if (req.method === "PUT") {
-    const { title, content, rating } = req.body;
-
     try {
       const review = await prisma.review.update({
         where: {
           id: id,
         },
+        include: {
+          author: true,
+          post: true,
+        },
         data: {
-          title,
-          content,
-          rating,
+          ...req.body,
         },
       });
 

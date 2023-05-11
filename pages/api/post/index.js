@@ -1,16 +1,7 @@
 import prisma from "../../../prisma/client";
 
 export default async function handler(req, res) {
-  if (req.method === "GET") {
-    // Obtener todos los posts
-    const posts = await prisma.post.findMany({
-      include: {
-        author: true,
-        reviews: true,
-      },
-    });
-    res.status(200).json(posts);
-  } else if (req.method === "POST") {
+  if (req.method === "POST") {
     // Crear un nuevo post
     const { title, content, photo, category, price, type, authorId } = req.body;
     const post = await prisma.post.create({
