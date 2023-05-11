@@ -8,14 +8,14 @@ import { AppContext, AppProvider } from "@/context/AppContext";
 import { useContext } from 'react';
 
 const tools = [
-  { name: 'Martillo', category: 'Carpintería', rating: 4, price: { venta: 0, alquiler: 5 } },
-  { name: 'Sierra circular', category: 'Carpintería', rating: 5, price: { venta: 120, alquiler: 0 } },
-  { name: 'Taladro', category: 'Electricidad', rating: 4, price: { venta: 80, alquiler: 10 } },
-  { name: 'Amoladora', category: 'Electricidad', rating: 3, price: { venta: 90, alquiler: 0 } },
-  { name: 'Pala', category: 'Excavación', rating: 2, price: { venta: 30, alquiler: 3 } },
-  { name: 'Martillo perforador', category: 'Excavación', rating: 0, price: { venta: 150, alquiler: 20 } },
-  { name: 'Cortacésped', category: 'Jardinería', rating: 4, price: { venta: 0, alquiler: 30 } },
-  { name: 'Tijeras de podar', category: 'Jardinería', rating: 0, price: { venta: 0, alquiler: 5 } }
+  { name: 'Martillo', category: 'Carpintería', rating: 4, price: { venta: 0, alquiler: 5 }, imageUrl: 'https://example.com/martillo.jpg', description: 'Martillo de carpintería con mango de madera' },
+  { name: 'Sierra circular', category: 'Carpintería', rating: 5, price: { venta: 120, alquiler: 0 }, imageUrl: 'https://example.com/sierra-circular.jpg', description: 'Sierra circular profesional con hoja de 12 pulgadas' },
+  { name: 'Taladro', category: 'Electricidad', rating: 4, price: { venta: 80, alquiler: 10 }, imageUrl: 'https://example.com/taladro.jpg', description: 'Taladro de percusión con cable de 10 pies' },
+  { name: 'Amoladora', category: 'Electricidad', rating: 3, price: { venta: 90, alquiler: 0 }, imageUrl: 'https://example.com/amoladora.jpg', description: 'Amoladora angular de 4.5 pulgadas con velocidad variable' },
+  { name: 'Pala', category: 'Excavación', rating: 2, price: { venta: 30, alquiler: 3 }, imageUrl: 'https://example.com/pala.jpg', description: 'Pala cuadrada con mango de madera de 48 pulgadas' },
+  { name: 'Martillo perforador', category: 'Excavación', rating: 0, price: { venta: 150, alquiler: 20 }, imageUrl: 'https://example.com/martillo-perforador.jpg', description: 'Martillo perforador de alta potencia con mandril de 1/2 pulgada' },
+  { name: 'Cortacésped', category: 'Jardinería', rating: 4, price: { venta: 0, alquiler: 30 }, imageUrl: 'https://example.com/cortacesped.jpg', description: 'Cortacésped a gasolina de 21 pulgadas con tracción trasera' },
+  { name: 'Tijeras de podar', category: 'Jardinería', rating: 0, price: { venta: 0, alquiler: 5 }, imageUrl: 'https://example.com/tijeras-podar.jpg', description: 'Tijeras de podar de acero con mango ergonómico' }
 ];
 
 export default function FilterBar() {
@@ -56,23 +56,26 @@ export default function FilterBar() {
 
   return (
     <AppProvider>
-      <div>
-        <SearchBar name={name} onNameChange={setName} />
-        <CategoryFilter
-          categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-        />
-        <RentFilter rent={rent} onRentChange={setRent} />
-        <SaleFilter sale={sale} onSaleChange={setSale} />
-        <div><button onClick={() => setSortBy('nameAsc')}>Ordenar A-Z</button></div>
-        <div><button onClick={() => setSortBy('nameDesc')}>Ordenar Z-A</button></div>
-        <div><button onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button></div>
-        <div><button onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button></div>
-        <div><button onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button></div>
-        <div><button onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button></div>
-        <div><button onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button></div>
-        <div><button onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button></div>
+      <div className="flex flex-col w-64 bg-gray-100">
+  <SearchBar name={name} onNameChange={setName} />
+  <CategoryFilter
+    categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
+    selectedCategory={selectedCategory}
+    onCategoryChange={setSelectedCategory}
+  />
+  <RentFilter rent={rent} onRentChange={setRent} />
+  <SaleFilter sale={sale} onSaleChange={setSale} />
+  <div className="py-2 px-4 bg-gray-200 font-medium">Ordenar por:</div>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameAsc')}>Nombre (A-Z)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameDesc')}>Nombre (Z-A)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button>
+  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button>
+</div>
+{/* <div>
         <ul>
           {filteredTools.map((tool) => (
             <li key={tool.name}>
@@ -80,7 +83,7 @@ export default function FilterBar() {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </AppProvider>
   );
 }

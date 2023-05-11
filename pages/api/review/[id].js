@@ -10,7 +10,6 @@ export default async function handler(req, res) {
           id: id,
         },
         include: {
-          author: true,
           post: true,
         },
       });
@@ -21,7 +20,7 @@ export default async function handler(req, res) {
       res.status(500).json({ message: "Error retrieving review" });
     }
   } else if (req.method === "PUT") {
-    const { title, content, rating, hidden } = req.body;
+    const { title, content, rating } = req.body;
 
     try {
       const review = await prisma.review.update({
@@ -32,11 +31,6 @@ export default async function handler(req, res) {
           title,
           content,
           rating,
-          hidden,
-        },
-        include: {
-          author: true,
-          post: true,
         },
       });
 
