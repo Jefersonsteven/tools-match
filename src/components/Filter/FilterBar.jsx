@@ -63,9 +63,23 @@ export default function FilterBar() {
     selectedCategory={selectedCategory}
     onCategoryChange={setSelectedCategory}
   />
-  <RentFilter rent={rent} onRentChange={setRent} />
-  <SaleFilter sale={sale} onSaleChange={setSale} />
-  <div className="py-2 px-4 bg-gray-200 font-medium">Ordenar por:</div>
+  <div className="flex justify-between items-center py-2 px-4 bg-gray-200 font-medium">
+    {/* <div>Ordenar por:</div> */}
+    <div>
+      <button
+        className={`py-2 px-4 ${rent ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+        onClick={() => setRent(!rent)}
+      >
+        Arriendo
+      </button>
+      <button
+        className={`ml-2 py-2 px-4 ${sale ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+        onClick={() => setSale(!sale)}
+      >
+        Venta
+      </button>
+    </div>
+  </div>
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameAsc')}>Nombre (A-Z)</button>
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameDesc')}>Nombre (Z-A)</button>
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button>
@@ -75,6 +89,15 @@ export default function FilterBar() {
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button>
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button>
 </div>
+<div>
+        <ul>
+          {filteredTools.map((tool) => (
+            <li key={tool.name}>
+              {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día - {tool.rating} Jeffersons
+            </li>
+          ))}
+        </ul>
+      </div>
     </AppProvider>
   );
 }
