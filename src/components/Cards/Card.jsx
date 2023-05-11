@@ -21,8 +21,10 @@ const Card = ({ name, description, imageUrl, price, sale, rental, saleType }) =>
         ) : null}
         {rental > 0 && <span className="text-sm text-gray-500">por día</span>}
       </h2>
-      </div>
-      <div className={styles.saleType}>{saleType}</div>
+      </div>  
+      <div className={styles.saleType}>
+      <p className={saleType === 'Arriendo' ? 'text-yellow-500' : 'text-green-500'}>{saleType}</p> 
+      </div>     
     </div>
   );
 };

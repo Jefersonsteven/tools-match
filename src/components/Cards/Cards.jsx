@@ -54,11 +54,8 @@ const Cards = () => {
               imageUrl={tool.imageUrl}
               name={tool.name}
               price={`${tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler}`}
-              saleType={tool.price.alquiler > 0 ? "Arriendo" : "Venta"}
-            />
-            {/* <div className="p-4 pt-0">
-        <p className="text-gray-700">{tool.price.alquiler > 0 ? 'Arriendo' : 'Venta'}</p>
-      </div> */}
+              saleType={`${tool.price.alquiler > 0 ? "Arriendo" : "Venta"}`}
+                          />
           </div>
         ))}
       </div>
