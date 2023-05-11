@@ -20,10 +20,10 @@
     display: flex;
     gap: 20px;
     color: #DCF1D9;
-    /* margin: auto; */
     margin-inline-start: auto;
     gap: 50px;
     font-size: 2rem;
+    align-items: center;
 }
 
 .navbarMenuLogin{

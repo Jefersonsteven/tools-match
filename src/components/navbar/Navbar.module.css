@@ -22,6 +22,8 @@
     color: #DCF1D9;
     margin-inline-start: auto;
     gap: 50px;
+    align-items: center;
+    font-size: 2rem;
 }
 
 .navbarMenuLogin{

@@ -15,13 +15,12 @@ export default function Footer() {
         setModalOpen(true);
     };
 
-
     return (
         <div>
           <footer className={style.footer}>
                 <div className={style.footerLogo}>
                 <Link href='#'>
-                    <Image src='/../public/images-landing/toolsMatch.jpg' alt='logo' width={70} height={70}/>
+                    <Image src='/../public/images/logo/toolsMatch.jpg' alt='logo' width={70} height={70}/>
                     </Link>
                 </div>
                 <div className={style.footerRights}>

@@ -55,15 +55,15 @@ export default function LandingPage() {
         <div className={style.landingPageContainer}>
             <header className={style.nabvarContainer}>
                 <div className={style.navbarLogo}>
-                <Link href='#'>
-                    <Image src='/../public/images-landing/toolsMatch.jpg' alt='logo' width={100} height={100}/>
+                <Link href='/home'>
+                    <Image src='/../public/images/logo/toolsMatch.jpg' alt='logo' width={100} height={100}/>
                 </Link>
 
                 </div>
                 <div className={style.navbarMenu}>
-                    <button>Home</button>
+                <Link href='/home'><button>Home</button></Link>
                     <button>Contacto</button>
-                    <Link href='form/login' className={style.navbarMenuLogin}>Iniciar Sesión</Link>
+                <Link href='form/login' className={style.navbarMenuLogin}>Iniciar Sesión</Link>
                 </div>
             </header>
             <main className={style.mainInfo}>
@@ -86,19 +86,19 @@ export default function LandingPage() {
             <section className={style.sponsorsContainer}>
                     <h2 className={style.sponsorsTitle}>Nuestros Patrocinadores</h2>
                     <div className={style.sponsorsLogos}>
-                        <Image src='/../public/images-landing/bosch.jpg' alt='sponsors' width={200} height={200}/>
-                        <Image src='/../public/images-landing/dewalt.jpg' alt='sponsors' width={200} height={200}/>
-                        <Image src='/../public/images-landing/dremel.jpg' alt='sponsors' width={200} height={200}/>
-                        <Image src='/../public/images-landing/karcher.jpg' alt='sponsors' width={200} height={200}/>
-                        <Image src='/../public/images-landing/makita.jpg' alt='sponsors' width={200} height={200}/>
-                        <Image src='/../public/images-landing/stanley.jpg' alt='sponsors' width={200} height={200}/>
-                        <Image src='/../public/images-landing/castellari.jpg' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images/sponsors/dewaltt.png' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images/sponsors/bosch.png' alt='sponsors' width={150} height={200}/>
+                        <Image src='/../public/images/sponsors/dremel.png' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images/sponsors/karcher.png' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images/sponsors/makita.png' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images/sponsors/stanley.png' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images/sponsors/castellari.png' alt='sponsors' width={230} height={200}/>
                     </div>
             </section>
             <footer className={style.footer}>
                 <div className={style.footerLogo}>
-                <Link href='#'>
-                    <Image src='/../public/images-landing/toolsMatch.jpg' alt='logo' width={70} height={70}/>
+                <Link href='/home'>
+                    <Image src='/../public/images/logo/toolsMatch.jpg' alt='logo' width={70} height={70}/>
                     </Link>
                 </div>
                 <div className={style.footerRights}>
@@ -106,7 +106,6 @@ export default function LandingPage() {
                 </div>
                 <div className={style.footerTerms}>
                     <Link href="#" onClick={handleOpenModal}>Términos y Condiciones</Link>
-                    {/* TODO:  Change*/}
                 </div>
                 {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
             </footer>

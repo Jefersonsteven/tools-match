@@ -10,7 +10,7 @@ export default function Navbar() {
         <header className={style.nabvarContainer}>
                 <div className={style.navbarLogo}>
                 <Link href='#'>
-                    <Image src='/../public/images-landing/toolsMatch.jpg' alt='logo' width={100} height={100}/>
+                    <Image src='/../public/images/logo/toolsMatch.jpg' alt='logo' width={100} height={100}/>
                 </Link>
 
                 </div>
