@@ -25,27 +25,18 @@ function AppProvider({ children }) {
     })
 
 
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [rent, setRent] = useState('');
-    const [sale, setSale] = useState(false);
-    const [sortBy, setSortBy] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');    
     const [name, setName] = useState('');
-    const [cards, setCards] = useState([]);    
+    const [cards, setCards] = useState([]);   
 
     return (
-        <AppContext.Provider value={{
+        <AppContext.Provider value={{            
             postDetail,
             setPostDetail,
             cards,
             setCards,
             selectedCategory,
             setSelectedCategory,
-            rent,
-            setRent,
-            sale,
-            setSale,
-            sortBy,
-            setSortBy,
             name,
             setName,
             userId,
