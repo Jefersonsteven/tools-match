@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useContext, useEffect } from "react";
 import styles from "./post.module.css";
+import { IoCaretBack } from "react-icons/io5";
+import Link from "next/link";
 
 function PostDetail({ }) {
     const { postId } = useParams();
@@ -32,75 +34,80 @@ function PostDetail({ }) {
     }, [setPostDetail])
 
     return (
-        <main className={styles.main}>
-            {postDetail.author !== undefined &&
-                <>
-                    <section className={styles.section_images}>
-                        <figure className={styles.figure}>
-                            <Image
-                                className={styles.image_first}
-                                src={pd?.images[0]}
-                                width={442}
-                                height={400}
-                                alt={pd.title}
-                                priority
-                            />
-                        </figure>
-                        <div>
-                            <figure className={styles.images}>
-                                {pd.images.map((img, index) => (
-                                    <Image
-                                        className={styles.image_others}
-                                        key={index}
-                                        src={img}
-                                        width={92}
-                                        height={81}
-                                        alt={pd.title}
-                                    />
-                                ))
-                                }
-                            </figure>
-                        </div>
-                    </section>
-                    <section className={styles.section_description}>
-                        <div className={styles.description_title}>
-                            <h2>{pd.title}</h2>
-                            <div>
-                                {pd.type === 'SALE' && <h3>${pd.price}</h3>}
-                                {pd.type === 'LEASE' && <h3>${pd.pricePerDay}</h3>}
-                                { }
-                            </div>
-                        </div>
-                        <p>{pd.description}</p>
-                        <div className={styles.description_categories}>
-                            <h5>Categorias:</h5>
-                            <p>{pd.categories.join(', ')}</p>
-                        </div>
-                    </section>
-                    <section className={styles.section_user}>
-                        <div>
-                            <figure>
+        <div className={styles.main_container}>
+            <Link className={styles.back} href="/home">
+                <IoCaretBack size={50} color="var(--white)" />
+            </Link>
+            <main className={styles.main}>
+                {postDetail.author !== undefined &&
+                    <>
+                        <section className={styles.section_images}>
+                            <figure className={styles.figure}>
                                 <Image
-                                    src={pd.images[0]}
-                                    width={96}
-                                    height={96}
-                                    alt={pd.author.username}
+                                    className={styles.image_first}
+                                    src={pd?.images[0]}
+                                    width={442}
+                                    height={400}
+                                    alt={pd.title}
+                                    priority
                                 />
                             </figure>
-                            <div className={styles.user_info}>
-                                <h5>@{pd.author.username}</h5>
-                                <h5>⭐{pd.author.rating}.0</h5>
+                            <div>
+                                <figure className={styles.images}>
+                                    {pd.images.map((img, index) => (
+                                        <Image
+                                            className={styles.image_others}
+                                            key={index}
+                                            src={img}
+                                            width={92}
+                                            height={81}
+                                            alt={pd.title}
+                                        />
+                                    ))
+                                    }
+                                </figure>
                             </div>
-                        </div>
-                    </section>
-                    <section className={styles.section_button}>
-                        {userId === pd.author.id && <button>Eliminar</button>}
-                        {userId !== pd.author.id && pd.type === 'SALE' && <button>Comprar</button>}
-                        {userId !== pd.author.id && pd.type === 'LEASE' && <button>Arrendar</button>}
-                    </section>
-                </>
-            }
-        </main>
+                        </section>
+                        <section className={styles.section_description}>
+                            <div className={styles.description_title}>
+                                <h2>{pd.title}</h2>
+                                <div>
+                                    {pd.type === 'SALE' && <h3>${pd.price}</h3>}
+                                    {pd.type === 'LEASE' && <h3>${pd.pricePerDay}</h3>}
+                                    { }
+                                </div>
+                            </div>
+                            <p>{pd.description}</p>
+                            <div className={styles.description_categories}>
+                                <h5>Categorias:</h5>
+                                <p>{pd.categories.join(', ')}</p>
+                            </div>
+                        </section>
+                        <section className={styles.section_user}>
+                            <div>
+                                <figure>
+                                    <Image
+                                        src={pd.images[0]}
+                                        width={96}
+                                        height={96}
+                                        alt={pd.author.username}
+                                    />
+                                </figure>
+                                <div className={styles.user_info}>
+                                    <h5><b>{pd.type === 'SALE' ? 'Vendedor: ' : 'Arrendador'}</b>@{pd.author.username}</h5>
+                                    <h5>⭐{pd.author.rating}.0</h5>
+                                </div>
+                            </div>
+                        </section>
+                        <section className={styles.section_button}>
+                            {userId === pd.author.id && <button>Eliminar</button>}
+                            {userId !== pd.author.id && pd.type === 'SALE' && <button>Comprar</button>}
+                            {userId !== pd.author.id && pd.type === 'LEASE' && <button>Arrendar</button>}
+                        </section>
+                    </>
+                }
+            </main>
+        </div>
     );
 }
 

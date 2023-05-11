@@ -39,3 +39,8 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+
+.home {
+    display: flex;
+}

@@ -53,6 +53,7 @@
 
 .description_title {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -60,13 +61,13 @@
     font-size: 4.8rem;
     text-transform: capitalize;
     font-weight: bold;
-    width: 50%;
     line-height: 5.8rem;
 }
 
 .description_title h3 {
-    font-size: 4.8rem;
+    font-size: 3.8rem;
     font-weight: bold;
+    color: var(--black-light);
 }
 
 .section_description > p {
@@ -154,4 +155,17 @@
 
 .section_button button:hover {
     background-color: var(--black);
+}
+
+.back {
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    background-color: var(--orange);
+    border-radius: 20px;
+    margin: 50px 0px 0 50px;
+}
+
+.main_container {
+    display: flex;
 }
