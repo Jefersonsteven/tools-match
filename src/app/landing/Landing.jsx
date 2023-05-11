@@ -1,10 +1,11 @@
 "use client";
 
-import style from './page.module.css';
+import style from './landing.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import Modal from "./modal";
+
 
 export default function LandingPage() {
 
@@ -60,7 +61,7 @@ export default function LandingPage() {
 
                 </div>
                 <div className={style.navbarMenu}>
-                    <button>Publicaciones</button>
+                    <button>Home</button>
                     <button>Contacto</button>
                     <Link href='form/login' className={style.navbarMenuLogin}>Iniciar Sesión</Link>
                 </div>
@@ -68,21 +69,54 @@ export default function LandingPage() {
             <main className={style.mainInfo}>
                 <div className={style.mainInfoApp}>
                     <h1> ToolsMatch es una aplicación innovadora que se centra en satisfacer
-                        las necesidades de las comunidades en cuanto a la compra y el arriendo
-                        de herramientas. Ofrecemos una solución práctica para aquellos que buscan
+                        las necesidades de la Comunidad para la compra y el arriendo
+                        de herramientas usadas. 
+                        <br/><br/>
+                        Ofrecemos una solución práctica para aquellos que buscan
                         compartir recursos y ahorrar dinero en la compra de herramientas costosas.
+                        <br/><br/>
                         Esto no solo ayuda a los vecinos a ahorrar dinero, sino que también fomenta
                         una cultura de colaboración y compartición de recursos en la comunidad.
-                        Si está buscando una forma práctica y segura de compartir herramientas con
-                        sus vecinos, ToolsMatch es una excelente opción.</h1>
+                        Si está buscando una forma práctica y segura de compartir herramientas  de 
+                        construcción y otros equipos necesarios para el hogar entre sus vecinos, y/ó
+                        realizar una excelente inversión vendiendo sus herramientas usadas en buen estado
+                        o rentarlas, ToolsMatch es una excelente opción.</h1>
                 </div>
             </main>
             <section className={style.sponsorsContainer}>
-                <div className={style.infoTitle}>
-
-                </div>
+                    <h2 className={style.sponsorsTitle}>Nuestros Patrocinadores</h2>
+                    <div className={style.sponsorsLogos}>
+                        <Image src='/../public/images-landing/bosch.jpg' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images-landing/dewalt.jpg' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images-landing/dremel.jpg' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images-landing/karcher.jpg' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images-landing/makita.jpg' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images-landing/stanley.jpg' alt='sponsors' width={200} height={200}/>
+                        <Image src='/../public/images-landing/castellari.jpg' alt='sponsors' width={200} height={200}/>
+                    </div>
             </section>
-            {/* <section className={style.teamContainer}>
+            <footer className={style.footer}>
+                <div className={style.footerLogo}>
+                <Link href='#'>
+                    <Image src='/../public/images-landing/toolsMatch.jpg' alt='logo' width={70} height={70}/>
+                    </Link>
+                </div>
+                <div className={style.footerRights}>
+                    <p>Copyright - ToolsMatch</p>
+                </div>
+                <div className={style.footerTerms}>
+                    <Link href="#" onClick={handleOpenModal}>Términos y Condiciones</Link>
+                    {/* TODO:  Change*/}
+                </div>
+                {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
+            </footer>
+        </div>
+    )
+}
+
+
+// javascript:void(0)
+   {/* <section className={style.teamContainer}>
                 <div className={style.infoTeam}>
                     <p className={style.teamTitle}>EQUIPO</p>
                     <p className={style.teamSubTitle}>Somos un equipo de colaboradores detrás de ToolsMatch demostrando un alto
@@ -113,22 +147,3 @@ export default function LandingPage() {
                     ))}
                 </div>
             </section> */}
-            <footer className={style.footer}>
-                <div className={style.footerLogo}>
-                <Link href='#'>
-                    <Image src='/../public/images-landing/toolsMatch.jpg' alt='logo' width={70} height={70}/>
-                    </Link>
-                </div>
-                <div className={style.footerRights}>
-                    <p>Copyright - ToolsMatch</p>
-                </div>
-                <div className={style.footerTerms}>
-                    <Link href="javascript:void(0)" onClick={handleOpenModal}>Términos y Condiciones</Link>
-                    {/* TODO:  Change*/}
-                </div>
-                {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
-            </footer>
-        </div>
-    )
-}
-
