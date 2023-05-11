@@ -14,16 +14,17 @@ const tools = [
 
 const Cards = () => {
   return (
-    <div>
-      <h1>Herramientas</h1>
-      <div style={{ display: 'flex', gap: '16px' }}>
+    <div className="p-4">
+      <h1 className="text-3xl font-bold mb-4">Herramientas</h1>
+      <div className="grid grid-cols-4 gap-4">
         {tools.map(tool => (
-          <Card
-            key={tool.title}
-            title={tool.title}
-            description={tool.description}
-            imageUrl={tool.imageUrl}
-          />
+          <div className="w-full" key={tool.title}>
+            <Card
+              title={tool.title}
+              description={tool.description}
+              imageUrl={tool.imageUrl}
+            />
+          </div>
         ))}
       </div>
     </div>
