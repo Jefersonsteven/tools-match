@@ -35,8 +35,6 @@
 
 
 
-
-
 /*--------------------MAIN APP--------------------*/
 
 .mainInfo{
@@ -82,7 +80,6 @@
     margin-top: 60px;
     gap: 10rem;
 }
-
 
   /*--------------------MAIN TEAM RESPONSIVE--------------------*/
   @media screen and (min-width: 1200px) {
