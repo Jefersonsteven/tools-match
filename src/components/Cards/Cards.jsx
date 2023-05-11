@@ -21,20 +21,44 @@ const tools = [
 //   { name: 'Cortacésped', category: 'Jardinería', rating: 4, price: { venta: 0, alquiler: 30 }, description: 'Cortacésped eléctrico de 12 amperios con bolsa recolectora' }
 // ];
 
+// const Cards = () => {
+//   return (
+//     <div className="p-4">
+//       {/* <h1 className="text-3xl font-bold mb-4">Herramientas</h1> */}
+//       <div className="grid grid-cols-4 gap-4">
+//         {tools.map(tool => (
+//           <div className="w-full" key={tool.name}>
+//             <Card
+//               // description={tool.description}
+//               imageUrl={tool.imageUrl}
+//               name={tool.name}
+//               price={tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler + ' por dia'}
+              
+//             />
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Cards;
+
 const Cards = () => {
   return (
     <div className="p-4">
-      {/* <h1 className="text-3xl font-bold mb-4">Herramientas</h1> */}
       <div className="grid grid-cols-4 gap-4">
         {tools.map(tool => (
           <div className="w-full" key={tool.name}>
             <Card
-              // description={tool.description}
               imageUrl={tool.imageUrl}
               name={tool.name}
-              price={tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler + ' por dia'}
-              
+              price={`${tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler}`}
+              saleType={tool.price.alquiler > 0 ? "Arriendo" : "Venta"}
             />
+            {/* <div className="p-4 pt-0">
+        <p className="text-gray-700">{tool.price.alquiler > 0 ? 'Arriendo' : 'Venta'}</p>
+      </div> */}
           </div>
         ))}
       </div>

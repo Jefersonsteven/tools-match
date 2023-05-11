@@ -40,3 +40,9 @@
   .cardDescription {
     margin: 0;
   }
+
+  .saleType{
+    color: rgb(250, 170, 21); 
+    font-weight:bold;
+    padding: 4%;
+  }
