@@ -1,8 +1,11 @@
 import React from 'react';
+import { AppContext, AppProvider } from "@/context/AppContext";
+import { useContext } from 'react';
 
 
 export default function CategoryFilter({ categories, selectedCategory, onCategoryChange }) {
   return (
+    <AppProvider>
     <div>
       <label htmlFor="category">Categoria:</label>
       <select
@@ -18,5 +21,6 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
         ))}
       </select>
     </div>
+    </AppProvider>
   );
 }

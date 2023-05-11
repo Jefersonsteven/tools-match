@@ -1,31 +1,27 @@
 import Cards from "@/components/Cards/Cards";
-import FilterBar from "@/components/Filter/FilterBar";
+import FilterBarDevelop from "@/components/Filter/FilterBarDevelop";
 import SearchBarconCSS from "@/components/SearchBar/SearchBarconCSS";
+import { AppContext, AppProvider } from "@/context/AppContext";
+import { useContext } from 'react';
 
 function Home() {
-<<<<<<< HEAD
     return (
-        <div>
-        <div>
+      <AppProvider>
+      <div className="flex flex-col h-screen">
+        <div className="flex-none">
           <SearchBarconCSS/>
         </div>
-        <div>
-            <FilterBar/>
+        <div className="flex flex-1">
+          <div className="w-1/4">
+            <FilterBarDevelop/>            
+          </div>
+          <div className="w-3/4">
+            <Cards/>
+          </div>
         </div>
-        </div>
+      </div>
+      </AppProvider>
     );
-=======
-  return (
-    <div className="flex">
-      <div className="w-1/4">
-        <FilterBar/>            
-      </div>
-      <div className="w-3/4">
-        <Cards/>
-      </div>
-    </div>
-  );
->>>>>>> f8e16c68b4e4e28395afb5ba8e059582b17f6b2c
-}
-
-export default Home;
+  }
+  
+  export default Home;

@@ -1,5 +1,5 @@
-import React from 'react';
 import styles from './Card.module.css';
+import React from 'react';
 
 const Card = ({ name, description, imageUrl, price, saleType, perDay }) => {
   return (
@@ -8,8 +8,9 @@ const Card = ({ name, description, imageUrl, price, saleType, perDay }) => {
       <div className={styles.cardContent}>
         <h2 className={styles.cardName}>{name}</h2>               
         <h2 className={styles.cardPrice}>
-        <span className={styles.cardPrice}> ${price} </span>        
-        </h2>
+  <span className={styles.cardPriceValue}>${price.venta}</span>
+  {price.alquiler > 0 && <span className={styles.cardPriceType}>/día</span>}
+</h2>
       </div>  
       <div className={styles.saleTypeContent}>        
       <p className={saleType === 'Arriendo' ? 'text-yellow-500' : 'text-green-500'}>{saleType}</p>

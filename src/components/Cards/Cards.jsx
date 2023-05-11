@@ -1,4 +1,7 @@
-import Card from './Card.jsx';
+"use client"
+import Card from './Card';
+import { AppContext, AppProvider } from "@/context/AppContext";
+import { useContext } from 'react';
 
 const tools = [
   { name: 'Martillo', category: 'Carpintería', rating: 4, price: { venta: 0, alquiler: 5 }, imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6RE25sL7PPH-WQsGEqThwl_pnSf04ZHsCQtL1C5fjRyk9Stp7GZaC6PbI_GtfHS2hGS8&usqp=CAU', description: 'Martillo de carpintería con mango de madera' },
@@ -21,33 +24,12 @@ const tools = [
 //   { name: 'Cortacésped', category: 'Jardinería', rating: 4, price: { venta: 0, alquiler: 30 }, description: 'Cortacésped eléctrico de 12 amperios con bolsa recolectora' }
 // ];
 
-// const Cards = () => {
-//   return (
-//     <div className="p-4">
-//       {/* <h1 className="text-3xl font-bold mb-4">Herramientas</h1> */}
-//       <div className="grid grid-cols-4 gap-4">
-//         {tools.map(tool => (
-//           <div className="w-full" key={tool.name}>
-//             <Card
-//               // description={tool.description}
-//               imageUrl={tool.imageUrl}
-//               name={tool.name}
-//               price={tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler + ' por dia'}
-              
-//             />
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Cards;
-
-const Cards = () => {
+const Cards = (tool) => {
+  const { Cards } = useContext(AppContext);
   return (
+    <AppProvider>
     <div className="p-4">
-      <div className="grid grid-cols-4 gap-4">
+      {/* <div className="grid grid-cols-4 gap-4">
         {tools.map(tool => (
           <div className="w-full" key={tool.name}>
             <Card
@@ -59,8 +41,9 @@ const Cards = () => {
                           />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
+    </AppProvider>
   );
 };
 

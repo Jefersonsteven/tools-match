@@ -30,11 +30,14 @@ function AppProvider({ children }) {
     const [sale, setSale] = useState(false);
     const [sortBy, setSortBy] = useState('');
     const [name, setName] = useState('');
+    const [cards, setCards] = useState([]);    
 
     return (
         <AppContext.Provider value={{
             postDetail,
             setPostDetail,
+            cards,
+            setCards,
             selectedCategory,
             setSelectedCategory,
             rent,
