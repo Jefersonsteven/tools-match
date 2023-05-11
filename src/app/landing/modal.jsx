@@ -3,12 +3,10 @@ import style from "./modal.module.css";
 const Modal = ({ onClose }) => {
   return (
     <div className={style.modalContainer}>
-      <div className={style.modal}>
+      <div id="terms-and-conditions" className={style.modal}>
         <h2 className={style.modalTitle}>Términos y condiciones</h2>
         <p>Al utilizar la aplicación ToolsMatch, aceptas los siguientes términos y condiciones: 
-
           <br/>
-
             <b>1-</b> Acceso y uso de la aplicación
             El acceso y uso de la aplicación está sujeto a los términos y condiciones descritos en este documento. 
             Al acceder y utilizar la aplicación, aceptas estos términos y condiciones en su totalidad. Si no estás 

@@ -8,14 +8,14 @@ import { AppContext, AppProvider } from "@/context/AppContext";
 import { useContext } from 'react';
 
 const tools = [
-  { name: 'Martillo', category: 'Carpintería', rating: 4, price: { venta: 0, alquiler: 5 } },
-  { name: 'Sierra circular', category: 'Carpintería', rating: 5, price: { venta: 120, alquiler: 0 } },
-  { name: 'Taladro', category: 'Electricidad', rating: 4, price: { venta: 80, alquiler: 10 } },
-  { name: 'Amoladora', category: 'Electricidad', rating: 3, price: { venta: 90, alquiler: 0 } },
-  { name: 'Pala', category: 'Excavación', rating: 2, price: { venta: 30, alquiler: 3 } },
-  { name: 'Martillo perforador', category: 'Excavación', rating: 0, price: { venta: 150, alquiler: 20 } },
-  { name: 'Cortacésped', category: 'Jardinería', rating: 4, price: { venta: 0, alquiler: 30 } },
-  { name: 'Tijeras de podar', category: 'Jardinería', rating: 0, price: { venta: 0, alquiler: 5 } }
+  { name: 'Martillo', category: 'Carpintería', rating: 4, price: { venta: 0, alquiler: 5 }, imageUrl: 'https://example.com/martillo.jpg', description: 'Martillo de carpintería con mango de madera' },
+  { name: 'Sierra circular', category: 'Carpintería', rating: 5, price: { venta: 120, alquiler: 0 }, imageUrl: 'https://example.com/sierra-circular.jpg', description: 'Sierra circular profesional con hoja de 12 pulgadas' },
+  { name: 'Taladro', category: 'Electricidad', rating: 4, price: { venta: 80, alquiler: 10 }, imageUrl: 'https://example.com/taladro.jpg', description: 'Taladro de percusión con cable de 10 pies' },
+  { name: 'Amoladora', category: 'Electricidad', rating: 3, price: { venta: 90, alquiler: 0 }, imageUrl: 'https://example.com/amoladora.jpg', description: 'Amoladora angular de 4.5 pulgadas con velocidad variable' },
+  { name: 'Pala', category: 'Excavación', rating: 2, price: { venta: 30, alquiler: 3 }, imageUrl: 'https://example.com/pala.jpg', description: 'Pala cuadrada con mango de madera de 48 pulgadas' },
+  { name: 'Martillo perforador', category: 'Excavación', rating: 0, price: { venta: 150, alquiler: 20 }, imageUrl: 'https://example.com/martillo-perforador.jpg', description: 'Martillo perforador de alta potencia con mandril de 1/2 pulgada' },
+  { name: 'Cortacésped', category: 'Jardinería', rating: 4, price: { venta: 0, alquiler: 30 }, imageUrl: 'https://example.com/cortacesped.jpg', description: 'Cortacésped a gasolina de 21 pulgadas con tracción trasera' },
+  { name: 'Tijeras de podar', category: 'Jardinería', rating: 0, price: { venta: 0, alquiler: 5 }, imageUrl: 'https://example.com/tijeras-podar.jpg', description: 'Tijeras de podar de acero con mango ergonómico' }
 ];
 
 export default function FilterBar() {
@@ -63,6 +63,7 @@ export default function FilterBar() {
     selectedCategory={selectedCategory}
     onCategoryChange={setSelectedCategory}
   />
+<<<<<<< HEAD
   <div className="flex justify-between items-center py-2 px-4 bg-gray-200 font-medium">
     {/* <div>Ordenar por:</div> */}
     <div>
@@ -80,6 +81,11 @@ export default function FilterBar() {
       </button>
     </div>
   </div>
+=======
+  <RentFilter rent={rent} onRentChange={setRent} />
+  <SaleFilter sale={sale} onSaleChange={setSale} />
+  <div className="py-2 px-4 bg-gray-200 font-medium">Ordenar por:</div>
+>>>>>>> f8e16c68b4e4e28395afb5ba8e059582b17f6b2c
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameAsc')}>Nombre (A-Z)</button>
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameDesc')}>Nombre (Z-A)</button>
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button>
@@ -89,7 +95,11 @@ export default function FilterBar() {
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button>
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button>
 </div>
+<<<<<<< HEAD
 <div>
+=======
+{/* <div>
+>>>>>>> f8e16c68b4e4e28395afb5ba8e059582b17f6b2c
         <ul>
           {filteredTools.map((tool) => (
             <li key={tool.name}>
@@ -97,7 +107,7 @@ export default function FilterBar() {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </AppProvider>
   );
 }
