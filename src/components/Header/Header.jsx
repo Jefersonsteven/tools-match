@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import styles from "./Header.module.css";
 import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
@@ -32,17 +34,20 @@ function Header() {
                 </Link>
               </li>
               <li>
-                {pathname !== "/" && <Link href="/crear-publicaciones">Crear Publicaciones</Link>}
+                {pathname !== "/" && (
+                  <Link href="/crear-publicaciones">Crear Publicaciones</Link>
+                )}
               </li>
             </ul>
 
-            {pathname !== "/" &&
+            {pathname !== "/" && (
               <div className={styles.nav}>
                 <FaUserCircle color="white" />
-                <Link href="/team">
+                <Link href="/cart">
                   <FaShoppingCart color="white" />
                 </Link>
-              </div>}
+              </div>
+            )}
           </>
         ) : (
           <ul className={styles.home}>
