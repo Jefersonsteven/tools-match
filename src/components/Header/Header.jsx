@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import styles from "./Header.module.css";
 import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+import { AppContext } from "@/context/AppContext";
+import { useContext } from "react";
+
 function Header() {
   const pathname = usePathname();
+
+  const { userSession } = useContext(AppContext);
 
   return (
     <header className={styles.header}>
@@ -32,17 +39,27 @@ function Header() {
                 </Link>
               </li>
               <li>
-                {pathname !== "/" && <Link href="/crear-publicaciones">Crear Publicaciones</Link>}
+                {pathname !== "/" && (
+                  <Link
+                    href={userSession ? "/crear-publicaciones" : "/form/login"}
+                  >
+                    Crear Publicaciones
+                  </Link>
+                )}
               </li>
             </ul>
 
-            {pathname !== "/" &&
+            {pathname !== "/" && (
               <div className={styles.nav}>
-                <FaUserCircle color="white" />
+                <Link href={userSession ? "/" : "/form/login"}>
+                  <FaUserCircle color="white" />
+                </Link>
+
                 <Link href="/team">
                   <FaShoppingCart color="white" />
                 </Link>
-              </div>}
+              </div>
+            )}
           </>
         ) : (
           <ul className={styles.home}>
