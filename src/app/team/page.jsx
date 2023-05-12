@@ -1,39 +1,40 @@
 import style from "./Team.module.css";
 import Image from "next/image";
+import Footer from "../../components/footer/Footer";
 
 export default function Team() {
   const team = [
     {
       name: "Axel",
-      image: "Axel.jpg",
+      image: "Axel.png",
     },
     {
-      name: "Celes",
-      image: "Celeste.jpg",
+      name: "Celeste",
+      image: "Celeste.png",
     },
     {
-      name: "Ema",
-      image: "Emanuel.jpg",
+      name: "Emmanuel",
+      image: "Emmanuel.png",
     },
     {
       name: "Franco",
-      image: "Franco.jpg",
+      image: "Franco.png",
     },
     {
-      name: "Adri",
-      image: "Adriana.jpg",
+      name: "Adriana",
+      image: "Adriana.png",
     },
     {
       name: "Jean",
-      image: "Jean.jpg",
+      image: "Jean.png",
     },
     {
       name: "Yael",
-      image: "Yael.jpg",
+      image: "Yael.png",
     },
     {
-      name: "Jeffer",
-      image: "Jeffer.jpg",
+      name: "Jefferson",
+      image: "Jefferson.png",
     },
   ];
 
@@ -84,6 +85,7 @@ export default function Team() {
           ))}
         </div>
       </section>
+      <Footer />
     </div>
   );
 }
