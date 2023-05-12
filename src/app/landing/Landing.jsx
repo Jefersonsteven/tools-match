@@ -34,7 +34,6 @@ export default function LandingPage() {
       <main className={style.mainInfo}>
         <div className={style.mainInfoApp}>
           <h1>
-            {" "}
             ToolsMatch es una aplicación innovadora que se centra en satisfacer
             las necesidades de la Comunidad para la compra y el arriendo de
             herramientas usadas.
