@@ -6,12 +6,14 @@ import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Link from "next/link";
+import Footer from "../../components/footer/Footer";
 
 export default function Page() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showVenta, setShowVenta] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const [showCards, setShowCards] = useState(true);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -46,26 +48,30 @@ export default function Page() {
     setTotal(sum);
   }, [cartItems]);
 
-  const handleDelete = (index) => {
-    const newCartItems = [...cart];
-    const cartItem = newCartItems[index];
-
-    // Resta 1 a la cantidad del cartItem eliminado
-    cartItem.quantity -= 1;
-
-    // Si la cantidad es cero, elimina el cartItem del carrito
-    if (cartItem.quantity === 0) {
-      newCartItems.splice(index, 1);
-    }
-
-    // Actualiza el estado del carrito y recalcula el total
-    setCart(newCartItems);
-    const newTotal = newCartItems.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
-    setTotal(newTotal);
+  const handleCloseCards = (showCards, setShowCards) => {
+    setShowCards(false);
   };
+
+  // const handleDelete = (index) => {
+  //   const newCartItems = [...cart];
+  //   const cartItem = newCartItems[index];
+
+  //   // Resta 1 a la cantidad del cartItem eliminado
+  //   cartItem.quantity -= 1;
+
+  //   // Si la cantidad es cero, elimina el cartItem del carrito
+  //   if (cartItem.quantity === 0) {
+  //     newCartItems.splice(index, 1);
+  //   }
+
+  //   // Actualiza el estado del carrito y recalcula el total
+  //   setCart(newCartItems);
+  //   const newTotal = newCartItems.reduce(
+  //     (acc, item) => acc + item.price * item.quantity,
+  //     0
+  //   );
+  //   setTotal(newTotal);
+  // };
 
   const tools = [
     {
@@ -142,12 +148,14 @@ export default function Page() {
           ))}
         </div>
         <div className={style.cartList2}>
-          <h2 className={style.cartTitle2}>TOTAL: ${total}</h2>
+          <h2 className={style.cartTitle2}>
+            TOTAL: <span className={style.cartTotal}>${total}</span>
+          </h2>
           {cartItems.map((cartItem, index) => (
             <div className={style.cardCart2} key={index}>
               <button
                 className={style.cardDelete}
-                onClick={() => handleDelete(index)}
+                onClick={() => handleCloseCards(showCards, setShowCards)}
               >
                 x
               </button>
@@ -167,6 +175,7 @@ export default function Page() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
