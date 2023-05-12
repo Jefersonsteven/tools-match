@@ -3,17 +3,20 @@ import { AppContext, AppProvider } from "@/context/AppContext";
 import { useContext } from 'react';
 
 
-export default function CategoryFilter({ categories, selectedCategory, onCategoryChange }) {
+export default function CategoryFilter({ handleFilter, categories, selectedCategory, onCategoryChange }) {
   return (
-    <AppProvider>
     <div>
       <label htmlFor="category">Categoria:</label>
       <select
         id="category"
         value={selectedCategory}
-        onChange={(e) => onCategoryChange(e.target.value)}
+        onChange={(event) => {
+          const value = event.target.value;
+          onCategoryChange(value)
+          handleFilter(null, value)
+        }}
       >
-        <option value="">Todas</option>
+        <option value="Todas">Todas</option>
         {categories.map((category) => (
           <option key={category} value={category}>
             {category}
@@ -21,6 +24,5 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
         ))}
       </select>
     </div>
-    </AppProvider>
   );
 }
