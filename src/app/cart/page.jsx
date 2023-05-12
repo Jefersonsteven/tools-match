@@ -11,9 +11,13 @@ import Footer from "../../components/footer/Footer";
 export default function Page() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showVenta, setShowVenta] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [showCards, setShowCards] = useState(true);
+
+  const [cartItems, setCartItems] = useState(() => {
+    const items = localStorage.getItem("cartItems");
+    return items ? JSON.parse(items) : [];
+  });
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -30,6 +34,7 @@ export default function Page() {
           name: tool.name,
           price: tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler,
           saleType: tool.price.alquiler > 0 ? "Arriendo" : "Venta",
+          added: false, // Para mostrar el mensaje de "Agregado al carrito"
         },
       ]);
     } else {
@@ -39,6 +44,13 @@ export default function Page() {
       setCartItems(updatedCartItems);
     }
   };
+
+  const handleBuyClick = () => {
+    const updatedCartItems = cartItems.filter((item) => !item.added);
+    setCartItems(updatedCartItems);
+    setShowVenta(true);
+  };
+
   const handleRemoveFromCart = (id, price) => {
     const itemIndex = cartItems.findIndex((item) => item.id === id);
     const updatedCartItems = [...cartItems];
@@ -48,6 +60,7 @@ export default function Page() {
   };
 
   useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
     let sum = 0;
     cartItems.forEach((cartItem) => {
       sum += cartItem.price;
