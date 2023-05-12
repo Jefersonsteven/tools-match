@@ -54,7 +54,7 @@ export default function Team() {
           {team.map((person) => (
             <div key={person.name} className={style.teamContactInfo}>
               <Image
-                src={`/../public/images/team/${person.image}`}
+                src={`/images/team/${person.image}`}
                 width={250}
                 height={250}
                 alt={person.name}
@@ -65,7 +65,7 @@ export default function Team() {
                 <a href="https://github.com" target="_blanket">
                   <Image
                     className={style.github}
-                    src="/../public/images/icons/github.jpg"
+                    src="/images/icons/github.jpg"
                     alt="GitHub"
                     width={35}
                     height={40}
@@ -74,7 +74,7 @@ export default function Team() {
                 <a href="https://linkedin.com" target="_blanket">
                   <Image
                     className={style.linkedin}
-                    src="/../public/images/icons/linkedin.jpg"
+                    src="/images/icons/linkedin.jpg"
                     alt="LinkedIn"
                     width={50}
                     height={40}
