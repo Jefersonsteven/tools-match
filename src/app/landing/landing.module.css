@@ -31,8 +31,98 @@
     height: 40px;
     border-radius: 10px;
     padding: 5px 25px;
+    cursor: pointer;
 }
+/*-----------------------MENU BUTTON-----------------------*/
+/* .navbarMenu.show {
+    display: flex;
+  }
+  
+.menuButton {
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .show {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 111px;
+    left: -300px;
+    background-color: #131713;
+    width: 300px;
+    height: calc(100vh - 111px);
+    padding: 20px;
+    transition: left 0.3s ease-in-out;
+  }
+  
+  .show.active {
+    left: 0;
+  }
+  
+  .show a {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    color: #dcf1d9;
+  }
+   */
+/*--------------------RESPONSIVE NAVBAR--------------------*/
+@media (max-width: 439px) {
+    .navbarMenu{
+        font-size: 1.2rem;
+    }
+    .navbarMenuLogin{
+        height: 30px;
+    }
+    .navbarLogo{
+        width: 20%;
+        height: 35%;
+    }
+    .contact{
+        display: none;
+    }
 
+
+
+    /* .navbarMenu {
+        display: none;
+      }
+      .show {
+        display: flex;
+      }
+      .navbarMenu.active {
+        left: 0;
+      }
+      .navbarMenu a {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 2rem;
+        color: #dcf1d9;
+      }
+      .navbarMenuLogin {
+        height: 40px;
+        margin-top: 20px;
+        font-size: 2rem;
+      }*/
+    } 
+@media (min-width: 440px) and (max-width: 570px) {
+    .navbarMenu{
+        font-size: 1.5rem;
+    }
+    .navbarMenuLogin{
+        height: 30px;
+    }
+    .navbarLogo{
+        width: 15%;
+        height: 30%;
+    }
+}
+@media screen and (max-width: 471px) {
+    .navbarMenu{
+        font-size: 1.2rem;
+    }
+}
 
 
 /*--------------------MAIN APP--------------------*/
@@ -47,6 +137,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    position: relative;
+    z-index: 0;
 }
 .mainInfoApp{
     font-size: 20px;
@@ -60,12 +152,62 @@
     border-radius: 15px;
 
 }
+.mainGoHome{
+    background-color: #21BF60;
+    height: 40px;
+    border-radius: 10px;
+    padding: 5px 25px;
+    color: #DCF1D9;
+    font-size: 2rem;
+    margin-top: 20px;
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -20px;
+    z-index: 1;
+}
+.mainGoHome:hover {
+    background-color: #32CD32;
+  }
+.toolsM{
+    text-align: center;
+}
+
+  /*--------------------RESPONSIVE MAIN--------------------*/
+  @media (max-width: 439px) {
+    .mainInfoApp{
+        font-size: 1.5rem;
+    }
+    .mainInfoApp h1{
+        font-size: 1.5rem;
+        padding: 30px 20px;
+    }
+    .mainGoHome{
+        font-size: 1.5rem;
+        height: 30px;
+        transform: translateX(-50%);
+        bottom: 1rem;
+        z-index: 1;
+    }
+  }
+  
+  @media (min-width: 440px) and (max-width: 549px) {
+    .mainGoHome{
+        font-size: 1.5rem;
+        height: 30px;
+        transform: translateX(-50%);
+        bottom: 1rem;
+        z-index: 1;
+    }
+}
 
 /*--------------------MAIN SPONSORS--------------------*/
 .sponsorsTitle{
-    font-size: 3rem;
+    font-size: 2.5rem;
     text-align: center;
-    padding-top: 40px;
+    padding-top: 80px;
+    font-weight: 500;
 }
 .sponsorsLogos{
     display: flex;
@@ -81,25 +223,13 @@
     gap: 10rem;
 }
 
-  /*--------------------MAIN TEAM RESPONSIVE--------------------*/
-  @media screen and (min-width: 1200px) {
-    .teamContact {
-        flex-wrap: nowrap;
+  /*--------------------RESPONSIVE SPONSORS--------------------*/
+@media screen and (max-width: 549px) {
+    .sponsorsTitle{
+        display: none;
     }
-    .teamContact > div {
-        width: 25%;
-    }
-}
-
-@media screen and (max-width: 1199px) {
-    .teamContact > div {
-        width: 50%;
-    }
-}
-
-@media screen and (max-width: 767px) {
-    .teamContact > div {
-        width: 100%;
+    .sponsorsLogos{
+        display: none;
     }
 }
 
@@ -126,5 +256,26 @@
 .footerTerms Link:hover{
     color: yellow;
     cursor: pointer;
+}
 
+  /*--------------------RESPONSIVE FOOTER--------------------*/
+  @media (max-width: 439px) {
+    .footerLogo{
+        width: 15%;
+        height: 30%;
+    }
+    .footerRights, .footerTerms{
+        font-size: 1.2rem; 
+        text-align: center;
+     }
+  }
+
+  @media (min-width: 440px) and (max-width: 549px) {
+    .footerLogo{
+        width: 12%;
+        height: 25%;
+    }
+    .footerRights, .footerTerms{
+        font-size: 1.2rem; 
+     }
 }
