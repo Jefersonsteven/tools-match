@@ -62,8 +62,8 @@ export default function Login() {
 
       console.log(response);
 
-      if (response.status == 200) {
-        router.push("/");
+      if (response.Message === "Has iniciado sesión") {
+        router.push("/home");
         setUserSession(true);
       }
     } catch (error) {
@@ -90,7 +90,7 @@ export default function Login() {
         console.log("URL de la foto de perfil:", photoURL);
         console.log("UID del usuario:", uid);
         console.log("Datos del proveedor de identidad:", providerData);
-        router.push("/");
+        router.push("/home");
         setUserSession(true);
       })
       .catch((error) => {
@@ -131,6 +131,12 @@ export default function Login() {
         <div className={styles.pwdInLogin} onClick={() => setViewPwd(!viewPwd)}>
           {viewPwd ? svgView : svgHide}
         </div>
+      </div>
+      <div className={styles.sessionChecboxContainer}>
+        <label className={styles.label}>
+          <input type="checkbox" name="test" value="test" />
+          Mantener Sesión
+        </label>
       </div>
       <div className={styles.submitContainer}>
         <button

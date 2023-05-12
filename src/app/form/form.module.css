@@ -144,7 +144,9 @@
 
 .label {
   color: #000000;
-
+  display: flex;
+  align-items: center;
+  cursor: pointer;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -154,12 +156,18 @@
 
 .label > input {
   margin-right: 16.5px;
+  width: 22px;
+  height: 22px;
 }
 
 .label > input:checked {
   accent-color: #21bf60;
 
   border-radius: 2px;
+}
+
+.label > a:hover {
+  text-decoration: underline;
 }
 
 .submitContainer {
@@ -299,4 +307,8 @@
 .linkContainer {
   display: flex;
   justify-content: center;
+}
+
+.sessionChecboxContainer {
+  margin-top: 27px;
 }

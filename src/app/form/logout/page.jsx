@@ -16,9 +16,10 @@ const provider = new GoogleAuthProvider();
 
 export default function Logout() {
   const router = useRouter();
-  const { userSession, setUserSession } = useContext(AppContext);
+  const { setUserSession } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
-  console.log(userSession, setUserSession);
+  const [checkbox, setCheckbox] = useState(false);
+
   const [registerData, setRegisterData] = useState({
     name: "",
     surname: "",
@@ -103,7 +104,7 @@ export default function Logout() {
         console.log("URL de la foto de perfil:", photoURL);
         console.log("UID del usuario:", uid);
         console.log("Datos del proveedor de identidad:", providerData);
-        user && router.push("/");
+        user && router.push("/home");
         setUserSession(true);
       })
       .catch((error) => {
@@ -211,7 +212,7 @@ export default function Logout() {
           <div className={styles.inputContainer}>
             <label htmlFor="passwordRepeat">confirmar contraseña *</label>
             <input
-              type={viewPwd ? "text" : "passwordRepeat"}
+              type="password"
               name="passwordRepeat"
               onChange={handleChange}
             />
@@ -224,21 +225,27 @@ export default function Logout() {
             >
               {errors.passwordRepeat && errors.passwordRepeat}
             </p>
-            <div className={styles.pwd} onClick={() => setViewPwd(!viewPwd)}>
-              {viewPwd ? svgView : svgHide}
-            </div>
           </div>
         </div>
         <div>
           <label className={styles.label}>
-            <input type="checkbox" name="test" value="test" />
-            <Link href="">Términos y condiciones</Link>
+            <input
+              type="checkbox"
+              name="checkbox"
+              value={checkbox}
+              onClick={() => setCheckbox(!checkbox)}
+            />
+            <Link href="/" target="_blank">
+              Términos y condiciones
+            </Link>
           </label>
         </div>
         <div className={styles.submitContainer}>
           <button
             className={`${styles.buttonSubmit} ${
-              errors.flag && styles.buttonSubmitDisabled
+              errors.flag
+                ? styles.buttonSubmitDisabled
+                : !checkbox && styles.buttonSubmitDisabled
             }`}
             type="submit"
             disabled={errors.flag}

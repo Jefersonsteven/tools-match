@@ -19,49 +19,42 @@ export default function FormLayout({ children }) {
   useEffect(() => {
     const path = pathname.split("/");
     setRoute(path[2]);
+    userSession && push("/home");
   }, [pathname]);
 
   return (
     <>
-      {userSession ? (
-        push("/")
-      ) : (
-        <>
-          <div className={styles.container}>
-            <div className={styles.left}>
-              <Image
-                className={styles.image}
-                src="/assets/saly-31.png"
-                width={500}
-                height={500}
-                alt="foto acerca de formulario de login - logout "
-              />
-            </div>
-            <div className={styles.right}>
-              <div className={styles.buttons}>
-                <Link
-                  className={
-                    route === "login" ? styles.activeLink : styles.link
-                  }
-                  href="/form/login"
-                >
-                  Iniciar Sesión
-                </Link>
-                <span>o</span>
-                <Link
-                  className={
-                    route === "logout" ? styles.activeLink : styles.link
-                  }
-                  href="/form/logout"
-                >
-                  Registrarme
-                </Link>
-              </div>
-              {children}
-            </div>
+      <>
+        <div className={styles.container}>
+          <div className={styles.left}>
+            <Image
+              className={styles.image}
+              src="/assets/saly-31.png"
+              width={500}
+              height={500}
+              alt="foto acerca de formulario de login - logout "
+            />
           </div>
-        </>
-      )}
+          <div className={styles.right}>
+            <div className={styles.buttons}>
+              <Link
+                className={route === "login" ? styles.activeLink : styles.link}
+                href="/form/login"
+              >
+                Iniciar Sesión
+              </Link>
+              <span>o</span>
+              <Link
+                className={route === "logout" ? styles.activeLink : styles.link}
+                href="/form/logout"
+              >
+                Registrarme
+              </Link>
+            </div>
+            {children}
+          </div>
+        </div>
+      </>
     </>
   );
 }

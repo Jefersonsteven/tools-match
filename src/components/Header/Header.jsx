@@ -5,18 +5,14 @@ import styles from "./Header.module.css";
 import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+
 import { AppContext } from "@/context/AppContext";
 import { useContext } from "react";
 
 function Header() {
   const pathname = usePathname();
-  const { push } = useRouter();
-  const { userSession } = useContext(AppContext);
 
-  const sessionRouter = (route) => {
-    userSession ? push(route) : push("/form/login");
-  };
+  const { userSession } = useContext(AppContext);
 
   return (
     <header className={styles.header}>
@@ -44,20 +40,21 @@ function Header() {
               </li>
               <li>
                 {pathname !== "/" && (
-                  <span onClick={() => sessionRouter("/crear-publicaciones")}>
+                  <Link
+                    href={userSession ? "/crear-publicaciones" : "/form/login"}
+                  >
                     Crear Publicaciones
-                  </span>
+                  </Link>
                 )}
               </li>
             </ul>
 
             {pathname !== "/" && (
               <div className={styles.nav}>
-                <FaUserCircle
-                  color="white"
-                  onClick={() => sessionRouter("/")}
-                />
-                {/* añadir evento */}
+                <Link href={userSession ? "/" : "/form/login"}>
+                  <FaUserCircle color="white" />
+                </Link>
+
                 <Link href="/team">
                   <FaShoppingCart color="white" />
                 </Link>
