@@ -9,11 +9,14 @@ import { svgHide } from "../assets/hidePwd";
 import { FcGoogle } from "react-icons//fc";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/firebase/firebase.config";
+import { AppContext } from "@/context/AppContext";
+import { useContext } from "react";
 
 const provider = new GoogleAuthProvider();
 
 export default function Login() {
   const router = useRouter();
+  const { userSession, setUserSession } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
 
   const [loginData, setLoginData] = useState({
@@ -60,9 +63,12 @@ export default function Login() {
       console.log(response);
 
       console.log(response);
-      response.status == 200
-        ? router.push("/")
-        : new Error("no se obtuvo un 200");
+      if (response.status == 200) {
+        router.push("/form/login");
+        setUserSession(true);
+      } else {
+        throw new Error("no se obtuvo un 200");
+      }
     } catch (error) {
       console.error("Error en la solicitud POST", error);
     }
@@ -88,6 +94,7 @@ export default function Login() {
         console.log("UID del usuario:", uid);
         console.log("Datos del proveedor de identidad:", providerData);
         router.push("/");
+        setUserSession(true);
       })
       .catch((error) => {
         const errorCode = error.code;
