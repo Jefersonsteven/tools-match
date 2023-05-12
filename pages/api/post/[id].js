@@ -9,14 +9,12 @@ export default async function handler(req, res) {
         id: id,
       },
       include: {
-        author: true,
         reviews: true,
       },
     });
     res.status(200).json(post);
   } else if (req.method === "PUT") {
-    const { title, content, photo, category, price, type, hidden, authorId } =
-      req.body;
+    const { title, content, photo, category, price, type } = req.body;
     const post = await prisma.post.update({
       where: {
         id: id,
@@ -28,12 +26,6 @@ export default async function handler(req, res) {
         category,
         price,
         type,
-        hidden,
-        authorId,
-      },
-      include: {
-        author: true,
-        reviews: true,
       },
     });
     res.status(200).json(post);
