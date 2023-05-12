@@ -121,7 +121,10 @@ export default function Page() {
                   </div>
                 )}
               </Card>
-              <button onClick={() => handleAddToCart(tool)}>
+              <button
+                className={style.addToCart}
+                onClick={() => handleAddToCart(tool)}
+              >
                 Agregar al Carrito
               </button>
             </div>

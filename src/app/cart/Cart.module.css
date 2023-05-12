@@ -12,7 +12,7 @@
 .cardCart{
     display: inline-block;
     margin-right: 20px;
-    margin-top: 30px;
+    margin-top: 50px;
     margin-bottom: 20px;
 }
 .cardCart img{
@@ -93,8 +93,16 @@
     -webkit-text-stroke-width: medium;
 }
 
-/*---------------------BUTTON BUY AND GO BACK TO PRODUCTS---------------------*/
-
+/*---------------------BUTTON BUY, GO BACK TO PRODUCTS AND ADD TO CART---------------------*/
+.addToCart{
+    background-color: #F0960E;
+    color: #DCF1D9;
+    width: 50%;
+    height: 50px;
+    align-items: center;
+    border-radius: 5px;
+    
+}
 .buying{
   bottom: 0;
   right: 0;
