@@ -69,17 +69,16 @@ export default function Logout() {
           phoneNumber: registerData.phoneNumber,
         }),
       };
-      const response = await fetch(
+      let response = await fetch(
         "http://localhost:3000/api/registerUser",
         config
       );
 
-      if (response.status == 200) {
-        router.push("/form/login");
-        setUserSession(true);
-      } else {
-        throw new Error("no se obtuvo un 200");
-      }
+      response = await response.json();
+
+      console.log(response);
+
+      router.push("/form/login");
     } catch (error) {
       console.error("Error en la solicitud POST", error);
     }
@@ -104,7 +103,7 @@ export default function Logout() {
         console.log("URL de la foto de perfil:", photoURL);
         console.log("UID del usuario:", uid);
         console.log("Datos del proveedor de identidad:", providerData);
-        router.push("/");
+        user && router.push("/");
         setUserSession(true);
       })
       .catch((error) => {

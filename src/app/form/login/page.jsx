@@ -45,7 +45,7 @@ export default function Login() {
     try {
       console.log("Entrando en try catch");
       const config = {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,19 +55,16 @@ export default function Login() {
         }),
       };
       let response = await fetch(
-        `http://localhost:3000/api/loginValidate?email=${loginData.email}&password=${loginData.password}`,
+        `http://localhost:3000/api/loginValidate`,
         config
       );
       response = await response.json();
 
       console.log(response);
 
-      console.log(response);
       if (response.status == 200) {
-        router.push("/form/login");
+        router.push("/");
         setUserSession(true);
-      } else {
-        throw new Error("no se obtuvo un 200");
       }
     } catch (error) {
       console.error("Error en la solicitud POST", error);
