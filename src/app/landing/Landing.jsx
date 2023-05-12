@@ -1,20 +1,11 @@
 "use client";
 
-<<<<<<< HEAD
-import style from './landing.module.css';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
-/* import Modal from "./modal/Modal"; */
-
-=======
 import style from "./landing.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Modal from "./modal";
 import Header from "@/components/Header/Header";
->>>>>>> 7dffb00379d161532743199f85eb74a655e0803e
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
