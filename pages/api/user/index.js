@@ -1,5 +1,5 @@
 import prisma from "../../../prisma/client";
-const bcrypt = require('bcryptjs')
+const crypto = require("crypto");
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -15,11 +15,10 @@ export default async function handler(req, res) {
         zipCode,
         reports,
       } = req.body;
-      let { 
-        password 
-      } = req.body
-      const rondasDeSal = 10
-      password = await bcrypt.hash(password, rondasDeSal)
+      let { password } = req.body;
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      password = crypto.createHash("sha256").update(data).digest("hex");
       const user = await prisma.user.create({
         data: {
           firstname,
@@ -38,21 +37,6 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Error creating user." });
-    }
-  } else if (req.method === "GET") {
-    try {
-      const users = await prisma.user.findMany({
-        include: {
-          posts: true,
-          reviews: true,
-          orders: true,
-          payments: true,
-        },
-      });
-      res.status(200).json(users);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Error retrieving users." });
     }
   } else {
     res.status(400).json({ error: "Invalid method." });
