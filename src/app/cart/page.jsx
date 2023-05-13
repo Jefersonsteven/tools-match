@@ -108,13 +108,31 @@ export default function Page() {
         "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR7XtSHjObVZ1gYSBGsiAjf1cYI66F5hAFeGP8kBtwabxOBdjYE8VypFH-OBj8Xf7M2mcL5w4RUEyEGrnQLkgM4lpE0wKApMy1Wgtmjs_czzJWBi9O66-W6tL6RUnfZPJ3rvw&usqp=CAc",
       description: "Amoladora angular de 4.5 pulgadas con velocidad variable",
     },
+    {
+      name: "Cortacésped",
+      category: "Jardinería",
+      rating: 4,
+      price: { venta: 175, alquiler: 0 },
+      imageUrl:
+        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRVszEOu1Pe7afrlEKJcGK__yfbJ4n62G1HTxzlT6N4TTSDmOPLTlh_iOcl4R3aCoWhUCpeT_luIlZmlh8grNTOIIEKpKMeJYdQ9YYQt7CpX7wY69myeitr9zaSaqIYAS_bPIY&usqp=CAc",
+      description: "Cortacésped a gasolina de 21 pulgadas con tracción trasera",
+    },
+    {
+      name: "Pala",
+      category: "Excavación",
+      rating: 2,
+      price: { venta: 40, alquiler: 0 },
+      imageUrl:
+        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQWsdFgFwKeh0QOobzWmz7Hg7-Eh49BHDpHQo3cumjg4Ygwea7UnGu3A9B0ZvwLxmS87SUwux3UGdIL_0qDlxr1nrwFEZmUvkye2ljFcEhyMrBmO0Oy3GF4R5KuUEfNl7PrXA&usqp=CAc",
+      description: "Pala cuadrada con mango de madera de 48 pulgadas",
+    },
   ];
 
   return (
     <div className="p-4">
+      <h2 className={style.cartTitle}>Te Puede Interesar</h2>
       <div className={style.cartContainer}>
         <div className={style.cartList}>
-          <h2 className={style.cartTitle}>Te Puede Interesar</h2>
           {tools.map((tool) => (
             <div className={style.cardCart} key={tool.name}>
               <Card
@@ -151,17 +169,17 @@ export default function Page() {
           </h2>
           {cartItems.map((item) => (
             <div className={style.cardCart2} key={item.id}>
+              <button
+                className={style.deleteCardCart}
+                onClick={() => handleRemoveFromCart(item.id, item.price)}
+              >
+                x
+              </button>
               <Card
                 imageUrl={item.imageUrl}
                 name={item.name}
                 price={`${item.price}`}
               />
-              <button
-                className={style.deleteCardCart}
-                onClick={() => handleRemoveFromCart(item.id, item.price)}
-              >
-                Close
-              </button>
             </div>
           ))}
           <div className={style.buying}>

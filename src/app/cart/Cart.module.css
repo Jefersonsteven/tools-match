@@ -11,7 +11,6 @@
 }
 .cardCart{
     display: inline-block;
-    margin-right: 20px;
     margin-top: 50px;
     margin-bottom: 20px;
 }
@@ -29,6 +28,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
+    margin-right: 20px;
 
   }
 
@@ -47,18 +47,22 @@
 }
 
 .cardCart2{
-    display: inline-block;
     margin-right: 50px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    background-color: white;
+    border-radius: 10px;
+    justify-content: space-around;
 }
 
 .cardCart2 img{
     width: 200px;    
     height: 200px;
-    position: relative;
-  display: inline-block;
-  margin-right: 50px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -72,8 +76,9 @@
     width: 50%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end; 
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: center; 
+    align-items: space-between;
 }
 .saleTypeContent{    
     display: none;
@@ -90,7 +95,12 @@
 .deleteCardCart{
     color: red;
     position: absolute;
-    -webkit-text-stroke-width: medium;
+    top: 8px;
+    right: 8px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 /*---------------------BUTTON BUY, GO BACK TO PRODUCTS AND ADD TO CART---------------------*/
