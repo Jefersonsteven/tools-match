@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Modal from "./modal";
+import Header from "@/components/Header/Header";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,34 +21,10 @@ export default function LandingPage() {
 
   return (
     <div className={style.landingPageContainer}>
-      <header className={style.nabvarContainer}>
-        <div className={style.navbarLogo}>
-          <Link href="/home">
-            <Image
-              src="/images/logo/toolsMatch.jpg"
-              alt="logo"
-              width={100}
-              height={100}
-            />
-          </Link>
-        </div>
-        <div className={style.navbarMenu}>
-          <div className={style.menuButton} onClick={toggleNavbarMenu}>
-            <i className="fas fa-bars"></i>
-          </div>
-          <Link href="/home">Home</Link>
-          <Link className={style.contact} href="">
-            Contacto
-          </Link>
-          <Link href="form/login" className={style.navbarMenuLogin}>
-            Iniciar Sesión
-          </Link>
-        </div>
-      </header>
+      <Header />
       <main className={style.mainInfo}>
         <div className={style.mainInfoApp}>
           <h1>
-            {" "}
             ToolsMatch es una aplicación innovadora que se centra en satisfacer
             las necesidades de la Comunidad para la compra y el arriendo de
             herramientas usadas.

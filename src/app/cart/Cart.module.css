@@ -1,0 +1,116 @@
+/*---------------------CART-CARDS---------------------*/
+.cartContainer{
+    display: flex;
+}
+.cartTitle{
+    text-align: left;
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.cardCart{
+    display: inline-block;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.cardCart img{
+    width: 200px;    
+    height: 200px;
+    gap: 10px;
+}
+.cartDate{
+    color: black;
+}
+.cardList {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+
+  }
+
+  .cartTitle2 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    padding: 10px 10px;
+    background-color: #131713;
+    width: 100%;
+    opacity: .5;
+    color: #DCF1D9;
+    text-align: center;
+    font-weight: 700;
+}
+
+.cardCart2{
+    display: inline-block;
+    margin-right: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.cardCart2 img{
+    width: 200px;    
+    height: 200px;
+}
+
+.cartDate2{
+    color: black;
+}
+
+.cartList2 {
+    background-color: #535E53;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end; /* Modificación */
+    align-items: flex-start;
+    margin-top: 1.5rem;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+.cardDelete{
+    color: red;
+}
+
+.buying{
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  margin-block-start: auto;
+    
+}
+.cartTotal{
+    margin-left: 50%;
+}
+.buying1{
+    background-color: #F0960E;
+    color: #DCF1D9;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    width: 200px;
+    height: 50px;
+}
+.buying2{
+    background-color: #131713;
+    color: #DCF1D9;
+    width: 200px;
+    height: 50px;
+    
+}
+.buying1, .buying2{
+    border: none;
+    border-radius: 5px;
+    font-size: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
