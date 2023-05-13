@@ -4,11 +4,9 @@ import CategoryFilter from './CategoryFilter';
 import SearchBar from '../SearchBar/SearchBar';
 import { AppContext, AppProvider } from "@/context/AppContext";
 import { useContext } from 'react';
-import Card from '../Cards/Card';
-import SearchBarconCSS from '../SearchBar/SearchBarconCSS';
 
 export default function FilterBar() {
-  const { selectedType, setSelectedType, cards, setCards, selectedCategory, setSelectedCategory, title, setTitle } = useContext(AppContext);
+  const { filter, setFilter, cards, setCards, selectedCategory, setSelectedCategory, title, setTitle } = useContext(AppContext);
 
   const [showFilters, setShowFilters] = useState(false);
   const [showSortOptions, setShowSortOptions] = useState(false);
@@ -18,8 +16,13 @@ export default function FilterBar() {
     console.log(cards)
   }, [cards])
 
-  function handleSort(sortBy){
-    const sortedTools = cards.sort((a, b) => {
+
+  useEffect(() => {
+  }, [cards, setCards])
+
+  function handleSort(sortBy) {
+    const temp = [...cards]
+    const sortedTools = temp.sort((a, b) => {
       if (sortBy === 'titleAsc') {
         return a.title.localeCompare(b.title);
       } else if (sortBy === 'titleDesc') {
@@ -27,7 +30,7 @@ export default function FilterBar() {
       } else if (sortBy === 'priceAsc') {
         return a.price - b.price;
       } else if (sortBy === 'priceDesc') {
-        return b.price - a.price;      
+        return b.price - a.price;
       } else if (sortBy === 'ratingAsc') {
         return a.rating - b.rating;
       } else if (sortBy === 'ratingDesc') {
@@ -37,77 +40,83 @@ export default function FilterBar() {
       }
     })
     // console.log(sortedTools)
-    setCards(sortedTools);    
+    setFilter(sortedTools);
   }
 
-  function handleFilter(){
-    const filteredTools = [...cards].filter(
-      (tool) =>
-        (!selectedCategory || tool.category === selectedCategory) &&        
-        (!title || tool.title.toLowerCase().includes(title.toLowerCase()))&&
-        (!selectedType || tool.type === selectedType)
-    ) 
-    setCards(filteredTools)
+  function handleFilter(selectedType = null, type = null) {
+    const temp = [...cards]
+    const filteredTools = temp.filter(
+      (tool) => {
+        if (selectedType === null) {
+          if (type !== "Todas") return tool.category === type
+          return tool
+        }
+        if (selectedType !== "ALLS") {
+          if (selectedType === "SALE") {
+            return tool.type === selectedType
+          }
+          if (selectedType === "LEASE") {
+            return tool.type === selectedType
+          }
+        } else {
+          return tool
+        }
+
+        // (!selectedCategory || tool.category === selectedCategory) &&
+        //   (!title || tool.title.toLowerCase().includes(title.toLowerCase())) &&
+        //   (!selectedType || tool.type === selectedType)
+      }
+    )
+    setFilter(filteredTools)
   }
   return (
-    <AppProvider>
-      <div className="flex flex-col w-64 bg-gray-100">
-        <div className="flex justify-between items-center py-2 px-4 bg-gray-200 font-medium">
+    <div className="flex flex-col w-64 bg-gray-100">
+      <SearchBar title={title} onTitleChange={setTitle} />
+      <CategoryFilter
+        categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        handleFilter={handleFilter}
+      />
+      <div className="flex justify-between items-center py-2 px-4 bg-gray-200 font-medium">
+        {/* <div>Ordenar por:</div> */}
+        <div>
           <button
-            className="py-2 px-4 hover:bg-gray-200"
-            onClick={() => setShowFilters(!showFilters)}
+            className={`py-2 px-4 bg-gray-200 text-gray-700 hover:bg-gray-300`}
+            onClick={() => {
+              // setSelectedType('LEASE');
+              handleFilter('LEASE');
+            }}
           >
-            Filters
+            Arriendo
           </button>
           <button
-            className="py-2 px-4 hover:bg-gray-200"
-            onClick={() => setShowSortOptions(!showSortOptions)}
+            className={`ml-2 py-2 px-4 bg-gray-200 text-gray-700 hover:bg-gray-300`}
+            onClick={() => {
+              // setSelectedType('SALE');
+              handleFilter('SALE');
+            }}
           >
-            Sort
+            Venta
+          </button>
+          <button
+            className={`ml-2 py-2 px-4 bg-gray-200 text-gray-700 hover:bg-gray-300`}
+            onClick={() => {
+              // setSelectedType('SALE');
+              handleFilter('ALLS');
+            }}
+          >
+            Todos
           </button>
         </div>
-        {showFilters && (
-          <div className="py-4 px-4 bg-white">
-            <CategoryFilter
-              categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
-            />
-            <div className="flex justify-between py-2">
-              {/* <SearchBarconCSS title={title} onTitleChange={setTitle} /> */}
-              <button
-                className="py-2 px-4 bg-gray-200 text-gray-700 hover:bg-gray-300"
-                onClick={handleFilter}
-              >
-                Apply
-              </button>
-            </div>
-          </div>
-        )}
-        {showSortOptions && (
-          <div className="py-4 px-4 bg-white">
-            <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('titleAsc')}>
-              Title (A-Z)
-            </button>
-            <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('titleDesc')}>
-              Title (Z-A)
-            </button>
-            <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('priceAsc')}>
-              Price (asc)
-            </button>
-            <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('priceDesc')}>
-              Price (desc)
-            </button>
-            <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('ratingAsc')}>
-              Rating (asc)
-            </button>
-            <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('ratingDesc')}>
-              Rating (desc)
-            </button>
-          </div>
-        )}
       </div>
-    </AppProvider>
+      <button className="py-2 px-4 hover:bg-gray-200" onClick={() => { handleSort('nameAsc') }}>Nombre (A-Z)</button>
+      <button className="py-2 px-4 hover:bg-gray-200" onClick={() => { handleSort('nameDes') }}>Nombre (Z-A)</button>
+      <button className="py-2 px-4 hover:bg-gray-200" onClick={() => { handleSort('priceAsc') }}>Precio (asc)</button>
+      <button className="py-2 px-4 hover:bg-gray-200" onClick={() => { handleSort('priceDesc') }}>Precio(desc)</button>
+      <button className="py-2 px-4 hover:bg-gray-200" onClick={() => { handleSort('ratingAsc') }}>Rating (asc)</button>
+      <button className="py-2 px-4 hover:bg-gray-200" onClick={() => { handleSort('ratingDesc') }}>Rating (des)</button>
+    </div>
   );
 }
   
