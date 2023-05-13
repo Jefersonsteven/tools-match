@@ -1,27 +1,29 @@
 "use client"
 import Card from './Card';
-import { AppContext } from "@/context/AppContext";
+import { AppContext, AppProvider } from "@/context/AppContext";
 import { useContext } from 'react';
 
 
-const Cards = (tool) => {
-  const { filter } = useContext(AppContext);
+const Cards = () => {
+  const { cards } = useContext(AppContext);
   return (
+    <AppProvider>
     <div className="p-4">
       <div className="grid grid-cols-4 gap-4">
-        {filter.map((tool, index) => (
-          <div className="w-full" key={tool.title} >
+        {cards.map(tool => (
+          <div className="w-full" key={tool.name}>
             <Card
               photo={tool.photo}
               title={tool.title}
               price={tool.price}
-              type={`${tool.type === 'LEASE' ? "Arriendo" : "Venta"}`}
-            //perDay={`${tool.price.alquiler > 0 ? "Por dia" : ""}`}
-            />
+              type={`${tool.type==='LEASE' ? "Arriendo" : "Venta"}`}
+              //perDay={`${tool.price.alquiler > 0 ? "Por dia" : ""}`}
+                          />
           </div>
         ))}
       </div>
     </div>
+    </AppProvider>
   );
 };
 

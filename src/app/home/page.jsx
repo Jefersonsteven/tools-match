@@ -2,6 +2,8 @@
 import Cards from "@/components/Cards/Cards";
 import FilterBar from "@/components/Filter/FilterBar";
 import SearchBarconCSS from "@/components/SearchBar/SearchBarconCSS";
+import { AppContext, AppProvider } from "@/context/AppContext";
+import { useContext } from 'react';
 
 function Home() {
 
@@ -20,21 +22,10 @@ function Home() {
           <div className="w-3/4">
             <Cards/>
           </div>
-  return (
-    <div className="flex flex-col h-screen">
-      <div className="flex-none">
-        <SearchBarconCSS />
-      </div>
-      <div className="flex flex-1">
-        <div className="w-1/4">
-          <FilterBarDevelop />
-        </div>
-        <div className="w-3/4">
-          <Cards />
         </div>
       </div>
-    </div>
-  );
-}
-
-export default Home;
+      </AppProvider>
+    );
+  }
+  
+  export default Home;

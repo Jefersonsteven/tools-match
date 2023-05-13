@@ -10,15 +10,40 @@ export default function FilterBar() {
 
   useEffect(()=>{
     if (cards.length ===0)setCards(tools)
-  }, [tools])
+  }, [cards])
 
-  const filteredTools = tools
-    .filter(
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    const filteredTools = tools.filter(
+      (tool) =>
+        (!selectedType || tool.type === selectedType) &&
+        (!title || tool.title.toLowerCase().includes(title.toLowerCase())) &&
+        (selectedCategory ? tool.category === selectedCategory : true)
+    );
+    setCards(filteredTools);
+  };
+
+  const handleTitleChange = (title) => {
+    setTitle(title);
+    const filteredTools = tools.filter(
+      (tool) =>
+        (!selectedType || tool.type === selectedType) &&
+        (!title || tool.title.toLowerCase().includes(title.toLowerCase())) &&
+        (!selectedCategory || tool.category === selectedCategory)
+    );
+    setCards(filteredTools);
+  };
+
+  const handleTypeChange = (type) => {
+    setSelectedType(type);
+    const filteredTools = tools.filter(
       (tool) =>
         (!selectedCategory || tool.category === selectedCategory) &&
-        (!selectedType || tool.type === selectedType) &&        
-        (!title || tool.title.toLowerCase().includes(title.toLowerCase()))
-    )
+        (!title || tool.title.toLowerCase().includes(title.toLowerCase())) &&
+        (selectedType ? tool.type === selectedType : true)
+    );
+    setCards(filteredTools);
+  };
 
     const handleSort = (sortBy) => {
     setSortBy(sortBy);
@@ -49,8 +74,6 @@ export default function FilterBar() {
     setCards(tools.filter((tool) => tool.type === 'SALE'));  
   };
 
-  
-
 
   return (
     <AppProvider>
@@ -65,12 +88,21 @@ export default function FilterBar() {
   <button onClick={handleSaleClick}>Venta</button>
   <div className="py-2 px-4 bg-gray-200 font-medium">Ordenar por:</div>
   <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('titleAsc')}>Nombre (A-Z)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('titleDesc')}>Nombre (Z-A)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('priceAsc')}>Precio (Asc)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('priceDesc')}>Precio (Des)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('ratingAsc')}>Rating (Asc)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('ratingDesc')}>Rating (Des)</button>
+    <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('titleDesc')}>Nombre (Z-A)</button>
+    <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('priceAsc')}>Precio (Asc)</button>
+    <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('priceDesc')}>Precio (Des)</button>
+    <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('ratingAsc')}>Rating (Asc)</button>
+    <button className="py-2 px-4 hover:bg-gray-200" onClick={() => handleSort('ratingDesc')}>Rating (Des)</button>
 </div>
+{/* <div>
+        <ul>
+          {filteredTools.map((tool) => (
+            <li key={tool.title}>
+              {tool.title} - {tool.category} - ${tool.price} - {tool.type} - {tool.rating} Jeffersons - 
+            </li>
+          ))}
+        </ul>
+      </div> */}
     </AppProvider>
   );
 }
