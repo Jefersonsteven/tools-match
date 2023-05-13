@@ -11,9 +11,13 @@ import Footer from "../../components/footer/Footer";
 export default function Page() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showVenta, setShowVenta] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [showCards, setShowCards] = useState(true);
+
+  const [cartItems, setCartItems] = useState(() => {
+    const items = localStorage.getItem("cartItems");
+    return items ? JSON.parse(items) : [];
+  });
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -30,6 +34,7 @@ export default function Page() {
           name: tool.name,
           price: tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler,
           saleType: tool.price.alquiler > 0 ? "Arriendo" : "Venta",
+          added: false, // Para mostrar el mensaje de "Agregado al carrito"
         },
       ]);
     } else {
@@ -40,38 +45,30 @@ export default function Page() {
     }
   };
 
+  const handleBuyClick = () => {
+    const updatedCartItems = cartItems.filter((item) => !item.added);
+    setCartItems(updatedCartItems);
+    setShowVenta(true);
+    setShowCards(false); // Agrega esta línea para ocultar las cards al hacer click en el botón comprar
+    setCartItems([]);
+  };
+
+  const handleRemoveFromCart = (id, price) => {
+    const itemIndex = cartItems.findIndex((item) => item.id === id);
+    const updatedCartItems = [...cartItems];
+    updatedCartItems.splice(itemIndex, 1);
+    setCartItems(updatedCartItems);
+    setTotal((prevTotal) => prevTotal - price);
+  };
+
   useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
     let sum = 0;
     cartItems.forEach((cartItem) => {
       sum += cartItem.price;
     });
     setTotal(sum);
   }, [cartItems]);
-
-  const handleCloseCards = (showCards, setShowCards) => {
-    setShowCards(false);
-  };
-
-  // const handleDelete = (index) => {
-  //   const newCartItems = [...cart];
-  //   const cartItem = newCartItems[index];
-
-  //   // Resta 1 a la cantidad del cartItem eliminado
-  //   cartItem.quantity -= 1;
-
-  //   // Si la cantidad es cero, elimina el cartItem del carrito
-  //   if (cartItem.quantity === 0) {
-  //     newCartItems.splice(index, 1);
-  //   }
-
-  //   // Actualiza el estado del carrito y recalcula el total
-  //   setCart(newCartItems);
-  //   const newTotal = newCartItems.reduce(
-  //     (acc, item) => acc + item.price * item.quantity,
-  //     0
-  //   );
-  //   setTotal(newTotal);
-  // };
 
   const tools = [
     {
@@ -117,9 +114,7 @@ export default function Page() {
     <div className="p-4">
       <div className={style.cartContainer}>
         <div className={style.cartList}>
-          <h2 className={style.cartTitle}>
-            Tenemos Algunas Sugerencias Para Ti
-          </h2>
+          <h2 className={style.cartTitle}>Te Puede Interesar</h2>
           {tools.map((tool) => (
             <div className={style.cardCart} key={tool.name}>
               <Card
@@ -141,7 +136,10 @@ export default function Page() {
                   </div>
                 )}
               </Card>
-              <button onClick={() => handleAddToCart(tool)}>
+              <button
+                className={style.addToCart}
+                onClick={() => handleAddToCart(tool)}
+              >
                 Agregar al Carrito
               </button>
             </div>
@@ -151,27 +149,28 @@ export default function Page() {
           <h2 className={style.cartTitle2}>
             TOTAL: <span className={style.cartTotal}>${total}</span>
           </h2>
-          {cartItems.map((cartItem, index) => (
-            <div className={style.cardCart2} key={index}>
-              <button
-                className={style.cardDelete}
-                onClick={() => handleCloseCards(showCards, setShowCards)}
-              >
-                x
-              </button>
+          {cartItems.map((item) => (
+            <div className={style.cardCart2} key={item.id}>
               <Card
-                imageUrl={cartItem.imageUrl}
-                name={cartItem.name}
-                price={cartItem.price}
-                saleType={cartItem.saleType}
+                imageUrl={item.imageUrl}
+                name={item.name}
+                price={`${item.price}`}
               />
+              <button
+                className={style.deleteCardCart}
+                onClick={() => handleRemoveFromCart(item.id, item.price)}
+              >
+                Close
+              </button>
             </div>
           ))}
           <div className={style.buying}>
             <Link href="/home" className={style.buying1}>
               Volver a Productos
             </Link>
-            <button className={style.buying2}>Comprar</button>
+            <button className={style.buying2} onClick={handleBuyClick}>
+              Comprar
+            </button>
           </div>
         </div>
       </div>
