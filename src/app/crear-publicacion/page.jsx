@@ -1,30 +1,12 @@
 'use client'
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { DragAndDrop } from "@/components/DragAndDrop/DragAndDrop";
 import styles from './CreatePost.module.css'
 import { validatePost } from "./asset/validate";
+import { AppContext } from "@/context/AppContext";
 
 function CreatePost() {
-
-    const [type, setType] = useState('');
-
-    const [form, setForm] = useState({
-        title: '',
-        description: '',
-        price: '',
-        category: '',
-        type: '',
-        images: ''
-    });
-
-    const [errors, setErrors] = useState({
-        title: '',
-        description: '',
-        price: '',
-        category: '',
-        type: '',
-        images: ''
-    });
+    const { form, setForm, errors, setErrors } = useContext(AppContext);
 
     function handleForm(event) {
         const name = event.target.name;
@@ -72,6 +54,7 @@ function CreatePost() {
             <section>
                 <DragAndDrop />
             </section>
+            <button></button>
         </main>
     );
 }
