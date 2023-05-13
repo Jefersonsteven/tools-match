@@ -4,6 +4,7 @@ import { createContext, useState } from "react";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
+  const [imageUrls, setImageUrls] = useState([]);
   const [userId, setUserId] = useState("932a3adf-9203-4b25-89ca-777b00411730");
   const [postDetail, setPostDetail] = useState({});
 
@@ -18,6 +19,8 @@ function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
+        imageUrls,
+        setImageUrls,
         postDetail,
         setPostDetail,
         selectedCategory,
