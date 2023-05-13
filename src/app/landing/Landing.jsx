@@ -99,6 +99,36 @@ export default function LandingPage() {
             width={230}
             height={200}
           />
+          <Image
+            src="/images/sponsors/fischer.png"
+            alt="sponsors"
+            width={230}
+            height={200}
+          />
+          <Image
+            src="/images/sponsors/irimo.png"
+            alt="sponsors"
+            width={130}
+            height={180}
+          />
+          <Image
+            src="/images/sponsors/libus.png"
+            alt="sponsors"
+            width={230}
+            height={200}
+          />
+          <Image
+            src="/images/sponsors/philips.png"
+            alt="sponsors"
+            width={150}
+            height={150}
+          />
+          <Image
+            src="/images/sponsors/skil.png"
+            alt="sponsors"
+            width={180}
+            height={180}
+          />
         </div>
       </section>
       <footer className={style.footer}>
