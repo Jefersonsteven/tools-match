@@ -1,4 +1,5 @@
-/*---------------------CART-CARDS---------------------*/
+/*---------------------CARDS-CART---------------------*/
+/*---------------------CARDS - SUGERENCIAS---------------------*/
 .cartContainer{
     display: flex;
 }
@@ -11,7 +12,7 @@
 .cardCart{
     display: inline-block;
     margin-right: 20px;
-    margin-top: 30px;
+    margin-top: 50px;
     margin-bottom: 20px;
 }
 .cardCart img{
@@ -22,7 +23,7 @@
 .cartDate{
     color: black;
 }
-.cardList {
+.cartList {
     width: 50%;
     display: flex;
     flex-wrap: wrap;
@@ -31,7 +32,9 @@
 
   }
 
+  /*---------------------CARDS - CARRITO---------------------*/
   .cartTitle2 {
+    position: relative;
     font-size: 2.5rem;
     font-weight: 500;
     padding: 10px 10px;
@@ -53,6 +56,11 @@
 .cardCart2 img{
     width: 200px;    
     height: 200px;
+    position: relative;
+  display: inline-block;
+  margin-right: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .cartDate2{
@@ -64,16 +72,37 @@
     width: 50%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end; /* Modificación */
+    justify-content: flex-end; 
     align-items: flex-start;
-    margin-top: 1.5rem;
-    margin-bottom: 20px;
-    border-radius: 10px;
 }
-.cardDelete{
-    color: red;
+.saleTypeContent{    
+    display: none;
+  }
+
+
+/*---------------------TOTAL PRICE---------------------*/
+
+.cartTotal{
+    margin-left: 50%;
 }
 
+/*---------------------CARDS - DELETE---------------------*/
+.deleteCardCart{
+    color: red;
+    position: absolute;
+    -webkit-text-stroke-width: medium;
+}
+
+/*---------------------BUTTON BUY, GO BACK TO PRODUCTS AND ADD TO CART---------------------*/
+.addToCart{
+    background-color: #F0960E;
+    color: #DCF1D9;
+    width: 50%;
+    height: 50px;
+    align-items: center;
+    border-radius: 5px;
+    
+}
 .buying{
   bottom: 0;
   right: 0;
@@ -87,9 +116,7 @@
   margin-block-start: auto;
     
 }
-.cartTotal{
-    margin-left: 50%;
-}
+
 .buying1{
     background-color: #F0960E;
     color: #DCF1D9;
