@@ -49,6 +49,8 @@ export default function Page() {
     const updatedCartItems = cartItems.filter((item) => !item.added);
     setCartItems(updatedCartItems);
     setShowVenta(true);
+    setShowCards(false); // Agrega esta línea para ocultar las cards al hacer click en el botón comprar
+    setCartItems([]);
   };
 
   const handleRemoveFromCart = (id, price) => {
@@ -166,7 +168,9 @@ export default function Page() {
             <Link href="/home" className={style.buying1}>
               Volver a Productos
             </Link>
-            <button className={style.buying2}>Comprar</button>
+            <button className={style.buying2} onClick={handleBuyClick}>
+              Comprar
+            </button>
           </div>
         </div>
       </div>
