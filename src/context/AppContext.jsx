@@ -13,7 +13,13 @@ function AppProvider({ children }) {
     const [cards, setCards] = useState([]);
     const [selectedType, setSelectedType] = useState('');
     const [sortBy, setSortBy] = useState('') 
-    const [searchTerm, setSearchTerm] = useState('');  
+    const [searchTerm, setSearchTerm] = useState(''); 
+    const [filteredCards, setFilteredCards] = useState(cards)
+    const [rent, setRent] = useState('') 
+    const [sale, setSale] = useState('')
+    const [name, setName] = useState('')
+    const [filter, setFilter] = useState('')
+    
 
     const tools = [
         { title: 'Martillo', category: 'Carpintería', rating: 4, price: 5.5, photo: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6RE25sL7PPH-WQsGEqThwl_pnSf04ZHsCQtL1C5fjRyk9Stp7GZaC6PbI_GtfHS2hGS8&usqp=CAU'], description: 'Martillo de carpintería con mango de madera' ,type: 'LEASE' },
@@ -45,6 +51,16 @@ function AppProvider({ children }) {
             searchTerm,
             setSearchTerm,
             tools,
+            filteredCards,
+            setFilteredCards,
+            rent,
+            setRent,
+            sale,
+            setSale,
+            name,
+            setName,
+            filter,
+            setFilter
         }}>
             {children}
         </AppContext.Provider >

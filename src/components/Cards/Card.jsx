@@ -2,7 +2,7 @@ import styles from './Card.module.css';
 import React from 'react';
 
 
-const Card = ({ title, description, photo, price, type, perDay }) => {
+const Card = ({ title, photo, price, type, perDay }) => {
   return (
     <div className={`${styles.cardContainer} bg-white rounded-md p-4`}>
       <img src={photo} alt={title} className={`${styles.cardImage} rounded-md`} />

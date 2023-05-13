@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default function SearchBar(props) {
-  const { name, onNameChange } = props;
+  const { title, onTitleChange } = props;
 
-  const handleNameChange = (event) => {
-    onNameChange(event.target.value);
+  const handleTitleChange = (event) => {
+    onTitleChange(event.target.value);
   };
 
   return (
@@ -12,8 +12,8 @@ export default function SearchBar(props) {
       <input
         type="text"
         placeholder="Buscar herramienta..."
-        value={name}
-        onChange={handleNameChange}
+        value={title}
+        onChange={handleTitleChange}
       />
     </div>
   );

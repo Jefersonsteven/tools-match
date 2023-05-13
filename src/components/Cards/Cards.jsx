@@ -4,13 +4,13 @@ import { AppContext, AppProvider } from "@/context/AppContext";
 import { useContext } from 'react';
 
 
-const Cards = (tool) => {
-  const { cards,tools } = useContext(AppContext);
+const Cards = () => {
+  const { cards } = useContext(AppContext);
   return (
     <AppProvider>
     <div className="p-4">
       <div className="grid grid-cols-4 gap-4">
-        {tools.map(tool => (
+        {cards.map(tool => (
           <div className="w-full" key={tool.name}>
             <Card
               photo={tool.photo}
