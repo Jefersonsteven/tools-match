@@ -3,12 +3,13 @@ import Cards from "@/components/Cards/Cards";
 import FilterBar from "@/components/Filter/FilterBar";
 import SearchBarconCSS from "@/components/SearchBar/SearchBarconCSS";
 import { AppContext, AppProvider } from "@/context/AppContext";
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 function Home() {
 
-  const { cards, tools, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy } = useContext(AppContext);
+  const { cards, setCards, tools, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy } = useContext(AppContext);
 
+ 
     return (
       <AppProvider>
       <div className="flex flex-col h-screen">
