@@ -35,6 +35,6 @@ const handleSubmit = async (event) => {
       setUserSession(true);
     }
   } catch (error) {
-    console.error("Error en la solicitud POST", error);
+    console.error("Error en la solicitud ", error);
   }
 };
