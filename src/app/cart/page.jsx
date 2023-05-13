@@ -178,24 +178,3 @@ export default function Page() {
     </div>
   );
 }
-
-// const handleDelete = (index) => {
-//   const newCartItems = [...cart];
-//   const cartItem = newCartItems[index];
-
-//   // Resta 1 a la cantidad del cartItem eliminado
-//   cartItem.quantity -= 1;
-
-//   // Si la cantidad es cero, elimina el cartItem del carrito
-//   if (cartItem.quantity === 0) {
-//     newCartItems.splice(index, 1);
-//   }
-
-//   // Actualiza el estado del carrito y recalcula el total
-//   setCart(newCartItems);
-//   const newTotal = newCartItems.reduce(
-//     (acc, item) => acc + item.price * item.quantity,
-//     0
-//   );
-//   setTotal(newTotal);
-// };
