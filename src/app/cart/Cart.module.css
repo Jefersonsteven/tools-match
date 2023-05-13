@@ -79,6 +79,7 @@
     flex-direction: row;
     justify-content: center; 
     align-items: space-between;
+    margin-bottom: 20px;
 }
 .saleTypeContent{    
     display: none;
@@ -127,8 +128,7 @@
     
 }
 
-.buying1{
-    background-color: #F0960E;
+.buying1, .buying2{
     color: #DCF1D9;
     text-align: center;
     align-items: center;
@@ -136,18 +136,15 @@
     padding-top: 10px;
     width: 200px;
     height: 50px;
-}
-.buying2{
-    background-color: #131713;
-    color: #DCF1D9;
-    width: 200px;
-    height: 50px;
-    
-}
-.buying1, .buying2{
     border: none;
     border-radius: 5px;
     font-size: 2rem;
     font-weight: 500;
     cursor: pointer;
+}
+.buying1{
+    background-color: #F0960E;
+}
+.buying2{
+    background-color: #131713;
 }

@@ -51,6 +51,11 @@ export default function Page() {
     setShowVenta(true);
     setShowCards(false); // Agrega esta línea para ocultar las cards al hacer click en el botón comprar
     setCartItems([]);
+
+    // setTimeout(() => {
+    //   setShowVenta(false);
+    //   setShowCards(true); // Agrega esta línea para mostrar las cards al hacer click en el botón comprar
+    // }, 3000);
   };
 
   const handleRemoveFromCart = (index, price) => {
@@ -173,6 +178,7 @@ export default function Page() {
               >
                 x
               </button>
+
               <Card
                 imageUrl={item.imageUrl}
                 name={item.name}
@@ -184,9 +190,14 @@ export default function Page() {
             <Link href="/home" className={style.buying1}>
               Volver a Productos
             </Link>
-            <button className={style.buying2} onClick={handleBuyClick}>
-              Comprar
-            </button>
+            <Link
+              className={style.buying2}
+              onClick={handleBuyClick}
+              href="/payment"
+              passHref
+            >
+              <span>Comprar</span>
+            </Link>
           </div>
         </div>
       </div>
