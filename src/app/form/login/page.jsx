@@ -7,16 +7,14 @@ import { validateLogIn } from "../assets/validateForms";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
 import { FcGoogle } from "react-icons//fc";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/firebase/firebase.config";
+
 import { AppContext } from "@/context/AppContext";
 import { useContext } from "react";
-
-const provider = new GoogleAuthProvider();
+import { callLoginGoogle } from "../assets/authWithGoogle";
 
 export default function Login() {
   const router = useRouter();
-  const { userSession, setUserSession } = useContext(AppContext);
+  const { setUserSession } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
 
   const [loginData, setLoginData] = useState({
@@ -71,37 +69,6 @@ export default function Login() {
     }
   };
 
-  const callLoginGoogle = (event) => {
-    event.preventDefault();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        console.log(token);
-        const user = result.user;
-        const displayName = user.displayName;
-        const email = user.email;
-        const photoURL = user.photoURL;
-        const uid = user.uid;
-        const providerData = user.providerData;
-
-        console.log("Nombre completo:", displayName);
-        console.log("Correo electrónico:", email);
-        console.log("URL de la foto de perfil:", photoURL);
-        console.log("UID del usuario:", uid);
-        console.log("Datos del proveedor de identidad:", providerData);
-        router.push("/home");
-        setUserSession(true);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-  };
-
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.inputContainer}>
@@ -132,7 +99,7 @@ export default function Login() {
           {viewPwd ? svgView : svgHide}
         </div>
       </div>
-      <div className={styles.sessionChecboxContainer}>
+      <div className={styles.sessionCheckboxContainer}>
         <label className={styles.label}>
           <input type="checkbox" name="test" value="test" />
           Mantener Sesión
@@ -149,7 +116,10 @@ export default function Login() {
           Iniciar sesión
         </button>
         <span>|</span>
-        <button className={`${styles.socialSignIn}`} onClick={callLoginGoogle}>
+        <button
+          className={`${styles.socialSignIn}`}
+          onClick={(event) => callLoginGoogle(event, router, setUserSession)}
+        >
           Iniciar con
           <FcGoogle className={styles.icon} />
         </button>

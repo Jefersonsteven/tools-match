@@ -7,17 +7,16 @@ import { useRouter } from "next/navigation";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
 import { FcGoogle } from "react-icons//fc";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/firebase/firebase.config";
+
 import { AppContext } from "@/context/AppContext";
 import { useContext } from "react";
-
-const provider = new GoogleAuthProvider();
+import { callLoginGoogle } from "../assets/authWithGoogle";
 
 export default function Logout() {
   const router = useRouter();
   const { setUserSession } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
+  const [repeatViewPwd, setRepeatViewPwd] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
 
   const [registerData, setRegisterData] = useState({
@@ -83,37 +82,6 @@ export default function Logout() {
     } catch (error) {
       console.error("Error en la solicitud POST", error);
     }
-  };
-
-  const callLoginGoogle = (event) => {
-    event.preventDefault();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        console.log(token);
-        const user = result.user;
-        const displayName = user.displayName;
-        const email = user.email;
-        const photoURL = user.photoURL;
-        const uid = user.uid;
-        const providerData = user.providerData;
-
-        console.log("Nombre completo:", displayName);
-        console.log("Correo electrónico:", email);
-        console.log("URL de la foto de perfil:", photoURL);
-        console.log("UID del usuario:", uid);
-        console.log("Datos del proveedor de identidad:", providerData);
-        user && router.push("/home");
-        setUserSession(true);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
   };
 
   return (
@@ -212,7 +180,7 @@ export default function Logout() {
           <div className={styles.inputContainer}>
             <label htmlFor="passwordRepeat">confirmar contraseña *</label>
             <input
-              type="password"
+              type={repeatViewPwd ? "text" : "password"}
               name="passwordRepeat"
               onChange={handleChange}
             />
@@ -225,6 +193,12 @@ export default function Logout() {
             >
               {errors.passwordRepeat && errors.passwordRepeat}
             </p>
+            <div
+              className={styles.pwd}
+              onClick={() => setRepeatViewPwd(!repeatViewPwd)}
+            >
+              {repeatViewPwd ? svgView : svgHide}
+            </div>
           </div>
         </div>
         <div>
@@ -255,7 +229,7 @@ export default function Logout() {
           <span>|</span>
           <button
             className={`${styles.socialSignIn}`}
-            onClick={callLoginGoogle}
+            onClick={(event) => callLoginGoogle(event, router, setUserSession)}
           >
             Iniciar con
             <FcGoogle className={styles.icon} />

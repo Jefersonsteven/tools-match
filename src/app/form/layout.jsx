@@ -43,7 +43,7 @@ export default function FormLayout({ children }) {
               >
                 Iniciar Sesión
               </Link>
-              <span>o</span>
+
               <Link
                 className={route === "logout" ? styles.activeLink : styles.link}
                 href="/form/logout"
