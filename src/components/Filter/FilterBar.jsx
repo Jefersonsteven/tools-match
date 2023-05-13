@@ -82,7 +82,7 @@ export default function FilterBar() {
   <CategoryFilter
     categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
     selectedCategory={selectedCategory}
-    onCategoryChange={setSelectedCategory}
+    onCategoryChange={handleCategoryChange}
   />
   <button onClick={handleRentClick}>Arriendo</button>
   <button onClick={handleSaleClick}>Venta</button>
