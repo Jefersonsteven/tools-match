@@ -53,10 +53,8 @@ export default function Page() {
     setCartItems([]);
   };
 
-  const handleRemoveFromCart = (id, price) => {
-    const itemIndex = cartItems.findIndex((item) => item.id === id);
-    const updatedCartItems = [...cartItems];
-    updatedCartItems.splice(itemIndex, 1);
+  const handleRemoveFromCart = (index, price) => {
+    const updatedCartItems = cartItems.filter((item, i) => i !== index);
     setCartItems(updatedCartItems);
     setTotal((prevTotal) => prevTotal - price);
   };
@@ -167,11 +165,11 @@ export default function Page() {
           <h2 className={style.cartTitle2}>
             TOTAL: <span className={style.cartTotal}>${total}</span>
           </h2>
-          {cartItems.map((item) => (
+          {cartItems.map((item, index) => (
             <div className={style.cardCart2} key={item.id}>
               <button
                 className={style.deleteCardCart}
-                onClick={() => handleRemoveFromCart(item.id, item.price)}
+                onClick={() => handleRemoveFromCart(index, item.price)}
               >
                 x
               </button>
