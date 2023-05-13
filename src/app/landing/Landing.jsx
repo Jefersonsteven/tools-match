@@ -25,7 +25,6 @@ export default function LandingPage() {
       <main className={style.mainInfo}>
         <div className={style.mainInfoApp}>
           <h1>
-            {" "}
             ToolsMatch es una aplicación innovadora que se centra en satisfacer
             las necesidades de la Comunidad para la compra y el arriendo de
             herramientas usadas.
@@ -99,6 +98,36 @@ export default function LandingPage() {
             alt="sponsors"
             width={230}
             height={200}
+          />
+          <Image
+            src="/images/sponsors/fischer.png"
+            alt="sponsors"
+            width={230}
+            height={200}
+          />
+          <Image
+            src="/images/sponsors/irimo.png"
+            alt="sponsors"
+            width={130}
+            height={180}
+          />
+          <Image
+            src="/images/sponsors/libus.png"
+            alt="sponsors"
+            width={230}
+            height={200}
+          />
+          <Image
+            src="/images/sponsors/philips.png"
+            alt="sponsors"
+            width={150}
+            height={150}
+          />
+          <Image
+            src="/images/sponsors/skil.png"
+            alt="sponsors"
+            width={180}
+            height={180}
           />
         </div>
       </section>

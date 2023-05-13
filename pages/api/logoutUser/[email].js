@@ -7,17 +7,14 @@ export default async function handler(req, res) {
       const findUser = await fetch(`${URL_BASE}/api/user/${email}`);
       const user = await findUser.json();
       if (user) {
-        const response = await fetch(`${URL_BASE}/api/admin/user/${user.id}`, {
+        await fetch(`${URL_BASE}/api/admin/user/${user.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ logged: false }),
         });
-        const userUpdate = await response.json();
-        res
-          .status(200)
-          .json({ message: "Has cerrado sesión correctamente", userUpdate });
+        res.status(200).json({ message: "Has cerrado sesión correctamente" });
       }
     }
   } catch (error) {
