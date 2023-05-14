@@ -13,7 +13,6 @@ function PostDetail({ }) {
     const pd = postDetail;
 
     const pd2 = {
-        categories: ['herramientas', 'taladros, herramientas electricas'],
         author: {
             rating: 1.0,
             image_perfil: 'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'
@@ -76,8 +75,8 @@ function PostDetail({ }) {
                             </div>
                             <p>{pd.content}</p>
                             <div className={styles.description_categories}>
-                                <h5>Categorias:</h5>
-                                <p>{pd2.categories.join(', ')}</p>
+                            <h5>Categoria:</h5>
+                            <p>{pd.category}</p>
                             </div>
                         </section>
                         <section className={styles.section_user}>

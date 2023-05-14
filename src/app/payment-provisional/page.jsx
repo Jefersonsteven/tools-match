@@ -1,6 +1,5 @@
 "use client";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import Header from "@/components/Header/Header";
 import style from "./payment.module.css";
 import { useState, useEffect } from "react";
 
@@ -27,7 +26,6 @@ export default function Page() {
 
   return (
     <div className={style.paymentContainer}>
-      <Header />
       <div className={style.paymentCard}>
         {payments.map((payment) => (
           <div className={style.payment} key={payment.id}>
@@ -53,7 +51,6 @@ export default function Page() {
           </div>
         ))}
       </div>
-      <Footer />
     </div>
   );
 }
