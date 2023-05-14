@@ -17,8 +17,8 @@ const Cards = () => {
 
   return (
     <AppProvider>
-    <div className="p-4">
-      <div className="grid grid-cols-4 gap-4">
+    <div className="p-4 px-2">
+      <div className="grid grid-cols-4 gap-9">
         {cards.length > 0 && cards.map(tool => (
           <div className="w-full" key={tool.name}>
             <Card

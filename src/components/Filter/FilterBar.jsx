@@ -50,12 +50,11 @@ export default function FilterBar() {
   }
 
     return (
-      <AppProvider>
-        <div className="flex flex-row w-full bg-gray-100">
-          <div className="flex-1 flex flex-row items-center justify-center">
+      <AppProvider>        
+          <div className="flex-1 flex flex-row items-center flex justify-between px-2">
             <div className="mr-2">
               <button
-                className="py-2 px-4 bg-black text-white hover:bg-gray-800"
+                className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4"
                 onClick={() => setShowFilterOptions(!showFilterOptions)}
               >
                 Filter
@@ -74,7 +73,7 @@ export default function FilterBar() {
                   <option value="RENTAL">Arriendo</option>
                   <option value="SALE">Venta</option>
                 </select>
-                <div className="py-2 px-4 bg-gray-200 font-medium">Categoría:</div>
+                <div className="py-2 px-4 bg-gray -200 font-medium">Categoría:</div>
                 <CategoryFilter
                   categories={[
                     'tecnologia',
@@ -88,10 +87,10 @@ export default function FilterBar() {
               </div>
             )}
           </div>
-          <div className="flex-1 flex flex-row items-center justify-center">
-            <div className="mr-2">
+          
+            <div className="flex space-x-4">
               <button
-                className="py-2 px-4 bg-black text-white hover:bg-gray-800"
+                className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4"
                 onClick={() => setShowSortOptions(!showSortOptions)}
               >
                 Sort
@@ -143,8 +142,10 @@ export default function FilterBar() {
                 </button>
               </div>
             )}
-          </div>
-        <SearchBar title={title} onTitleChange={handleTitleChange} />  
-      </div>
+          
+          <div className="flex-1 flex flex-row items-center justify-end pr-4"> 
+        <SearchBar title={title} onTitleChange={handleTitleChange} /> 
+        </div> 
+      
     </AppProvider>
   )}

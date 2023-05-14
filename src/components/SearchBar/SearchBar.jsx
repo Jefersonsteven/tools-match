@@ -16,7 +16,7 @@ export default function SearchBar({ title, onTitleChange }) {
         value={title}
         onChange={handleTitleChange}
       />
-      <button className="absolute top-0 right-0 mt-1.5 mr-1.5 p-5 rounded-full bg-green-500">
+      <button className="absolute top-0 right-0 mt-1.5 mr-1.5 p-5 rounded-full bg-green-500 ml">
         <FaSearch className="text-white" />
       </button>
     </div>
