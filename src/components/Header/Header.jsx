@@ -13,7 +13,7 @@ function Header() {
   const pathname = usePathname();
 
   const { userSession, userId } = useContext(AppContext);
-  const [submenu, setSubmenu] = useState(false);
+  const [submenu, setSubmenu] = useState(false)
 
   return (
     <header className={styles.header}>
@@ -68,7 +68,7 @@ function Header() {
                       </Link>
                     </li>
                     {userSession && <li>
-                      <Link href="/perfil">
+                      <Link href={`/perfil/${userId}`}>
                         Perfil
                       </Link>
                     </li>}
