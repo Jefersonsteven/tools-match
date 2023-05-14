@@ -16,21 +16,19 @@ export default function Footer() {
     };
 
     return (
-        <div>
-          <footer className={style.footer}>
-                <div className={style.footerLogo}>
+        <footer className={style.footer}>
+            <div className={style.footerLogo}>
                 <Link href='#'>
-                    <Image src='/../public/images/logo/toolsMatch.jpg' alt='logo' width={70} height={70}/>
-                    </Link>
-                </div>
-                <div className={style.footerRights}>
-                    <p>Copyright - ToolsMatch</p>
-                </div>
-                <div className={style.footerTerms}>
-                    <Link href="#" onClick={handleOpenModal}>Términos y Condiciones</Link>
-                </div>
-                {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
-            </footer>
-        </div>
+                    <Image src='/../public/images/logo/toolsMatch.jpg' alt='logo' width={70} height={70} />
+                </Link>
+            </div>
+            <div className={style.footerRights}>
+                <p>Copyright - ToolsMatch</p>
+            </div>
+            <div className={style.footerTerms}>
+                <Link href="#" onClick={handleOpenModal}>Términos y Condiciones</Link>
+            </div>
+            {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
+        </footer>
     )
 }
