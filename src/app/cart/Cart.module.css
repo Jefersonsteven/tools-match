@@ -2,18 +2,19 @@
 /*---------------------CARDS - SUGERENCIAS---------------------*/
 .cartContainer{
     display: flex;
+    padding: 20px 50px;
+        justify-content: space-between;
 }
 .cartTitle{
     text-align: left;
-    font-size: 2.5rem;
-    font-weight: 500;
+    font-size: 4rem;
+        font-weight: bold;
+        margin: 0 50px;
     margin-top: 20px;
 }
 .cardCart{
-    display: inline-block;
-    margin-right: 20px;
-    margin-top: 50px;
-    margin-bottom: 20px;
+    display: flex;
+        flex-direction: column;
 }
 .cardCart img{
     width: 200px;    
@@ -29,8 +30,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-
-  }
+}
 
   /*---------------------CARDS - CARRITO---------------------*/
   .cartTitle2 {
@@ -38,7 +38,7 @@
     font-size: 2.5rem;
     font-weight: 500;
     padding: 10px 10px;
-    background-color: #131713;
+    background-color: var(--black);
     width: 100%;
     opacity: .5;
     color: #DCF1D9;
@@ -47,18 +47,22 @@
 }
 
 .cardCart2{
-    display: inline-block;
     margin-right: 50px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    background-color: white;
+    border-radius: 10px;
+    justify-content: space-around;
 }
 
 .cardCart2 img{
     width: 200px;    
     height: 200px;
-    position: relative;
-  display: inline-block;
-  margin-right: 50px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -68,12 +72,14 @@
 }
 
 .cartList2 {
-    background-color: #535E53;
+    background-color: var(--black-light);
     width: 50%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end; 
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: center; 
+    align-items: space-between;
+    margin-bottom: 20px;
 }
 .saleTypeContent{    
     display: none;
@@ -90,12 +96,17 @@
 .deleteCardCart{
     color: red;
     position: absolute;
-    -webkit-text-stroke-width: medium;
+    top: 8px;
+    right: 8px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 /*---------------------BUTTON BUY, GO BACK TO PRODUCTS AND ADD TO CART---------------------*/
 .addToCart{
-    background-color: #F0960E;
+    background-color: var(--orange);
     color: #DCF1D9;
     width: 50%;
     height: 50px;
@@ -117,8 +128,7 @@
     
 }
 
-.buying1{
-    background-color: #F0960E;
+.buying1, .buying2{
     color: #DCF1D9;
     text-align: center;
     align-items: center;
@@ -126,18 +136,15 @@
     padding-top: 10px;
     width: 200px;
     height: 50px;
-}
-.buying2{
-    background-color: #131713;
-    color: #DCF1D9;
-    width: 200px;
-    height: 50px;
-    
-}
-.buying1, .buying2{
     border: none;
     border-radius: 5px;
     font-size: 2rem;
     font-weight: 500;
     cursor: pointer;
+}
+.buying1{
+    background-color: var(--orange);
+}
+.buying2{
+    background-color: var(--black);
 }

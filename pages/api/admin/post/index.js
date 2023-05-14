@@ -8,6 +8,9 @@ export default async function handler(req, res) {
         author: true,
         reviews: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     res.status(200).json(posts);
   } else {

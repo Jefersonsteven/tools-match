@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["us.123rf.com", "res.cloudinary.com", "ejemplo.com","thumbs.dreamstime.com","www.beta-tools.com","www.evans.com.co","images-na.ssl-images-amazon.com", "cdn3.iconfinder.com"],
+    domains: [
+      "us.123rf.com",
+      "res.cloudinary.com",
+      "ejemplo.com","thumbs.dreamstime.com",
+      "www.beta-tools.com","www.evans.com.co",
+      "images-na.ssl-images-amazon.com", 
+      "cdn3.iconfinder.com",
+      "encrypted-tbn0.gstatic.com",
+      "encrypted-tbn3.gstatic.com",
+      "encrypted-tbn2.gstatic.com",
+      "encrypted-tbn1.gstatic.com",
+    ],
   },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,

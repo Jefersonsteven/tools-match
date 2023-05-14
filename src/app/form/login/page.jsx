@@ -1,24 +1,32 @@
 "use client";
-import Link from "next/link";
 import styles from "../form.module.css";
+
+/* React */
+import { useContext } from "react";
 import { useEffect, useState } from "react";
+
+/* NextJs */
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons//fc";
+import { AppContext } from "@/context/AppContext";
+
+/* Helpers */
 import { validateLogIn } from "../assets/validateForms";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
-import { FcGoogle } from "react-icons//fc";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/firebase/firebase.config";
-import { AppContext } from "@/context/AppContext";
-import { useContext } from "react";
+import { callLoginGoogle } from "../assets/authWithGoogle";
+import { newPetition } from "../assets/petition";
+import generatePassword from "../assets/passwordGenerator";
+import saveInLocalStorage from "../assets/saveInLocalStorage";
 
-const provider = new GoogleAuthProvider();
+import Swal from "sweetalert2";
 
 export default function Login() {
   const router = useRouter();
-  const { userSession, setUserSession } = useContext(AppContext);
+  const [rememberSession, setRememberSession] = useState(false);
+  const { setUserSession, setUserData } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
-
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -43,69 +51,91 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log("Entrando en try catch");
-      const config = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: loginData.email,
-          password: loginData.password,
-        }),
+      let dbUserData = null;
+      const body = {
+        email: loginData.email,
+        password: loginData.password,
       };
-      let response = await fetch(
-        `http://localhost:3000/api/loginValidate`,
-        config
+
+      let responseValidate = await newPetition(
+        "PUT",
+        "http://localhost:3000/api/loginValidate",
+        body
       );
-      response = await response.json();
 
-      console.log(response);
+      if (!responseValidate.error) {
+        dbUserData = await newPetition(
+          "GET",
+          `http://localhost:3000/api/user/${loginData.email}`,
+          false
+        );
+      } else {
+        throw new Error(responseValidate.error);
+      }
 
-      if (response.Message === "Has iniciado sesión") {
+      if (dbUserData.logged) {
+        Swal.fire({
+          position: "bottom-end",
+          title: `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
         router.push("/home");
+        setUserData(dbUserData);
         setUserSession(true);
+        rememberSession && saveInLocalStorage("token", dbUserData);
       }
     } catch (error) {
-      console.error("Error en la solicitud POST", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al iniciar sesión en ToolMatch",
+        text: error,
+        footer: "",
+      });
     }
   };
 
-  const callLoginGoogle = (event) => {
+  const handleAuth = async (event) => {
     event.preventDefault();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        console.log(token);
-        const user = result.user;
-        const displayName = user.displayName;
-        const email = user.email;
-        const photoURL = user.photoURL;
-        const uid = user.uid;
-        const providerData = user.providerData;
+    const userDataProvider = await callLoginGoogle();
+    let dbUserData = null;
+    let password = generatePassword();
 
-        console.log("Nombre completo:", displayName);
-        console.log("Correo electrónico:", email);
-        console.log("URL de la foto de perfil:", photoURL);
-        console.log("UID del usuario:", uid);
-        console.log("Datos del proveedor de identidad:", providerData);
-        router.push("/home");
-        setUserSession(true);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+    const dataBody = {
+      ...userDataProvider,
+      password,
+    };
+
+    dbUserData = await newPetition(
+      "GET",
+      `http://localhost:3000/api/user/${userDataProvider.email}`,
+      false
+    );
+
+    if (!dbUserData) {
+      await newPetition("POST", "http://localhost:3000/api/user", dataBody);
+      dbUserData = await newPetition(
+        "GET",
+        `http://localhost:3000/api/user/${userDataProvider.email}`,
+        false
+      );
+    }
+
+    setUserData(dbUserData);
+    setUserSession(true);
+    router.push("/home");
+    Swal.fire({
+      position: "bottom-end",
+      title: `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.inputContainer}>
-        <label htmlFor="">CORREO</label>
+        <label htmlFor="email">Correo</label>
         <input
           type="text"
           name="email"
@@ -121,7 +151,7 @@ export default function Login() {
         </p>
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="">CONTRASEÑA</label>
+        <label htmlFor="password">Contraseña</label>
         <input
           type={viewPwd ? "text" : "password"}
           name="password"
@@ -132,9 +162,14 @@ export default function Login() {
           {viewPwd ? svgView : svgHide}
         </div>
       </div>
-      <div className={styles.sessionChecboxContainer}>
+      <div className={styles.sessionCheckboxContainer}>
         <label className={styles.label}>
-          <input type="checkbox" name="test" value="test" />
+          <input
+            type="checkbox"
+            name="rememberSession"
+            value={rememberSession}
+            onClick={() => setRememberSession(!rememberSession)}
+          />
           Mantener Sesión
         </label>
       </div>
@@ -149,7 +184,7 @@ export default function Login() {
           Iniciar sesión
         </button>
         <span>|</span>
-        <button className={`${styles.socialSignIn}`} onClick={callLoginGoogle}>
+        <button className={`${styles.socialSignIn}`} onClick={handleAuth}>
           Iniciar con
           <FcGoogle className={styles.icon} />
         </button>
