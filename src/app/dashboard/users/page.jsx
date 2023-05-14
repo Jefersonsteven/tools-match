@@ -1,9 +1,14 @@
 "use client";
 import style from "./users.module.css";
-import User from "../components/User";
+import Modal from "../components/Modal";
 import { Fragment, useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa"
-import Form from "../components/Form"
+import { FaSearch } from "react-icons/fa";
+import {MdVerifiedUser} from "react-icons/md";
+import {FaRegUserCircle } from "react-icons/fa";
+import UserForm from "../components/Form";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { icons } from "react-icons";
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -21,14 +26,40 @@ function Users() {
   const [searchTerm, setSearchTerm] = useState("");
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+
+
+  const handleDeleteUser = async (id) => {
+    try {
+      const userDelete = await axios.delete(`http://localhost:3000/api/admin/user/${id}`);
+        console.log(userDelete.data);
+        Swal.fire({
+          title:'Usuario eliminado',
+          text: 'El usuario ha sido eliminado exitosamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });  
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title:'Error al Eliminar el Usuario',
+        text:'Ha ocurrido un error al eliminar el usuario, porfavor intenta de nuevo',
+        icon:'error',
+        confirmButtonText:'Aceptar',
+      })
+      
+    }
+  };
+  
 
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/users');
-        const users = await response.json();
+        const response = await axios('http://localhost:3000/api/admin/user');
+        const users = await response.data;
   
         if (users.length > 0) {
           const columns = Object.keys(users[0]).map((column) => column.toUpperCase());
@@ -41,33 +72,54 @@ function Users() {
     };
   
     fetchUsers();
-  }, []);
+  }, [handleDeleteUser]);
 
 
   const filteredUsuarios = records.filter((usuario) => {
-    return usuario.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  const handleDeleteUser = (id) => {
-    const updatedRecords = records.filter((user)=> user.id !== id);
-    setRecords(updatedRecords)
-      alert("Usuario eliminado con exito")  
+
+  const handleClick = (userId) => {
+    const userToEdit = filteredUsuarios.find((user) => user.id === userId);
+    setEditingUser(userToEdit);
+    setShowModal(true)
   };
 
-  const handleClick = (user) => {
-    setShowForm(true);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const updatedUser = {
+      firstname: formData.get('firstname'),
+      lastname: formData.get('lastname'),
+      email: formData.get('email'),
+      phoneNumber: formData.get('phonenumber'),
+      reports: formData.get('reports'),
+    };
+    axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser)
+      .then((response) => {
+        console.log(response.data);
+        setEditingUser(null);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  const handleCancel = () => {
-    setShowForm(false);
-  };
+  const handleDeleteClick = (firstname, id) => {
+    Swal.fire({
 
-  const handleDeleteClick = (name, id) => {
-    if (
-      window.confirm(`Estas por eliminar al usuario "${name}" estas seguro?`)
-    ) {
-      handleDeleteUser(id);
-    }
+      title:'¿Estás seguro?',
+      text:`Estás por eliminar al usuario "${firstname}"`,
+      icon:'warning',
+      showCancelButton: true,
+      confirmButtonText:'Si, eliminar',
+      cancelButtonText:'Cancelar',      
+    }).then((result)=> {
+      if(result.isConfirmed) {
+        handleDeleteUser(id);
+      }
+    })
   };
 
 
@@ -81,53 +133,58 @@ function Users() {
       <div className={style.contenedorTable}>
       {filteredUsuarios.length > 0 ? (
         <table className={style.table}>
-          <tbody>
+          <thead>
             <tr>
-              {columns
-                .filter((c) => c !== "ID")
-                .map((c, i) => {
-                  return <th key={i}>{c}</th>;
-                })}
-           </tr>     
- {/* ACA */}
-            
-             
+            <th><MdVerifiedUser/></th>
+    <th>NOMBRE</th>
+    <th>APELLIDO</th>
+    <th>EMAIL</th>
+    <th>TELEFONO</th>
+    <th>REPORTS</th>
+           </tr>
+           </thead> 
+               
+           <tbody className={style.bodyTabla}>
             {filteredUsuarios.map((d, i) => (
               <tr className={style.namesTable} key={i}>
-                <td>{d.name}</td>
-                <td>{d.phone}</td>
+                <td><FaRegUserCircle/></td>            
+                <td>{d.firstname}</td>
+                <td>{d.lastname}</td>
                 <td>{d.email}</td>
-                <td>{d.username}</td>
-                <td>{d.phone}</td>
+                <td>{d.phoneNumber}</td>
+                <td>{d.reports}</td>
                 <td>
                   <button
                   className={style.botonEditar}
-                    onClick={()=> handleClick(d.id)}>Editar
+                    onClick={()=> handleClick(d.id)}>EDITAR
                     </button>
                   <button
                     className={style.botonDelete}
-                    onClick={() => handleDeleteClick(d.name, d.id)}
+                    onClick={() => handleDeleteClick(d.firstname, d.id)}
                   >
-                    Bannear
+                    BAN
                   </button>
                 </td>
               </tr>
             ))}
           
 
-  {/* HASTA ACA */}
+
           </tbody>
         </table>
       ):(
         <div className={style.noUsuarios}><p>No hay Usuarios</p></div>
       )}
-      {showForm && (
-        <div className={style.modal}>
-          <div className={style.modalContent}>
-            <Form onCancel={handleCancel} />
-          </div>
-        </div>
-      )}
+     {editingUser && (
+      <Modal show={showModal} onClose={()=> setShowModal(false)}>
+  <UserForm
+  editingUser={editingUser}
+  handleSubmit={handleSubmit}
+  setEditingUser={setEditingUser}
+ />
+ </Modal>
+)}
+
       </div>
     </div>
   );

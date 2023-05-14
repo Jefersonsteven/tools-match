@@ -132,24 +132,3 @@
     border: 2px solid #20bc5e;
     color: white
 }
-
-
-
-
-.swal2-title {
-    font-size: large;
-}
-/* 
-.noUsuarios{
-   
-    color: #f80101;
-    -webkit-text-fill-color: rgb(255, 0, 0);
-    -webkit-text-stroke: 1px rgb(0, 0, 0);
-    padding: 1rem;
-    font-weight: bold;
-    text-align: center;
-    padding-left: 230px;
-    padding-right: 250px;
-    margin-left: 30px;
-
-} */

@@ -1,4 +1,48 @@
-.formContainer{
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+  }
+  
+.label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+.input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+.buttonCancelar {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    background-color: #ff0404;
+    cursor: pointer;
+  }
+  
+.buttonGuardar {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    background-color: #28a745;
+  }
+
+
+
+/* .formContainer{
     display: flex;
     position: absolute;
     width: 552px;
@@ -42,5 +86,5 @@
 .submitButton { 
     
 }
-
+ */
 
