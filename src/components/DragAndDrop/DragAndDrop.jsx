@@ -6,32 +6,33 @@ import { AppContext } from '@/context/AppContext';
 import { validatePost } from '@/app/crear-publicacion/asset/validate';
 
 export const DragAndDrop = () => {
-    const { imageUrls, setImageUrls, errors, setErrors, form } = useContext(AppContext);
-    const [imagesView, setImagesView] = useState([]);
+    const { errors, setErrors, form, setForm } = useContext(AppContext);
+    const [imagesPrint, setImagesPrint] = useState([]);
 
     const handleDelete = (index) => {
-        const newImageView = [...imagesView];
-        const newImageUrl = [...imagesView];
-        newImageView.splice(index, 1);
+        const newImageUrl = [...form.photo];
+        const newImagePrint = [...imagesPrint];
         newImageUrl.splice(index, 1);
-        setImagesView(newImageView);
-        setImageUrls(newImageUrl);
-        validatePost({ ...form, images: [...newImageUrl] }, errors, setErrors)
+        newImagePrint.splice(index, 1);
+        setForm({ ...form, photo: newImageUrl });
+        setImagesPrint(newImagePrint);
+        validatePost({ ...form, photo: [...newImageUrl] }, errors, setErrors)
     };
 
     return (
         <div className={styles.container}>
             <h2>Arrastra y suelta tus imágenes aquí</h2>
             {<Dropzone
-                onDrop={acceptedFiles => {
-                    const newImageUrls = acceptedFiles.map(file => URL.createObjectURL(file));
-                    setImageUrls([...imageUrls, ...acceptedFiles]);
-                    validatePost({ ...form, images: [...imageUrls, ...acceptedFiles] }, errors, setErrors);
-                    setImagesView([...imagesView, ...newImageUrls]);
+                onDrop={(acceptedFiles) => {
+                    const imagesPrints = acceptedFiles.map((file) => URL.createObjectURL(file));
+                    console.log(...acceptedFiles);
+                    setImagesPrint([...imagesPrint, ...imagesPrints])
+                    setForm({ ...form, photo: [...form.photo, ...acceptedFiles] })
+                    validatePost({ ...form, photo: [...form.photo, ...acceptedFiles] }, errors, setErrors);
                 }}>
                 {({ getRootProps, getInputProps }) => (
                     <section className={styles.section}>
-                        {imageUrls.length < 4 ? <div {...getRootProps()}>
+                        {form.photo.length < 4 ? <div {...getRootProps()}>
                             <input
                                 accept={"image/*"}
                                 {...getInputProps()} />
@@ -41,14 +42,15 @@ export const DragAndDrop = () => {
                 )}
             </Dropzone>}
             <div className={styles.images}>
-                {imagesView.map((imageUrl, index) => (
+                {imagesPrint.map((imageUrl, index) => (
                     <div key={index}>
+                        {imageUrl === undefined && <span>loading...</span>}
                         <Image src={imageUrl} width={100} height={100} alt='img' />
                         <button onClick={() => handleDelete(index)}>Eliminar</button>
                     </div>
                 ))}
             </div>
-            <span>{errors.images}</span>
+            <span>{errors.photo}</span>
         </div>
     );
 }

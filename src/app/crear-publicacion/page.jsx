@@ -4,9 +4,11 @@ import { DragAndDrop } from "@/components/DragAndDrop/DragAndDrop";
 import styles from './CreatePost.module.css'
 import { validatePost } from "./asset/validate";
 import { AppContext } from "@/context/AppContext";
+import { uploadImage } from "@/components/Cloudinary/upload";
 
 function CreatePost() {
     const { form, setForm, errors, setErrors } = useContext(AppContext);
+    const [urlsImages, setUrlsImages] = useState([]);
 
     function handleForm(event) {
         const name = event.target.name;
@@ -16,11 +18,48 @@ function CreatePost() {
             setForm({ ...form, [name]: value })
         }
     }
-    // ! mandar la imagen sin code url
+
+    function uploadImages(images, setUrlsImages) {
+        const URLS = images.map(async (file) => await uploadImage(file));
+        Promise.all(URLS).then(data => setUrlsImages(data));
+    }
+
+    async function handleSubmit() {
+        const error = Object.values(errors).some(e => e.length > 0);
+        const post = Object.values(form).some(e => e.length === 0);
+        if (!error && !post) {
+            if (form.photo.length > 0) uploadImages(form.photo, setUrlsImages)
+            while (urlsImages.length < 0) {
+                console.log('Subiendo Imagenes...');
+            }
+            const newPost = { ...form }
+            newPost.photo = [...urlsImages];
+            newPost.price = Math.floor(newPost.price);
+            const post = await fetch("http://localhost:3000/api/post", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newPost)
+            })
+            const data = await post.json();
+
+            setForm({
+                title: '',
+                content: '',
+                photo: [],
+                category: '',
+                price: '',
+                type: '',
+                authorId: userId
+            })
+        }
+    }
+
     return (
         <main className={styles.main}>
             <section>
-                <button onClick={handleForm} name="type" value="LEASE">Arrendar</button>
+                <button onClick={handleForm} name="type" value="RENTAL">Arrendar</button>
                 <button onClick={handleForm} name="type" value="SALE">Vender</button>
             </section>
             <section>
@@ -33,8 +72,8 @@ function CreatePost() {
                     </div>
                     <div>
                         <label htmlFor="">Descripción</label>
-                        <textarea onChange={handleForm} name="description" id="" cols="30" rows="5" value={form.description}></textarea>
-                        <span>{errors.description}</span>
+                        <textarea onChange={handleForm} name="content" id="" cols="30" rows="5" value={form.content}></textarea>
+                        <span>{errors.content}</span>
                     </div>
                     <div>
                         <label htmlFor="">Precio</label>
@@ -54,7 +93,7 @@ function CreatePost() {
             <section>
                 <DragAndDrop />
             </section>
-            <button></button>
+            <button onClick={handleSubmit}>Publicar</button>
         </main>
     );
 }

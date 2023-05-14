@@ -5,44 +5,49 @@ const AppContext = createContext();
 
 function AppProvider({ children }) {
 
+  // * El id del usuario de la Sesion
+  const [userId, setUserId] = useState("932a3adf-9203-4b25-89ca-777b00411730");
 
-  // * Formulario para crear publicaciones
-  const [imageUrls, setImageUrls] = useState([]);
+  // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
     title: '',
-    description: '',
-    price: '',
+    content: '',
+    photo: [],
     category: '',
+    price: '',
     type: '',
-    images: imageUrls
+    authorId: userId
   });
 
   const [errors, setErrors] = useState({
     title: '',
-    description: '',
-    price: '',
+    content: '',
+    photo: '',
     category: '',
+    price: '',
     type: '',
-    images: ''
+    authorId: ''
   });
 // *---------------------------------------* //
 
-  const [userId, setUserId] = useState("932a3adf-9203-4b25-89ca-777b00411730");
+  // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
 
+  // * Filtros *//
   const [selectedCategory, setSelectedCategory] = useState("");
   const [rent, setRent] = useState("");
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
-  /* Crear estado para saber si el usuario esta logeado o no (booleano) */
+  // *----------------------------------* //
+
+
+  //* Crear estado para saber si el usuario esta logeado o no (booleano)
   const [userSession, setUserSession] = useState(false);
 
   return (
     <AppContext.Provider
       value={{
-        imageUrls,
-        setImageUrls,
         form,
         setForm,
         errors,

@@ -2,15 +2,14 @@ export function validatePost(form, errors, setErrors) {
     const newErrors = { ...errors };
 
     //? Validate Title
-    if (!/^[a-zA-Z0-9/]{8,}$/.test(form.title)) newErrors.title = "Debe tener minimo 8 caracteres y sin simbolos";
+    if (!/^[a-zA-Z0-9/ ]{8,}$/.test(form.title)) newErrors.title = "Debe tener minimo 8 caracteres y sin simbolos";
     else newErrors.title = ""
     if (form.title === "") newErrors.title = "Llenar este espacio"
 
     //? Validate Description
-    // /^(.{17, 500})$/.test(form.description)
-    if (form.description.length <= 17 || form.description.length > 500) newErrors.description = "Debe tener entre 17 y 500 caracteres";
-    else newErrors.description = ""
-    if (form.description === "") newErrors.description = "Llenar este espacio"
+    if (form.content.length <= 17 || form.content.length > 500) newErrors.content = "Debe tener entre 17 y 500 caracteres";
+    else newErrors.content = ""
+    if (form.content === "") newErrors.content = "Llenar este espacio"
 
     //? Validate Price
     if (form.price === "0") newErrors.price = "El precio no puede ser 0";
@@ -22,8 +21,8 @@ export function validatePost(form, errors, setErrors) {
     else newErrors.category = ""
 
     //? Validate Category
-    if (form.images.length === 0) newErrors.images = "Sube minimo una imagen";
-    else newErrors.images = ""
+    if (form.photo.length === 0) newErrors.photo = "Sube minimo una imagen";
+    else newErrors.photo = ""
 
     //*
     setErrors(newErrors);
