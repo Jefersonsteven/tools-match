@@ -55,7 +55,7 @@ function Header() {
                   <FaUserCircle color="white" />
                 </Link>
 
-                <Link href="/team">
+                <Link href="/cart">
                   <FaShoppingCart color="white" />
                 </Link>
               </div>

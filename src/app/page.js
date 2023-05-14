@@ -1,11 +1,12 @@
-"use client";
-// import ShoppingCart from "@/components/shoppingCart/ShoppingCart";
-import LandingPage from "./landing/Landing";
+// "use client";
+// import LandingPage from "./landing/Landing";
+import Payment from "./payment-provisional/page";
 
 export default function Landing() {
   return (
     <>
-      <LandingPage />
+      {/* <LandingPage /> */}
+      <Payment />
     </>
   );
 }
