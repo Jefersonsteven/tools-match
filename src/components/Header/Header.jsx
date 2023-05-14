@@ -7,12 +7,13 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { AppContext } from "@/context/AppContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 function Header() {
   const pathname = usePathname();
 
   const { userSession } = useContext(AppContext);
+  const [submenu, setSubmenu] = useState(false);
 
   return (
     <header className={styles.header}>
@@ -40,22 +41,37 @@ function Header() {
               </li>
               <li>
                 {pathname !== "/" && (
-                  <Link
-                    href={userSession ? "/crear-publicaciones" : "/form/login"}
-                  >
-                    Crear Publicaciones
-                  </Link>
+                  <Link href="/crear-publicacion">Crear Publicaciones</Link>
                 )}
               </li>
             </ul>
 
             {pathname !== "/" && (
               <div className={styles.nav}>
-                <Link href={userSession ? "/home" : "/form/login"}>
-                  <FaUserCircle color="white" />
-                </Link>
+                <div className={styles.perfil}>
+                  <FaUserCircle
+                    onClick={() => setSubmenu((state) => !state)}
+                    color="white"
+                  />
+                  <ul
+                    className={
+                      submenu ? styles.openSubmenu : styles.closeSubmenu
+                    }
+                  >
+                    <li>
+                      <Link href={userSession ? "/" : "/form/login"}>
+                        {userSession ? "Cerrar Sesion" : "Iniciar Sesion"}
+                      </Link>
+                    </li>
+                    {userSession && (
+                      <li>
+                        <Link href="/perfil">Perfil</Link>
+                      </li>
+                    )}
+                  </ul>
+                </div>
 
-                <Link href="/team">
+                <Link href="/cart">
                   <FaShoppingCart color="white" />
                 </Link>
               </div>

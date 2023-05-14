@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "./Card.module.css";
+import Image from "next/image";
 
 const Card = ({ name, description, imageUrl, price, saleType, perDay }) => {
   return (
     <div className={`${styles.cardContainer} bg-white rounded-md p-4`}>
-      <img
+      <Image
+        width={100}
+        height={100}
         src={imageUrl}
         alt={name}
         className={`${styles.cardImage} rounded-md`}

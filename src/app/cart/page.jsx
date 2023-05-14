@@ -11,9 +11,13 @@ import Footer from "../../components/footer/Footer";
 export default function Page() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showVenta, setShowVenta] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [showCards, setShowCards] = useState(true);
+
+  const [cartItems, setCartItems] = useState(() => {
+    const items = localStorage.getItem("cartItems");
+    return items ? JSON.parse(items) : [];
+  });
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -30,6 +34,7 @@ export default function Page() {
           name: tool.name,
           price: tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler,
           saleType: tool.price.alquiler > 0 ? "Arriendo" : "Venta",
+          added: false, // Para mostrar el mensaje de "Agregado al carrito"
         },
       ]);
     } else {
@@ -40,38 +45,33 @@ export default function Page() {
     }
   };
 
+  const handleBuyClick = () => {
+    const updatedCartItems = cartItems.filter((item) => !item.added);
+    setCartItems(updatedCartItems);
+    setShowVenta(true);
+    setShowCards(false); // Agrega esta línea para ocultar las cards al hacer click en el botón comprar
+    setCartItems([]);
+
+    // setTimeout(() => {
+    //   setShowVenta(false);
+    //   setShowCards(true); // Agrega esta línea para mostrar las cards al hacer click en el botón comprar
+    // }, 3000);
+  };
+
+  const handleRemoveFromCart = (index, price) => {
+    const updatedCartItems = cartItems.filter((item, i) => i !== index);
+    setCartItems(updatedCartItems);
+    setTotal((prevTotal) => prevTotal - price);
+  };
+
   useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
     let sum = 0;
     cartItems.forEach((cartItem) => {
       sum += cartItem.price;
     });
     setTotal(sum);
   }, [cartItems]);
-
-  const handleCloseCards = (showCards, setShowCards) => {
-    setShowCards(false);
-  };
-
-  // const handleDelete = (index) => {
-  //   const newCartItems = [...cart];
-  //   const cartItem = newCartItems[index];
-
-  //   // Resta 1 a la cantidad del cartItem eliminado
-  //   cartItem.quantity -= 1;
-
-  //   // Si la cantidad es cero, elimina el cartItem del carrito
-  //   if (cartItem.quantity === 0) {
-  //     newCartItems.splice(index, 1);
-  //   }
-
-  //   // Actualiza el estado del carrito y recalcula el total
-  //   setCart(newCartItems);
-  //   const newTotal = newCartItems.reduce(
-  //     (acc, item) => acc + item.price * item.quantity,
-  //     0
-  //   );
-  //   setTotal(newTotal);
-  // };
 
   const tools = [
     {
@@ -111,15 +111,31 @@ export default function Page() {
         "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR7XtSHjObVZ1gYSBGsiAjf1cYI66F5hAFeGP8kBtwabxOBdjYE8VypFH-OBj8Xf7M2mcL5w4RUEyEGrnQLkgM4lpE0wKApMy1Wgtmjs_czzJWBi9O66-W6tL6RUnfZPJ3rvw&usqp=CAc",
       description: "Amoladora angular de 4.5 pulgadas con velocidad variable",
     },
+    {
+      name: "Cortacésped",
+      category: "Jardinería",
+      rating: 4,
+      price: { venta: 175, alquiler: 0 },
+      imageUrl:
+        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRVszEOu1Pe7afrlEKJcGK__yfbJ4n62G1HTxzlT6N4TTSDmOPLTlh_iOcl4R3aCoWhUCpeT_luIlZmlh8grNTOIIEKpKMeJYdQ9YYQt7CpX7wY69myeitr9zaSaqIYAS_bPIY&usqp=CAc",
+      description: "Cortacésped a gasolina de 21 pulgadas con tracción trasera",
+    },
+    {
+      name: "Pala",
+      category: "Excavación",
+      rating: 2,
+      price: { venta: 40, alquiler: 0 },
+      imageUrl:
+        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQWsdFgFwKeh0QOobzWmz7Hg7-Eh49BHDpHQo3cumjg4Ygwea7UnGu3A9B0ZvwLxmS87SUwux3UGdIL_0qDlxr1nrwFEZmUvkye2ljFcEhyMrBmO0Oy3GF4R5KuUEfNl7PrXA&usqp=CAc",
+      description: "Pala cuadrada con mango de madera de 48 pulgadas",
+    },
   ];
 
   return (
     <div className="p-4">
+      <h2 className={style.cartTitle}>Te Puede Interesar</h2>
       <div className={style.cartContainer}>
         <div className={style.cartList}>
-          <h2 className={style.cartTitle}>
-            Tenemos Algunas Sugerencias Para Ti
-          </h2>
           {tools.map((tool) => (
             <div className={style.cardCart} key={tool.name}>
               <Card
@@ -141,7 +157,10 @@ export default function Page() {
                   </div>
                 )}
               </Card>
-              <button onClick={() => handleAddToCart(tool)}>
+              <button
+                className={style.addToCart}
+                onClick={() => handleAddToCart(tool)}
+              >
                 Agregar al Carrito
               </button>
             </div>
@@ -151,19 +170,19 @@ export default function Page() {
           <h2 className={style.cartTitle2}>
             TOTAL: <span className={style.cartTotal}>${total}</span>
           </h2>
-          {cartItems.map((cartItem, index) => (
-            <div className={style.cardCart2} key={index}>
+          {cartItems.map((item, index) => (
+            <div className={style.cardCart2} key={item.id}>
               <button
-                className={style.cardDelete}
-                onClick={() => handleCloseCards(showCards, setShowCards)}
+                className={style.deleteCardCart}
+                onClick={() => handleRemoveFromCart(index, item.price)}
               >
                 x
               </button>
+
               <Card
-                imageUrl={cartItem.imageUrl}
-                name={cartItem.name}
-                price={cartItem.price}
-                saleType={cartItem.saleType}
+                imageUrl={item.imageUrl}
+                name={item.name}
+                price={`${item.price}`}
               />
             </div>
           ))}
@@ -171,11 +190,17 @@ export default function Page() {
             <Link href="/home" className={style.buying1}>
               Volver a Productos
             </Link>
-            <button className={style.buying2}>Comprar</button>
+            <Link
+              className={style.buying2}
+              onClick={handleBuyClick}
+              href="/payment-provisional"
+              passHref
+            >
+              <span>Comprar</span>
+            </Link>
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

@@ -1,12 +1,10 @@
-"use client";
-// import ShoppingCart from "@/components/shoppingCart/ShoppingCart";
+// "use client";
 import LandingPage from "./landing/Landing";
 
 export default function Landing() {
   return (
     <>
       <LandingPage />
-      {/* <ShoppingCart /> */}
     </>
   );
 }

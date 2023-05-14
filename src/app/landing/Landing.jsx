@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Modal from "./modal";
 import Header from "@/components/Header/Header";
+import Footer from "@/components/footer/Footer";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -99,29 +100,38 @@ export default function LandingPage() {
             width={230}
             height={200}
           />
+          <Image
+            src="/images/sponsors/fischer.png"
+            alt="sponsors"
+            width={230}
+            height={200}
+          />
+          <Image
+            src="/images/sponsors/irimo.png"
+            alt="sponsors"
+            width={130}
+            height={180}
+          />
+          <Image
+            src="/images/sponsors/libus.png"
+            alt="sponsors"
+            width={230}
+            height={200}
+          />
+          <Image
+            src="/images/sponsors/philips.png"
+            alt="sponsors"
+            width={150}
+            height={150}
+          />
+          <Image
+            src="/images/sponsors/skil.png"
+            alt="sponsors"
+            width={180}
+            height={180}
+          />
         </div>
       </section>
-      <footer className={style.footer}>
-        <div className={style.footerLogo}>
-          <Link href="/home">
-            <Image
-              src="/images/logo/toolsMatch.jpg"
-              alt="logo"
-              width={70}
-              height={70}
-            />
-          </Link>
-        </div>
-        <div className={style.footerRights}>
-          <p>Copyright - ToolsMatch</p>
-        </div>
-        <div className={style.footerTerms}>
-          <Link href="#" onClick={handleOpenModal}>
-            Términos y Condiciones
-          </Link>
-        </div>
-        {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
-      </footer>
     </div>
   );
 }
