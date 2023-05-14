@@ -38,7 +38,7 @@
     font-size: 2.5rem;
     font-weight: 500;
     padding: 10px 10px;
-    background-color: #131713;
+    background-color: var(--black);
     width: 100%;
     opacity: .5;
     color: #DCF1D9;
@@ -72,8 +72,8 @@
 }
 
 .cartList2 {
-    background-color: #535E53;
-    width: 40%;
+    background-color: var(--black-light);
+    width: 50%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -106,7 +106,7 @@
 
 /*---------------------BUTTON BUY, GO BACK TO PRODUCTS AND ADD TO CART---------------------*/
 .addToCart{
-    background-color: #F0960E;
+    background-color: var(--orange);
     color: #DCF1D9;
     width: 50%;
     height: 50px;
@@ -143,8 +143,8 @@
     cursor: pointer;
 }
 .buying1{
-    background-color: #F0960E;
+    background-color: var(--orange);
 }
 .buying2{
-    background-color: #131713;
+    background-color: var(--black);
 }
