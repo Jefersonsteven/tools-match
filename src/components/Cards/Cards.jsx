@@ -19,13 +19,14 @@ const Cards = () => {
     <AppProvider>
     <div className="p-4 px-2">
       <div className="grid grid-cols-4 gap-9">
-        {cards.length > 0 && cards.map(tool => (
-          <div className="w-full" key={tool.name}>
+        {cards.length > 0 && cards.slice(0,20).map(tool => (
+          <div className="w-full" key={tool.id}>
             <Card
-              photo={tool.photo}
+              photo={tool.photo[0]}
               title={tool.title}
               price={tool.price}
               type={`${tool.type==='RENTAL' ? "Arriendo" : "Venta"}`}
+              id={tool.id}
               //perDay={`${tool.price.alquiler > 0 ? "Por dia" : ""}`}
                           />
           </div>

@@ -52,6 +52,7 @@ export default function FilterBar() {
     return (
       <AppProvider>        
           <div className="flex-1 flex flex-row items-center flex justify-between px-2">
+            <div>
             <div className="mr-2">
               <button
                 className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4"
@@ -140,10 +141,10 @@ export default function FilterBar() {
                 >
                   Rating (Des)
                 </button>
-              </div>
+              </div>                       
             )}
-          
-          <div className="flex-1 flex flex-row items-center justify-end pr-4"> 
+            </div>          
+          <div className="flex-1 flex flex-row items-center justify-end pr-4 w-96"> 
         <SearchBar title={title} onTitleChange={handleTitleChange} /> 
         </div> 
       
