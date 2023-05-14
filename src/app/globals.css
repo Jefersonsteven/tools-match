@@ -11,6 +11,8 @@
   --orange: #F0960E;
   --white-dark: #BDCFBA;
   --black-light: #535E53;
+  --green: #21BF60;
+
 }
 
 @media (prefers-color-scheme: dark) {
