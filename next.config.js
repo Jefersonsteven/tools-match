@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["us.123rf.com"],
+    domains: ["us.123rf.com", "res.cloudinary.com"],
   },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,

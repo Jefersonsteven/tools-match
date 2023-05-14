@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Modal from "./modal";
 import Header from "@/components/Header/Header";
+import Footer from "@/components/footer/Footer";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -131,27 +132,6 @@ export default function LandingPage() {
           />
         </div>
       </section>
-      <footer className={style.footer}>
-        <div className={style.footerLogo}>
-          <Link href="/home">
-            <Image
-              src="/images/logo/toolsMatch.jpg"
-              alt="logo"
-              width={70}
-              height={70}
-            />
-          </Link>
-        </div>
-        <div className={style.footerRights}>
-          <p>Copyright - ToolsMatch</p>
-        </div>
-        <div className={style.footerTerms}>
-          <Link href="#" onClick={handleOpenModal}>
-            Términos y Condiciones
-          </Link>
-        </div>
-        {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
-      </footer>
     </div>
   );
 }
