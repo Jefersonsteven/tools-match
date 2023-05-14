@@ -1,32 +1,26 @@
 "use client"
 import Cards from "@/components/Cards/Cards";
 import FilterBar from "@/components/Filter/FilterBar";
-import SearchBarconCSS from "@/components/SearchBar/SearchBarconCSS";
-import { AppContext, AppProvider } from "@/context/AppContext";
-import { useContext, useEffect } from 'react';
 
 function Home() {
 
-  const { cards, setCards, tools, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy } = useContext(AppContext);
-
- 
-    return (
-      <AppProvider>
+   return (   
       <div className="flex flex-col h-screen">
-        <div className="flex-none">
-          <SearchBarconCSS/>
+        <div className="w-full bg-gray-100">
+          <div className="flex justify-between max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <div className="flex">
+              <FilterBar />
+            </div>            
+            </div>
         </div>
         <div className="flex flex-1">
-          <div className="w-1/4">
-            <FilterBar/>            
-          </div>
-          <div className="w-3/4">
-            <Cards/>
+          <div className="w-full">
+            <div className="flex flex-wrap justify-center">
+              <Cards className="mb-4" />
+            </div>
           </div>
         </div>
       </div>
-      </AppProvider>
-    );
-  }
+  )}
   
   export default Home;

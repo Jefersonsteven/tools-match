@@ -1,9 +1,8 @@
 import React from 'react';
 
-export default function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) { 
-  
+export default function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) {   
 
-  console.log('estoyenCategoryFilter', selectedCategory)
+  //console.log('estoyenCategoryFilter', selectedCategory)
 
   return (
     <div>

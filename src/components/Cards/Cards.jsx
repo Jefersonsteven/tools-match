@@ -8,10 +8,6 @@ import axios from 'axios';
 const Cards = () => {
   const { cards, setCards } = useContext(AppContext);
 
-  // const tools = async () => {
-  //     const response = await axios.get('http://localhost:3000/api/admin/post');
-  //     return response.data;
-  //   }
   
     useEffect(() => {
       if (cards.length ===0)
