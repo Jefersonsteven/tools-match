@@ -16,6 +16,6 @@ export const newPetition = async (method, url, dataToSend) => {
     let data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    console.log("in petition: ", error);
   }
 };

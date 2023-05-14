@@ -18,12 +18,15 @@ import { svgHide } from "../assets/hidePwd";
 import { callLoginGoogle } from "../assets/authWithGoogle";
 import { newPetition } from "../assets/petition";
 import generatePassword from "../assets/passwordGenerator";
+import saveInLocalStorage from "../assets/saveInLocalStorage";
+
+import Swal from "sweetalert2";
 
 export default function Login() {
   const router = useRouter();
+  const [rememberSession, setRememberSession] = useState(false);
   const { setUserSession, setUserData } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
-
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -47,44 +50,55 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    /* Email http://localhost:3000/api/user/email => del input 
-      Guardar en un estado (Context)
-    */
     try {
-      const dataBody = {
+      let dbUserData = null;
+      const body = {
         email: loginData.email,
         password: loginData.password,
       };
 
-      await newPetition(
+      let responseValidate = await newPetition(
         "PUT",
         "http://localhost:3000/api/loginValidate",
-        dataBody
+        body
       );
 
-      let data = await newPetition(
-        "GET",
-        `http://localhost:3000/api/user/${loginData.email}`,
-        false
-      );
+      if (!responseValidate.error) {
+        dbUserData = await newPetition(
+          "GET",
+          `http://localhost:3000/api/user/${loginData.email}`,
+          false
+        );
+      } else {
+        throw new Error(responseValidate.error);
+      }
 
-      console.log(data);
-      console.log(data.logged);
-
-      if (data.logged) {
+      if (dbUserData.logged) {
+        Swal.fire({
+          position: "bottom-end",
+          title: `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
         router.push("/home");
-        setUserData(data);
+        setUserData(dbUserData);
         setUserSession(true);
+        rememberSession && saveInLocalStorage("token", dbUserData);
       }
     } catch (error) {
-      console.error("Error en la solicitud POST", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al iniciar sesión en ToolMatch",
+        text: error,
+        footer: "",
+      });
     }
   };
 
   const handleAuth = async (event) => {
     event.preventDefault();
     const userDataProvider = await callLoginGoogle();
-    let userData = null;
+    let dbUserData = null;
     let password = generatePassword();
 
     const dataBody = {
@@ -94,24 +108,30 @@ export default function Login() {
 
     /*  await newPetition("POST", "http://localhost:3000/api/user", dataBody); */
 
-    userData = await newPetition(
+    dbUserData = await newPetition(
       "GET",
       `http://localhost:3000/api/user/${userDataProvider.email}`,
       false
     );
 
-    if (!userData) {
+    if (!dbUserData) {
       await newPetition("POST", "http://localhost:3000/api/user", dataBody);
-      userData = await newPetition(
+      dbUserData = await newPetition(
         "GET",
         `http://localhost:3000/api/user/${userDataProvider.email}`,
         false
       );
     }
 
-    setUserData(userData);
-    router.push("/home");
+    setUserData(dbUserData);
     setUserSession(true);
+    router.push("/home");
+    Swal.fire({
+      position: "bottom-end",
+      title: `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
   };
 
   return (
@@ -146,7 +166,12 @@ export default function Login() {
       </div>
       <div className={styles.sessionCheckboxContainer}>
         <label className={styles.label}>
-          <input type="checkbox" name="test" value="test" />
+          <input
+            type="checkbox"
+            name="rememberSession"
+            value={rememberSession}
+            onClick={() => setRememberSession(!rememberSession)}
+          />
           Mantener Sesión
         </label>
       </div>

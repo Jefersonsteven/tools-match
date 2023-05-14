@@ -51,7 +51,7 @@ function Header() {
 
             {pathname !== "/" && (
               <div className={styles.nav}>
-                <Link href={userSession ? "/" : "/form/login"}>
+                <Link href={userSession ? "/home" : "/form/login"}>
                   <FaUserCircle color="white" />
                 </Link>
 

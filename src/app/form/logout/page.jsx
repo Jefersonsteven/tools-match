@@ -19,6 +19,8 @@ import { callLoginGoogle } from "../assets/authWithGoogle";
 import { newPetition } from "../assets/petition";
 import generatePassword from "../assets/passwordGenerator";
 
+import Swal from "sweetalert2";
+
 export default function Logout() {
   const router = useRouter();
   const { setUserSession, setUserData } = useContext(AppContext);
@@ -77,17 +79,34 @@ export default function Logout() {
       );
 
       if (data.newUser) {
-        router.push("/form/login");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Tu cuenta ha sido creada, redirigiendo hacia el logIn",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        setTimeout(() => {
+          router.push("/form/login");
+        }, 3000);
+      } else {
+        throw new Error(data.error);
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al crear tu cuenta en ToolMatch",
+        text: error,
+        footer: "",
+      });
     }
   };
-  /* otro handler para autenticarse con google y enviar los datos a la db */
+
   const handleAuth = async (event) => {
     event.preventDefault();
     const userDataProvider = await callLoginGoogle();
-    let userData = null;
+    let dbUserData = null;
     let password = generatePassword();
 
     const dataBody = {
@@ -95,26 +114,32 @@ export default function Logout() {
       password,
     };
 
-    /*  await newPetition("POST", "http://localhost:3000/api/user", dataBody); */
-
-    userData = await newPetition(
+    dbUserData = await newPetition(
       "GET",
       `http://localhost:3000/api/user/${userDataProvider.email}`,
       false
     );
 
-    if (!userData) {
+    if (!dbUserData) {
       await newPetition("POST", "http://localhost:3000/api/user", dataBody);
-      userData = await newPetition(
+      dbUserData = await newPetition(
         "GET",
         `http://localhost:3000/api/user/${userDataProvider.email}`,
         false
       );
     }
 
-    setUserData(userData);
-    router.push("/home");
+    setUserData(dbUserData);
+    Swal.fire({
+      title: `Bienvenido ${dbUserData.firstname} ${dbUserData.lastname}`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
     setUserSession(true);
+
+    setTimeout(() => {
+      router.push("/form/login");
+    }, 3000);
   };
 
   return (
