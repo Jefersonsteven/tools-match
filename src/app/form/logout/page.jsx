@@ -1,23 +1,31 @@
 "use client";
-import Link from "next/link";
 import styles from "../form.module.css";
+
+/* React */
+import { useContext } from "react";
 import { useEffect, useState } from "react";
-import { validateSignIn } from "../assets/validateForms";
+
+/* NextJs */
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons//fc";
+import { AppContext } from "@/context/AppContext";
+
+/* Helpers */
+import { validateSignIn } from "../assets/validateForms";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
-import { FcGoogle } from "react-icons//fc";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/firebase/firebase.config";
-import { AppContext } from "@/context/AppContext";
-import { useContext } from "react";
+import { callLoginGoogle } from "../assets/authWithGoogle";
+import { newPetition } from "../assets/petition";
+import generatePassword from "../assets/passwordGenerator";
 
-const provider = new GoogleAuthProvider();
+import Swal from "sweetalert2";
 
 export default function Logout() {
   const router = useRouter();
-  const { setUserSession } = useContext(AppContext);
+  const { setUserSession, setUserData } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
+  const [repeatViewPwd, setRepeatViewPwd] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
 
   const [registerData, setRegisterData] = useState({
@@ -56,64 +64,82 @@ export default function Logout() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log("Entrando en try catch");
-      const config = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstname: registerData.name,
-          lastname: registerData.surname,
-          email: registerData.email,
-          password: registerData.password,
-          phoneNumber: registerData.phoneNumber,
-        }),
+      const dataBody = {
+        firstname: registerData.name,
+        lastname: registerData.surname,
+        email: registerData.email,
+        password: registerData.password,
+        phoneNumber: registerData.phoneNumber,
       };
-      let response = await fetch(
+
+      let data = await newPetition(
+        "POST",
         "http://localhost:3000/api/registerUser",
-        config
+        dataBody
       );
 
-      response = await response.json();
+      if (data.newUser) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Tu cuenta ha sido creada, redirigiendo hacia el logIn",
+          showConfirmButton: false,
+          timer: 3000,
+        });
 
-      console.log(response);
-
-      router.push("/form/login");
+        setTimeout(() => {
+          router.push("/form/login");
+        }, 3000);
+      } else {
+        throw new Error(data.error);
+      }
     } catch (error) {
-      console.error("Error en la solicitud POST", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al crear tu cuenta en ToolMatch",
+        text: error,
+        footer: "",
+      });
     }
   };
 
-  const callLoginGoogle = (event) => {
+  const handleAuth = async (event) => {
     event.preventDefault();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        console.log(token);
-        const user = result.user;
-        const displayName = user.displayName;
-        const email = user.email;
-        const photoURL = user.photoURL;
-        const uid = user.uid;
-        const providerData = user.providerData;
+    const userDataProvider = await callLoginGoogle();
+    let dbUserData = null;
+    let password = generatePassword();
 
-        console.log("Nombre completo:", displayName);
-        console.log("Correo electrónico:", email);
-        console.log("URL de la foto de perfil:", photoURL);
-        console.log("UID del usuario:", uid);
-        console.log("Datos del proveedor de identidad:", providerData);
-        user && router.push("/home");
-        setUserSession(true);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+    const dataBody = {
+      ...userDataProvider,
+      password,
+    };
+
+    dbUserData = await newPetition(
+      "GET",
+      `http://localhost:3000/api/user/${userDataProvider.email}`,
+      false
+    );
+
+    if (!dbUserData) {
+      await newPetition("POST", "http://localhost:3000/api/user", dataBody);
+      dbUserData = await newPetition(
+        "GET",
+        `http://localhost:3000/api/user/${userDataProvider.email}`,
+        false
+      );
+    }
+
+    setUserData(dbUserData);
+    Swal.fire({
+      title: `Bienvenido ${dbUserData.firstname} ${dbUserData.lastname}`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    setUserSession(true);
+
+    setTimeout(() => {
+      router.push("/form/login");
+    }, 3000);
   };
 
   return (
@@ -212,7 +238,7 @@ export default function Logout() {
           <div className={styles.inputContainer}>
             <label htmlFor="passwordRepeat">confirmar contraseña *</label>
             <input
-              type="password"
+              type={repeatViewPwd ? "text" : "password"}
               name="passwordRepeat"
               onChange={handleChange}
             />
@@ -225,6 +251,12 @@ export default function Logout() {
             >
               {errors.passwordRepeat && errors.passwordRepeat}
             </p>
+            <div
+              className={styles.pwd}
+              onClick={() => setRepeatViewPwd(!repeatViewPwd)}
+            >
+              {repeatViewPwd ? svgView : svgHide}
+            </div>
           </div>
         </div>
         <div>
@@ -253,10 +285,7 @@ export default function Logout() {
             Registrarse
           </button>
           <span>|</span>
-          <button
-            className={`${styles.socialSignIn}`}
-            onClick={callLoginGoogle}
-          >
+          <button className={`${styles.socialSignIn}`} onClick={handleAuth}>
             Iniciar con
             <FcGoogle className={styles.icon} />
           </button>
