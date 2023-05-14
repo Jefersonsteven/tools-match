@@ -1,4 +1,103 @@
 .main {
+    padding-top: 50px;
     width: 100%;
     height: 100vh;
+    display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-bottom: 50px;
+    }
+    
+    .main span {
+        color: var(--red);
+        height: 24px;
+    }
+    
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .form h2 {
+        font-size: 4rem;
+        font-weight: bold;
+    }
+    
+    .form form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .form form div {
+        max-width: 534px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .form form div input,
+    .form form div select {
+        height: 48px;
+        padding-left: 10px;
+        border-radius: 5px;
+    }
+    
+    .form form div label {
+        font-weight: 700;
+    }
+    
+    .form form div textarea {
+        border-radius: 5px;
+        padding: 10px;
+    }
+    
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding-left: 50px;
+    }
+    
+    .buttons button {
+        width: 265px;
+        height: 66px;
+        border-radius: 5px;
+        color: var(--white);
+    }
+    
+    .buttons button:hover {
+        background-color: var(--black);
+    }
+    
+    .desactived {
+        background-color: var(--black-light);
+    }
+    
+    .active {
+        background-color: var(--green);
+    }
+    
+    
+    .button {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .button button {
+        width: 226px;
+        height: 56px;
+        border-radius: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--black);
+        font-weight: bold;
+        color: var(--white);
+    }
+    
+    .button button:hover {
+        background-color: var(--white-dark);
+        color: var(--blac);
 }

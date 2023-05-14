@@ -20,9 +20,13 @@ export function validatePost(form, errors, setErrors) {
     if (form.category === "") newErrors.category = "Escoge una categoria";
     else newErrors.category = ""
 
-    //? Validate Category
+    //? Validate Images
     if (form.photo.length === 0) newErrors.photo = "Sube minimo una imagen";
     else newErrors.photo = ""
+
+    //? Validate Type
+    if (form.type === "") newErrors.type = "Escoge una opcion"
+    else newErrors.type = ""
 
     //*
     setErrors(newErrors);

@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Dropzone from 'react-dropzone';
 import styles from './DragAndDrop.module.css';
 import Image from 'next/image';
 import { AppContext } from '@/context/AppContext';
 import { validatePost } from '@/app/crear-publicacion/asset/validate';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 export const DragAndDrop = () => {
     const { errors, setErrors, form, setForm } = useContext(AppContext);
@@ -25,7 +26,6 @@ export const DragAndDrop = () => {
             {<Dropzone
                 onDrop={(acceptedFiles) => {
                     const imagesPrints = acceptedFiles.map((file) => URL.createObjectURL(file));
-                    console.log(...acceptedFiles);
                     setImagesPrint([...imagesPrint, ...imagesPrints])
                     setForm({ ...form, photo: [...form.photo, ...acceptedFiles] })
                     validatePost({ ...form, photo: [...form.photo, ...acceptedFiles] }, errors, setErrors);
@@ -36,7 +36,7 @@ export const DragAndDrop = () => {
                             <input
                                 accept={"image/*"}
                                 {...getInputProps()} />
-                            <p>Arrastra y suelta archivos aquí o haz clic para seleccionar archivos</p>
+                            <p>Arrastra y suelta aquí o haz clic para seleccionar imagenes.</p>
                         </div> : <p>Maximo 4 Imagenes</p>}
                     </section>
                 )}
@@ -46,7 +46,9 @@ export const DragAndDrop = () => {
                     <div key={index}>
                         {imageUrl === undefined && <span>loading...</span>}
                         <Image src={imageUrl} width={100} height={100} alt='img' />
-                        <button onClick={() => handleDelete(index)}>Eliminar</button>
+                        <button onClick={() => handleDelete(index)}>
+                            <AiFillCloseCircle size={30} color='var(--red)' />
+                        </button>
                     </div>
                 ))}
             </div>

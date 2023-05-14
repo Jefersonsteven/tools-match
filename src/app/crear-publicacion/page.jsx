@@ -1,7 +1,7 @@
 'use client'
 import { useContext, useState } from "react";
 import { DragAndDrop } from "@/components/DragAndDrop/DragAndDrop";
-import styles from './CreatePost.module.css'
+import * as style from './CreatePost.module.css'
 import { validatePost } from "./asset/validate";
 import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
@@ -24,7 +24,8 @@ function CreatePost() {
         Promise.all(URLS).then(data => setUrlsImages(data));
     }
 
-    async function handleSubmit() {
+    async function handleSubmit(event) {
+        event.preventDefault()
         const error = Object.values(errors).some(e => e.length > 0);
         const post = Object.values(form).some(e => e.length === 0);
         if (!error && !post) {
@@ -57,13 +58,26 @@ function CreatePost() {
     }
 
     return (
-        <main className={styles.main}>
-            <section>
-                <button onClick={handleForm} name="type" value="RENTAL">Arrendar</button>
-                <button onClick={handleForm} name="type" value="SALE">Vender</button>
+        <main className={style.main}>
+            <section className={style.buttons}>
+                <button
+                    className={form.type === 'RENTAL' ? style.active : style.desactived}
+                    onClick={handleForm}
+                    name="type"
+                    value="RENTAL">
+                    Arrendar
+                </button>
+                <button
+                    className={form.type === 'SALE' ? style.active : style.desactived}
+                    onClick={handleForm}
+                    name="type"
+                    value="SALE">
+                    Vender
+                </button>
+                <span>{errors.type}</span>
             </section>
-            <section>
-                <h2>Publica tu producto</h2>
+            <section className={style.form}>
+                <h2>Publica una herramienta</h2>
                 <form action="">
                     <div>
                         <label htmlFor="">Titulo</label>
@@ -88,12 +102,14 @@ function CreatePost() {
                         </select>
                         <span>{errors.category}</span>
                     </div>
+                    <div className={style.button}>
+                        <button onClick={handleSubmit}>Publicar</button>
+                    </div>
                 </form>
             </section>
             <section>
                 <DragAndDrop />
             </section>
-            <button onClick={handleSubmit}>Publicar</button>
         </main>
     );
 }
