@@ -43,7 +43,7 @@ function AppProvider({ children }) {
 
 
   //* Crear estado para saber si el usuario esta logeado o no (booleano)
-  const [userSession, setUserSession] = useState(false);
+  const [userSession, setUserSession] = useState(true);
 
   return (
     <AppContext.Provider

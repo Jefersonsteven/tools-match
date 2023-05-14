@@ -16,7 +16,7 @@
     width: 100%;
 }
 
-.nav ul {
+.nav>ul {
     justify-content: flex-end;
     width: 100%;
 }
@@ -43,4 +43,36 @@
 
 .home {
     display: flex;
+}
+.perfil {
+    width: 16px;
+    position: relative;
+}
+
+.perfil ul li a {
+    width: 100%;
+}
+
+.openSubmenu {
+    display: flex;
+    position: absolute;
+    width: 150px;
+    padding: 15px;
+    flex-direction: column;
+    gap: 2px;
+    right: 0;
+    z-index: 1;
+    background-color: var(--black);
+}
+
+.closeSubmenu {
+    display: none;
+    position: absolute;
+    width: 150px;
+    padding: 15px;
+    flex-direction: column;
+    gap: 2px;
+    right: 0;
+    z-index: 1;
+    background-color: var(--black);
 }
