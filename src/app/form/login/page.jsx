@@ -106,8 +106,6 @@ export default function Login() {
       password,
     };
 
-    /*  await newPetition("POST", "http://localhost:3000/api/user", dataBody); */
-
     dbUserData = await newPetition(
       "GET",
       `http://localhost:3000/api/user/${userDataProvider.email}`,

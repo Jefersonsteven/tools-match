@@ -41,7 +41,11 @@ function Header() {
               </li>
               <li>
                 {pathname !== "/" && (
-                  <Link href="/crear-publicacion">Crear Publicaciones</Link>
+                  <Link
+                    href={userSession ? "/crear-publicacion" : "/form/login"}
+                  >
+                    Crear Publicaciones
+                  </Link>
                 )}
               </li>
             </ul>
