@@ -13,7 +13,7 @@ function Header() {
   const pathname = usePathname();
 
   const { userSession, userId } = useContext(AppContext);
-  const [submenu, setSubmenu] = useState(false)
+  const [submenu, setSubmenu] = useState(false);
 
   return (
     <header className={styles.header}>
@@ -42,7 +42,7 @@ function Header() {
               <li>
                 {pathname !== "/" && (
                   <Link
-                    href="/crear-publicacion"
+                    href={userSession ? "/crear-publicacion" : "/form/login"}
                   >
                     Crear Publicaciones
                   </Link>
@@ -53,15 +53,22 @@ function Header() {
             {pathname !== "/" && (
               <div className={styles.nav}>
                 <div className={styles.perfil}>
-                  <FaUserCircle onClick={() => setSubmenu(state => !state)} color="white" />
-                  <ul className={submenu ? styles.openSubmenu : styles.closeSubmenu}>
+                  <FaUserCircle
+                    onClick={() => setSubmenu((state) => !state)}
+                    color="white"
+                  />
+                  <ul
+                    className={
+                      submenu ? styles.openSubmenu : styles.closeSubmenu
+                    }
+                  >
                     <li>
-                      <Link href={userSession ? '/' : '/form/login'}>
-                        {userSession ? 'Cerrar Sesion' : 'Iniciar Sesion'}
+                      <Link href={userSession ? "/" : "/form/login"}>
+                        {userSession ? "Cerrar Sesion" : "Iniciar Sesion"}
                       </Link>
                     </li>
                     {userSession && <li>
-                      <Link href={`/perfil/${userId}`}>
+                      <Link href="/perfil">
                         Perfil
                       </Link>
                     </li>}
