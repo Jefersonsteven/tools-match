@@ -12,7 +12,7 @@ import { useContext, useState } from "react";
 function Header() {
   const pathname = usePathname();
 
-  const { userSession } = useContext(AppContext);
+  const { userSession, userId } = useContext(AppContext);
   const [submenu, setSubmenu] = useState(false)
 
   return (
@@ -61,7 +61,7 @@ function Header() {
                       </Link>
                     </li>
                     {userSession && <li>
-                      <Link href="/perfil">
+                      <Link href={`/perfil/${userId}`}>
                         Perfil
                       </Link>
                     </li>}
