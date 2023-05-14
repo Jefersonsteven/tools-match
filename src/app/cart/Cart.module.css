@@ -2,17 +2,19 @@
 /*---------------------CARDS - SUGERENCIAS---------------------*/
 .cartContainer{
     display: flex;
+    padding: 20px 50px;
+        justify-content: space-between;
 }
 .cartTitle{
     text-align: left;
-    font-size: 2.5rem;
-    font-weight: 500;
+    font-size: 4rem;
+        font-weight: bold;
+        margin: 0 50px;
     margin-top: 20px;
 }
 .cardCart{
-    display: inline-block;
-    margin-top: 50px;
-    margin-bottom: 20px;
+    display: flex;
+        flex-direction: column;
 }
 .cardCart img{
     width: 200px;    
@@ -28,9 +30,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    margin-right: 20px;
-
-  }
+}
 
   /*---------------------CARDS - CARRITO---------------------*/
   .cartTitle2 {
@@ -73,7 +73,7 @@
 
 .cartList2 {
     background-color: #535E53;
-    width: 50%;
+    width: 40%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;

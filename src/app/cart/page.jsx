@@ -193,7 +193,7 @@ export default function Page() {
             <Link
               className={style.buying2}
               onClick={handleBuyClick}
-              href="/payment"
+              href="/payment-provisional"
               passHref
             >
               <span>Comprar</span>
@@ -201,7 +201,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
