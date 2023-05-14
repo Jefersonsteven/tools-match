@@ -2,15 +2,27 @@
 import CategoryFilter from './CategoryFilter';
 import SearchBar from '../SearchBar/SearchBar';
 import { AppContext, AppProvider } from "@/context/AppContext";
-import { useContext } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+
 
 export default function FilterBar() {
-  const { cards, setCards, tools, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy } = useContext(AppContext);
+  const { cards, setCards, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy } = useContext(AppContext);
 
-  useEffect(()=>{
-    if (cards.length ===0)setCards(tools)
-  }, [])  
+  // const tools = async () => {
+  //   const response = await axios.get('http://localhost:3000/api/admin/post');
+  //   return response.data;
+  // }
+
+  // useEffect(()=>{
+  //   if (cards.length ===0)setCards(tools)
+  // }, [])  
+
+
+//  useEffect(async () => {
+//     const toolsData = await tools();
+//     setCards(toolsData);
+// }, []);
 
   useEffect(()=>{
     FilterLechu()
@@ -21,9 +33,11 @@ export default function FilterBar() {
   // console.log('title', title)
   // console.log('sortBy', sortBy)
 
-  const FilterLechu = () => {
-    let myFilter = [...tools]
+  const FilterLechu = () => {    
+
+    let myFilter = [...cards]
     if (title !== '') myFilter = myFilter.filter(tool => tool.title.toLowerCase().includes(title.toLowerCase()))
+    if (title === '') myFilter = [...cards]
     if (selectedCategory !== '') myFilter = myFilter.filter (tool => tool.category == selectedCategory)
     if (selectedType !== '') myFilter = myFilter.filter (tool => tool.type === selectedType)
     if (sortBy !== '') {
