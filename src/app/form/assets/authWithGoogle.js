@@ -3,33 +3,31 @@ import { auth } from "@/firebase/firebase.config";
 
 const provider = new GoogleAuthProvider();
 
-export const callLoginGoogle = (event, router, setUserSession) => {
-  event.preventDefault();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      console.log(token);
-      const user = result.user;
-      const displayName = user.displayName;
-      const email = user.email;
-      const photoURL = user.photoURL;
-      const uid = user.uid;
-      const providerData = user.providerData;
+export const callLoginGoogle = () => {
+  return new Promise((resolve, reject) => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        console.log(user);
+        let displayNameSplit = user.displayName.split(" ");
 
-      console.log("Nombre completo:", displayName);
-      console.log("Correo electrónico:", email);
-      console.log("URL de la foto de perfil:", photoURL);
-      console.log("UID del usuario:", uid);
-      console.log("Datos del proveedor de identidad:", providerData);
-      router.push("/home");
-      setUserSession(true);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.customData.email;
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
+        resolve({
+          firstname: displayNameSplit[0],
+          lastname: displayNameSplit.slice(1).join(" "),
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          photoURL: user.photoURL,
+          token,
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        reject(error);
+      });
+  });
 };

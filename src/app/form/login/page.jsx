@@ -1,20 +1,27 @@
 "use client";
-import Link from "next/link";
 import styles from "../form.module.css";
+
+/* React */
+import { useContext } from "react";
 import { useEffect, useState } from "react";
+
+/* NextJs */
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons//fc";
+import { AppContext } from "@/context/AppContext";
+
+/* Helpers */
 import { validateLogIn } from "../assets/validateForms";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
-import { FcGoogle } from "react-icons//fc";
-
-import { AppContext } from "@/context/AppContext";
-import { useContext } from "react";
 import { callLoginGoogle } from "../assets/authWithGoogle";
+import { newPetition } from "../assets/petition";
+import generatePassword from "../assets/passwordGenerator";
 
 export default function Login() {
   const router = useRouter();
-  const { setUserSession } = useContext(AppContext);
+  const { setUserSession, setUserData } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
 
   const [loginData, setLoginData] = useState({
@@ -40,28 +47,33 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    /* Email http://localhost:3000/api/user/email => del input 
+      Guardar en un estado (Context)
+    */
     try {
-      console.log("Entrando en try catch");
-      const config = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: loginData.email,
-          password: loginData.password,
-        }),
+      const dataBody = {
+        email: loginData.email,
+        password: loginData.password,
       };
-      let response = await fetch(
-        `http://localhost:3000/api/loginValidate`,
-        config
+
+      await newPetition(
+        "PUT",
+        "http://localhost:3000/api/loginValidate",
+        dataBody
       );
-      response = await response.json();
 
-      console.log(response);
+      let data = await newPetition(
+        "GET",
+        `http://localhost:3000/api/user/${loginData.email}`,
+        false
+      );
 
-      if (response.Message === "Has iniciado sesión") {
+      console.log(data);
+      console.log(data.logged);
+
+      if (data.logged) {
         router.push("/home");
+        setUserData(data);
         setUserSession(true);
       }
     } catch (error) {
@@ -69,10 +81,43 @@ export default function Login() {
     }
   };
 
+  const handleAuth = async (event) => {
+    event.preventDefault();
+    const userDataProvider = await callLoginGoogle();
+    let userData = null;
+    let password = generatePassword();
+
+    const dataBody = {
+      ...userDataProvider,
+      password,
+    };
+
+    /*  await newPetition("POST", "http://localhost:3000/api/user", dataBody); */
+
+    userData = await newPetition(
+      "GET",
+      `http://localhost:3000/api/user/${userDataProvider.email}`,
+      false
+    );
+
+    if (!userData) {
+      await newPetition("POST", "http://localhost:3000/api/user", dataBody);
+      userData = await newPetition(
+        "GET",
+        `http://localhost:3000/api/user/${userDataProvider.email}`,
+        false
+      );
+    }
+
+    setUserData(userData);
+    router.push("/home");
+    setUserSession(true);
+  };
+
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.inputContainer}>
-        <label htmlFor="">CORREO</label>
+        <label htmlFor="email">Correo</label>
         <input
           type="text"
           name="email"
@@ -88,7 +133,7 @@ export default function Login() {
         </p>
       </div>
       <div className={styles.inputContainer}>
-        <label htmlFor="">CONTRASEÑA</label>
+        <label htmlFor="password">Contraseña</label>
         <input
           type={viewPwd ? "text" : "password"}
           name="password"
@@ -116,10 +161,7 @@ export default function Login() {
           Iniciar sesión
         </button>
         <span>|</span>
-        <button
-          className={`${styles.socialSignIn}`}
-          onClick={(event) => callLoginGoogle(event, router, setUserSession)}
-        >
+        <button className={`${styles.socialSignIn}`} onClick={handleAuth}>
           Iniciar con
           <FcGoogle className={styles.icon} />
         </button>

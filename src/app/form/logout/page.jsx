@@ -1,20 +1,27 @@
 "use client";
-import Link from "next/link";
 import styles from "../form.module.css";
+
+/* React */
+import { useContext } from "react";
 import { useEffect, useState } from "react";
-import { validateSignIn } from "../assets/validateForms";
+
+/* NextJs */
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons//fc";
+import { AppContext } from "@/context/AppContext";
+
+/* Helpers */
+import { validateSignIn } from "../assets/validateForms";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
-import { FcGoogle } from "react-icons//fc";
-
-import { AppContext } from "@/context/AppContext";
-import { useContext } from "react";
 import { callLoginGoogle } from "../assets/authWithGoogle";
+import { newPetition } from "../assets/petition";
+import generatePassword from "../assets/passwordGenerator";
 
 export default function Logout() {
   const router = useRouter();
-  const { setUserSession } = useContext(AppContext);
+  const { setUserSession, setUserData } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
   const [repeatViewPwd, setRepeatViewPwd] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
@@ -55,33 +62,59 @@ export default function Logout() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log("Entrando en try catch");
-      const config = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstname: registerData.name,
-          lastname: registerData.surname,
-          email: registerData.email,
-          password: registerData.password,
-          phoneNumber: registerData.phoneNumber,
-        }),
+      const dataBody = {
+        firstname: registerData.name,
+        lastname: registerData.surname,
+        email: registerData.email,
+        password: registerData.password,
+        phoneNumber: registerData.phoneNumber,
       };
-      let response = await fetch(
+
+      let data = await newPetition(
+        "POST",
         "http://localhost:3000/api/registerUser",
-        config
+        dataBody
       );
 
-      response = await response.json();
-
-      console.log(response);
-
-      router.push("/form/login");
+      if (data.newUser) {
+        router.push("/form/login");
+      }
     } catch (error) {
-      console.error("Error en la solicitud POST", error);
+      console.log(error);
     }
+  };
+  /* otro handler para autenticarse con google y enviar los datos a la db */
+  const handleAuth = async (event) => {
+    event.preventDefault();
+    const userDataProvider = await callLoginGoogle();
+    let userData = null;
+    let password = generatePassword();
+
+    const dataBody = {
+      ...userDataProvider,
+      password,
+    };
+
+    /*  await newPetition("POST", "http://localhost:3000/api/user", dataBody); */
+
+    userData = await newPetition(
+      "GET",
+      `http://localhost:3000/api/user/${userDataProvider.email}`,
+      false
+    );
+
+    if (!userData) {
+      await newPetition("POST", "http://localhost:3000/api/user", dataBody);
+      userData = await newPetition(
+        "GET",
+        `http://localhost:3000/api/user/${userDataProvider.email}`,
+        false
+      );
+    }
+
+    setUserData(userData);
+    router.push("/home");
+    setUserSession(true);
   };
 
   return (
@@ -227,10 +260,7 @@ export default function Logout() {
             Registrarse
           </button>
           <span>|</span>
-          <button
-            className={`${styles.socialSignIn}`}
-            onClick={(event) => callLoginGoogle(event, router, setUserSession)}
-          >
+          <button className={`${styles.socialSignIn}`} onClick={handleAuth}>
             Iniciar con
             <FcGoogle className={styles.icon} />
           </button>
