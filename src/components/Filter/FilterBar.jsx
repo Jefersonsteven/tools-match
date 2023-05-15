@@ -1,89 +1,152 @@
 'use client'
-import React from 'react';
 import CategoryFilter from './CategoryFilter';
-import RentFilter from './RentFilter';
-import SaleFilter from './SaleFilter';
 import SearchBar from '../SearchBar/SearchBar';
 import { AppContext, AppProvider } from "@/context/AppContext";
-import { useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
-const tools = [
-  { name: 'Martillo', category: 'Carpintería', rating: 4, price: { venta: 0, alquiler: 5 }, imageUrl: 'https://example.com/martillo.jpg', description: 'Martillo de carpintería con mango de madera' },
-  { name: 'Sierra circular', category: 'Carpintería', rating: 5, price: { venta: 120, alquiler: 0 }, imageUrl: 'https://example.com/sierra-circular.jpg', description: 'Sierra circular profesional con hoja de 12 pulgadas' },
-  { name: 'Taladro', category: 'Electricidad', rating: 4, price: { venta: 80, alquiler: 10 }, imageUrl: 'https://example.com/taladro.jpg', description: 'Taladro de percusión con cable de 10 pies' },
-  { name: 'Amoladora', category: 'Electricidad', rating: 3, price: { venta: 90, alquiler: 0 }, imageUrl: 'https://example.com/amoladora.jpg', description: 'Amoladora angular de 4.5 pulgadas con velocidad variable' },
-  { name: 'Pala', category: 'Excavación', rating: 2, price: { venta: 30, alquiler: 3 }, imageUrl: 'https://example.com/pala.jpg', description: 'Pala cuadrada con mango de madera de 48 pulgadas' },
-  { name: 'Martillo perforador', category: 'Excavación', rating: 0, price: { venta: 150, alquiler: 20 }, imageUrl: 'https://example.com/martillo-perforador.jpg', description: 'Martillo perforador de alta potencia con mandril de 1/2 pulgada' },
-  { name: 'Cortacésped', category: 'Jardinería', rating: 4, price: { venta: 0, alquiler: 30 }, imageUrl: 'https://example.com/cortacesped.jpg', description: 'Cortacésped a gasolina de 21 pulgadas con tracción trasera' },
-  { name: 'Tijeras de podar', category: 'Jardinería', rating: 0, price: { venta: 0, alquiler: 5 }, imageUrl: 'https://example.com/tijeras-podar.jpg', description: 'Tijeras de podar de acero con mango ergonómico' }
-];
 
 export default function FilterBar() {
-  const { selectedCategory, setSelectedCategory, rent, setRent, sale, setSale, sortBy, setSortBy, name, setName } = useContext(AppContext);
+  const { cards, setCards, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy } = useContext(AppContext);
+
+  const [showSortOptions, setShowSortOptions] = useState(false);
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
+  const handleTitleChange = (newTitle) => {
+    setTitle(newTitle);
+  };
 
 
-  const filteredTools = tools
-    .filter(
-      (tool) =>
-        (!selectedCategory || tool.category === selectedCategory) &&
-        (!rent || (rent === 'rental' ? tool.price.alquiler > 0 : tool.price.alquiler === 0)) &&
-        (!sale || tool.price.venta > 0) &&
-        (!name || tool.name.toLowerCase().includes(name.toLowerCase()))
-    )
+  useEffect(()=>{
+    FilterLechu()
+  }, [title, selectedCategory, selectedType, sortBy]) 
 
-  const sortedTools = filteredTools.sort((a, b) => {
-    if (sortBy === 'nameAsc') {
-      return a.name.localeCompare(b.name);
-    } else if (sortBy === 'nameDesc') {
-      return b.name.localeCompare(a.name);
-    } else if (sortBy === 'priceAsc') {
-      return a.price.venta - b.price.venta;
-    } else if (sortBy === 'priceDesc') {
-      return b.price.venta - a.price.venta;
-    } else if (sortBy === 'priceAlqAsc') {
-      return a.price.alquiler - b.price.alquiler;
-    } else if (sortBy === 'priceAlqDesc') {
-      return b.price.alquiler - a.price.alquiler;
-    } else if (sortBy === 'ratingAsc') {
-      return a.rating - b.rating;
-    } else if (sortBy === 'ratingDesc') {
-      return b.rating - a.rating;
-    } else {
-      return 0;
+  //console.log('selectedCategory', selectedCategory)
+  // console.log('selectedType', selectedType)
+  // console.log('title', title)
+  // console.log('sortBy', sortBy)
+
+  const FilterLechu = () => {    
+
+    let myFilter = [...cards]
+    if (title !== '') myFilter = myFilter.filter(tool => tool.title.toLowerCase().includes(title.toLowerCase()))
+    if (title === '') myFilter = [...cards]
+    if (selectedCategory !== '') myFilter = myFilter.filter (tool => tool.category == selectedCategory)
+    if (selectedType !== '') myFilter = myFilter.filter (tool => tool.type === selectedType)
+    if (sortBy !== '') {
+      if (sortBy === 'titleAsc') {
+        myFilter = myFilter.sort((a, b) => a.title.localeCompare(b.title));
+      } if (sortBy === 'titleDesc') {
+        myFilter = myFilter.sort((a, b) => b.title.localeCompare(a.title));
+      } if (sortBy === 'priceAsc') {
+        myFilter = myFilter.sort((a, b) => a.price - b.price);
+      } if (sortBy === 'priceDesc') {
+        myFilter = myFilter.sort((a, b) => b.price - a.price);
+      } if (sortBy === 'ratingAsc') {
+        myFilter = myFilter.sort((a, b) => a.rating - b.rating);
+      } if (sortBy === 'ratingDesc') {
+        myFilter = myFilter.sort((a, b) => b.rating - a.rating);
+      }
     }
-  });
+    setCards(myFilter);      
+  }
 
-
-  return (
-    <AppProvider>
-      <div className="flex flex-col w-64 bg-gray-100">
-  <SearchBar name={name} onNameChange={setName} />
-  <CategoryFilter
-    categories={['Carpintería', 'Electricidad', 'Excavación', 'Jardinería']}
-    selectedCategory={selectedCategory}
-    onCategoryChange={setSelectedCategory}
-  />
-  <RentFilter rent={rent} onRentChange={setRent} />
-  <SaleFilter sale={sale} onSaleChange={setSale} />
-  <div className="py-2 px-4 bg-gray-200 font-medium">Ordenar por:</div>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameAsc')}>Nombre (A-Z)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('nameDesc')}>Nombre (Z-A)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAsc')}>Precio de Venta (menor a mayor)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceDesc')}>Precio de Venta (mayor a menor)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAlqAsc')}>Precio de Renta (menor a mayor)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('priceAlqDesc')}>Precio de Renta (mayor a menor)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingAsc')}>Rating (menor a mayor)</button>
-  <button className="py-2 px-4 hover:bg-gray-200" onClick={() => setSortBy('ratingDesc')}>Rating (mayor a menor)</button>
-</div>
-{/* <div>
-        <ul>
-          {filteredTools.map((tool) => (
-            <li key={tool.name}>
-              {tool.name} - {tool.category} - ${tool.price.venta} - ${tool.price.alquiler}/día - {tool.rating} Jeffersons
-            </li>
-          ))}
-        </ul>
-      </div> */}
+    return (
+      <AppProvider>        
+          <div className="flex-1 flex flex-row items-center flex justify-between px-2">
+            <div>
+            <div className="mr-2">
+              <button
+                className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4"
+                onClick={() => setShowFilterOptions(!showFilterOptions)}
+              >
+                Filter
+              </button>
+            </div>
+            {showFilterOptions && (
+              <div>
+                <div className="py-2 px-4 bg-gray-200 font-medium">
+                  Tipo de transacción:
+                </div>
+                <select
+                  value={selectedType}
+                  onChange={(e) => setSelectedType(e.target.value)}
+                >
+                  <option value="">Todos</option>
+                  <option value="RENTAL">Arriendo</option>
+                  <option value="SALE">Venta</option>
+                </select>
+                <div className="py-2 px-4 bg-gray -200 font-medium">Categoría:</div>
+                <CategoryFilter
+                  categories={[
+                    'tecnologia',
+                    'herramientas eléctricas',
+                    'Excavación',
+                    'Jardinería'
+                  ]}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                />
+              </div>
+            )}
+          </div>
+          
+            <div className="flex space-x-4">
+              <button
+                className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4"
+                onClick={() => setShowSortOptions(!showSortOptions)}
+              >
+                Sort
+              </button>
+            </div>
+            {showSortOptions && (
+              <div>
+                <button
+                  className="py-2 px-4 hover:bg-gray-200"
+                  onClick={() => setSortBy('')}
+                >
+                  Default
+                </button>
+                <button
+                  className="py-2 px-4 hover:bg-gray-200"
+                  onClick={() => setSortBy('titleAsc')}
+                >
+                  Nombre (A-Z)
+                </button>
+                <button
+                  className="py-2 px-4 hover:bg-gray-200"
+                  onClick={() => setSortBy('titleDesc')}
+                >
+                  Nombre (Z-A)
+                </button>
+                <button
+                  className="py-2 px-4 hover:bg-gray-200"
+                  onClick={() => setSortBy('priceAsc')}
+                >
+                  Precio (Asc)
+                </button>
+                <button
+                  className="py-2 px-4 hover:bg-gray-200"
+                  onClick={() => setSortBy('priceDesc')}
+                >
+                  Precio (Des)
+                </button>
+                <button
+                  className="py-2 px-4 hover:bg-gray-200"
+                  onClick={() => setSortBy('ratingAsc')}
+                >
+                  Rating (Asc)
+                </button>
+                <button
+                  className="py-2 px-4 hover:bg-gray-200"
+                  onClick={() => setSortBy('ratingDesc')}
+                >
+                  Rating (Des)
+                </button>
+              </div>                       
+            )}
+            </div>          
+          <div className="flex-1 flex flex-row items-center justify-end pr-4 w-96"> 
+        <SearchBar title={title} onTitleChange={handleTitleChange} /> 
+        </div> 
+      
     </AppProvider>
-  );
-}
+  )}

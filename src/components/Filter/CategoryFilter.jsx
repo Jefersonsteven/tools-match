@@ -1,14 +1,16 @@
 import React from 'react';
 
+export default function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) {   
 
-export default function CategoryFilter({ categories, selectedCategory, onCategoryChange }) {
+  //console.log('estoyenCategoryFilter', selectedCategory)
+
   return (
     <div>
       <label htmlFor="category">Categoria:</label>
       <select
         id="category"
         value={selectedCategory}
-        onChange={(e) => onCategoryChange(e.target.value)}
+        onChange={(e) => setSelectedCategory(e.target.value)}
       >
         <option value="">Todas</option>
         {categories.map((category) => (
