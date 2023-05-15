@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    concurrentServerRendering: false,
+  },
   images: {
     domains: [
       "us.123rf.com",
