@@ -17,7 +17,7 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <figure>
+      <figure className={styles.logo}>
         <Link href="/">
           <Image
             src="/../public/images/logo/toolsMatch.jpg"
@@ -26,6 +26,9 @@ function Header() {
             height={70}
           />
         </Link>
+        {<Link href="/dashboard/users">
+          <button>Dashboard</button>
+        </Link>}
       </figure>
       <nav className={styles.nav}>
         {pathname !== "/team" ? (
