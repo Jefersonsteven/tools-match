@@ -5,7 +5,7 @@ const AppContext = createContext();
 
 function AppProvider({ children }) {
   // * El id del usuario de la Sesion
-  const [userId, setUserId] = useState("932a3adf-9203-4b25-89ca-777b00411730");
+  const [userId, setUserId] = useState("289be228-6466-4dcc-b8e5-b94839c0de60");
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({

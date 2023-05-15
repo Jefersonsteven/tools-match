@@ -98,7 +98,7 @@ function PostDetail({ }) {
                         <section className={styles.section_button}>
                             {userId === pd.author.id && <button>Eliminar</button>}
                             {userId !== pd.author.id && pd.type === 'SALE' && <button>Comprar</button>}
-                            {userId !== pd.author.id && pd.type === 'LEASE' && <button>Arrendar</button>}
+                        {userId !== pd.author.id && pd.type === 'RENTAL' && <button>Arrendar</button>}
                         </section>
                     </>
                 }

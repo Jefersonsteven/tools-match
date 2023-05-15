@@ -1,6 +1,7 @@
 "use client"
 import Cards from "@/components/Cards/Cards";
 import FilterBar from "@/components/Filter/FilterBar";
+import Map from "@/components/Map/Map";
 
 function Home() {
 
@@ -13,6 +14,7 @@ function Home() {
         </div>
         <div className="flex-grow">
           <div className="flex flex-wrap my-4 mx-0">
+            <Map />
             <Cards className="mb-1" />
           </div>
         </div>
