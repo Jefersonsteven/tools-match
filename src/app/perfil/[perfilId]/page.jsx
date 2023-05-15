@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+function Perfil() {
+    return (
+        <div>
+            <h1>Perfil</h1>
+        </div>
+    );
+}
+
+export default Perfil;
+=======
 "use client"
 
 import { useState, useEffect, useContext } from 'react';
@@ -130,3 +141,4 @@ export default function PerfilUsuario() {
     </div>
   );
 }
+>>>>>>> 6d6d004a6b631cf2bddb7d5c9e493eb2c52f4a5b
