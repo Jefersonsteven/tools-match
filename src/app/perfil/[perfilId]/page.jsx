@@ -1,17 +1,16 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useContext } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import UserForm from '../../dashboard/components/Form';
-import {pathname} from 'next/navigation';
-import { useParams } from 'next/navigation';
-import styles from './perfil.module.css';
-import { AppContext } from '@/context/AppContext';
-import Swal from 'sweetalert2';
-import Modal from "../../dashboard/components/Modal"
-import Cards from '@/components/Cards/Cards';
-
+import { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
+import UserForm from "../../dashboard/components/Form";
+import { pathname } from "next/navigation";
+import { useParams } from "next/navigation";
+import styles from "./perfil.module.css";
+import { AppContext } from "@/context/AppContext";
+import Swal from "sweetalert2";
+import Modal from "../../dashboard/components/Modal";
+import Cards from "@/components/Cards/Cards";
 
 export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
@@ -26,29 +25,27 @@ export default function PerfilUsuario() {
       .then((data) => setUser(data));
   }, [perfilId]);
 
-
   const handleEdit = () => {
     setEditingUser(user);
-    setShowModal(true)
-
+    setShowModal(true);
   };
 
   const handleReport = () => {
     Swal.fire({
-      title: '¿Estás seguro?',
+      title: "¿Estás seguro?",
       text: "¿Quieres reportar este usuario?",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Reportar'
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Reportar",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
-          '¡Usuario reportado!',
-          'El usuario ha sido reportado con éxito.',
-          'success'
-        );      
+          "¡Usuario reportado!",
+          "El usuario ha sido reportado con éxito.",
+          "success"
+        );
       }
     });
   };
@@ -57,24 +54,27 @@ export default function PerfilUsuario() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const updatedUser = {
-      firstname: formData.get('firstname'),
-      lastname: formData.get('lastname'),
-      email: formData.get('email'),
-      phoneNumber: formData.get('phonenumber'),
-      reports: formData.get('reports'),
+      firstname: formData.get("firstname"),
+      lastname: formData.get("lastname"),
+      email: formData.get("email"),
+      phoneNumber: formData.get("phonenumber"),
+      reports: formData.get("reports"),
     };
     try {
-      await axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser);
+      await axios.put(
+        `http://localhost:3000/api/admin/user/${editingUser.id}`,
+        updatedUser
+      );
       console.log("User updated in DB");
       fetch(`http://localhost:3000/api/admin/user/${perfilId}`)
         .then((response) => response.json())
         .then((data) => setUser(data));
       setEditingUser(null);
       Swal.fire({
-        title: 'Cambiado con éxito!',
-        icon: 'success',
+        title: "Cambiado con éxito!",
+        icon: "success",
         timer: 1500,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
     } catch (error) {
       console.log(error);
@@ -112,19 +112,19 @@ export default function PerfilUsuario() {
           <strong>Ordenes: </strong>4
         </h2>
         {editingUser && (
-          <Modal show={showModal} onClose={()=> setShowModal(false)}>
-          <UserForm
-          editingUser={editingUser}
-          handleSubmit={handleSubmit}
-          setEditingUser={setEditingUser}
-         />
-         </Modal>
+          <Modal show={showModal} onClose={() => setShowModal(false)}>
+            <UserForm
+              editingUser={editingUser}
+              handleSubmit={handleSubmit}
+              setEditingUser={setEditingUser}
+            />
+          </Modal>
         )}
         <h2 className={styles.title_tienda}>Tienda</h2>
       </div>
       {userId === perfilId && (
         <>
-        <Cards />
+          <Cards />
         </>
       )}
     </div>
