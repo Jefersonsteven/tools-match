@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL")
+  directUrl         = env("POSTGRES_URL_NON_POOLING")
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  photo       String?
+  firstname   String
+  lastname    String
+  email       String    @unique
+  password    String
+  admin       Boolean   @default(false)
+  logged      Boolean   @default(false)
+  hidden      Boolean   @default(false)
+  phoneNumber String?
+  zipCode     String?
+  reports     String[]
+  orders      Order[]   @relation("userOrders")
+  payments    Payment[] @relation("userPayments")
+  posts       Post[]    @relation("userPosts")
+  reviews     Review[]  @relation("userReviews")
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  photo     String[]
+  category  String
+  price     Float
+  type      Type     @default(SALE)
+  hidden    Boolean  @default(false)
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation("userPosts", fields: [authorId], references: [id])
+  reviews   Review[] @relation("postReviews")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  rating    Float
+  hidden    Boolean  @default(false)
+  authorId  String
+  postId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation("userReviews", fields: [authorId], references: [id])
+  post      Post     @relation("postReviews", fields: [postId], references: [id])
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  postId    String
+  paymentId String   @unique
+  payment   Payment  @relation("orderPayment", fields: [paymentId], references: [id])
+  user      User     @relation("userOrders", fields: [userId], references: [id])
+}
+
+model Payment {
+  id        String   @id @default(uuid())
+  amount    Float
+  currency  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  order     Order?   @relation("orderPayment")
+  user      User     @relation("userPayments", fields: [userId], references: [id])
+}
+
+enum Type {
+  RENTAL
+  SALE
+}

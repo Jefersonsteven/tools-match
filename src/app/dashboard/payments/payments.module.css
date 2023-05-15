@@ -1,0 +1,134 @@
+.userContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+}
+
+.contenedorPadre {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 15px;
+    padding: 0 120px;
+}
+
+.searchBar {
+    padding-right: 10px;
+    align-items: center;
+    background-color: #D9D9D9;
+    display: flex;
+    justify-items: center;
+    border-width: 2px;
+    border: 5px solid;
+    border-color: #D9D9D9;
+    border-radius: 20px;
+    transition: 0.5s;
+}
+
+.searchBar:hover {
+    border:5px solid;
+    border-color: #9b9b9b;
+}
+
+.searchBar input {
+    background-color: rgb(216, 216, 216);
+    color: black;
+    padding-left: 10px;
+    border: none;
+    border-radius: 20px;
+}
+
+.searchbarContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.searchbarContainer h2 {
+    font-size: xxx-large;
+    color: rgb(46, 46, 46);
+    -webkit-text-fill-color: rgb(35, 35, 35);
+    -webkit-text-stroke: 1px black;
+}
+
+.botonDelete {
+    cursor: pointer;
+    color: #f80101;
+    border: 2px solid rgba(255, 67, 67, 0.802);
+    background-color: rgba(255, 255, 255, 0.612);
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    padding: 2px;
+}
+
+.botonDelete:hover {
+    background-color: rgba(255, 0, 0, 0.537);
+    color: white
+}
+
+.table {
+    color:rgb(0, 0, 0);
+}
+
+.table th {
+    text-align: left;
+    padding-right: 10px;
+    min-height: 200px;
+    font-size: large;
+
+}
+
+.namesTable{
+    color: rgb(54, 54, 54);
+}
+
+.namesTable td {
+    padding-right: 0px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    font-size: medium;
+    font-weight: 600;
+}
+
+.contenedorTable {
+    background-color: rgba(0, 0, 0, 0.193);
+    padding: 18px;
+    margin-top: 0px;
+    margin-right: -10px;
+    border-radius: 3px;
+    padding-left: 60px;
+    padding-right: 0px;
+    box-shadow: 0 0 30px;
+    border: 3px solid #000803;
+    overflow: auto;
+    max-height: 500px;
+}
+
+.bodyTabla {
+    overflow: auto !important;
+    max-height: 500px !important;
+}
+
+
+.botonEditar {
+    cursor: pointer;
+    color: #115b2f;
+    border: 2px solid #115b2f;
+    background-color: rgba(255, 255, 255, 0.612);
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    padding: 2px;
+    margin-right: 8px;
+}
+
+.botonEditar:hover {
+    background-color: #21BF60;
+    border: 2px solid #20bc5e;
+    color: white
+}

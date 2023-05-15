@@ -1,0 +1,197 @@
+"use client";
+import styles from "../form.module.css";
+
+/* React */
+import { useContext } from "react";
+import { useEffect, useState } from "react";
+
+/* NextJs */
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons//fc";
+import { AppContext } from "@/context/AppContext";
+
+/* Helpers */
+import { validateLogIn } from "../assets/validateForms";
+import { svgView } from "../assets/viewPwd";
+import { svgHide } from "../assets/hidePwd";
+import { callLoginGoogle } from "../assets/authWithGoogle";
+import { newPetition } from "../assets/petition";
+import generatePassword from "../assets/passwordGenerator";
+import saveInLocalStorage from "../assets/saveInLocalStorage";
+
+import Swal from "sweetalert2";
+
+export default function Login() {
+  const router = useRouter();
+  const [rememberSession, setRememberSession] = useState(false);
+  const { setUserSession, setUserData } = useContext(AppContext);
+  const [viewPwd, setViewPwd] = useState(false);
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    flag: true,
+  });
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
+
+    setLoginData({ ...loginData, [name]: value });
+  };
+
+  useEffect(() => {
+    setErrors(validateLogIn(loginData));
+  }, [loginData]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      let dbUserData = null;
+      const body = {
+        email: loginData.email,
+        password: loginData.password,
+      };
+
+      let responseValidate = await newPetition(
+        "PUT",
+        "http://localhost:3000/api/loginValidate",
+        body
+      );
+
+      if (!responseValidate.error) {
+        dbUserData = await newPetition(
+          "GET",
+          `http://localhost:3000/api/user/${loginData.email}`,
+          false
+        );
+      } else {
+        throw new Error(responseValidate.error);
+      }
+
+      if (dbUserData.logged) {
+        Swal.fire({
+          position: "bottom-end",
+          title: `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        router.push("/home");
+        setUserData(dbUserData);
+        setUserSession(true);
+        rememberSession && saveInLocalStorage("token", dbUserData);
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error al iniciar sesión en ToolMatch",
+        text: error,
+        footer: "",
+      });
+    }
+  };
+
+  const handleAuth = async (event) => {
+    event.preventDefault();
+    const userDataProvider = await callLoginGoogle();
+    let dbUserData = null;
+    let password = generatePassword();
+
+    const dataBody = {
+      ...userDataProvider,
+      password,
+    };
+
+    dbUserData = await newPetition(
+      "GET",
+      `http://localhost:3000/api/user/${userDataProvider.email}`,
+      false
+    );
+
+    if (!dbUserData) {
+      await newPetition("POST", "http://localhost:3000/api/user", dataBody);
+      dbUserData = await newPetition(
+        "GET",
+        `http://localhost:3000/api/user/${userDataProvider.email}`,
+        false
+      );
+    }
+
+    setUserData(dbUserData);
+    setUserSession(true);
+    router.push("/home");
+    Swal.fire({
+      position: "bottom-end",
+      title: `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+  };
+
+  return (
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.inputContainer}>
+        <label htmlFor="email">Correo</label>
+        <input
+          type="text"
+          name="email"
+          onChange={handleChange}
+          autoComplete="off"
+        />
+        <p
+          className={
+            errors.email.includes("✔️") ? styles.success : styles.error
+          }
+        >
+          {errors.email && errors.email}
+        </p>
+      </div>
+      <div className={styles.inputContainer}>
+        <label htmlFor="password">Contraseña</label>
+        <input
+          type={viewPwd ? "text" : "password"}
+          name="password"
+          onChange={handleChange}
+        />
+
+        <div className={styles.pwdInLogin} onClick={() => setViewPwd(!viewPwd)}>
+          {viewPwd ? svgView : svgHide}
+        </div>
+      </div>
+      <div className={styles.sessionCheckboxContainer}>
+        <label className={styles.label}>
+          <input
+            type="checkbox"
+            name="rememberSession"
+            value={rememberSession}
+            onClick={() => setRememberSession(!rememberSession)}
+          />
+          Mantener Sesión
+        </label>
+      </div>
+      <div className={styles.submitContainer}>
+        <button
+          className={`${styles.buttonSubmit} ${
+            errors.flag && styles.buttonSubmitDisabled
+          }`}
+          type="submit"
+          disabled={errors.flag}
+        >
+          Iniciar sesión
+        </button>
+        <span>|</span>
+        <button className={`${styles.socialSignIn}`} onClick={handleAuth}>
+          Iniciar con
+          <FcGoogle className={styles.icon} />
+        </button>
+      </div>
+      <div className={styles.linkContainer}>
+        <Link href="/form/recover">Olvide mi contraseña</Link>
+      </div>
+    </form>
+  );
+}

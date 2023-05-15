@@ -1,0 +1,95 @@
+.header {
+    display: flex;
+    padding: 20px 50px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--black);
+    color: var(--white);
+    height: 100px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo button {
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 5px;
+    padding: 0 15px;
+}
+
+.logo button:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+.nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    font-size: 1.6rem;
+    width: 100%;
+}
+
+.nav>ul {
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.nav div {
+    width: 100px;
+}
+
+.route {
+    padding: 3px 5px;
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 5px;
+}
+
+.nav ul li:hover {
+    padding: 3px 5px;
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.home {
+    display: flex;
+}
+.perfil {
+    width: 16px;
+    position: relative;
+}
+
+.perfil ul li a {
+    width: 100%;
+}
+
+.openSubmenu {
+    display: flex;
+    position: absolute;
+    width: 150px;
+    padding: 15px;
+    flex-direction: column;
+    gap: 2px;
+    right: 0;
+    z-index: 1;
+    background-color: var(--black);
+}
+
+.closeSubmenu {
+    display: none;
+    position: absolute;
+    width: 150px;
+    padding: 15px;
+    flex-direction: column;
+    gap: 2px;
+    right: 0;
+    z-index: 1;
+    background-color: var(--black);
+}
