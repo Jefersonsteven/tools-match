@@ -11,6 +11,7 @@ import { AppContext } from '@/context/AppContext';
 import Swal from 'sweetalert2';
 import Modal from "../../dashboard/components/Modal"
 import Cards from '@/components/Cards/Cards';
+import {AiOutlinePhone, AiOutlineMail} from "react-icons/ai"
 
 
 export default function PerfilUsuario() {
@@ -96,17 +97,19 @@ export default function PerfilUsuario() {
             Reportar Usuario
           </button>
         )}
+        </div>
+        <div className={styles.datos_container}>
         <h2>
           <strong>Apellido: </strong>
           {user.lastname}
         </h2>
         <h2>
-          <strong>Teléfono: </strong>
-          {user.phoneNumber}
+          <strong>Teléfono  : </strong>
+          {user.phoneNumber}<AiOutlinePhone/>
         </h2>
         <h2>
           <strong>Email: </strong>
-          {user.email}
+          {user.email}<AiOutlineMail/>
         </h2>
         <h2>
           <strong>Ordenes: </strong>4
@@ -120,13 +123,15 @@ export default function PerfilUsuario() {
          />
          </Modal>
         )}
-        <h2 className={styles.title_tienda}>Tienda</h2>
       </div>
+        <div className={styles.cards_container}>
+        <h2 className={styles.title_tienda}>Tienda: </h2>
       {userId === perfilId && (
         <>
         <Cards />
         </>
       )}
+      </div>
     </div>
   );
 }
