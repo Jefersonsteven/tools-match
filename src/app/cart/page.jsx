@@ -37,11 +37,6 @@ export default function Page() {
           added: false, // Para mostrar el mensaje de "Agregado al carrito"
         },
       ]);
-    } else {
-      const updatedCartItems = [...cartItems];
-      updatedCartItems[itemIndex].price +=
-        tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler;
-      setCartItems(updatedCartItems);
     }
   };
 
