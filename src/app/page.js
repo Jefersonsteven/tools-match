@@ -1,12 +1,10 @@
 // "use client";
-// import LandingPage from "./landing/Landing";
-import Payment from "./payment-provisional/page";
+import LandingPage from "./landing/Landing";
 
 export default function Landing() {
   return (
     <>
-      {/* <LandingPage /> */}
-      <Payment />
+      <LandingPage />
     </>
   );
 }
