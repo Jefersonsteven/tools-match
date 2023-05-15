@@ -12,8 +12,8 @@ import { useContext, useState } from "react";
 function Header() {
   const pathname = usePathname();
 
-  const { userSession } = useContext(AppContext);
-  const [submenu, setSubmenu] = useState(false);
+  const { userSession, userId } = useContext(AppContext);
+  const [submenu, setSubmenu] = useState(false)
 
   return (
     <header className={styles.header}>
@@ -70,11 +70,11 @@ function Header() {
                         {userSession ? "Cerrar Sesion" : "Iniciar Sesion"}
                       </Link>
                     </li>
-                    {userSession && (
-                      <li>
-                        <Link href="/perfil">Perfil</Link>
-                      </li>
-                    )}
+                    {userSession && <li>
+                      <Link href={`/perfil/${userId}`}>
+                        Perfil
+                      </Link>
+                    </li>}
                   </ul>
                 </div>
 

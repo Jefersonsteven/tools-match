@@ -39,6 +39,10 @@ function AppProvider({ children }) {
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
+  // *----------------------------------* //
+
+
+  //* Crear estado para saber si el usuario esta logeado o no (booleano)
   const [userSession, setUserSession] = useState(false);
 
     const [title, setTitle] = useState('');

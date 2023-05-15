@@ -102,8 +102,14 @@ function CreatePost() {
                     <div>
                         <label htmlFor="">Categoria</label>
                         <select onChange={handleForm} name="category" id="" placeholder="categoria">
-                            <option value="herramienta-electrica">Herramienta Electrica</option>
-                            <option value="herramienta-2">Herramienta 2</option>
+                            <option value="electrica" disabled>Herramienta Electrica</option>
+                            <option value="manual">Herramienta Manual</option>
+                            <option value="medicion">Herramienta de Medicion</option>
+                            <option value="corte">Herramienta de Corte</option>
+                            <option value="jardin">Herramienta de Jardin</option>
+                            <option value="fontaneria">Herramienta de Fontaneria</option>
+                            <option value="pintar">Herramienta para Pintar</option>
+                            <option value="soldar">Herramienta de Soldar</option>
                         </select>
                         <span>{errors.category}</span>
                     </div>
