@@ -40,7 +40,7 @@ function AppProvider({ children }) {
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
   const [userSession, setUserSession] = useState(false);
- 
+
     const [title, setTitle] = useState('');
     const [cards, setCards] = useState([]);
     const [selectedType, setSelectedType] = useState('');    
@@ -90,6 +90,10 @@ function AppProvider({ children }) {
             setUserSession,
             userData,
             setUserData,
+        form,
+        setForm,
+        errors,
+        setErrors
         }}>
             {children}
         </AppContext.Provider >   

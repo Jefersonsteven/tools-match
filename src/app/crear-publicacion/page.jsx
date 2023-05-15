@@ -7,7 +7,7 @@ import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
 
 function CreatePost() {
-    const { form, setForm, errors, setErrors } = useContext(AppContext);
+    const { form, setForm, errors, setErrors, userId } = useContext(AppContext);
     const [urlsImages, setUrlsImages] = useState([]);
 
     function handleForm(event) {
@@ -54,6 +54,11 @@ function CreatePost() {
                 type: '',
                 authorId: userId
             })
+
+            setUrlsImages([])
+
+            console.log(urlsImages);
+            console.log(data);
         }
     }
 

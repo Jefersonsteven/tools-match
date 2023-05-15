@@ -27,6 +27,7 @@
   .cardContent {
     padding: 5%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
   }
   
@@ -38,7 +39,7 @@
   }
 
   .cardPrice {
-    font-size: 3 rem;
+    font-size: 3rem;
     font-weight: bold;
     
   }

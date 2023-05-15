@@ -5,7 +5,8 @@ import FilterBar from "@/components/Filter/FilterBar";
 function Home() {
 
   return (
-    <div className="flex flex-col h-screen mt-8">
+    <div className="flex flex-col mt-8 ">
+      <h1 className="text-4xl font-bold text-center m-5">Renta o Compra Herramientas en Tu Comunidad</h1>
       <div className="container mx-auto px-4">
         <div className="bg-green-80 flex justify-between py-4 px-4 sm:px-6 lg:px-8">
           <FilterBar />
@@ -19,5 +20,5 @@ function Home() {
     </div>
   )
 }
- 
+
   export default Home;

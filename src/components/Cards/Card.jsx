@@ -21,8 +21,8 @@ const Card = ({ title, photo, price, type, perDay, id}) => {
         </h2>
       </div>  
       <div className={styles.saleTypeContent}>        
-      <p className={type == 'Arriendo' ? 'text-yellow-500' : 'text-green-500'}>{type}</p>
-      <p >{perDay}</p> 
+          <p className={type == 'Arriendo' ? 'bg-yellow-500 p-2 rounded text-white' : 'bg-green-500 p-2 rounded text-white'}>{type}</p>
+          <p>{perDay}</p> 
       </div>     
     </div>
     </Link>

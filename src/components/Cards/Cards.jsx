@@ -9,8 +9,7 @@ const Cards = () => {
   const { cards, setCards } = useContext(AppContext);
 
   
-    useEffect(() => {
-      if (cards.length ===0)
+  useEffect(() => {
       axios.get('http://localhost:3000/api/admin/post').then(res => setCards(res.data))       
       }, []);
   
