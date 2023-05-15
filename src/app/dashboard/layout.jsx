@@ -15,9 +15,9 @@ export default function DashboardLayout({ children }) {
             <div className={styles.boton}>
               <Link href="/dashboard/users">Usuarios</Link>
             </div>
-            <div className={styles.boton}>
+            {/* <div className={styles.boton}>
               <Link href="/dashboard/payments">Pagos</Link>
-            </div>
+            </div> */}
             <div className={styles.boton}>
               <Link href="/dashboard/publications">Publicaciones</Link>
             </div>

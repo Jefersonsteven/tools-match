@@ -1,4 +1,5 @@
 .main {
+    width: 100%;
     padding: 50px 50px 0 50px;
     display: grid;
     grid-template-columns: 30% 70%;
@@ -142,8 +143,8 @@
 }
 
 .section_button button {
-    width: 256px;
-    height: 66px;
+    width: 226px;
+        height: 56px;
     border-radius: 58px;
     display: flex;
     align-items: center;

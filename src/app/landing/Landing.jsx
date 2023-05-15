@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Modal from "./modal";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/footer/Footer";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,34 +22,10 @@ export default function LandingPage() {
 
   return (
     <div className={style.landingPageContainer}>
-      <header className={style.nabvarContainer}>
-        <div className={style.navbarLogo}>
-          <Link href="/home">
-            <Image
-              src="/images/logo/toolsMatch.jpg"
-              alt="logo"
-              width={100}
-              height={100}
-            />
-          </Link>
-        </div>
-        <div className={style.navbarMenu}>
-          <div className={style.menuButton} onClick={toggleNavbarMenu}>
-            <i className="fas fa-bars"></i>
-          </div>
-          <Link href="/home">Home</Link>
-          <Link className={style.contact} href="">
-            Contacto
-          </Link>
-          <Link href="form/login" className={style.navbarMenuLogin}>
-            Iniciar Sesión
-          </Link>
-        </div>
-      </header>
+      <Header />
       <main className={style.mainInfo}>
         <div className={style.mainInfoApp}>
           <h1>
-            {" "}
             ToolsMatch es una aplicación innovadora que se centra en satisfacer
             las necesidades de la Comunidad para la compra y el arriendo de
             herramientas usadas.
@@ -122,29 +100,38 @@ export default function LandingPage() {
             width={230}
             height={200}
           />
+          <Image
+            src="/images/sponsors/fischer.png"
+            alt="sponsors"
+            width={230}
+            height={200}
+          />
+          <Image
+            src="/images/sponsors/irimo.png"
+            alt="sponsors"
+            width={130}
+            height={180}
+          />
+          <Image
+            src="/images/sponsors/libus.png"
+            alt="sponsors"
+            width={230}
+            height={200}
+          />
+          <Image
+            src="/images/sponsors/philips.png"
+            alt="sponsors"
+            width={150}
+            height={150}
+          />
+          <Image
+            src="/images/sponsors/skil.png"
+            alt="sponsors"
+            width={180}
+            height={180}
+          />
         </div>
       </section>
-      <footer className={style.footer}>
-        <div className={style.footerLogo}>
-          <Link href="/home">
-            <Image
-              src="/images/logo/toolsMatch.jpg"
-              alt="logo"
-              width={70}
-              height={70}
-            />
-          </Link>
-        </div>
-        <div className={style.footerRights}>
-          <p>Copyright - ToolsMatch</p>
-        </div>
-        <div className={style.footerTerms}>
-          <Link href="#" onClick={handleOpenModal}>
-            Términos y Condiciones
-          </Link>
-        </div>
-        {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
-      </footer>
     </div>
   );
 }

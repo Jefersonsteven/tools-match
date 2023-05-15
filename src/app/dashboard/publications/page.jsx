@@ -157,10 +157,10 @@ function Posts() {
                 <td>{d.price}</td>
                 <td>{d.type}</td>
                 <td>
-                  <button
+                  {/* <button
                   className={style.botonEditar}
                     onClick={()=> handleClick(d.id)}>EDITAR
-                    </button>
+                    </button> */}
                   <button
                     className={style.botonDelete}
                     onClick={() => handleDeleteClick(d.firstname, d.id)}
@@ -176,7 +176,7 @@ function Posts() {
           </tbody>
         </table>
       ):(
-        <div className={style.noUsuarios}><p>No hay Usuarios</p></div>
+        <div className={style.noUsuarios}><p>No hay Publicaciones</p></div>
       )}
      {editingUser && (
       <Modal show={showModal} onClose={()=> setShowModal(false)}>

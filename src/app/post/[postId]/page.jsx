@@ -12,26 +12,23 @@ function PostDetail({ }) {
     const { postDetail, setPostDetail, userId } = useContext(AppContext);
     const pd = postDetail;
 
+    const pd2 = {
+        author: {
+            rating: 1.0,
+            image_perfil: 'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'
+        },
+        images: [
+            'https://us.123rf.com/450wm/godruma/godruma1802/godruma180200012/95380266-taladro-manual-o-m%C3%A1quina-de-perforaci%C3%B3n-equipada-con-un-accesorio-de-herramienta-de-corte-o-de.jpg',
+            'https://us.123rf.com/450wm/vivacityimages/vivacityimages2004/vivacityimages200400051/144863343-vista-lateral-del-taladro-manual-a-bater%C3%ADa.jpg'
+        ]
+    }
+
     useEffect(() => {
-        setPostDetail({
-            id: 45712,
-            title: 'taladro eléctrico de mano usado',
-            price: 50,
-            description: 'Este taladro eléctrico de mano es ideal para realizar trabajos de perforación en madera, metal, plástico y otros materiales. Ha sido previamente utilizado, pero se encuentra en buen estado y funciona correctamente. El taladro cuenta con una potencia de 500 vatios y una velocidad variable de hasta 3000 RPM. Además, incluye una broca para comenzar a trabajar de inmediato.',
-            categories: ['herramientas', 'taladros, herramientas electricas'],
-            author: {
-                id: 1,
-                username: 'juanperez88',
-                rating: 1.0,
-                image_perfil: 'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'
-            },
-            images: [
-                'https://us.123rf.com/450wm/godruma/godruma1802/godruma180200012/95380266-taladro-manual-o-m%C3%A1quina-de-perforaci%C3%B3n-equipada-con-un-accesorio-de-herramienta-de-corte-o-de.jpg',
-                'https://us.123rf.com/450wm/vivacityimages/vivacityimages2004/vivacityimages200400051/144863343-vista-lateral-del-taladro-manual-a-bater%C3%ADa.jpg'
-            ],
-            type: 'SALE'
-        })
-    }, [setPostDetail])
+        fetch(`http://localhost:3000/api/admin/post/${postId}`)
+            .then(response => response.json())
+            .then(data => setPostDetail(data))
+
+    }, [setPostDetail, postId])
 
     return (
         <div className={styles.main_container}>
@@ -45,7 +42,7 @@ function PostDetail({ }) {
                             <figure className={styles.figure}>
                                 <Image
                                     className={styles.image_first}
-                                    src={pd?.images[0]}
+                                    src={pd2?.images[0]}
                                     width={442}
                                     height={400}
                                     alt={pd.title}
@@ -54,7 +51,7 @@ function PostDetail({ }) {
                             </figure>
                             <div>
                                 <figure className={styles.images}>
-                                    {pd.images.map((img, index) => (
+                                    {pd2.images.map((img, index) => (
                                         <Image
                                             className={styles.image_others}
                                             key={index}
@@ -74,28 +71,27 @@ function PostDetail({ }) {
                                 <div>
                                     {pd.type === 'SALE' && <h3>${pd.price}</h3>}
                                     {pd.type === 'LEASE' && <h3>${pd.pricePerDay}</h3>}
-                                    { }
                                 </div>
                             </div>
-                            <p>{pd.description}</p>
+                            <p>{pd.content}</p>
                             <div className={styles.description_categories}>
-                                <h5>Categorias:</h5>
-                                <p>{pd.categories.join(', ')}</p>
+                            <h5>Categoria:</h5>
+                            <p>{pd.category}</p>
                             </div>
                         </section>
                         <section className={styles.section_user}>
                             <div>
                                 <figure>
                                     <Image
-                                        src={pd.images[0]}
+                                        src={pd2.images[0]}
                                         width={96}
                                         height={96}
-                                        alt={pd.author.username}
+                                        alt={pd.author.firstname}
                                     />
                                 </figure>
                                 <div className={styles.user_info}>
-                                    <h5><b>{pd.type === 'SALE' ? 'Vendedor: ' : 'Arrendador'}</b>@{pd.author.username}</h5>
-                                    <h5>⭐{pd.author.rating}.0</h5>
+                                    <h5><b>{pd.type === 'SALE' ? 'Vendedor: ' : 'Arrendador'}</b>@{pd.author.firstname}</h5>
+                                    <h5>⭐{pd2.author.rating}.0</h5>
                                 </div>
                             </div>
                         </section>

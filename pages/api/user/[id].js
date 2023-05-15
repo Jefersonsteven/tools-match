@@ -1,6 +1,6 @@
 import { parse } from "postcss";
 import prisma from "../../../prisma/client";
-const bcrypt = require("bcryptjs");
+const crypto = require('crypto');
 
 export default async function handler(req, res) {
   const { id } = req.query;
@@ -18,7 +18,11 @@ export default async function handler(req, res) {
     });
     res.status(200).json(user);
   } else if (req.method === "PUT") {
-    const { firstname, lastname, password, phoneNumber, zipCode } = req.body;
+    const { firstname, lastname, phoneNumber, zipCode } = req.body;
+    let { password } = req.body
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    password = crypto.createHash('sha256').update(data).digest('hex');
     try {
       const user = await prisma.user.update({
         where: {

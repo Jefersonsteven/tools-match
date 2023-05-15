@@ -1,5 +1,5 @@
 import prisma from "../../../prisma/client";
-const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -16,8 +16,9 @@ export default async function handler(req, res) {
         reports,
       } = req.body;
       let { password } = req.body;
-      const rondasDeSal = 10;
-      password = await bcrypt.hash(password, rondasDeSal);
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      password = crypto.createHash("sha256").update(data).digest("hex");
       const user = await prisma.user.create({
         data: {
           firstname,

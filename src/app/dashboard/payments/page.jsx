@@ -173,7 +173,7 @@ function Users() {
           </tbody>
         </table>
       ):(
-        <div className={style.noUsuarios}><p>No hay Usuarios</p></div>
+        <div className={style.noUsuarios}><p>No hay Pagos</p></div>
       )}
      {editingUser && (
       <Modal show={showModal} onClose={()=> setShowModal(false)}>
