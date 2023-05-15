@@ -5,6 +5,7 @@ const nextConfig = {
       "us.123rf.com",
       "res.cloudinary.com",
       "encrypted-tbn0.gstatic.com",
+      "images.unsplash.com",
       "encrypted-tbn3.gstatic.com",
       "encrypted-tbn2.gstatic.com",
       "encrypted-tbn1.gstatic.com",
@@ -15,6 +16,8 @@ const nextConfig = {
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     CLOUDINARY_UPLOAD_PRESET: process.env.CLOUDINARY_UPLOAD_PRESET,
+    MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
+    MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN,
   },
 };
 
