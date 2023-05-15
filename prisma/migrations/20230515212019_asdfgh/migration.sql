@@ -14,6 +14,7 @@ CREATE TABLE "User" (
     "hidden" BOOLEAN NOT NULL DEFAULT false,
     "phoneNumber" TEXT,
     "zipCode" TEXT,
+    "map" TEXT,
     "reports" TEXT[],
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")

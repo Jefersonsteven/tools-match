@@ -21,6 +21,7 @@ model User {
   hidden      Boolean   @default(false)
   phoneNumber String?
   zipCode     String?
+  map         String?
   reports     String[]
   orders      Order[]   @relation("userOrders")
   payments    Payment[] @relation("userPayments")

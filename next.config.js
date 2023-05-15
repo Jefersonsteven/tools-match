@@ -4,9 +4,7 @@ const nextConfig = {
     concurrentServerRendering: false,
   },
   images: {
-    domains: [
-      "res.cloudinary.com",
-    ],
+    domains: ["res.cloudinary.com"],
   },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,
@@ -15,6 +13,7 @@ const nextConfig = {
     CLOUDINARY_UPLOAD_PRESET: process.env.CLOUDINARY_UPLOAD_PRESET,
     MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
     MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN,
+    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
   },
 };
 
