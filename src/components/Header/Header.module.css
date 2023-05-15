@@ -8,6 +8,22 @@
     height: 100px;
 }
 
+.logo {
+    display: flex;
+    gap: 20px;
+}
+
+.logo button {
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 5px;
+    padding: 0 15px;
+}
+
+.logo button:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
 .nav {
     display: flex;
     gap: 30px;

@@ -1,6 +1,8 @@
-
+"use client"
 import Link from "next/link";
 import styles from "./dashboard.module.css";
+import { disableReactRoot } from 'react-dom'
+disableReactRoot()
 
 export default function DashboardLayout({ children }) {
   return (
