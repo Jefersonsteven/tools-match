@@ -1,3 +1,4 @@
 export default function getFromLocalStorage() {
-  return JSON.parse(localStorage.getItem("token"));
+  if (localStorage.getItem("token") !== "") return JSON.parse(localStorage.getItem("token"));
+  return false
 }

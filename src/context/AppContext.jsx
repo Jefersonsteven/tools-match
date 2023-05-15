@@ -49,7 +49,7 @@ function AppProvider({ children }) {
     const [cards, setCards] = useState([]);
     const [selectedType, setSelectedType] = useState('');    
     const [searchTerm, setSearchTerm] = useState(''); 
-    const [filteredCards, setFilteredCards] = useState(cards)   
+  const [filteredCards, setFilteredCards] = useState([])   
     const [filter, setFilter] = useState('')
 
 

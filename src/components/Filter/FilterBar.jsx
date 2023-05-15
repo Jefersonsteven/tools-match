@@ -2,11 +2,12 @@
 import CategoryFilter from './CategoryFilter';
 import SearchBar from '../SearchBar/SearchBar';
 import { AppContext, AppProvider } from "@/context/AppContext";
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import styles from './filter.module.css';
 
 
 export default function FilterBar() {
-  const { cards, setCards, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy } = useContext(AppContext);
+  const { cards, setCards, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy, filteredCards } = useContext(AppContext);
 
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showFilterOptions, setShowFilterOptions] = useState(false);
@@ -15,9 +16,6 @@ export default function FilterBar() {
   };
 
 
-  useEffect(()=>{
-    FilterLechu()
-  }, [title, selectedCategory, selectedType, sortBy]) 
 
   //console.log('selectedCategory', selectedCategory)
   // console.log('selectedType', selectedType)
@@ -27,10 +25,10 @@ export default function FilterBar() {
   const FilterLechu = () => {    
 
     let myFilter = [...cards]
-    if (title !== '') myFilter = myFilter.filter(tool => tool.title.toLowerCase().includes(title.toLowerCase()))
-    if (title === '') myFilter = [...cards]
-    if (selectedCategory !== '') myFilter = myFilter.filter (tool => tool.category == selectedCategory)
-    if (selectedType !== '') myFilter = myFilter.filter (tool => tool.type === selectedType)
+    if (title) myFilter = [...filteredCards].filter(tool => tool.title.toLowerCase().includes(title.toLowerCase()))
+    if (title === '') myFilter = [...filteredCards]
+    if (selectedCategory !== '') myFilter = [...filteredCards].filter(tool => tool.category == selectedCategory)
+    if (selectedType !== '') myFilter = [...filteredCards].filter(tool => tool.type === selectedType)
     if (sortBy !== '') {
       if (sortBy === 'titleAsc') {
         myFilter = myFilter.sort((a, b) => a.title.localeCompare(b.title));
@@ -49,10 +47,15 @@ export default function FilterBar() {
     setCards(myFilter);      
   }
 
-    return (
-      <AppProvider>        
-          <div className="flex-1 flex flex-row items-center flex justify-between px-2">
-            <div>
+  useEffect(() => {
+    FilterLechu()
+  }, [title, selectedCategory, selectedType, sortBy])
+
+  return (
+    <AppProvider>        
+      <div className={styles.filter}>
+        <div className="flex-1 flex flex-row items-center flex justify-between px-2">
+          <div className={styles.filter}>
             <div className="mr-2">
               <button
                 className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4"
@@ -62,7 +65,7 @@ export default function FilterBar() {
               </button>
             </div>
             {showFilterOptions && (
-              <div>
+              <div className={styles.window}>
                 <div className="py-2 px-4 bg-gray-200 font-medium">
                   Tipo de transacción:
                 </div>
@@ -77,10 +80,14 @@ export default function FilterBar() {
                 <div className="py-2 px-4 bg-gray -200 font-medium">Categoría:</div>
                 <CategoryFilter
                   categories={[
-                    'tecnologia',
-                    'herramientas eléctricas',
-                    'Excavación',
-                    'Jardinería'
+                    'electrica',
+                    'manual',
+                    'medicion',
+                    'corte',
+                    'jardin',
+                    'fontaneria',
+                    'pintar',
+                    'soldar',
                   ]}
                   selectedCategory={selectedCategory}
                   setSelectedCategory={setSelectedCategory}
@@ -89,16 +96,15 @@ export default function FilterBar() {
             )}
           </div>
           
-            <div className="flex space-x-4">
+          <div className="flex space-x-4 relative">
               <button
                 className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4"
                 onClick={() => setShowSortOptions(!showSortOptions)}
               >
                 Sort
-              </button>
-            </div>
+            </button>
             {showSortOptions && (
-              <div>
+              <div className={styles.window2}>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
                   onClick={() => setSortBy('')}
@@ -143,10 +149,12 @@ export default function FilterBar() {
                 </button>
               </div>                       
             )}
-            </div>          
-          <div className="flex-1 flex flex-row items-center justify-end pr-4 w-96"> 
+          </div>
+        </div>          
+        <div className="flex-1 flex flex-row items-center justify-end pr-4 w-96"> 
+        </div>
         <SearchBar title={title} onTitleChange={handleTitleChange} /> 
-        </div> 
-      
+      </div>   
     </AppProvider>
   )}
+

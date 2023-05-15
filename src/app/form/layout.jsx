@@ -21,7 +21,7 @@ export default function FormLayout({ children }) {
     const path = pathname.split("/");
     setRoute(path[2]);
     userSession && push("/home");
-  }, [pathname]);
+  }, [push, pathname, userSession]);
 
   useEffect(() => {
     let token = getFromLocalStorage();
@@ -31,7 +31,7 @@ export default function FormLayout({ children }) {
       setUserSession(true);
       push("/home");
     }
-  }, []);
+  }, [push, userSession, setUserData, setUserSession]);
 
   return (
     <>
