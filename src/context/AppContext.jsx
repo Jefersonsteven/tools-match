@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useState } from "react";
-
+import axios from "axios";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
@@ -41,35 +41,62 @@ function AppProvider({ children }) {
   const [name, setName] = useState("");
   const [userSession, setUserSession] = useState(false);
 
-  return (
-    <AppContext.Provider
-      value={{
+    const [title, setTitle] = useState('');
+    const [cards, setCards] = useState([]);
+    const [selectedType, setSelectedType] = useState('');    
+    const [searchTerm, setSearchTerm] = useState(''); 
+    const [filteredCards, setFilteredCards] = useState(cards)   
+    const [filter, setFilter] = useState('')
+
+
+    const tools = async () => {
+      const response = await axios.get('http://localhost:3000/api/admin/post');
+      return response.data;
+    }
+
+    
+    return (
+        <AppContext.Provider value={{            
+            postDetail,
+            setPostDetail,
+            cards,
+            setCards,
+            selectedCategory,
+            setSelectedCategory,
+            title,
+            setTitle,
+            userId,
+            setUserId,
+            selectedType,
+            setSelectedType,
+            sortBy,
+            setSortBy,
+            searchTerm,
+            setSearchTerm,
+            tools,
+            filteredCards,
+            setFilteredCards,
+            rent,
+            setRent,
+            sale,
+            setSale,
+            name,
+            setName,
+            filter,
+            setFilter,    
+            userId,
+            setUserId,
+            userSession,
+            setUserSession,
+            userData,
+            setUserData,
         form,
         setForm,
         errors,
-        setErrors,
-        postDetail,
-        setPostDetail,
-        selectedCategory,
-        setSelectedCategory,
-        rent,
-        setRent,
-        sale,
-        setSale,
-        sortBy,
-        setSortBy,
-        name,
-        setName,
-        userId,
-        setUserId,
-        userSession,
-        setUserSession,
-        userData,
-        setUserData,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+        setErrors
+        }}>
+            {children}
+        </AppContext.Provider >   
   );
 }
 

@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    concurrentServerRendering: false,
+  },
   images: {
     domains: [
-      "us.123rf.com",
       "res.cloudinary.com",
-      "encrypted-tbn0.gstatic.com",
-      "images.unsplash.com",
-      "encrypted-tbn3.gstatic.com",
-      "encrypted-tbn2.gstatic.com",
-      "encrypted-tbn1.gstatic.com",
     ],
   },
   env: {
