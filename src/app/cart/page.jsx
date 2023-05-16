@@ -13,11 +13,16 @@ export default function Page() {
   const [showVenta, setShowVenta] = useState(false);
   const [total, setTotal] = useState(0);
   const [showCards, setShowCards] = useState(true);
+  const [cartItems, setCartItems] = useState(null);
 
-  const [cartItems, setCartItems] = useState(() => {
-    const items = localStorage.getItem("cartItems");
-    return items ? JSON.parse(items) : [];
-  });
+  if (typeof window !== 'undefined') {
+    // Acceso a localStorage aquí
+    setCartItems(() => {
+      const items = localStorage.getItem("cartItems");
+      return items ? JSON.parse(items) : [];
+    });
+  }
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
