@@ -28,29 +28,27 @@ export default function PerfilUsuario() {
       .then((data) => setUser(data));
   }, [perfilId]);
 
-
   const handleEdit = () => {
     setEditingUser(user);
-    setShowModal(true)
-
+    setShowModal(true);
   };
 
   const handleReport = () => {
     Swal.fire({
-      title: '¿Estás seguro?',
+      title: "¿Estás seguro?",
       text: "¿Quieres reportar este usuario?",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Reportar'
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Reportar",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
-          '¡Usuario reportado!',
-          'El usuario ha sido reportado con éxito.',
-          'success'
-        );      
+          "¡Usuario reportado!",
+          "El usuario ha sido reportado con éxito.",
+          "success"
+        );
       }
     });
   };
@@ -59,11 +57,11 @@ export default function PerfilUsuario() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const updatedUser = {
-      firstname: formData.get('firstname'),
-      lastname: formData.get('lastname'),
-      email: formData.get('email'),
-      phoneNumber: formData.get('phonenumber'),
-      reports: formData.get('reports'),
+      firstname: formData.get("firstname"),
+      lastname: formData.get("lastname"),
+      email: formData.get("email"),
+      phoneNumber: formData.get("phonenumber"),
+      reports: formData.get("reports"),
     };
   
     Swal.fire({
@@ -90,6 +88,26 @@ export default function PerfilUsuario() {
           });
       }
     });
+
+    try {
+      await axios.put(
+        `http://localhost:3000/api/admin/user/${editingUser.id}`,
+        updatedUser
+      );
+      console.log("User updated in DB");
+      fetch(`http://localhost:3000/api/admin/user/${perfilId}`)
+        .then((response) => response.json())
+        .then((data) => setUser(data));
+      setEditingUser(null);
+      Swal.fire({
+        title: "Cambiado con éxito!",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -138,17 +156,23 @@ export default function PerfilUsuario() {
           setEditingUser={setEditingUser}
          />
          </Modal>
+          <Modal show={showModal} onClose={() => setShowModal(false)}>
+            <UserForm
+              editingUser={editingUser}
+              handleSubmit={handleSubmit}
+              setEditingUser={setEditingUser}
+            />
+          </Modal>
         )}
       </div>
         <div className={styles.cards_container}>
         <h2 className={styles.title_tienda}>Tienda: </h2>
       {userId === perfilId && (
         <>
-        <Cards />
+          <Cards />
         </>
       )}
       </div>
     </div>
   );
 }
-
