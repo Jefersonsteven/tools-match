@@ -71,7 +71,7 @@ function Posts() {
     };
 
     fetchUsers();
-  }, [handleDeleteUser]);
+  }, []);
 
 
   const filteredUsuarios = records.filter((usuario) => {
