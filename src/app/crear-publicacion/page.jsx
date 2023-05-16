@@ -19,20 +19,19 @@ function CreatePost() {
         }
     }
 
-    async function uploadImages(images, setUrlsImages) {
+    async function uploadImages(images) {
         const URLS = images.map(async (file) => await uploadImage(file));
         const urls = await Promise.all(URLS)
-        // .then(data => setUrlsImages(data));
         return urls
     }
 
     async function handleSubmit(event) {
+
         event.preventDefault()
         const error = Object.values(errors).some(e => e.length > 0);
         const post = Object.values(form).some(e => e.length === 0);
         if (!error && !post) {
             if (form.photo.length > 0) {
-                console.log('Hey!!☠️');
                 const urls = await uploadImages(form.photo, setUrlsImages)
 
                 const newPost = { ...form }
