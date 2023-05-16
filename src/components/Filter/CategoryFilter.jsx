@@ -6,7 +6,7 @@ export default function CategoryFilter({ categories, selectedCategory, setSelect
 
   return (
     <div>
-      <label htmlFor="category">Categoria:</label>
+      <label htmlFor="category"></label>
       <select
         id="category"
         value={selectedCategory}

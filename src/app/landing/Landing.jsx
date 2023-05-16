@@ -51,7 +51,7 @@ export default function LandingPage() {
             </p>
           </h1>
           <div className={style.mainGoHome}>
-            <Link href="/home">Ingresar Ahora</Link>
+            <Link href="/home">Ingresar</Link>
           </div>
         </div>
       </main>
