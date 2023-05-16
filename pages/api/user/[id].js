@@ -14,15 +14,16 @@ export default async function handler(req, res) {
         reviews: true,
         orders: true,
         payments: true,
+        received: true,
       },
     });
     res.status(200).json(user);
   } else if (req.method === "PUT") {
     const { firstname, lastname, phoneNumber, zipCode } = req.body;
-    let { password } = req.body
+    let { password } = req.body;
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
-    password = crypto.createHash('sha256').update(data).digest('hex');
+    password = crypto.createHash("sha256").update(data).digest("hex");
     try {
       const user = await prisma.user.update({
         where: {

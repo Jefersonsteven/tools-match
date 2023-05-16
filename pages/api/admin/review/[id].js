@@ -11,6 +11,7 @@ export default async function handler(req, res) {
         include: {
           author: true,
           post: true,
+          received: true,
         },
       });
 
