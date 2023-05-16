@@ -7,6 +7,7 @@ import { MdVerifiedUser } from "react-icons/md";
 import { FaToolbox } from "react-icons/fa";
 import UserForm from "../components/Form";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -134,23 +135,33 @@ function Posts() {
           <thead>
             <tr>
             <th><MdVerifiedUser/></th>
+            <th>ID</th>
     <th>TITULO</th>
     <th>CATEGORIA</th>
     <th>CONTENIDO</th>
     <th>PRECIO</th>
     <th>TIPO</th>
+    <th>AUTOR</th>
+    <th>CREADA</th>
+    <th>MODIFICADA</th>
+
            </tr>
            </thead> 
                
            <tbody className={style.bodyTabla}>
             {filteredUsuarios.map((d, i) => (
               <tr className={style.namesTable} key={i}>
-                <td><FaToolbox/></td>            
+                <td><FaToolbox/></td>
+                <td>{d.id}</td>           
                 <td>{d.title}</td>
                 <td>{d.category}</td>
                 <td>{d.content}</td>
                 <td>{d.price}</td>
                 <td>{d.type}</td>
+                <td>{d.authorId}</td>
+                <td>{d.createdAt}</td>
+                <td>{d.updatedAt}</td>
+           
                 <td>
                   {/* <button
                   className={style.botonEditar}
@@ -171,7 +182,7 @@ function Posts() {
           </tbody>
         </table>
       ):(
-        <div className={style.noUsuarios}><p>No hay Publicaciones</p></div>
+        <div className={style.noUsuarios}><p>No hay Publicaciones🚩</p></div>
       )}
      {editingUser && (
       <Modal show={showModal} onClose={()=> setShowModal(false)}>

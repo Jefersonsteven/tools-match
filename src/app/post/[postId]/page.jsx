@@ -32,7 +32,7 @@ function PostDetail({ }) {
 
     return (
         <div className={styles.main_container}>
-            <Link className={styles.back} href="/home">
+            <Link onClick={() => setPostDetail([])} className={styles.back} href="/home">
                 <IoCaretBack size={50} color="var(--white)" />
             </Link>
             <main className={styles.main}>
@@ -42,7 +42,7 @@ function PostDetail({ }) {
                             <figure className={styles.figure}>
                                 <Image
                                     className={styles.image_first}
-                                    src={pd2?.images[0]}
+                                src={pd?.photo[0]}
                                     width={442}
                                     height={400}
                                     alt={pd.title}
@@ -51,7 +51,7 @@ function PostDetail({ }) {
                             </figure>
                             <div>
                                 <figure className={styles.images}>
-                                    {pd2.images.map((img, index) => (
+                                {pd?.photo.map((img, index) => (
                                         <Image
                                             className={styles.image_others}
                                             key={index}
@@ -83,7 +83,7 @@ function PostDetail({ }) {
                             <div>
                                 <figure>
                                     <Image
-                                        src={pd2.images[0]}
+                                    src={pd?.photo[0]}
                                         width={96}
                                         height={96}
                                         alt={pd.author.firstname}
@@ -98,7 +98,7 @@ function PostDetail({ }) {
                         <section className={styles.section_button}>
                             {userId === pd.author.id && <button>Eliminar</button>}
                             {userId !== pd.author.id && pd.type === 'SALE' && <button>Comprar</button>}
-                            {userId !== pd.author.id && pd.type === 'LEASE' && <button>Arrendar</button>}
+                        {userId !== pd.author.id && pd.type === 'RENTAL' && <button>Arrendar</button>}
                         </section>
                     </>
                 }
