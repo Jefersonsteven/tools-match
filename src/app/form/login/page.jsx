@@ -24,7 +24,8 @@ import Loader from "@/components/Loader/Loader";
 
 export default function Login() {
   const router = useRouter();
-  const { setUserData, setUserId, saveInLocalStorage } = useContext(AppContext);
+  const { setUserData, setUserId, saveInLocalStorage, form, setForm } =
+    useContext(AppContext);
   const [rememberSession, setRememberSession] = useState(false);
   const [fetchingData, setFetchingData] = useState(false);
   const [fetchingAuth, setFetchingAuth] = useState(false);
@@ -59,9 +60,10 @@ export default function Login() {
         setUserData,
         setUserId,
         rememberSession,
-        setRememberSession,
         router,
-        saveInLocalStorage
+        saveInLocalStorage,
+        form,
+        setForm
       );
     } catch (error) {
       Swal.fire({
