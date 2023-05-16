@@ -12,9 +12,11 @@ function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
   const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("token"))
+    JSON.parse(localStorage.getItem("token")) || null
   );
-  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
+  const [userId, setUserId] = useState(
+    JSON.parse(localStorage.getItem("id")) || null
+  );
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
