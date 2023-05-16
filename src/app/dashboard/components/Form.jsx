@@ -82,16 +82,6 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
           pattern="^[a-zA-Z]{1,15}$"
           required
        />
-  <label className={style.label} htmlFor="email">Email:</label>
-  <input className={style.input}
-         type="text"
-         id="email"
-         name="email"
-         defaultValue={editingUser.email}
-         onBlur={validarEmail}
-         maxLength={15}
-         required
-       />
   <label className={style.label} htmlFor="phonenumber">Telefono:</label>
   <input className={style.input}
          type="text"
