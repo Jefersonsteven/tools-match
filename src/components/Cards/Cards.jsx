@@ -10,9 +10,11 @@ const Cards = () => {
 
   
   useEffect(() => {
-      axios.get('http://localhost:3000/api/admin/post').then(res => {setCards(res.data)
-    setFilteredCards(res.data)})       
-      }, []);
+    axios.get('http://localhost:3000/api/admin/post').then(res => {
+      setCards(res.data)
+      setFilteredCards(res.data)
+    })       
+  }, [setCards, setFilteredCards]);
   
 
   return (

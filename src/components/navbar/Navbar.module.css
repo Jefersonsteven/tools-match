@@ -1,7 +1,7 @@
 /*--------------------NAVBAR--------------------*/
 .nabvarContainer{
     display: flex;
-    background: #131713;
+    background: var(--black);
     width: 100%;
     height: 111px;
     align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .navbarMenuLogin{
-    background: #21BF60;
+    background: var(--green);
     height: 40px;
     border-radius: 10px;
     padding: 5px 25px;

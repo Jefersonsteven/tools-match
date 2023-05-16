@@ -11,19 +11,23 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons//fc";
 import { AppContext } from "@/context/AppContext";
 
+/* Sweetalert2 */
+import Swal from "sweetalert2";
+
 /* Helpers */
 import { validateSignIn } from "../assets/validateForms";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
-import { callLoginGoogle } from "../assets/authWithGoogle";
-import { newPetition } from "../assets/petition";
-import generatePassword from "../assets/passwordGenerator";
+import {
+  callLoginGoogle,
+  createNewUserOrLogIn,
+} from "../assets/authWithGoogle";
 
-import Swal from "sweetalert2";
+import { submitSignUpFormData } from "../assets/formSubmit";
 
 export default function Logout() {
   const router = useRouter();
-  const { setUserSession, setUserData } = useContext(AppContext);
+  const { setUserData, setUserId } = useContext(AppContext);
   const [viewPwd, setViewPwd] = useState(false);
   const [repeatViewPwd, setRepeatViewPwd] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
@@ -64,35 +68,7 @@ export default function Logout() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const dataBody = {
-        firstname: registerData.name,
-        lastname: registerData.surname,
-        email: registerData.email,
-        password: registerData.password,
-        phoneNumber: registerData.phoneNumber,
-      };
-
-      let data = await newPetition(
-        "POST",
-        "http://localhost:3000/api/registerUser",
-        dataBody
-      );
-
-      if (data.newUser) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Tu cuenta ha sido creada, redirigiendo hacia el logIn",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-
-        setTimeout(() => {
-          router.push("/form/login");
-        }, 3000);
-      } else {
-        throw new Error(data.error);
-      }
+      await submitSignUpFormData(registerData, router);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -105,41 +81,17 @@ export default function Logout() {
 
   const handleAuth = async (event) => {
     event.preventDefault();
-    const userDataProvider = await callLoginGoogle();
-    let dbUserData = null;
-    let password = generatePassword();
-
-    const dataBody = {
-      ...userDataProvider,
-      password,
-    };
-
-    dbUserData = await newPetition(
-      "GET",
-      `http://localhost:3000/api/user/${userDataProvider.email}`,
-      false
-    );
-
-    if (!dbUserData) {
-      await newPetition("POST", "http://localhost:3000/api/user", dataBody);
-      dbUserData = await newPetition(
-        "GET",
-        `http://localhost:3000/api/user/${userDataProvider.email}`,
-        false
+    try {
+      const userDataProvider = await callLoginGoogle();
+      await createNewUserOrLogIn(
+        userDataProvider,
+        setUserData,
+        setUserId,
+        router
       );
+    } catch (error) {
+      console.log(error);
     }
-
-    setUserData(dbUserData);
-    Swal.fire({
-      title: `Bienvenido ${dbUserData.firstname} ${dbUserData.lastname}`,
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    setUserSession(true);
-
-    setTimeout(() => {
-      router.push("/form/login");
-    }, 3000);
   };
 
   return (
@@ -286,7 +238,7 @@ export default function Logout() {
           </button>
           <span>|</span>
           <button className={`${styles.socialSignIn}`} onClick={handleAuth}>
-            Iniciar con
+            Registrarse con
             <FcGoogle className={styles.icon} />
           </button>
         </div>
