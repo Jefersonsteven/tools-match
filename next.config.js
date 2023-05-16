@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    concurrentServerRendering: false,
-  },
   images: {
     domains: [
       "res.cloudinary.com",

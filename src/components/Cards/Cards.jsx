@@ -6,11 +6,12 @@ import axios from 'axios';
 
 
 const Cards = () => {
-  const { cards, setCards } = useContext(AppContext);
+  const { cards, setCards, setFilteredCards } = useContext(AppContext);
 
   
   useEffect(() => {
-      axios.get('http://localhost:3000/api/admin/post').then(res => setCards(res.data))       
+      axios.get('http://localhost:3000/api/admin/post').then(res => {setCards(res.data)
+    setFilteredCards(res.data)})       
       }, []);
   
 
