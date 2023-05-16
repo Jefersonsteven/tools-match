@@ -4,8 +4,7 @@ import styles from "./dashboard.module.css";
 
 export default function DashboardLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
+    <>
         <div className={styles.body}>
         <div className={styles.contenedor}>
           <div className={styles.title}> 
@@ -25,7 +24,6 @@ export default function DashboardLayout({ children }) {
         </div>
         {children}
         </div>
-      </body>
-    </html>
+    </>
   );
 }
