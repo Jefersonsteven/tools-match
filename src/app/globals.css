@@ -12,7 +12,7 @@
   --white-dark: #BDCFBA;
   --black-light: #535E53;
   --green: #21BF60;
-    --red: #EF3A3A;
+  --red: #EF3A3A;
 }
 
 @media (prefers-color-scheme: dark) {
