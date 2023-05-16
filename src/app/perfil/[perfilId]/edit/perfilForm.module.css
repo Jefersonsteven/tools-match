@@ -1,0 +1,60 @@
+.section {
+  display: flex;
+  width: 100%;
+  margin-top: 61px;
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 30%;
+}
+
+.formContainer {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  width: 254px;
+  height: 254px;
+  background-color: black;
+  margin-bottom: 38px;
+}
+
+.editUserDatForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 15px;
+  width: 534px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 534px;
+}
+.inputContainer input {
+  margin-bottom: 49px;
+  width: inherit;
+  height: 55px;
+  padding: 16px;
+}
+
+.inputContainer input:disabled {
+  background-color: var(--black-light);
+}
+
+.inputContainer label {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+  color: #131713;
+}
