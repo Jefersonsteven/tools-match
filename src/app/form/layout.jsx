@@ -20,7 +20,7 @@ export default function FormLayout({ children }) {
     const path = pathname.split("/");
     setRoute(path[2]);
     userData && push("/home");
-  }, [pathname]);
+  }, [pathname, push, userData]);
 
   useEffect(() => {
     let token = JSON.parse(localStorage.getItem("token"));
@@ -28,7 +28,7 @@ export default function FormLayout({ children }) {
     if (token) {
       push("/home");
     }
-  }, [push, userSession, setUserData, setUserSession]);
+  }, [push]);
 
   return (
     <>
