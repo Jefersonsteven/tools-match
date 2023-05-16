@@ -87,7 +87,7 @@ export default function PerfilUsuario() {
     });
 
     try {
-      await axios.put(
+      axios.put(
         `http://localhost:3000/api/admin/user/${editingUser.id}`,
         updatedUser
       );
