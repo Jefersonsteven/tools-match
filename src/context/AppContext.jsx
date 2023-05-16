@@ -5,7 +5,7 @@ const AppContext = createContext();
 
 function AppProvider({ children }) {
   // * El id del usuario de la Sesion
-  const [userId, setUserId] = useState("289be228-6466-4dcc-b8e5-b94839c0de60");
+  const [userId, setUserId] = useState("45bdedf6-0efc-4d21-a7c3-c1458daa9292");
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -43,7 +43,7 @@ function AppProvider({ children }) {
 
 
   //* Crear estado para saber si el usuario esta logeado o no (booleano)
-  const [userSession, setUserSession] = useState(false);
+  const [userSession, setUserSession] = useState(true);
 
     const [title, setTitle] = useState('');
     const [cards, setCards] = useState([]);
