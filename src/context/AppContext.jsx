@@ -11,10 +11,8 @@ const AppContext = createContext();
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(null);
-  const [userId, setUserId] = useState(null);
-  // const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("token")) || null);
-  // const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")) || null);
+  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("token")));
+  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -60,12 +58,8 @@ function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
-        postDetail,
-        setPostDetail,
         cards,
         setCards,
-        selectedCategory,
-        setSelectedCategory,
         title,
         setTitle,
         userId,
@@ -92,6 +86,7 @@ function AppProvider({ children }) {
 
         userData,
         setUserData,
+
         form,
         setForm,
         errors,
@@ -100,16 +95,7 @@ function AppProvider({ children }) {
         setPostDetail,
         selectedCategory,
         setSelectedCategory,
-        rent,
-        setRent,
-        sale,
-        setSale,
-        sortBy,
-        setSortBy,
-        name,
-        setName,
-        userId,
-        setUserId,
+
         userData,
         setUserData,
         saveInLocalStorage,
