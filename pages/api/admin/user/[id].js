@@ -13,6 +13,7 @@ export default async function handler(req, res) {
           reviews: true,
           orders: true,
           payments: true,
+          received: true,
         },
       });
       res.status(200).json(user);
