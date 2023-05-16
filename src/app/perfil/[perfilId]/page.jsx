@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import Modal from "../../dashboard/components/Modal"
 import Cards from '@/components/Cards/Cards';
 import {AiOutlinePhone, AiOutlineMail} from "react-icons/ai"
+import PerfilForm from '@/components/PerfilForm/PerfilForm';
 
 
 export default function PerfilUsuario() {
@@ -54,7 +55,7 @@ export default function PerfilUsuario() {
     });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const updatedUser = {
@@ -64,22 +65,31 @@ export default function PerfilUsuario() {
       phoneNumber: formData.get('phonenumber'),
       reports: formData.get('reports'),
     };
-    try {
-      await axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser);
-      console.log("User updated in DB");
-      fetch(`http://localhost:3000/api/admin/user/${perfilId}`)
-        .then((response) => response.json())
-        .then((data) => setUser(data));
-      setEditingUser(null);
-      Swal.fire({
-        title: 'Cambiado con éxito!',
-        icon: 'success',
-        timer: 1500,
-        showConfirmButton: false
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  
+    Swal.fire({
+      title: '¿Estás seguro de los cambios?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, guardar cambios',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser)
+          .then((response) => {
+            console.log(response.data);
+            setEditingUser(null);
+            Swal.fire({
+              title: '¡Usuario editado correctamente!',
+              icon: 'success',
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
   };
 
   return (
@@ -99,6 +109,11 @@ export default function PerfilUsuario() {
         )}
         </div>
         <div className={styles.datos_container}>
+          <div>
+            Imagen
+            {user.image}
+          </div>
+          <div>
         <h2>
           <strong>Apellido: </strong>
           {user.lastname}
@@ -114,9 +129,10 @@ export default function PerfilUsuario() {
         <h2>
           <strong>Ordenes: </strong>4
         </h2>
+        </div>
         {editingUser && (
           <Modal show={showModal} onClose={()=> setShowModal(false)}>
-          <UserForm
+          <PerfilForm
           editingUser={editingUser}
           handleSubmit={handleSubmit}
           setEditingUser={setEditingUser}
@@ -135,3 +151,4 @@ export default function PerfilUsuario() {
     </div>
   );
 }
+

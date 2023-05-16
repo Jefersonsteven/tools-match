@@ -1,10 +1,8 @@
-"use client"
-
 import React from "react";
-import style from "./form.module.css"
+import style from "../../app/dashboard/components/form.module.css"
 import { useState } from "react";
 
-function UserForm({editingUser, handleSubmit, setEditingUser}) {
+function PerfilForm({editingUser, handleSubmit, setEditingUser}) {
 
   const [error, setError] = useState("");
 
@@ -12,40 +10,46 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
   const handleClick = (e) => {
     e.stopPropagation();
   };
-  
-  function validarNombre(evento) {
-    const valor = evento.target.value;
-    const campo = evento.target;
-  
-    if (!/^[a-zA-Z]+$/.test(valor)) {
-      campo.classList.add('input-invalido');
-    } else {
-      campo.classList.remove('input-invalido');
-    }
-  }
 
-  function validarEdad(evento) {
-    const valor = evento.target.value;
-    const campo = evento.target;
-  
-    if (isNaN(valor)) {
-      campo.classList.add('input-invalido');
-    } else {
-      campo.classList.remove('input-invalido');
-    }
-  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-  function validarEmail(evento) {
-    const valor = evento.target.value;
-    const campo = evento.target;
-  
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) {
-      campo.classList.add('input-invalido');
-    } else {
-      campo.classList.remove('input-invalido');
+    // Validación del input "firstname"
+    if (name === "firstname") {
+      if (!/^[a-zA-Z]+$/.test(value)) {
+        setError("El nombre solo puede contener letras");
+      } else {
+        setError("");
+      }
     }
-  }
 
+    // Validación del input "lastname"
+    if (name === "lastname") {
+      if (!/^[a-zA-Z]+$/.test(value)) {
+        setError("El apellido solo puede contener letras");
+      } else {
+        setError("");
+      }
+    }
+
+    // Validación del input "email"
+    if (name === "email") {
+      if (!/^\S+@\S+\.\S+$/.test(value)) {
+        setError("El email no es válido");
+      } else {
+        setError("");
+      }
+    }
+
+    // Validación del input "phonenumber"
+    if (name === "phonenumber") {
+      if (!/^\d{1,15}$/.test(value)) {
+        setError("El teléfono solo puede contener números");
+      } else {
+        setError("");
+      }
+    }
+  };
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
@@ -68,7 +72,7 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
          id="firstname"
          name="firstname"
          defaultValue={editingUser.firstname}
-         onBlur={validarNombre}
+         onChange={handleInputChange}
          pattern="^[a-zA-Z]{1,15}$"
          required
        />
@@ -78,7 +82,7 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
          id="lastname"
          name="lastname"
          defaultValue={editingUser.lastname}
-         onChange={validarNombre}
+         onChange={handleInputChange}
           pattern="^[a-zA-Z]{1,15}$"
           required
        />
@@ -88,7 +92,7 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
          id="email"
          name="email"
          defaultValue={editingUser.email}
-         onBlur={validarEmail}
+         onChange={handleInputChange}
          maxLength={15}
          required
        />
@@ -98,7 +102,7 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
          id="phonenumber"
          name="phonenumber"
          defaultValue={editingUser.phoneNumber}
-         onBlur={validarEdad}
+         onChange={handleInputChange}
           pattern="^\d{1,15}$"
           maxLength={15}
           required
@@ -119,4 +123,4 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
   );
   }
   
-  export default UserForm;
+  export default PerfilForm;

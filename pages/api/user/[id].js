@@ -1,6 +1,6 @@
 import { parse } from "postcss";
 import prisma from "../../../prisma/client";
-const crypto = require('crypto');
+import crypto from "crypto";
 
 export default async function handler(req, res) {
   const { id } = req.query;
