@@ -13,8 +13,21 @@ const LocalStorage = localStorage;
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(JSON.parse(LocalStorage.getItem("token")));
-  const [userId, setUserId] = useState(JSON.parse(LocalStorage.getItem("id")));
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState(null);
+
+  if (typeof window !== 'undefined') {
+    // Acceso a localStorage aquí
+    const storedToken = localStorage.getItem("token");
+    const storedId = localStorage.getItem("id");
+
+    // Resto del código que depende de localStorage
+    if (storedId && storedToken) {
+      setUserData(storedToken)
+      setUserId(storedId)
+    }
+  }
+
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
