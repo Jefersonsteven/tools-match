@@ -4,7 +4,8 @@ const nextConfig = {
     domains: [
       "res.cloudinary.com",
       "www.google.com",
-      "www.homedepot.com.mx"
+      "www.homedepot.com.mx",
+      "encrypted-tbn0.gstatic.com"
     ],
   },
   env: {
