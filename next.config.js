@@ -3,6 +3,8 @@ const nextConfig = {
   images: {
     domains: [
       "res.cloudinary.com",
+      "www.google.com",
+      "www.homedepot.com.mx"
     ],
   },
   env: {

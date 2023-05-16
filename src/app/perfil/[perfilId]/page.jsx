@@ -1,10 +1,8 @@
 "use client"
 
 import { useState, useEffect, useContext } from 'react';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import UserForm from '../../dashboard/components/Form';
-import {pathname} from 'next/navigation';
 import { useParams } from 'next/navigation';
 import styles from './perfil.module.css';
 import { AppContext } from '@/context/AppContext';
@@ -89,7 +87,7 @@ export default function PerfilUsuario() {
     });
 
     try {
-      await axios.put(
+      axios.put(
         `http://localhost:3000/api/admin/user/${editingUser.id}`,
         updatedUser
       );
@@ -148,20 +146,22 @@ export default function PerfilUsuario() {
         </h2>
         </div>
         {editingUser && (
-          <Modal show={showModal} onClose={()=> setShowModal(false)}>
-          <PerfilForm
-          editingUser={editingUser}
-          handleSubmit={handleSubmit}
-          setEditingUser={setEditingUser}
-         />
-         </Modal>
-          <Modal show={showModal} onClose={() => setShowModal(false)}>
-            <UserForm
+          <>
+            <Modal show={showModal} onClose={()=> setShowModal(false)}>
+              <PerfilForm
               editingUser={editingUser}
               handleSubmit={handleSubmit}
               setEditingUser={setEditingUser}
-            />
-          </Modal>
+              />
+            </Modal>
+            <Modal show={showModal} onClose={() => setShowModal(false)}>
+              <UserForm
+                editingUser={editingUser}
+                handleSubmit={handleSubmit}
+                setEditingUser={setEditingUser}
+                />
+            </Modal>
+          </>
         )}
       </div>
         <div className={styles.cards_container}>
@@ -174,3 +174,4 @@ export default function PerfilUsuario() {
       </div>
     </div>
   );
+}
