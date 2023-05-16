@@ -5,45 +5,52 @@ import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useState, useContext } from 'react';
 import { FaFilter, FaSort } from 'react-icons/fa';
 
-
-
 export default function FilterBar() {
-  const { cards, setCards, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy, filteredCards, setFilterdCards } = useContext(AppContext);
+  const { cards, setCards, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy, selected, setSelected } = useContext(AppContext);
 
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const handleTitleChange = (newTitle) => {
     setTitle(newTitle);
   };
-
-  const FilterLechu = () => {
-
-    let myFilter = [...cards]
-    if (title !== '') myFilter = [...filteredCards].filter(tool => tool.title.toLowerCase().includes(title.toLowerCase()))
-    if (title === '') myFilter = [...filteredCards]
-    if (selectedCategory !== '') myFilter = [...filteredCards].filter(tool => tool.category == selectedCategory)
-    if (selectedType !== '') myFilter = [...filteredCards].filter(tool => tool.type === selectedType)
-    if (sortBy !== '') {
-      if (sortBy === 'titleAsc') {
-        myFilter = myFilter.sort((a, b) => a.title.localeCompare(b.title));
-      } if (sortBy === 'titleDesc') {
-        myFilter = myFilter.sort((a, b) => b.title.localeCompare(a.title));
-      } if (sortBy === 'priceAsc') {
-        myFilter = myFilter.sort((a, b) => a.price - b.price);
-      } if (sortBy === 'priceDesc') {
-        myFilter = myFilter.sort((a, b) => b.price - a.price);
-      } if (sortBy === 'ratingAsc') {
-        myFilter = myFilter.sort((a, b) => a.rating - b.rating);
-      } if (sortBy === 'ratingDesc') {
-        myFilter = myFilter.sort((a, b) => b.rating - a.rating);
-      }
-    }
-    setCards(myFilter);
-  }
-
   useEffect(() => {
-    FilterLechu()
-  }, [title, selectedCategory, selectedType, sortBy])
+    const getCategoryParam = () => selected.category ? `category=${selected.category}` : '';
+    const getTypeParam = () => selected.type ? `type=${selected.type}` : '';
+
+    const fetchCards = async () => {
+      const categoryParam = getCategoryParam();
+      const typeParam = getTypeParam();
+      const orderParam = selected.order ? `order=${selected.order.order}&` : '';
+
+      const response = await fetch(`http://localhost:3000/api/filter?${categoryParam}&${typeParam}`);
+      const data = await response.json();
+      let cards = data ||  [];
+
+      if (selected.order?.type === 'price') {
+        const orderResponse = await fetch(`http://localhost:3000/api/orderPrice?${orderParam}${typeParam}&${categoryParam}`);
+        const orderData = await orderResponse.json();
+        cards = orderData || [];
+      }
+
+      if (selected.order?.type === 'alpha') {
+        const orderResponse = await fetch(`http://localhost:3000/api/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}`);
+        const orderData = await orderResponse.json();
+        cards = orderData || [];
+      }
+
+      setCards(cards);
+    };
+
+    fetchCards();
+  }, [selected]);
+
+  const handleCategoryChange = (event) => {
+    setSelected({ ...selected, category: event.target.value }); // Mantener las propiedades existentes y actualizar solo la propiedad category
+  };
+
+  const handleTypeChange = (event) => {
+    setSelected({ ...selected, type: event.target.value }); // Mantener las propiedades existentes y actualizar solo la propiedad type
+  };
 
   return (
     <AppProvider>
@@ -61,8 +68,8 @@ export default function FilterBar() {
             <div className="absolute bg-white shadow mt-1 top-12 left-0">
               <div className="py-2 px-4 bg-gray-200 font-medium">Tipo de Transacción</div>
               <select
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
+                value={selected.type}
+                onChange={handleTypeChange}
               >
                 <option value="">Todos</option>
                 <option value="RENTAL">Arriendo</option>
@@ -80,8 +87,8 @@ export default function FilterBar() {
                   'pintar',
                   'soldar',
                 ]}
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
+                selectedCategory={selected.category}
+                handleCategoryChange={handleCategoryChange}
               />
             </div>
           )}
@@ -103,25 +110,41 @@ export default function FilterBar() {
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('titleAsc')}
+                  onClick={() => setSelected({ ...selected, order: {
+                    ...selected.order,
+                    type: "alpha",
+                    order: "A-Z"
+                  } })}
                 >
                   Nombre (A-Z)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('titleDesc')}
+                  onClick={() => setSelected({ ...selected, order: {
+                    ...selected.order,
+                    type: "alpha",
+                    order: "Z-A"
+                  } })}
                 >
                   Nombre (Z-A)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('priceAsc')}
+                  onClick={() => setSelected({ ...selected, order: {
+                    ...selected.order,
+                    type: "price",
+                    order: "asc"
+                  } })}
                 >
                   Precio (Asc)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('priceDesc')}
+                  onClick={() => setSelected({ ...selected, order: {
+                    ...selected.order,
+                    type: "price",
+                    order: "desc"
+                  } })}
                 >
                   Precio (Des)
                 </button>

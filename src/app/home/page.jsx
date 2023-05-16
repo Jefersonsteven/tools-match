@@ -1,6 +1,7 @@
 "use client"
 import Cards from "@/components/Cards/Cards";
 import FilterBar from "@/components/Filter/FilterBar";
+import Paginate from 
 
 function Home() {
 

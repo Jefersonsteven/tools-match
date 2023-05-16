@@ -10,23 +10,24 @@ datasource db {
 }
 
 model User {
-  id          String    @id @default(uuid())
-  photo       String?
-  firstname   String
-  lastname    String
-  email       String    @unique
-  password    String
-  admin       Boolean   @default(false)
-  logged      Boolean   @default(false)
-  hidden      Boolean   @default(false)
-  phoneNumber String?
-  zipCode     String?
-  map         String?
-  reports     String[]
-  orders      Order[]   @relation("userOrders")
-  payments    Payment[] @relation("userPayments")
-  posts       Post[]    @relation("userPosts")
-  reviews     Review[]  @relation("userReviews")
+  id                             String    @id @default(uuid())
+  photo                          String?
+  firstname                      String
+  lastname                       String
+  email                          String    @unique
+  password                       String
+  admin                          Boolean   @default(false)
+  logged                         Boolean   @default(false)
+  hidden                         Boolean   @default(false)
+  phoneNumber                    String?
+  zipCode                        String?
+  map                            String?
+  reports                        String[]
+  orders                         Order[]   @relation("userOrders")
+  payments                       Payment[] @relation("userPayments")
+  posts                          Post[]    @relation("userPosts")
+  reviews                        Review[]  @relation("userReviews")
+  Review_Review_receivedIdToUser Review[]  @relation("Review_receivedIdToUser")
 }
 
 model Post {
@@ -46,17 +47,19 @@ model Post {
 }
 
 model Review {
-  id        String   @id @default(uuid())
-  title     String
-  content   String
-  rating    Float
-  hidden    Boolean  @default(false)
-  authorId  String
-  postId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  author    User     @relation("userReviews", fields: [authorId], references: [id])
-  post      Post     @relation("postReviews", fields: [postId], references: [id])
+  id                           String   @id @default(uuid())
+  title                        String
+  content                      String
+  rating                       Float
+  hidden                       Boolean  @default(false)
+  authorId                     String
+  postId                       String
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+  receivedId                   String
+  author                       User     @relation("userReviews", fields: [authorId], references: [id])
+  post                         Post     @relation("postReviews", fields: [postId], references: [id])
+  User_Review_receivedIdToUser User     @relation("Review_receivedIdToUser", fields: [receivedId], references: [id])
 }
 
 model Order {
