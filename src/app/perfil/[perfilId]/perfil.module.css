@@ -1,53 +1,69 @@
 .main_container {
-    display: grid;
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 3em;
+}
+
+
+.main_container h1 {
+    font-size: xx-large;
+}
+
+.datos_container {
+  display: inline-table;
+  padding-left: 300px;
+  align-items: center;
+  height: 200px;
+
+}
+
+.datos_container h2 {
+    width: 100px;
+    height: 100px;
+    
+}
+
+.datos_container strong {
+   text-decoration: underline;
 }
 
 .button_edit {
-        background-color: #131713; 
-        color: #DCF1D9; 
-        border: 2px solid #131713;
-        border-radius: 58px;
-        display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 21px 83px;
-gap: 20px;
-
-position: absolute;
-width: 302px;
-height: 66px;
-left: 1096px;
-top: 163px;
+    background-color: #131713; 
+    color: #DCF1D9; 
+    border: 2px solid #131713;
+    border-radius: 58px;
+    padding: 21px 83px;
+    width: 302px;
+    height: 66px;
 }
       
 .button_edit:hover {
-        background-color: #F0960E;
-        border-color: #F0960E;
-      }
+     background-color: #F0960E;
+     border-color: #F0960E;
+}
 
 .button_report {
     background-color: #F0960E; 
     color: #DCF1D9; 
     border: 2px solid #F0960E;
     border-radius: 58px;
-    display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 21px 83px;
-gap: 20px;
-
-position: absolute;
-width: 302px;
-height: 66px;
-left: 1096px;
-top: 163px;
-
+    padding: 21px 83px;
+    width: 302px;
+    height: 66px;
 }
 
 .button_report:hover {
     background-color: #131713;
-        border-color: #131713;
+    border-color: #131713;
 }
+
+.cards_container {
+    font-size: xx-large;
+}
+
+.cards_container h2{
+    font-size: xx-large;
+    padding-left: 100px;
+}
+
+

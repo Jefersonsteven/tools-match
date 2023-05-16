@@ -21,6 +21,7 @@ model User {
   hidden      Boolean   @default(false)
   phoneNumber String?
   zipCode     String?
+  map         String?
   reports     String[]
   orders      Order[]   @relation("userOrders")
   payments    Payment[] @relation("userPayments")
@@ -64,7 +65,7 @@ model Order {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
-  postId    String[]
+  postId    String
   paymentId String   @unique
   payment   Payment  @relation("orderPayment", fields: [paymentId], references: [id])
   user      User     @relation("userOrders", fields: [userId], references: [id])

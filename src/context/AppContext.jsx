@@ -1,11 +1,20 @@
 "use client";
 import { createContext, useState } from "react";
+
+import saveInLocalStorage from "./assets/saveInLocalStorage";
+import removeFromLocalStorage from "./assets/removeFromLocalStorage";
+import endSession from "./assets/endSession";
+
 import axios from "axios";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
-  // * El id del usuario de la Sesion
-  const [userId, setUserId] = useState("33df4e67-e7c8-4ff6-9e64-476fb28389ce");
+  // * Detalles de la publicación
+  const [postDetail, setPostDetail] = useState({});
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("token"))
+  );
+  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -29,20 +38,12 @@ function AppProvider({ children }) {
   });
   // *---------------------------------------* //
 
-  // * Detalles de la publicación
-  const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(null);
-
   // * Filtros *//
   const [selectedCategory, setSelectedCategory] = useState("");
   const [rent, setRent] = useState("");
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
-  // *----------------------------------* //
-
-  //* Crear estado para saber si el usuario esta logeado o no (booleano)
-  const [userSession, setUserSession] = useState(false);
 
   const [title, setTitle] = useState("");
   const [cards, setCards] = useState([]);
@@ -59,23 +60,19 @@ function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
-        postDetail,
-        setPostDetail,
         cards,
         setCards,
-        selectedCategory,
-        setSelectedCategory,
         title,
         setTitle,
-        userId,
-        setUserId,
         selectedType,
         setSelectedType,
         sortBy,
         setSortBy,
         searchTerm,
         setSearchTerm,
+
         tools,
+
         filteredCards,
         setFilteredCards,
         rent,
@@ -88,14 +85,20 @@ function AppProvider({ children }) {
         setFilter,
         userId,
         setUserId,
-        userSession,
-        setUserSession,
-        userData,
-        setUserData,
         form,
         setForm,
         errors,
         setErrors,
+        postDetail,
+        setPostDetail,
+        selectedCategory,
+        setSelectedCategory,
+
+        userData,
+        setUserData,
+        saveInLocalStorage,
+        removeFromLocalStorage,
+        endSession,
       }}
     >
       {children}
