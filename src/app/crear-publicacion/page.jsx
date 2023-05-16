@@ -32,6 +32,7 @@ function CreatePost() {
         const post = Object.values(form).some(e => e.length === 0);
         if (!error && !post) {
             if (form.photo.length > 0) {
+                console.log('Hey!!☠️');
                 const urls = await uploadImages(form.photo, setUrlsImages)
 
                 const newPost = { ...form }
@@ -100,7 +101,7 @@ function CreatePost() {
                     <div>
                         <label htmlFor="">Categoria</label>
                         <select onChange={handleForm} name="category" id="" placeholder="categoria">
-                            <option value="electrica" disabled>Herramienta Electrica</option>
+                            <option value="electrica">Herramienta Electrica</option>
                             <option value="manual">Herramienta Manual</option>
                             <option value="medicion">Herramienta de Medicion</option>
                             <option value="corte">Herramienta de Corte</option>
