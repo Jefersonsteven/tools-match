@@ -17,6 +17,10 @@ function AppProvider({ children }) {
   const [userId, setUserId] = useState(
     JSON.parse(localStorage.getItem("id")) || null
   );
+  /*  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState(null); */
+  // const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("token")) || null);
+  // const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")) || null);
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({

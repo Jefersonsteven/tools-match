@@ -28,7 +28,7 @@ export default function FormLayout({ children }) {
     if (token) {
       push("/home");
     }
-  }, []);
+  }, [push, userSession, setUserData, setUserSession]);
 
   return (
     <>

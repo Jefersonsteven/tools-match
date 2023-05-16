@@ -1,7 +1,7 @@
 /*--------------------NAVBAR--------------------*/
 .nabvarContainer{
     display: flex;
-    background: #131713;
+    background: var(--black);
     width: 100%;
     height: 111px;
     align-items: center;
@@ -19,7 +19,7 @@
 .navbarMenu{
     display: flex;
     gap: 20px;
-    color: #DCF1D9;
+    color: var(--white);
     margin-inline-start: auto;
     gap: 50px;
     font-size: 2rem;
@@ -27,46 +27,13 @@
 }
 
 .navbarMenuLogin{
-    background: #21BF60;
+    background: var(--green);
     height: 40px;
     border-radius: 10px;
     padding: 5px 25px;
     cursor: pointer;
 }
-/*-----------------------MENU BUTTON-----------------------*/
-/* .navbarMenu.show {
-    display: flex;
-  }
-  
-.menuButton {
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .show {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 111px;
-    left: -300px;
-    background-color: #131713;
-    width: 300px;
-    height: calc(100vh - 111px);
-    padding: 20px;
-    transition: left 0.3s ease-in-out;
-  }
-  
-  .show.active {
-    left: 0;
-  }
-  
-  .show a {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 2rem;
-    color: #dcf1d9;
-  }
-   */
+
 /*--------------------RESPONSIVE NAVBAR--------------------*/
 @media (max-width: 439px) {
     .navbarMenu{
@@ -82,30 +49,8 @@
     .contact{
         display: none;
     }
+}
 
-
-
-    /* .navbarMenu {
-        display: none;
-      }
-      .show {
-        display: flex;
-      }
-      .navbarMenu.active {
-        left: 0;
-      }
-      .navbarMenu a {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 2rem;
-        color: #dcf1d9;
-      }
-      .navbarMenuLogin {
-        height: 40px;
-        margin-top: 20px;
-        font-size: 2rem;
-      }*/
-    } 
 @media (min-width: 440px) and (max-width: 570px) {
     .navbarMenu{
         font-size: 1.5rem;
@@ -124,7 +69,6 @@
     }
 }
 
-
 /*--------------------MAIN APP--------------------*/
 
 .mainInfo{
@@ -142,22 +86,22 @@
 }
 .mainInfoApp{
     font-size: 20px;
-    color: #DCF1D9;
+    color: var(--white);
     padding: 30px 20px;
 }
 .mainInfoApp h1{
-    background-color: #131713;
+    background-color: var(--black);
     opacity: .7;
     padding: 60px 40px;
     border-radius: 15px;
 
 }
 .mainGoHome{
-    background-color: #21BF60;
+    background-color: var(--green);
     height: 45px;
     border-radius: 10px;
     padding: 5px 25px;
-    color: #DCF1D9;
+    color: var(--white);
     font-size: 2.5rem;
     margin-top: 20px;
     cursor: pointer;
@@ -214,7 +158,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    background-color: #DCF1D9;
+    background-color: var(--white);
     width: 100%;
     height: auto;
     padding: 30px 20px;
@@ -236,7 +180,7 @@
 /*----------------------FOOTER----------------------*/
 .footer{
     display: flex;
-    background: #131713;
+    background: var(--black);
     width: 100%;
     height: 111px;
     justify-content: space-around;
@@ -245,7 +189,7 @@
     bottom: 0;
 }
 .footerRights, .footerTerms{
-   color:#DCF1D9; 
+   color: var(--white); 
 }
 
 .footerLogo{
