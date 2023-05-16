@@ -9,6 +9,14 @@
     height: 100%;
 }
 
+.contenedor p {
+    color: #dcf1d9
+}
+
+.contenedor a {
+    color: #dcf1d9
+}
+
 .title {
     color: rgb(255, 255, 255);
     display: block;
@@ -38,7 +46,7 @@
 }
 
 .body {
-    width: 100vw;
+    width: 88vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0);
     color: rgb(0, 0, 0);
