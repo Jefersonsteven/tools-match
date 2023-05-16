@@ -20,9 +20,11 @@ function Header() {
     userData,
     setUserData,
     setUserId,
+    userId,
     removeFromLocalStorage,
     endSession,
   } = useContext(AppContext);
+
   const [submenu, setSubmenu] = useState(false);
 
   const handleCloseSession = async () => {
@@ -54,7 +56,7 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <figure>
+      <figure className={styles.logo}>
         <Link href="/">
           <Image
             src="/../public/images/logo/toolsMatch.jpg"
@@ -63,6 +65,11 @@ function Header() {
             height={70}
           />
         </Link>
+        {
+          <Link href="/dashboard/users">
+            <button>Dashboard</button>
+          </Link>
+        }
       </figure>
       <nav className={styles.nav}>
         {pathname !== "/team" ? (
@@ -104,7 +111,7 @@ function Header() {
                     </li>
                     {userData && (
                       <li>
-                        <Link href="/perfil">Perfil</Link>
+                        <Link href={`/perfil/${userId}`}>Perfil</Link>
                       </li>
                     )}
                   </ul>

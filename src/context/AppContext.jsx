@@ -5,6 +5,7 @@ import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 
+import axios from "axios";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
@@ -44,9 +45,53 @@ function AppProvider({ children }) {
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
 
+  const [title, setTitle] = useState("");
+  const [cards, setCards] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredCards, setFilteredCards] = useState(cards);
+  const [filter, setFilter] = useState("");
+
+  const tools = async () => {
+    const response = await axios.get("http://localhost:3000/api/admin/post");
+    return response.data;
+  };
+
   return (
     <AppContext.Provider
       value={{
+        postDetail,
+        setPostDetail,
+        cards,
+        setCards,
+        selectedCategory,
+        setSelectedCategory,
+        title,
+        setTitle,
+        userId,
+        setUserId,
+        selectedType,
+        setSelectedType,
+        sortBy,
+        setSortBy,
+        searchTerm,
+        setSearchTerm,
+        tools,
+        filteredCards,
+        setFilteredCards,
+        rent,
+        setRent,
+        sale,
+        setSale,
+        name,
+        setName,
+        filter,
+        setFilter,
+        userId,
+        setUserId,
+
+        userData,
+        setUserData,
         form,
         setForm,
         errors,

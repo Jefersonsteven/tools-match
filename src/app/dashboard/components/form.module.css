@@ -1,0 +1,90 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+  }
+  
+.label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+.input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #2b9d0d;
+    font-size: 14px;
+  }
+  
+.buttonCancelar {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    background-color: #ff0404;
+    cursor: pointer;
+  }
+  
+.buttonGuardar {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    background-color: #28a745;
+  }
+
+
+
+/* .formContainer{
+    display: flex;
+    position: absolute;
+    width: 552px;
+    height: 366px;
+    left: 532px;
+    top: 158px;
+    background-color: #8ca388;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #131713;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.8) 15px 15px 50px;
+}
+
+.formHeader {
+    padding-bottom: 10px;
+}
+
+.input textarea{
+    border: 0;
+    outline: none;
+    width: 280px;
+}
+
+.field{
+    border: solid 1px #ccc;
+    padding: 10px;
+
+    
+}
+
+.field:focus{
+    border-color: #18A383;
+}
+
+.center-content{
+    text-align: center;
+}
+
+.submitButton { 
+    
+}
+ */
+
