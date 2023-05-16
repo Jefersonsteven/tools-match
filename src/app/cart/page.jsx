@@ -141,7 +141,7 @@ export default function Page() {
       <h2 className={style.cartTitle}>Te Puede Interesar</h2>
       <div className={style.cartContainer}>
         <div className={style.cartList}>
-          {tools.map((tool) => (
+          {tools?.map((tool) => (
             <div className={style.cardCart} key={tool.name}>
               <Card
                 imageUrl={tool.imageUrl}
@@ -175,7 +175,7 @@ export default function Page() {
           <h2 className={style.cartTitle2}>
             TOTAL: <span className={style.cartTotal}>${total}</span>
           </h2>
-          {cartItems.map((item, index) => (
+          {cartItems?.map((item, index) => (
             <div className={style.cardCart2} key={item.id}>
               <button
                 className={style.deleteCardCart}
