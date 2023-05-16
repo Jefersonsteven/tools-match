@@ -7,9 +7,10 @@ export const submitLogInFormData = async (
   setUserData,
   setUserId,
   rememberSession,
-  setRememberSession,
   router,
-  saveInLocalStorage
+  saveInLocalStorage,
+  form,
+  setForm
 ) => {
   let dbUserData = null;
   const body = {
@@ -17,6 +18,8 @@ export const submitLogInFormData = async (
     password: loginData.password,
   };
 
+  console.log(router);
+  console.log(router.push);
   let responseOfValidation = await newPetition(
     "PUT",
     "http://localhost:3000/api/loginValidate",
@@ -32,7 +35,6 @@ export const submitLogInFormData = async (
   } else {
     throw new Error(responseOfValidation.error);
   }
-
   if (dbUserData.logged) {
     setUserData(dbUserData);
 
@@ -42,6 +44,7 @@ export const submitLogInFormData = async (
       setUserId(dbUserData.id);
     } else {
       setUserId(dbUserData.id);
+      setForm({ ...form, authorId: dbUserData.id });
     }
     customAlert(
       5000,
