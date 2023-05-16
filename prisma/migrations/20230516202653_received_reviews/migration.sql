@@ -14,6 +14,7 @@ CREATE TABLE "User" (
     "hidden" BOOLEAN NOT NULL DEFAULT false,
     "phoneNumber" TEXT,
     "zipCode" TEXT,
+    "map" TEXT,
     "reports" TEXT[],
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -47,6 +48,7 @@ CREATE TABLE "Review" (
     "postId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "receivedId" TEXT NOT NULL,
 
     CONSTRAINT "Review_pkey" PRIMARY KEY ("id")
 );
@@ -90,6 +92,9 @@ ALTER TABLE "Review" ADD CONSTRAINT "Review_authorId_fkey" FOREIGN KEY ("authorI
 
 -- AddForeignKey
 ALTER TABLE "Review" ADD CONSTRAINT "Review_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Review" ADD CONSTRAINT "Review_receivedId_fkey" FOREIGN KEY ("receivedId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "Payment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
