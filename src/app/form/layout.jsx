@@ -9,26 +9,23 @@ import { useEffect, useState } from "react";
 import { AppContext } from "@/context/AppContext";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
-import getFromLocalStorage from "./assets/getFromLocalStorage";
 
 export default function FormLayout({ children }) {
   const pathname = usePathname();
   const [route, setRoute] = useState();
   const { push } = useRouter();
-  const { userSession, setUserData, setUserSession } = useContext(AppContext);
+  const { userData } = useContext(AppContext);
 
   useEffect(() => {
     const path = pathname.split("/");
     setRoute(path[2]);
-    userSession && push("/home");
+    userData && push("/home");
   }, [pathname]);
 
   useEffect(() => {
-    let token = getFromLocalStorage();
+    let token = JSON.parse(localStorage.getItem("token"));
 
     if (token) {
-      setUserData(token);
-      setUserSession(true);
       push("/home");
     }
   }, []);

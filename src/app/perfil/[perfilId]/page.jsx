@@ -14,7 +14,6 @@ import Cards from '@/components/Cards/Cards';
 import {AiOutlinePhone, AiOutlineMail} from "react-icons/ai"
 import PerfilForm from '@/components/PerfilForm/PerfilForm';
 
-
 export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
   const { perfilId } = useParams();
@@ -175,4 +174,3 @@ export default function PerfilUsuario() {
       </div>
     </div>
   );
-}
