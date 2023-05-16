@@ -11,7 +11,9 @@ const AppContext = createContext();
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("token")));
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("token"))
+  );
   const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
 
   // * Formulario para crear publicaciones */
@@ -68,9 +70,9 @@ function AppProvider({ children }) {
         setSortBy,
         searchTerm,
         setSearchTerm,
-    
+
         tools,
-    
+
         filteredCards,
         setFilteredCards,
         rent,
@@ -83,7 +85,6 @@ function AppProvider({ children }) {
         setFilter,
         userId,
         setUserId,
-
         form,
         setForm,
         errors,
