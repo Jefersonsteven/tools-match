@@ -11,10 +11,10 @@ const AppContext = createContext();
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("token"))
-  );
-  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState(null);
+  // const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("token")) || null);
+  // const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")) || null);
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({

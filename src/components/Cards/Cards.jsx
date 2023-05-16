@@ -14,7 +14,7 @@ const Cards = () => {
       setCards(res.data)
       setFilteredCards(res.data)
     })       
-      }, []);
+  }, [setCards, setFilteredCards]);
   
 
   return (
