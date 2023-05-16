@@ -8,11 +8,13 @@ import endSession from "./assets/endSession";
 import axios from "axios";
 const AppContext = createContext();
 
+const LocalStorage = localStorage;
+
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("token")));
-  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
+  const [userData, setUserData] = useState(JSON.parse(LocalStorage.getItem("token")));
+  const [userId, setUserId] = useState(JSON.parse(LocalStorage.getItem("id")));
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
