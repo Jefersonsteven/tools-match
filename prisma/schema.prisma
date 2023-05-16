@@ -27,6 +27,7 @@ model User {
   payments    Payment[] @relation("userPayments")
   posts       Post[]    @relation("userPosts")
   reviews     Review[]  @relation("userReviews")
+  received    Review[]  @relation("userReceivedReviews")
 }
 
 model Post {
@@ -46,17 +47,19 @@ model Post {
 }
 
 model Review {
-  id        String   @id @default(uuid())
-  title     String
-  content   String
-  rating    Float
-  hidden    Boolean  @default(false)
-  authorId  String
-  postId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  author    User     @relation("userReviews", fields: [authorId], references: [id])
-  post      Post     @relation("postReviews", fields: [postId], references: [id])
+  id         String   @id @default(uuid())
+  title      String
+  content    String
+  rating     Float
+  hidden     Boolean  @default(false)
+  authorId   String
+  postId     String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  receivedId String
+  author     User     @relation("userReviews", fields: [authorId], references: [id])
+  post       Post     @relation("postReviews", fields: [postId], references: [id])
+  received   User     @relation("userReceivedReviews", fields: [receivedId], references: [id])
 }
 
 model Order {
