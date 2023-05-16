@@ -1,11 +1,19 @@
 "use client";
 import { createContext, useState } from "react";
 
+import saveInLocalStorage from "./assets/saveInLocalStorage";
+import removeFromLocalStorage from "./assets/removeFromLocalStorage";
+import endSession from "./assets/endSession";
+
 const AppContext = createContext();
 
 function AppProvider({ children }) {
-  // * El id del usuario de la Sesion
-  const [userId, setUserId] = useState("932a3adf-9203-4b25-89ca-777b00411730");
+  // * Detalles de la publicación
+  const [postDetail, setPostDetail] = useState({});
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("token"))
+  );
+  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -29,17 +37,12 @@ function AppProvider({ children }) {
   });
   // *---------------------------------------* //
 
-  // * Detalles de la publicación
-  const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(null);
-
   // * Filtros *//
   const [selectedCategory, setSelectedCategory] = useState("");
   const [rent, setRent] = useState("");
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
-  const [userSession, setUserSession] = useState(false);
 
   return (
     <AppContext.Provider
@@ -62,10 +65,11 @@ function AppProvider({ children }) {
         setName,
         userId,
         setUserId,
-        userSession,
-        setUserSession,
         userData,
         setUserData,
+        saveInLocalStorage,
+        removeFromLocalStorage,
+        endSession,
       }}
     >
       {children}

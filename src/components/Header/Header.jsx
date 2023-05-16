@@ -8,12 +8,49 @@ import { usePathname } from "next/navigation";
 
 import { AppContext } from "@/context/AppContext";
 import { useContext, useState } from "react";
+import { useRouter } from "next/navigation";
+
+import Swal from "sweetalert2";
 
 function Header() {
   const pathname = usePathname();
+  const { push } = useRouter();
 
-  const { userSession } = useContext(AppContext);
+  const {
+    userData,
+    setUserData,
+    setUserId,
+    removeFromLocalStorage,
+    endSession,
+  } = useContext(AppContext);
   const [submenu, setSubmenu] = useState(false);
+
+  const handleCloseSession = async () => {
+    if (userData) {
+      removeFromLocalStorage("token");
+      removeFromLocalStorage("id");
+      endSession(userData.email);
+      setUserData(null);
+      setUserId(null);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "info",
+        title: "Sesión cerrada",
+      });
+      push("/");
+    }
+  };
 
   return (
     <header className={styles.header}>
@@ -41,9 +78,7 @@ function Header() {
               </li>
               <li>
                 {pathname !== "/" && (
-                  <Link
-                    href={userSession ? "/crear-publicacion" : "/form/login"}
-                  >
+                  <Link href={userData ? "/crear-publicacion" : "/form/login"}>
                     Crear Publicaciones
                   </Link>
                 )}
@@ -62,12 +97,12 @@ function Header() {
                       submenu ? styles.openSubmenu : styles.closeSubmenu
                     }
                   >
-                    <li>
-                      <Link href={userSession ? "/" : "/form/login"}>
-                        {userSession ? "Cerrar Sesion" : "Iniciar Sesion"}
+                    <li onClick={handleCloseSession}>
+                      <Link href={userData ? "/" : "/form/login"}>
+                        {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
                       </Link>
                     </li>
-                    {userSession && (
+                    {userData && (
                       <li>
                         <Link href="/perfil">Perfil</Link>
                       </li>

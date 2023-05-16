@@ -13,6 +13,7 @@
     "autoprefixer": "10.4.14",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.36.4",
+    "encoding": "^0.1.13",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
     "firebase": "^9.21.0",
