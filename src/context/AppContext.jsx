@@ -8,8 +8,6 @@ import endSession from "./assets/endSession";
 import axios from "axios";
 const AppContext = createContext();
 
-const LocalStorage = localStorage;
-
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
