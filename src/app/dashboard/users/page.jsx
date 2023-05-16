@@ -96,14 +96,31 @@ function Users() {
       phoneNumber: formData.get('phonenumber'),
       reports: formData.get('reports'),
     };
-    axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser)
-      .then((response) => {
-        console.log(response.data);
-        setEditingUser(null);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  
+    Swal.fire({
+      title: '¿Estás seguro de los cambios?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, guardar cambios',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser)
+          .then((response) => {
+            console.log(response.data);
+            setEditingUser(null);
+            Swal.fire({
+              title: '¡Usuario editado correctamente!',
+              icon: 'success',
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
   };
 
   const handleDeleteClick = (firstname, id) => {
@@ -136,23 +153,39 @@ function Users() {
           <thead>
             <tr>
             <th><MdVerifiedUser/></th>
+            <th>ID</th>
     <th>NOMBRE</th>
     <th>APELLIDO</th>
     <th>EMAIL</th>
     <th>TELEFONO</th>
-    <th>REPORTS</th>
+    <th>RANGO</th>
+    <th>LOGGIN</th>
+    <th>HIDDEN</th>
+    <th>CP</th>
+    <th>REPORTES</th>
+    <th>PUBLICACIONES</th>
+    <th>RESEÑAS</th>
+    <th>ORDENES</th>
            </tr>
            </thead> 
                
            <tbody className={style.bodyTabla}>
             {filteredUsuarios.map((d, i) => (
               <tr className={style.namesTable} key={i}>
-                <td><FaRegUserCircle/></td>            
+                <td><FaRegUserCircle/></td>
+                <td>{d.id}</td>            
                 <td>{d.firstname}</td>
                 <td>{d.lastname}</td>
                 <td>{d.email}</td>
                 <td>{d.phoneNumber}</td>
+                <td>{d.admin ? "Admin" : "Usuario"}</td>
+                <td>{d.logged ? "Conectado" : "Desconectado"}</td>
+                <td>{d.hidden ? "True" : "False"}</td>
+                <td>{d.zipCode ? "True" : "False"}</td>
                 <td>{d.reports}</td>
+                <td>{d.posts.length}</td>
+                <td>{d.reviews.length}</td>
+                <td>{d.orders.length}</td>
                 <td>
                   <button
                   className={style.botonEditar}
@@ -173,7 +206,7 @@ function Users() {
           </tbody>
         </table>
       ):(
-        <div className={style.noUsuarios}><p>No hay Usuarios</p></div>
+        <div className={style.noUsuarios}><p>No hay Usuarios🚩</p></div>
       )}
      {editingUser && (
       <Modal show={showModal} onClose={()=> setShowModal(false)}>

@@ -19,9 +19,11 @@ function CreatePost() {
         }
     }
 
-    function uploadImages(images, setUrlsImages) {
+    async function uploadImages(images, setUrlsImages) {
         const URLS = images.map(async (file) => await uploadImage(file));
-        Promise.all(URLS).then(data => setUrlsImages(data));
+        const urls = await Promise.all(URLS)
+        // .then(data => setUrlsImages(data));
+        return urls
     }
 
     async function handleSubmit(event) {
@@ -29,36 +31,33 @@ function CreatePost() {
         const error = Object.values(errors).some(e => e.length > 0);
         const post = Object.values(form).some(e => e.length === 0);
         if (!error && !post) {
-            if (form.photo.length > 0) uploadImages(form.photo, setUrlsImages)
-            while (urlsImages.length < 0) {
-                console.log('Subiendo Imagenes...');
-            }
-            const newPost = { ...form }
-            newPost.photo = [...urlsImages];
-            newPost.price = Math.floor(newPost.price);
-            const post = await fetch("http://localhost:3000/api/post", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newPost)
-            })
-            const data = await post.json();
+            if (form.photo.length > 0) {
+                console.log('Hey!!☠️');
+                const urls = await uploadImages(form.photo, setUrlsImages)
 
-            setForm({
-                title: '',
-                content: '',
-                photo: [],
-                category: '',
-                price: '',
-                type: '',
-                authorId: userId
-            })
+                const newPost = { ...form }
+                newPost.photo = urls;
+                newPost.price = Math.floor(newPost.price);
 
-            setUrlsImages([])
+                const post = await fetch("http://localhost:3000/api/post", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newPost)
+                })
+                const data = await post.json();
 
-            console.log(urlsImages);
-            console.log(data);
+                setForm({
+                    title: '',
+                    content: '',
+                    photo: [],
+                    category: '',
+                    price: '',
+                    type: '',
+                    authorId: userId
+                })
+            }   
         }
     }
 
@@ -102,7 +101,7 @@ function CreatePost() {
                     <div>
                         <label htmlFor="">Categoria</label>
                         <select onChange={handleForm} name="category" id="" placeholder="categoria">
-                            <option value="electrica" disabled>Herramienta Electrica</option>
+                            <option value="electrica">Herramienta Electrica</option>
                             <option value="manual">Herramienta Manual</option>
                             <option value="medicion">Herramienta de Medicion</option>
                             <option value="corte">Herramienta de Corte</option>
