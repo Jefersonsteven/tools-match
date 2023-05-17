@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "Type" AS ENUM ('RENTAL', 'SALE');
 
+-- CreateEnum
+CREATE TYPE "Code" AS ENUM ('AR', 'BO', 'BR', 'CL', 'CO', 'CR', 'CU', 'EC', 'SV', 'GT', 'HT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'DO', 'UY', 'VE');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -13,6 +16,7 @@ CREATE TABLE "User" (
     "logged" BOOLEAN NOT NULL DEFAULT false,
     "hidden" BOOLEAN NOT NULL DEFAULT false,
     "phoneNumber" TEXT,
+    "country" "Code",
     "zipCode" TEXT,
     "map" TEXT,
     "reports" TEXT[],
@@ -60,7 +64,7 @@ CREATE TABLE "Order" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,
-    "postId" TEXT NOT NULL,
+    "postId" TEXT[],
     "paymentId" TEXT NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
