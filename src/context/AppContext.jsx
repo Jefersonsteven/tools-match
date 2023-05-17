@@ -65,8 +65,6 @@ function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
-        selected,
-        setSelected,
         postDetail,
         setPostDetail,
         cards,
@@ -99,7 +97,6 @@ function AppProvider({ children }) {
         setPostDetail,
         selectedCategory,
         setSelectedCategory,
-
         userData,
         setUserData,
         saveInLocalStorage,

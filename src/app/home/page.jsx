@@ -19,13 +19,7 @@ function Home({cards, currentPage, setCards, setCurrentPage } ) {
             <Cards className="mb-1" />
           </div>
         </div>
-      </div>
-      <Paginated
-      cards = {cards}
-      currentPage = {currentPage}
-      setCurrentPage = {setCurrentPage}
-      setCards = {setCards}
-      />
+      </div>     
     </div>
   );
 }
