@@ -1,31 +1,24 @@
 "use client";
-import Card from "../../components/Cards/Card";
+
 import style from "./Paginated.module.css";
 import { useEffect, useState } from "react";
 
-export default function Paginated() {
-  //   cards,
-  //   setCards,
-  //   currentPage,
-  //   setCurrentPage,
-  const [cards, setCards] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+export default function Paginated({ url, currentPage, setCurrentPage }) {
+  const [paginatedCards, setPaginatedCards] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchCards = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/paginated?page=${currentPage}&limit=8`
-        );
+        const response = await fetch(url);
         const data = await response.json();
-        setCards(data.posts);
+        setPaginatedCards(data.posts);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchPosts();
-  }, [currentPage]);
+    fetchCards();
+  }, [url, currentPage]);
 
   const handlePreviousPage = () => {
     setCurrentPage(currentPage - 1);
@@ -41,17 +34,6 @@ export default function Paginated() {
 
   return (
     <div>
-      {/* Contenedor de las cards con estilos de Cards */}
-      {/* <div className={style.cardsContainer}>
-        {cards.map((card) => (
-          <Card
-            key={card.id}
-            {...card}
-            type={card.type === "SALE" ? "Venta" : "Arriendo"}
-          />
-        ))}
-      </div> */}
-
       {/* Agrega botones de navegación para el paginado */}
       <div className={style.pagination}>
         <button
@@ -86,6 +68,25 @@ export default function Paginated() {
       </div>
     </div>
   );
+}
+
+{
+  /* Contenedor de las cards con estilos de Cards */
+}
+{
+  /* {paginatedCards.length > 0 ? (
+        <div className={style.cardsContainer}>
+          {paginatedCards.map((card) => (
+            <Card
+              key={card.id}
+              {...card}
+              type={card.type === "SALE" ? "Venta" : "Arriendo"}
+            />
+          ))}
+        </div>
+      ) : (
+        <p>No hay cards disponibles.</p>
+      )} */
 }
 
 // "use client";
