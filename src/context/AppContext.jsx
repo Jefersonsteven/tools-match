@@ -52,6 +52,11 @@ function AppProvider({ children }) {
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
 
+  const [selected, setSelected] = useState({ category: '', type: '' ,order: {
+    type:'',
+    order:''
+  }});//lo agrego JeanHey para filtros de cards en el back
+
   const tools = async () => {
     const response = await axios.get("http://localhost:3000/api/admin/post");
     return response.data;
@@ -60,6 +65,10 @@ function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
+        selected,
+        setSelected,
+        postDetail,
+        setPostDetail,
         cards,
         setCards,
         title,
@@ -70,9 +79,7 @@ function AppProvider({ children }) {
         setSortBy,
         searchTerm,
         setSearchTerm,
-
         tools,
-
         filteredCards,
         setFilteredCards,
         rent,
@@ -93,7 +100,6 @@ function AppProvider({ children }) {
         setPostDetail,
         selectedCategory,
         setSelectedCategory,
-
         userData,
         setUserData,
         saveInLocalStorage,

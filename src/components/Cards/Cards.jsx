@@ -35,7 +35,7 @@ const Cards = () => {
                 photo={tool.photo[0]}
                 title={tool.title}
                 price={tool.price}
-                type={`${tool.type === "RENTAL" ? "Arriendo" : "Venta"}`}
+                type={tool.type === "RENTAL" ? "Arriendo" : "Venta"}
                 id={tool.id}
               />
             </div>
