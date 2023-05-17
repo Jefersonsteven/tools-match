@@ -1,8 +1,10 @@
 "use client";
 import Cards from "@/components/Cards/Cards";
 import FilterBar from "@/components/Filter/FilterBar";
+import Paginated from "@/components/paginated/Paginated";
 
-function Home() {
+function Home({cards, currentPage, setCards, setCurrentPage } ) {
+
   return (
     <div className="flex flex-col mt-8 ">
       <h1 className="text-4xl font-bold text-center m-5">
@@ -18,6 +20,12 @@ function Home() {
           </div>
         </div>
       </div>
+      <Paginated
+      cards = {cards}
+      currentPage = {currentPage}
+      setCurrentPage = {setCurrentPage}
+      setCards = {setCards}
+      />
     </div>
   );
 }

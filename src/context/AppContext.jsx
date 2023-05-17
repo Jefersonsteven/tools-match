@@ -62,11 +62,13 @@ function AppProvider({ children }) {
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
 
-
-
   return (
     <AppContext.Provider
       value={{
+        selected,
+        setSelected,
+        postDetail,
+        setPostDetail,
         cards,
         setCards,
         title,

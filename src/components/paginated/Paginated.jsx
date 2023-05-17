@@ -38,7 +38,7 @@ export default function Paginated({}) {
   return (
     <div>
       {/* Contenedor de las cards con estilos de Cards */}
-      <div className={style.cardsContainer}>
+      {/* <div className={style.cardsContainer}>
         {cards.map((card) => (
           <Card
             key={card.id}
@@ -46,7 +46,7 @@ export default function Paginated({}) {
             type={card.type === "SALE" ? "Venta" : "Arriendo"}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Agrega botones de navegación para el paginado */}
       <div className={style.pagination}>
