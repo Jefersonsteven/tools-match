@@ -62,11 +62,6 @@ function AppProvider({ children }) {
     }
   });//lo agrego JeanHey para filtros de cards en el back
 
-  const tools = async () => {
-    const response = await axios.get("http://localhost:3000/api/admin/post");
-    return response.data;
-  };
-
   return (
     <AppContext.Provider
       value={{
@@ -84,7 +79,6 @@ function AppProvider({ children }) {
         setSortBy,
         searchTerm,
         setSearchTerm,
-        tools,
         filteredCards,
         setFilteredCards,
         rent,
