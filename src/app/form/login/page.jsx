@@ -11,21 +11,23 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons//fc";
 import { AppContext } from "@/context/AppContext";
 
+/* Sweetalert2 */
+import Swal from "sweetalert2";
+
 /* Helpers */
 import { validateLogIn } from "../assets/validateForms";
 import { svgView } from "../assets/viewPwd";
 import { svgHide } from "../assets/hidePwd";
-import { callLoginGoogle } from "../assets/authWithGoogle";
-import { newPetition } from "../assets/petition";
-import generatePassword from "../assets/passwordGenerator";
-import saveInLocalStorage from "../assets/saveInLocalStorage";
-
-import Swal from "sweetalert2";
+import { callLoginGoogle, getDataFromDB } from "../assets/authWithGoogle";
+import { submitLogInFormData } from "../assets/formSubmit";
+import Loader from "@/components/Loader/Loader";
 
 export default function Login() {
   const router = useRouter();
+  const { setUserData, setUserId, saveInLocalStorage, form, setForm } = useContext(AppContext);
   const [rememberSession, setRememberSession] = useState(false);
-  const { setUserSession, setUserData } = useContext(AppContext);
+  const [fetchingData, setFetchingData] = useState(false);
+  const [fetchingAuth, setFetchingAuth] = useState(false);
   const [viewPwd, setViewPwd] = useState(false);
   const [loginData, setLoginData] = useState({
     email: "",
@@ -50,41 +52,18 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setFetchingData(true);
     try {
-      let dbUserData = null;
-      const body = {
-        email: loginData.email,
-        password: loginData.password,
-      };
-
-      let responseValidate = await newPetition(
-        "PUT",
-        "http://localhost:3000/api/loginValidate",
-        body
+      await submitLogInFormData(
+        loginData,
+        setUserData,
+        setUserId,
+        rememberSession,
+        router,
+        saveInLocalStorage,
+        form,
+        setForm
       );
-
-      if (!responseValidate.error) {
-        dbUserData = await newPetition(
-          "GET",
-          `http://localhost:3000/api/user/${loginData.email}`,
-          false
-        );
-      } else {
-        throw new Error(responseValidate.error);
-      }
-
-      if (dbUserData.logged) {
-        Swal.fire({
-          position: "bottom-end",
-          title: `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`,
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        router.push("/home");
-        setUserData(dbUserData);
-        setUserSession(true);
-        rememberSession && saveInLocalStorage("token", dbUserData);
-      }
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -93,43 +72,19 @@ export default function Login() {
         footer: "",
       });
     }
+    setFetchingData(false);
   };
 
   const handleAuth = async (event) => {
     event.preventDefault();
-    const userDataProvider = await callLoginGoogle();
-    let dbUserData = null;
-    let password = generatePassword();
-
-    const dataBody = {
-      ...userDataProvider,
-      password,
-    };
-
-    dbUserData = await newPetition(
-      "GET",
-      `http://localhost:3000/api/user/${userDataProvider.email}`,
-      false
-    );
-
-    if (!dbUserData) {
-      await newPetition("POST", "http://localhost:3000/api/user", dataBody);
-      dbUserData = await newPetition(
-        "GET",
-        `http://localhost:3000/api/user/${userDataProvider.email}`,
-        false
-      );
+    setFetchingAuth(true);
+    try {
+      const userDataProvider = await callLoginGoogle();
+      await getDataFromDB(userDataProvider, setUserData, setUserId, router);
+    } catch (error) {
+      console.log(error);
     }
-
-    setUserData(dbUserData);
-    setUserSession(true);
-    router.push("/home");
-    Swal.fire({
-      position: "bottom-end",
-      title: `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`,
-      showConfirmButton: false,
-      timer: 3000,
-    });
+    setFetchingAuth(false);
   };
 
   return (
@@ -179,14 +134,23 @@ export default function Login() {
             errors.flag && styles.buttonSubmitDisabled
           }`}
           type="submit"
-          disabled={errors.flag}
+          disabled={errors.flag ? true : fetchingData ? true : false}
         >
-          Iniciar sesión
+          {fetchingData ? <Loader /> : "Iniciar sesión"}
         </button>
         <span>|</span>
-        <button className={`${styles.socialSignIn}`} onClick={handleAuth}>
-          Iniciar con
-          <FcGoogle className={styles.icon} />
+        <button
+          className={`${styles.socialSignIn}`}
+          onClick={handleAuth}
+          disabled={fetchingAuth}
+        >
+          {fetchingAuth ? (
+            <Loader />
+          ) : (
+            <>
+              <span>Iniciar con</span> <FcGoogle className={styles.icon} />
+            </>
+          )}
         </button>
       </div>
       <div className={styles.linkContainer}>
