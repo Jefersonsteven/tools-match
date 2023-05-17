@@ -8,7 +8,6 @@ import Paginated from "../paginated/Paginated";
 
 const Cards = () => {
   const { cards, setCards, setFilteredCards } = useContext(AppContext);
-  const URL_API = process.env.URL_API
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 8;
 

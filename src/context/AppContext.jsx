@@ -10,10 +10,12 @@ const AppContext = createContext();
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState();
-  const [userId, setUserId] = useState();
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState(null);
 
-  if (typeof window !== 'undefined' && userData) {
+
+  if (typeof window === 'undefined') {
+    console.log(JSON.parse(localStorage.getItem("token")));
     setUserId(JSON.parse(localStorage.getItem("token")))
     setUserData(JSON.parse(localStorage.getItem("id")))
   }
