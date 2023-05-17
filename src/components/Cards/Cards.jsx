@@ -21,7 +21,9 @@ const Cards = () => {
 
   const startIndex = (currentPage - 1) * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
-  const currentCards = cards.slice(startIndex, endIndex);
+  const currentCards = Array.isArray(cards)
+    ? cards.slice(startIndex, endIndex)
+    : [];
 
   const isPageEmpty = currentCards.length === 0;
 
