@@ -8,6 +8,12 @@ export default function handler(req, res) {
         "TEST-2453755324059058-051514-f7c74b6634388bb60e0826be077467e5-1374342095",
     });
     const { items } = req.body;
+    // items debe ser un arreglo de objetos que tenga las propiedadedades de: 
+    // - title(nombre del producto)
+    // - description(descripción del producto)
+    // - quantity(cantidad que se va a comprar del producto)
+    // - unit_price(precio unitario del producto )
+    // - currency_id(ARS: peso Arg / BRL: real Bra / CLP: peso Chi / MXN: peso Mex / COP: peso Col / PEN: sol Per / UYU: peso Uru)
     console.log(req.body.items)
     const preference = {
       items: items,
@@ -21,17 +27,18 @@ export default function handler(req, res) {
       auto_return: "approved",
     };
 
-    mercadopago.preferences
-      .create(preference)
-      .then((response) => {
-        const paymentLink = response.body.sandbox_init_point;
-        res.json({
-          LinkDePago: paymentLink,
-          Respuesta: response.body,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+        mercadopago.preferences
+          .create(preference)
+          .then((response) => {
+            const paymentLink = response.body.sandbox_init_point;
+            res.json({
+              LinkDePago: paymentLink,
+              Respuesta: response.body,
+            });
+          })
+    } catch (error) {
+        res.sattus(400).json({Error: 'No se ha podido crear el pago'})   
+    }
   }
 }
