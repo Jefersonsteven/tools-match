@@ -81,9 +81,9 @@ function AppProvider({ children }) {
         setSortBy,
         searchTerm,
         setSearchTerm,
-    
+
         tools,
-    
+
         filteredCards,
         setFilteredCards,
         rent,
@@ -96,7 +96,6 @@ function AppProvider({ children }) {
         setFilter,
         userId,
         setUserId,
-
         form,
         setForm,
         errors,
