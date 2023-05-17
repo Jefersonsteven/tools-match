@@ -11,10 +11,8 @@ const AppContext = createContext();
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("token"))
-  );
-  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
+  const [userData, setUserData] = useState(typeof window !== 'undefined' && JSON.parse(localStorage.getItem("token")));
+  const [userId, setUserId] = useState(typeof window !== 'undefined' && JSON.parse(localStorage.getItem("id")));
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -57,11 +55,6 @@ function AppProvider({ children }) {
     order:''
   }});//lo agrego JeanHey para filtros de cards en el back
 
-  const tools = async () => {
-    const response = await axios.get("http://localhost:3000/api/admin/post");
-    return response.data;
-  };
-
   return (
     <AppContext.Provider
       value={{
@@ -79,7 +72,6 @@ function AppProvider({ children }) {
         setSortBy,
         searchTerm,
         setSearchTerm,
-        tools,
         filteredCards,
         setFilteredCards,
         rent,
