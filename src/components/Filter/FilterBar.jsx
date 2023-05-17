@@ -10,8 +10,12 @@ export default function FilterBar() {
 
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showFilterOptions, setShowFilterOptions] = useState(false);
-  const handleTitleChange = (newTitle) => {
+  
+  const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
+    const response = await fetch(`http://localhost:3000/api/filter/${newTitle}`);
+    const data = await response.json();
+    setCards(data || []);
   };
   useEffect(() => {
     const getCategoryParam = () => selected.category ? `category=${selected.category}` : '';
