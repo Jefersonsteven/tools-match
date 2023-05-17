@@ -4,7 +4,8 @@ const nextConfig = {
     domains: [
       "res.cloudinary.com",
       "www.google.com",
-      "www.homedepot.com.mx"
+      "www.homedepot.com.mx",
+      "maps.googleapis.com",
     ],
   },
   env: {
@@ -14,6 +15,7 @@ const nextConfig = {
     CLOUDINARY_UPLOAD_PRESET: process.env.CLOUDINARY_UPLOAD_PRESET,
     MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
     MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN,
+    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
   },
 };
 
