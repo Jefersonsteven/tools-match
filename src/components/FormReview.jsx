@@ -17,13 +17,38 @@ const FormReview = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí puedes hacer algo con los datos enviados, como enviarlos a un servidor
 
-    // Reiniciamos los campos después de enviar
-    setRating(0);
-    setContent("");
+    const reviewData = {
+      rating,
+      content,
+      date: currentDate,
+    };
+
+    try {
+      const response = await fetch("/api/review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reviewData),
+      });
+
+      if (response.ok) {
+        // La reseña se envió correctamente
+        console.log("Reseña enviada correctamente");
+      } else {
+        // Hubo un error al enviar la reseña
+        console.error("Error al enviar la reseña");
+      }
+
+      // Reiniciamos los campos después de enviar
+      setRating(0);
+      setContent("");
+    } catch (error) {
+      console.error("Error al enviar la reseña", error);
+    }
   };
 
   const handleClose = () => {
@@ -36,7 +61,7 @@ const FormReview = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="relative w-2/3 max-w-lg bg-green-80 p-8 rounded-lg shadow">
+      <div className="relative w-2/3 max-w-lg bg-green-100 p-8 rounded-lg shadow">
         <div className="absolute top-0 right-0 mt-2 mr-2">
           <button
             className="bg-yellow-500 rounded-full p-2"
@@ -48,7 +73,7 @@ const FormReview = () => {
         <h2 className="text-2xl font-bold mb-4">Opinar y Calificar</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="date" className="block mb-1 text-sm font-medium">
+            <label htmlFor="date" className="block bg-mb-1 text-sm font-medium">
               Fecha:
             </label>
             <div className="w-full border bg-white border-gray-300 rounded p-2 text-sm">
