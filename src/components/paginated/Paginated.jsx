@@ -3,7 +3,11 @@ import Card from "../../components/Cards/Card";
 import style from "./Paginated.module.css";
 import { useEffect, useState } from "react";
 
-export default function Paginated({}) {
+export default function Paginated() {
+  //   cards,
+  //   setCards,
+  //   currentPage,
+  //   setCurrentPage,
   const [cards, setCards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -38,7 +42,7 @@ export default function Paginated({}) {
   return (
     <div>
       {/* Contenedor de las cards con estilos de Cards */}
-      <div className={style.cardsContainer}>
+      {/* <div className={style.cardsContainer}>
         {cards.map((card) => (
           <Card
             key={card.id}
@@ -46,7 +50,7 @@ export default function Paginated({}) {
             type={card.type === "SALE" ? "Venta" : "Arriendo"}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Agrega botones de navegación para el paginado */}
       <div className={style.pagination}>
