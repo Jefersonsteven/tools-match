@@ -13,7 +13,7 @@ const Cards = () => {
   const cardsPerPage = 8;
 
   useEffect(() => {
-    axios.get(`/api/admin/post`).then((res) => {
+    axios.get("/api/admin/post").then((res) => {
       setCards(res.data);
       setFilteredCards(res.data);
       console.log('✅', res.data);
