@@ -11,13 +11,13 @@ const Cards = () => {
   const cardsPerPage = 8;
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/admin/post").then((res) => {
+    axios.get("/api/admin/post").then((res) => {
       setCards(res.data);
       setFilteredCards(res.data);
     });
   }, [setCards, setFilteredCards]);
 
-  const paginatedUrl = `http://localhost:3000/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
+  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
 
   const startIndex = (currentPage - 1) * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
