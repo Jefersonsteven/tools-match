@@ -12,6 +12,7 @@ function AppProvider({ children }) {
   const [postDetail, setPostDetail] = useState({});
   const [userData, setUserData] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [selected, setSelected] = useState()
 
   if (typeof window !== 'undefined') {
     // Acceso a localStorage aquí
@@ -71,6 +72,8 @@ function AppProvider({ children }) {
         setCards,
         title,
         setTitle,
+        selected,
+        setSelected,
         selectedType,
         setSelectedType,
         sortBy,
