@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com", "www.google.com", "www.homedepot.com.mx"],
+    domains: [
+      "res.cloudinary.com",
+      "www.google.com",
+      "www.homedepot.com.mx",
+      "maps.googleapis.com",
+    ],
   },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,

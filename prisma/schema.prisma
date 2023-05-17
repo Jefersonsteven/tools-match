@@ -20,6 +20,7 @@ model User {
   logged      Boolean   @default(false)
   hidden      Boolean   @default(false)
   phoneNumber String?
+  country     Code?
   zipCode     String?
   map         String?
   reports     String[]
@@ -68,7 +69,7 @@ model Order {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
-  postId    String
+  postId    String[]
   paymentId String   @unique
   payment   Payment  @relation("orderPayment", fields: [paymentId], references: [id])
   user      User     @relation("userOrders", fields: [userId], references: [id])
@@ -88,4 +89,27 @@ model Payment {
 enum Type {
   RENTAL
   SALE
+}
+
+enum Code {
+  AR
+  BO
+  BR
+  CL
+  CO
+  CR
+  CU
+  EC
+  SV
+  GT
+  HT
+  HN
+  MX
+  NI
+  PA
+  PY
+  PE
+  DO
+  UY
+  VE
 }
