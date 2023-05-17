@@ -9,6 +9,7 @@ import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
+import Paginated from "@/components/paginated/Paginated";
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -29,6 +30,7 @@ function Users() {
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
 
 
   const handleDeleteUser = async (id) => {
@@ -72,7 +74,7 @@ function Users() {
     };
   
     fetchUsers();
-  }, [handleDeleteUser]);
+  }, []);
 
 
   const filteredUsuarios = records.filter((usuario) => {
@@ -217,8 +219,10 @@ function Users() {
  />
  </Modal>
 )}
+       
 
       </div>
+      {/* <Paginated cards={filteredUsuarios} setCurrentPage={setCurrentPage} currentPage={currentPage}/> */}
     </div>
   );
 }

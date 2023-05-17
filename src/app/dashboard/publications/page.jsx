@@ -8,6 +8,7 @@ import { FaToolbox } from "react-icons/fa";
 import UserForm from "../components/Form";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Paginated from "@/components/paginated/Paginated";
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -27,6 +28,8 @@ function Posts() {
   const [records, setRecords] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
 
 
@@ -195,6 +198,9 @@ function Posts() {
 )}
 
       </div>
+
+      <Paginated cards={records} setCards={setRecords} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
+
     </div>
   );
 }
