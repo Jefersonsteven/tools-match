@@ -3,20 +3,21 @@ import Card from "./Card";
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useContext } from "react";
 import axios from "axios";
-const URL_API = process.env.URL_API
+
+
 const Cards = () => {
   const { cards, setCards, setFilteredCards } = useContext(AppContext);
+  const URL_API = process.env.URL_API
 
   useEffect(() => {
-    axios.get(`${URL_API}/api/admin/post`).then((res) => {
+    axios.get("/api/admin/post").then((res) => {
       setCards(res.data);
       setFilteredCards(res.data);
-      console.log('✅', res.data, URL_API);
+      console.log('✅', res.data);
     });
   }, [setCards, setFilteredCards]);
 
   return (
-    <AppProvider>
       <div className="p-4 px-2">
         <div className="grid grid-cols-4 gap-9">
           {cards.length > 0 &&
@@ -33,8 +34,7 @@ const Cards = () => {
               </div>
             ))}
         </div>
-      </div>
-    </AppProvider>
+    </div>
   );
 };
 
