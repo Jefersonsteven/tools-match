@@ -1,5 +1,6 @@
 .section {
   width: 100%;
+  min-height: 100vh;
   padding-left: 32px;
   padding-top: 52px;
   padding-bottom: 108px;
@@ -9,6 +10,7 @@
   width: 254px;
   height: 254px;
   background-color: black;
+  border-radius: 20px;
 }
 
 .userContainer {

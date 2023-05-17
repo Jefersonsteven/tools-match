@@ -4,6 +4,7 @@ import { createContext, useState } from "react";
 import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
+import { newPetition } from "./assets/customFetch";
 
 import axios from "axios";
 const AppContext = createContext();
@@ -52,6 +53,32 @@ function AppProvider({ children }) {
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
 
+  // * Data de países *//
+
+  const [countries, setCountries] = useState({
+    null: "---",
+    AR: "Argentina",
+    BO: "Bolivia",
+    BR: "Brasil",
+    CL: "Chile",
+    CO: "Colombia",
+    CR: "Costa Rica",
+    CU: "Cuba",
+    EC: "Ecuador",
+    SV: "El Salvador",
+    GT: "Guatemala",
+    HT: "Haití",
+    HN: "Honduras",
+    MX: "México",
+    NI: "Nicaragua",
+    PA: "Panamá",
+    PY: "Paraguay",
+    PE: "Perú",
+    DO: "República Dominicana",
+    UY: "Uruguay",
+    VE: "Venezuela",
+  });
+
   const tools = async () => {
     const response = await axios.get("http://localhost:3000/api/admin/post");
     return response.data;
@@ -99,6 +126,10 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
+
+        countries,
+        setCountries,
+        newPetition,
       }}
     >
       {children}

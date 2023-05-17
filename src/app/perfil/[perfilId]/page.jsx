@@ -2,21 +2,18 @@
 
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserForm from "../../dashboard/components/Form";
+
 import { useParams } from "next/navigation";
 import styles from "./perfil.module.css";
 import { AppContext } from "@/context/AppContext";
 import Swal from "sweetalert2";
-import Modal from "../../dashboard/components/Modal";
-import Cards from "@/components/Cards/Cards";
-import { AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
-import PerfilForm from "@/components/PerfilForm/PerfilForm";
+
 import Link from "next/link";
 
 export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
   const { perfilId } = useParams();
-  const { userId, userData } = useContext(AppContext);
+  const { userId, userData, countries } = useContext(AppContext);
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
 
@@ -120,27 +117,39 @@ export default function PerfilUsuario() {
             <div className={styles.image}></div>
             <div>
               <h2>
-                <strong>Usuario:</strong> @example23
+                <strong>Usuario: </strong>@example23
               </h2>
               <h2>
-                <strong>Nombre completo:</strong>
+                <strong>Nombre completo: </strong>
                 {`${userData.firstname} ${userData.lastname}`}
               </h2>
               <h2>
-                <strong>Correo:</strong> {userData.email}
+                <strong>Correo: </strong>
+                {userData.email}
               </h2>
               <h2>
-                <strong>Ciudad:</strong> ---
+                <strong>País de residencia: </strong>
+                {userData.country ? countries[userData.country] : "---"}
               </h2>
               <h2>
-                <strong>Celular:</strong>{" "}
+                <strong>Código postal: </strong>
+                {userData.zipCode ? userData.zipCode : "---"}
+              </h2>
+              <h2>
+                <strong>Celular: </strong>
                 {userData.phoneNumber ? userData.phoneNumber : "---"}
               </h2>
             </div>
           </div>
           <div className={styles.buttonContainer}>
             <Link href={`perfil/${userId}/edit`} className={styles.editButton}>
-              editar usuario
+              Editar datos
+            </Link>
+            <Link
+              href={`perfil/${userId}/changePassword`}
+              className={styles.editButton}
+            >
+              Seguridad
             </Link>
           </div>
         </div>
