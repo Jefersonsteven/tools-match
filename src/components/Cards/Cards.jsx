@@ -3,14 +3,15 @@ import Card from "./Card";
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useContext } from "react";
 import axios from "axios";
-
+const URL_API = process.env.URL_API
 const Cards = () => {
   const { cards, setCards, setFilteredCards } = useContext(AppContext);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/admin/post").then((res) => {
+    axios.get(`${URL_API}/api/admin/post`).then((res) => {
       setCards(res.data);
       setFilteredCards(res.data);
+      console.log('✅', res.data, URL_API);
     });
   }, [setCards, setFilteredCards]);
 

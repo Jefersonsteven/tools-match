@@ -5,7 +5,6 @@ import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 
-import axios from "axios";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
@@ -63,10 +62,7 @@ function AppProvider({ children }) {
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
 
-  const tools = async () => {
-    const response = await axios.get("http://localhost:3000/api/admin/post");
-    return response.data;
-  };
+
 
   return (
     <AppContext.Provider
@@ -81,9 +77,6 @@ function AppProvider({ children }) {
         setSortBy,
         searchTerm,
         setSearchTerm,
-
-        tools,
-
         filteredCards,
         setFilteredCards,
         rent,
