@@ -79,9 +79,7 @@ function AppProvider({ children }) {
         setSortBy,
         searchTerm,
         setSearchTerm,
-
         tools,
-
         filteredCards,
         setFilteredCards,
         rent,
@@ -102,7 +100,6 @@ function AppProvider({ children }) {
         setPostDetail,
         selectedCategory,
         setSelectedCategory,
-
         userData,
         setUserData,
         saveInLocalStorage,
