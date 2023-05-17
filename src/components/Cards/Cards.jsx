@@ -10,12 +10,12 @@ const Cards = () => {
   const URL_API = process.env.URL_API
 
   useEffect(() => {
-    axios.get("/api/admin/post").then((res) => {
+    axios.get(`${URL_API}/api/admin/post`).then((res) => {
       setCards(res.data);
       setFilteredCards(res.data);
       console.log('✅', res.data);
     });
-  }, [setCards, setFilteredCards]);
+  }, [setCards, setFilteredCards, URL_API]);
 
   return (
       <div className="p-4 px-2">
