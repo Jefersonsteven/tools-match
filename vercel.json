@@ -1,0 +1,15 @@
+{
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@vercel/node",
+            "config": {
+                "prerun": {
+                    "yarn": [
+                        "prisma generate"
+                    ]
+                }
+            }
+        }
+    ]
+}

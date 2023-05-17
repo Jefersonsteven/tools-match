@@ -1,6 +1,6 @@
 import Mailgun from "mailgun-js";
 
-export default async (req, res) => {
+export default async = (req, res) => {
   //en metodo post quiero enviar el email con las credenciales del usuario
   if (req.method === "POST") {
     const { email, password } = req.body;

@@ -13,11 +13,16 @@ export default function Page() {
   const [showVenta, setShowVenta] = useState(false);
   const [total, setTotal] = useState(0);
   const [showCards, setShowCards] = useState(true);
+  const [cartItems, setCartItems] = useState(null);
 
-  const [cartItems, setCartItems] = useState(() => {
-    const items = localStorage.getItem("cartItems");
-    return items ? JSON.parse(items) : [];
-  });
+  if (typeof window !== 'undefined') {
+    // Acceso a localStorage aquí
+    setCartItems(() => {
+      const items = localStorage.getItem("cartItems");
+      return items ? JSON.parse(items) : [];
+    });
+  }
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -136,7 +141,7 @@ export default function Page() {
       <h2 className={style.cartTitle}>Te Puede Interesar</h2>
       <div className={style.cartContainer}>
         <div className={style.cartList}>
-          {tools.map((tool) => (
+          {tools?.map((tool) => (
             <div className={style.cardCart} key={tool.name}>
               <Card
                 imageUrl={tool.imageUrl}
@@ -170,7 +175,7 @@ export default function Page() {
           <h2 className={style.cartTitle2}>
             TOTAL: <span className={style.cartTotal}>${total}</span>
           </h2>
-          {cartItems.map((item, index) => (
+          {cartItems?.map((item, index) => (
             <div className={style.cardCart2} key={item.id}>
               <button
                 className={style.deleteCardCart}
