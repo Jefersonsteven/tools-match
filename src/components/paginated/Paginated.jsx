@@ -4,20 +4,23 @@ import style from "./Paginated.module.css";
 import { useEffect, useState } from "react";
 
 export default function Paginated({ url, currentPage, setCurrentPage }) {
-  const [paginatedCards, setPaginatedCards] = useState([]);
+  const [paginatedData, setPaginatedData] = useState([]);
+  const [totalPages, setTotalPages] = useState([]);
 
   useEffect(() => {
-    const fetchCards = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch(url);
         const data = await response.json();
-        setPaginatedCards(data.posts);
+        setPaginatedData(data.users);
+        setTotalPages(data.pageInfo.totalPages);
+        console.log(data.pageInfo.totalPages);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchCards();
+    fetchData();
   }, [url, currentPage]);
 
   const handlePreviousPage = () => {
@@ -45,18 +48,23 @@ export default function Paginated({ url, currentPage, setCurrentPage }) {
         </button>
 
         {/* Cuadritos de paginación */}
-        {Array.from({ length: 10 }).map((_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => handlePageClick(index + 1)}
-            disabled={currentPage === index + 1}
-            className={`${style.pageNumber} ${
-              currentPage === index + 1 ? style.active : ""
-            }`}
-          >
-            {index + 1}
-          </button>
-        ))}
+        {Array.from({ length: totalPages }).map(
+          (_, index) => (
+            console.log(totalPages),
+            (
+              <button
+                key={index + 1}
+                onClick={() => handlePageClick(index + 1)}
+                disabled={currentPage === index + 1}
+                className={`${style.pageNumber} ${
+                  currentPage === index + 1 ? style.active : ""
+                }`}
+              >
+                {index + 1}
+              </button>
+            )
+          )
+        )}
 
         <button
           onClick={handleNextPage}
