@@ -5,7 +5,6 @@ import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 
-import axios from "axios";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
@@ -14,7 +13,7 @@ function AppProvider({ children }) {
   const [userData, setUserData] = useState();
   const [userId, setUserId] = useState();
 
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined' && userData) {
     setUserId(JSON.parse(localStorage.getItem("token")))
     setUserData(JSON.parse(localStorage.getItem("id")))
   }

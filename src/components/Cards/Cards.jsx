@@ -16,9 +16,8 @@ const Cards = () => {
     axios.get("/api/admin/post").then((res) => {
       setCards(res.data);
       setFilteredCards(res.data);
-      console.log('✅', res.data);
     });
-  }, [setCards, setFilteredCards, URL_API]);
+  }, [setCards, setFilteredCards]);
 
   const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
 
