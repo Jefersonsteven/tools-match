@@ -10,7 +10,8 @@ export const submitLogInFormData = async (
   router,
   saveInLocalStorage,
   form,
-  setForm
+  setForm,
+  setDataMessage
 ) => {
   let dbUserData = null;
   const body = {
@@ -20,6 +21,7 @@ export const submitLogInFormData = async (
 
   console.log(router);
   console.log(router.push);
+  setDataMessage("Validando credenciales...");
   let responseOfValidation = await newPetition(
     "PUT",
     "http://localhost:3000/api/loginValidate",
@@ -27,6 +29,7 @@ export const submitLogInFormData = async (
   );
 
   if (!responseOfValidation.error) {
+    setDataMessage("Iniciando sesión...");
     dbUserData = await newPetition(
       "GET",
       `http://localhost:3000/api/user/${loginData.email}`,
