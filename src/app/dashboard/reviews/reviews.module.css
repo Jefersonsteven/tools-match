@@ -132,3 +132,10 @@
     border: 2px solid #20bc5e;
     color: white
 }
+
+.noUsuarios {
+    color: black;
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+}

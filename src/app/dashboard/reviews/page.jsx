@@ -1,5 +1,5 @@
 "use client";
-import style from "./payments.module.css";
+import style from "./reviews.module.css";
 import Modal from "../components/Modal";
 import { Fragment, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -16,7 +16,12 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   };
   return (
     <div className={style.searchBar}>
-      <input type="text" value={searchTerm} onChange={handleSearchTermChange} />
+      <input 
+      type="text" 
+      value={searchTerm} 
+      onChange={handleSearchTermChange}
+      placeholder="Titulo" 
+      />
       <FaSearch/>
     </div>
   );
@@ -33,19 +38,19 @@ function Users() {
 
   const handleDeleteUser = async (id) => {
     try {
-      const userDelete = await axios.delete(`http://localhost:3000/api/admin/user/${id}`);
+      const userDelete = await axios.delete(`http://localhost:3000/api/admin/review/${id}`);
         console.log(userDelete.data);
         Swal.fire({
-          title:'Usuario eliminado',
-          text: 'El usuario ha sido eliminado exitosamente',
+          title:'Reseña eliminada',
+          text: 'La reseña ha sido eliminada exitosamente',
           icon: 'success',
           confirmButtonText: 'Aceptar'
         });  
     } catch (error) {
       console.error(error);
       Swal.fire({
-        title:'Error al Eliminar el Usuario',
-        text:'Ha ocurrido un error al eliminar el usuario, porfavor intenta de nuevo',
+        title:'Error al Eliminar la reseña',
+        text:'Ha ocurrido un error al eliminar la reseña, porfavor intenta de nuevo',
         icon:'error',
         confirmButtonText:'Aceptar',
       })
@@ -58,7 +63,7 @@ function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios('http://localhost:3000/api/admin/user');
+        const response = await axios('http://localhost:3000/api/admin/review');
         const users = await response.data;
   
         if (users.length > 0) {
@@ -76,7 +81,7 @@ function Users() {
 
 
   const filteredUsuarios = records.filter((usuario) => {
-    return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
+    return usuario.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
 
@@ -106,11 +111,11 @@ function Users() {
       });
   };
 
-  const handleDeleteClick = (firstname, id) => {
+  const handleDeleteClick = (title, id) => {
     Swal.fire({
 
       title:'¿Estás seguro?',
-      text:`Estás por eliminar al usuario "${firstname}"`,
+      text:`Estás por eliminar la reseña "${title}"`,
       icon:'warning',
       showCancelButton: true,
       confirmButtonText:'Si, eliminar',
@@ -127,7 +132,7 @@ function Users() {
   return (
     <div className={style.contenedorPadre}>
       <div className={style.searchbarContainer}>
-        <h2>Administracion de Pagos</h2>
+        <h2>Reseñas de los usuarios</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
       <div className={style.contenedorTable}>
@@ -136,31 +141,35 @@ function Users() {
           <thead>
             <tr>
             <th><MdVerifiedUser/></th>
-    <th>NOMBRE</th>
-    <th>APELLIDO</th>
-    <th>EMAIL</th>
-    <th>TELEFONO</th>
-    <th>REPORTS</th>
+            <th>ID</th>
+    <th>TITULO</th>
+    <th>CONTENIDO</th>
+    <th>PUNTAJE</th>
+    <th>USUARIO</th>
+    <th>CREADA</th>
+    <th>MODIFICADA</th>
+    <th>PUBLICACION</th>
+    <th>AUTOR PUBLICACION</th>
            </tr>
            </thead> 
                
            <tbody className={style.bodyTabla}>
             {filteredUsuarios.map((d, i) => (
               <tr className={style.namesTable} key={i}>
-                <td><FaRegUserCircle/></td>            
-                <td>{d.firstname}</td>
-                <td>{d.lastname}</td>
-                <td>{d.email}</td>
-                <td>{d.phoneNumber}</td>
-                <td>{d.reports}</td>
+                <td><FaRegUserCircle/></td>
+                <td>{d.id}</td>            
+                <td>{d.title}</td>
+                <td>{d.content}</td>
+                <td>{d.rating}</td>
+                <td>{d.author.email}</td>
+                <td>{d.createdAt}</td>
+                <td>{d.updatedAt}</td>
+                <td>{d.post.title}</td>
+                <td>{d.received.email}</td>
                 <td>
                   <button
-                  className={style.botonEditar}
-                    onClick={()=> handleClick(d.id)}>EDITAR
-                    </button>
-                  <button
                     className={style.botonDelete}
-                    onClick={() => handleDeleteClick(d.firstname, d.id)}
+                    onClick={() => handleDeleteClick(d.title, d.id)}
                   >
                     BAN
                   </button>
@@ -173,7 +182,7 @@ function Users() {
           </tbody>
         </table>
       ):(
-        <div className={style.noUsuarios}><p>No hay Pagos</p></div>
+        <div className={style.noUsuarios}><p>No hay reseñas🚩</p></div>
       )}
      {editingUser && (
       <Modal show={showModal} onClose={()=> setShowModal(false)}>
