@@ -1,6 +1,6 @@
 export default function endSession(email) {
   console.log("Cerrando Sesión");
-  fetch(`http://localhost:3000/api/logoutUser/${email}`, {
+  fetch(`/api/logoutUser/${email}`, {
     method: "PUT",
   })
     .then((res) => res.json())

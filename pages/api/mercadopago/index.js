@@ -3,37 +3,27 @@ const mercadopago = require("mercadopago");
 export default async function handler(req, res) {
   const { method } = req;
   if (method == "POST") {
-    // ITEMS DEBE SER UN ARREGLO DE OBJETOS CON LAS PROPIEDADES:
-    // - title(nombre del producto)
-    // - description(descripción del producto)
-    // - quantity(cantidad que se va a comprar del producto)
-    // - unit_price(precio unitario del producto )
-    // - currency_id(ARS: peso Arg / BRL: real Bra / CLP: peso Chi / MXN: peso Mex / COP: peso Col / PEN: sol Per / UYU: peso Uru)
-    
-    // PAYER DEBE SER UN OBJETO CON LAS PROPIEDADES:
-    // - name(email del usuario)
-
-    const URL_BASE = "http://localhost:3000";
-    const { items, payer } = req.body;
+    const { items, payer, postId } = req.body;
+    const URL_BASE = process.env.DEPLOY_BACK || 'http://localhost:3000'
     const response = await fetch(`${URL_BASE}/api/user/${payer.name}`);
     const user = await response.json();
 
-    if (!user) throw new Error("Faltan datos por completar")
+    if (!user) throw new Error("No se encuentra el usuario con el que deseas realizar la compra")
 
     mercadopago.configure({
-      access_token: req.body.token,
+      access_token: "TEST-5795718698863749-051622-c31f13a1fa61032ebb4ddcdf861a0d09-1375420066" 
+      // process.env.ACCESS_TOKEN_MERCADOPAGO,
     });
     const preference = {
       items,
       payer,
       back_urls: {
-        success: "http:localhost:3005/succes",
-        failure: "http:localhost:3005/failure",
-        pending: "http:localhost:3005/pending",
+        success: `${URL_BASE}/post/${postId}`,
+        failure: `${URL_BASE}/paymant/${postId}`,
+        pending: `${URL_BASE}`,
       },
       notification_url:
-        "https://11b0-181-98-73-247.ngrok-free.app/api/mercadopago/pago",
-      // cuando este deployado el serviddor, la urle dbe ser url_del_servidor/api/mercadopago/pago
+        `${URL_BASE}/api/mercadopago/pago`,
       auto_return: "approved",
     };
     try {
@@ -46,7 +36,7 @@ export default async function handler(req, res) {
         Respuesta: response.body,
       });
     } catch (error) {
-      res.sattus(400).json({ error: error.message });
-    }
+      res.status(400).json({ error: error.message });
+    } 
   }
 }

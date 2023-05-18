@@ -22,14 +22,14 @@ export const submitLogInFormData = async (
   console.log(router.push);
   let responseOfValidation = await newPetition(
     "PUT",
-    "http://localhost:3000/api/loginValidate",
+    "/api/loginValidate",
     body
   );
 
   if (!responseOfValidation.error) {
     dbUserData = await newPetition(
       "GET",
-      `http://localhost:3000/api/user/${loginData.email}`,
+      `/api/user/${loginData.email}`,
       false
     );
   } else {
@@ -68,7 +68,7 @@ export const submitSignUpFormData = async (registerData, router) => {
 
   let data = await newPetition(
     "POST",
-    "http://localhost:3000/api/registerUser",
+    "/api/registerUser",
     body
   );
 

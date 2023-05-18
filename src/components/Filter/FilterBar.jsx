@@ -13,7 +13,7 @@ export default function FilterBar() {
   
   const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
-    const response = await fetch(`http://localhost:3000/api/filter/${newTitle}`);
+    const response = await fetch(`/api/filter/${newTitle}`);
     const data = await response.json();
     setCards(data || []);
   };
@@ -26,18 +26,18 @@ export default function FilterBar() {
       const typeParam = getTypeParam();
       const orderParam = selected.order ? `order=${selected.order.order}&` : '';
 
-      const response = await fetch(`http://localhost:3000/api/filter?${categoryParam}&${typeParam}`);
+      const response = await fetch(`/api/filter?${categoryParam}&${typeParam}`);
       const data = await response.json();
       let cards = data ||  [];
 
       if (selected.order?.type === 'price') {
-        const orderResponse = await fetch(`http://localhost:3000/api/orderPrice?${orderParam}${typeParam}&${categoryParam}`);
+        const orderResponse = await fetch(`/api/orderPrice?${orderParam}${typeParam}&${categoryParam}`);
         const orderData = await orderResponse.json();
         cards = orderData || [];
       }
 
       if (selected.order?.type === 'alpha') {
-        const orderResponse = await fetch(`http://localhost:3000/api/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}`);
+        const orderResponse = await fetch(`/api/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}`);
         const orderData = await orderResponse.json();
         cards = orderData || [];
       }
