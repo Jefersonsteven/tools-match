@@ -16,7 +16,7 @@ const Cards = () => {
       setCards(res.data);
       setFilteredCards(res.data);
     });
-  }, [setCards, setFilteredCards, URL_API]);
+  }, [setCards, setFilteredCards]);
 
   const paginatedUrl = `/paginated?page=${currentPage}&limit=${cardsPerPage}`;
 
@@ -29,6 +29,7 @@ const Cards = () => {
   const isPageEmpty = currentCards.length === 0;
 
   return (
+    <AppProvider>
       <div className="p-4 px-2">
         <div className="grid grid-cols-4 gap-9">
           {currentCards.map((tool) => (
@@ -55,7 +56,6 @@ const Cards = () => {
         />
       </div>
     </AppProvider>
-    </div>
   );
 };
 
