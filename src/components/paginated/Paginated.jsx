@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 
 export default function Paginated({ url, currentPage, setCurrentPage }) {
   const [paginatedCards, setPaginatedCards] = useState([]);
+  const [totalPages, setTotalPages] = useState();
 
   useEffect(() => {
     const fetchCards = async () => {
       try {
         const response = await fetch(url);
         const data = await response.json();
+        setTotalPages(data.pageInfo.totalPages)
         setPaginatedCards(data.posts);
       } catch (error) {
         console.log(error);
@@ -45,7 +47,7 @@ export default function Paginated({ url, currentPage, setCurrentPage }) {
         </button>
 
         {/* Cuadritos de paginación */}
-        {Array.from({ length: 10 }).map((_, index) => (
+        {Array.from({ length: totalPages }).map((_, index) => (
           <button
             key={index + 1}
             onClick={() => handlePageClick(index + 1)}
