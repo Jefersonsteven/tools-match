@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Link from "next/link";
-import Footer from "../../components/footer/Footer";
 
 export default function Page() {
   const [selectedDate, setSelectedDate] = useState(null);

@@ -10,15 +10,12 @@ const AppContext = createContext();
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(null);
-  const [userId, setUserId] = useState(null);
-
-
-  if (typeof window === 'undefined') {
-    console.log(JSON.parse(localStorage.getItem("token")));
-    setUserId(JSON.parse(localStorage.getItem("token")))
-    setUserData(JSON.parse(localStorage.getItem("id")))
-  }
+  const [userData, setUserData] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("token"))
+  );
+  const [userId, setUserId] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("id"))
+  );
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -57,11 +54,13 @@ function AppProvider({ children }) {
   const [filter, setFilter] = useState("");
 
   const [selected, setSelected] = useState({
-    category: '', type: '', order: {
-      type: '',
-      order: ''
-    }
-  });//lo agrego JeanHey para filtros de cards en el back
+    category: "",
+    type: "",
+    order: {
+      type: "",
+      order: "",
+    },
+  }); //lo agrego JeanHey para filtros de cards en el back
 
   return (
     <AppContext.Provider
