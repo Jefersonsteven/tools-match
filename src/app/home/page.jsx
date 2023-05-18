@@ -6,7 +6,7 @@ import Paginated from "@/components/paginated/Paginated";
 function Home({cards, currentPage, setCards, setCurrentPage } ) {
 
   return (
-    <div className="flex flex-col mt-8 ">
+    <div className="flex flex-col mt-8 p-28 min-h-screen">
       <h1 className="text-4xl font-bold text-center m-5">
         Renta o Compra Herramientas en Tu Comunidad
       </h1>
@@ -19,13 +19,7 @@ function Home({cards, currentPage, setCards, setCurrentPage } ) {
             <Cards className="mb-1" />
           </div>
         </div>
-      </div>
-      <Paginated
-      cards = {cards}
-      currentPage = {currentPage}
-      setCurrentPage = {setCurrentPage}
-      setCards = {setCards}
-      />
+      </div>     
     </div>
   );
 }
