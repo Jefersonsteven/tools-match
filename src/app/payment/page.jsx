@@ -41,7 +41,7 @@ function Payment() {
         items: [
             {
                 title: "Martillo",
-                description: "Martillo usada 3 veces",
+                content: "Martillo usada 3 veces",
                 quantity: 5,
                 unit_price: 2,
                 currency_id: "USD",
