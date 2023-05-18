@@ -62,6 +62,10 @@ function AppProvider({ children }) {
     },
   }); //lo agrego JeanHey para filtros de cards en el back
 
+  // *---------------------------------------* //
+  // * Paginated *//
+  const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
+
   return (
     <AppContext.Provider
       value={{
@@ -104,6 +108,8 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
+        currentPage,
+        setCurrentPage,
       }}
     >
       {children}
