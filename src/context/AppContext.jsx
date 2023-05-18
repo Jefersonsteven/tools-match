@@ -4,6 +4,7 @@ import { createContext, useState } from "react";
 import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
+import { newPetition } from "./assets/customFetch";
 
 
 const AppContext = createContext();
@@ -56,8 +57,32 @@ function AppProvider({ children }) {
     type:'',
     order:''
   }});//lo agrego JeanHey para filtros de cards en el back
+  // * Data de países *//
 
-  
+  const [countries, setCountries] = useState({
+    null: "---",
+    AR: "Argentina",
+    BO: "Bolivia",
+    BR: "Brasil",
+    CL: "Chile",
+    CO: "Colombia",
+    CR: "Costa Rica",
+    CU: "Cuba",
+    EC: "Ecuador",
+    SV: "El Salvador",
+    GT: "Guatemala",
+    HT: "Haití",
+    HN: "Honduras",
+    MX: "México",
+    NI: "Nicaragua",
+    PA: "Panamá",
+    PY: "Paraguay",
+    PE: "Perú",
+    DO: "República Dominicana",
+    UY: "Uruguay",
+    VE: "Venezuela",
+  });
+
   return (
     <AppContext.Provider
       value={{
@@ -100,6 +125,10 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
+
+        countries,
+        setCountries,
+        newPetition,
       }}
     >
       {children}

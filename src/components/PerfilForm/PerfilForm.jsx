@@ -1,11 +1,9 @@
 import React from "react";
-import style from "../../app/dashboard/components/form.module.css"
+import style from "../../app/dashboard/components/form.module.css";
 import { useState } from "react";
 
-function PerfilForm({editingUser, handleSubmit, setEditingUser}) {
-
+function PerfilForm({ editingUser, handleSubmit, setEditingUser }) {
   const [error, setError] = useState("");
-
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -62,65 +60,89 @@ function PerfilForm({editingUser, handleSubmit, setEditingUser}) {
     handleSubmit(e);
   };
 
-
   return (
-  <>
-  <form className={style.form} onClick={handleClick} onSubmit={handleSubmit}>
-  <label className={style.label}htmlFor="firstname">Nombre:</label>
-  <input className={style.input}
-         type="text"
-         id="firstname"
-         name="firstname"
-         defaultValue={editingUser.firstname}
-         onChange={handleInputChange}
-         pattern="^[a-zA-Z]{1,15}$"
-         required
-       />
-  <label className={style.label}htmlFor="lastname">Apellido:</label>
-  <input className={style.input}
-         type="text"
-         id="lastname"
-         name="lastname"
-         defaultValue={editingUser.lastname}
-         onChange={handleInputChange}
+    <>
+      <form
+        className={style.form}
+        onClick={handleClick}
+        onSubmit={handleSubmit}
+      >
+        <label className={style.label} htmlFor="firstname">
+          Nombre:
+        </label>
+        <input
+          className={style.input}
+          type="text"
+          id="firstname"
+          name="firstname"
+          defaultValue={editingUser.firstname}
+          onChange={handleInputChange}
           pattern="^[a-zA-Z]{1,15}$"
           required
-       />
-  <label className={style.label} htmlFor="email">Email:</label>
-  <input className={style.input}
-         type="text"
-         id="email"
-         name="email"
-         defaultValue={editingUser.email}
-         onChange={handleInputChange}
-         maxLength={15}
-         required
-       />
-  <label className={style.label} htmlFor="phonenumber">Telefono:</label>
-  <input className={style.input}
-         type="text"
-         id="phonenumber"
-         name="phonenumber"
-         defaultValue={editingUser.phoneNumber}
-         onChange={handleInputChange}
+        />
+        <label className={style.label} htmlFor="lastname">
+          Apellido:
+        </label>
+        <input
+          className={style.input}
+          type="text"
+          id="lastname"
+          name="lastname"
+          defaultValue={editingUser.lastname}
+          onChange={handleInputChange}
+          pattern="^[a-zA-Z]{1,15}$"
+          required
+        />
+        <label className={style.label} htmlFor="email">
+          Email:
+        </label>
+        <input
+          className={style.input}
+          type="text"
+          id="email"
+          name="email"
+          defaultValue={editingUser.email}
+          onChange={handleInputChange}
+          maxLength={15}
+          required
+        />
+        <label className={style.label} htmlFor="phonenumber">
+          Telefono:
+        </label>
+        <input
+          className={style.input}
+          type="text"
+          id="phonenumber"
+          name="phonenumber"
+          defaultValue={editingUser.phoneNumber}
+          onChange={handleInputChange}
           pattern="^\d{1,15}$"
           maxLength={15}
           required
-       />
-  <label className={style.label} htmlFor="reports">Ordenes:</label>
-  <input className={style.input}
-         type="text"
-         id="reports"
-         name="reports"
-         defaultValue="4"
-       />
-  <button className={style.buttonGuardar} type="submit">Guardar</button>
-  <button className={style.buttonCancelar}type="button" onClick={() => setEditingUser(null)}>
-  Cancelar
-  </button>
-  </form>
-  </>
+        />
+        <label className={style.label} htmlFor="reports">
+          Ordenes:
+        </label>
+        <input
+          className={style.input}
+          type="text"
+          id="reports"
+          name="reports"
+          defaultValue="4"
+        />
+        <button className={style.buttonGuardar} type="submit">
+          Guardar
+        </button>
+        <button
+          className={style.buttonCancelar}
+          type="button"
+          onClick={() => setEditingUser(null)}
+        >
+          Cancelar
+        </button>
+      </form>
+    </>
   );
-  }
-  
-  export default PerfilForm;
+}
+
+export default PerfilForm;
