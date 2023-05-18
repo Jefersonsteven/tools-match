@@ -29,6 +29,7 @@ const Cards = () => {
   const isPageEmpty = currentCards.length === 0;
 
   return (
+    <AppProvider>
       <div className="p-4 px-2">
         <div className="grid grid-cols-4 gap-9">
           {currentCards.map((tool) => (
@@ -54,9 +55,10 @@ const Cards = () => {
           setCurrentPage={setCurrentPage}
         />
       </div>
-    </AppProvider>
-    </div>
+      </AppProvider>
+                
   );
+  
 };
 
 export default Cards;
