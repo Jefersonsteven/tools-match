@@ -195,9 +195,6 @@ function Posts() {
         )}
       </div>
       {/* ---------- PAGINATED ---------- */}
-      {isPageEmpty && (
-        <p className="text-center mt-4">No hay publicaciones disponibles.</p>
-      )}
 
       {filteredUsuarios.length > publicationsPerPage && (
         <Paginated
