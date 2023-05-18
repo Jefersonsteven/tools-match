@@ -10,6 +10,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
 
+/*PARA PAGINATED*/
+import Paginated from "@/components/paginated/Paginated";
+/*-----------------*/
+
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
@@ -22,12 +26,26 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   );
 }
 
+/*MODIFICADO PARA PAGINATED*/
+
 function Users() {
   const [searchTerm, setSearchTerm] = useState("");
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+  const filteredUsuarios = records.filter((usuario) => {
+    return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  /*---------- PAGINATED ----------*/
+  const startIndex = (currentPage - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const displayedUsers = filteredUsuarios.slice(startIndex, endIndex);
+  /*-------------------------------*/
 
   const handleDeleteUser = async (id) => {
     try {
@@ -51,11 +69,10 @@ function Users() {
       });
     }
   };
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios("http://localhost:3000/api/admin/user");
+        const response = await axios("/api/admin/user"); //PAGINATED
         const users = await response.data;
 
         if (users.length > 0) {
@@ -73,9 +90,9 @@ function Users() {
     fetchUsers();
   }, [handleDeleteUser]);
 
-  const filteredUsuarios = records.filter((usuario) => {
-    return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  // const filteredUsuarios = records.filter((usuario) => {
+  //   return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
+  // });
 
   const handleClick = (userId) => {
     const userToEdit = filteredUsuarios.find((user) => user.id === userId);
@@ -96,7 +113,7 @@ function Users() {
 
     Swal.fire({
       title: "¿Estás seguro de los cambios?",
-      icon: "warning",
+      icon: "success",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -105,10 +122,7 @@ function Users() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .put(
-            `http://localhost:3000/api/admin/user/${editingUser.id}`,
-            updatedUser
-          )
+          .put(`/api/admin/user/${editingUser.id}`, updatedUser)
           .then((response) => {
             console.log(response.data);
             setEditingUser(null);
@@ -130,7 +144,7 @@ function Users() {
       text: `Estás por eliminar al usuario "${firstname}"`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Si, eliminar",
+      confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -170,7 +184,7 @@ function Users() {
             </thead>
 
             <tbody className={style.bodyTabla}>
-              {filteredUsuarios.map((d, i) => (
+              {displayedUsers.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
                   <td>
                     <FaRegUserCircle />
@@ -211,16 +225,16 @@ function Users() {
             <p>No hay Usuarios🚩</p>
           </div>
         )}
-        {editingUser && (
-          <Modal show={showModal} onClose={() => setShowModal(false)}>
-            <UserForm
-              editingUser={editingUser}
-              handleSubmit={handleSubmit}
-              setEditingUser={setEditingUser}
-            />
-          </Modal>
-        )}
       </div>
+      {/*--------- PAGINATED ---------- */}
+      {filteredUsuarios.length > 0 && (
+        <Paginated
+          url={`/api/admin/paginatedUser?page=${currentPage}&limit=${perPage}`}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
+      {/*------------------------------ */}
     </div>
   );
 }

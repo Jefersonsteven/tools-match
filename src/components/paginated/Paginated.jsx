@@ -14,7 +14,6 @@ export default function Paginated({ url, currentPage, setCurrentPage }) {
         const data = await response.json();
         setPaginatedData(data.users);
         setTotalPages(data.pageInfo.totalPages);
-        console.log(data.pageInfo.totalPages);
       } catch (error) {
         console.log(error);
       }
@@ -48,23 +47,18 @@ export default function Paginated({ url, currentPage, setCurrentPage }) {
         </button>
 
         {/* Cuadritos de paginación */}
-        {Array.from({ length: totalPages }).map(
-          (_, index) => (
-            console.log(totalPages),
-            (
-              <button
-                key={index + 1}
-                onClick={() => handlePageClick(index + 1)}
-                disabled={currentPage === index + 1}
-                className={`${style.pageNumber} ${
-                  currentPage === index + 1 ? style.active : ""
-                }`}
-              >
-                {index + 1}
-              </button>
-            )
-          )
-        )}
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageClick(index + 1)}
+            disabled={currentPage === index + 1}
+            className={`${style.pageNumber} ${
+              currentPage === index + 1 ? style.active : ""
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
 
         <button
           onClick={handleNextPage}
