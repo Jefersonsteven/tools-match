@@ -47,7 +47,7 @@ export const getDataFromDB = async (
 
   dbUserData = await newPetition(
     "GET",
-    `http://localhost:3000/api/user/${userDataProvider.email}`,
+    `/api/user/${userDataProvider.email}`,
     false
   );
 
@@ -91,15 +91,15 @@ export const createNewUserOrLogIn = async (
 
   dbUserData = await newPetition(
     "GET",
-    `http://localhost:3000/api/user/${userDataProvider.email}`,
+    `/api/user/${userDataProvider.email}`,
     false
   );
 
   if (!dbUserData) {
-    await newPetition("POST", "http://localhost:3000/api/user", body);
+    await newPetition("POST", "/api/user", body);
     dbUserData = await newPetition(
       "GET",
-      `http://localhost:3000/api/user/${userDataProvider.email}`,
+      `/api/user/${userDataProvider.email}`,
       false
     );
   }

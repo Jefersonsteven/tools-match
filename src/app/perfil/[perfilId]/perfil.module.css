@@ -6,11 +6,11 @@
   padding-bottom: 108px;
 }
 
-.image {
+.imageContainer {
   width: 254px;
   height: 254px;
-  background-color: black;
-  border-radius: 20px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .userContainer {
@@ -42,7 +42,7 @@
   border-radius: 58px;
   width: 302px;
   height: 66px;
-  color: #dcf1d9;
+  color: var(--white);
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -52,109 +52,6 @@
 }
 
 .editButton:hover {
-  background-color: #f0960e;
-  border-color: #f0960e;
+  background-color: var(--green);
+  border-color: var(--green);
 }
-
-/* .main_container {
-  display: flex;
-  justify-content: space-between;
-  padding: 3em;
-}
-
-.main_container h1 {
-  font-size: xx-large;
-}
-
-.userData {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 32px;
-  width: 60%;
-}
-
-.userData div {
-  margin-bottom: 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.userData div h2 {
-  font-size: medium;
-}
-
-.userDataContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.userDataContainer h2 {
-  margin-right: 16px;
-}
-
-/* .datos_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-}
-
-.datos_container_data {
-  display: flex;
-  justify-content: space-between;
-}
-
-.datos_container_data h2 {
-  display: flex;
-  justify-content: space-between;
-} 
-
-.datos_container strong {
-  text-decoration: underline;
-}
-
-.button_edit {
-  background-color: #131713;
-  color: #dcf1d9;
-  border: 2px solid #131713;
-  border-radius: 58px;
-  padding: 21px 83px;
-  width: 302px;
-  height: 66px;
-}
-
-.button_edit:hover {
-  background-color: #f0960e;
-  border-color: #f0960e;
-}
-
-.button_report {
-  background-color: #f0960e;
-  color: #dcf1d9;
-  border: 2px solid #f0960e;
-  border-radius: 58px;
-  padding: 21px 83px;
-  width: 302px;
-  height: 66px;
-}
-
-.button_report:hover {
-  background-color: #131713;
-  border-color: #131713;
-}
-
-.cards_container {
-  font-size: xx-large;
-}
-
-.cards_container h2 {
-  font-size: xx-large;
-  padding-left: 100px;
-}
- */

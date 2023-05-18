@@ -24,8 +24,7 @@
 .image {
   width: 254px;
   height: 254px;
-  background-color: black;
-  margin-bottom: 38px;
+  background-color: var(--black-light);
   border-radius: 20px;
 }
 
@@ -38,32 +37,42 @@
   width: 534px;
 }
 
-.buttonSubmit {
-  width: 233px;
-  height: 66px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.1em;
-  margin: 0 16px;
-  color: #dcf1d9;
-  background: #131713;
-  border-radius: 58px;
+.editUserDatForm p {
+  text-align: center;
 }
 
+.buttonSubmit,
 .buttonCancel {
-  width: 233px;
+  width: 253px;
   height: 66px;
-  margin: 0 16px;
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.1em;
-  color: #dcf1d9;
+  color: var(--white);
   background: #131713;
   border-radius: 58px;
+  transition: all 0.3s ease-in-out;
+}
+
+.buttonSubmit:disabled,
+.buttonCancel:disabled {
+  background-color: var(--black-light);
+  color: var(--white);
+}
+
+.buttonCancel:disabled:hover,
+.buttonSubmit:disabled:hover {
+  background-color: var(--black-light);
+  border-color: var(--black-light);
+}
+
+.buttonSubmit:hover,
+.buttonCancel:hover,
+.changePwdButton:hover {
+  background-color: var(--green);
+  border-color: var(--green);
 }
 
 .inputsContainer {
@@ -117,16 +126,50 @@
   width: 534px;
 }
 
-.buttonChangePassword {
+.IoCaretBack {
+  color: var(--white);
+  background-color: var(--green);
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  margin-top: 32px;
+  margin-left: 32px;
+}
+
+.changePwdButton {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  background: #131713;
+  border-radius: 58px;
   width: 253px;
   height: 66px;
-  margin: 16px;
+  color: var(--white);
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.1em;
-  color: #dcf1d9;
-  background: #131713;
-  border-radius: 58px;
+  transition: all 0.3s ease-in-out;
+}
+
+.changePwdButton:hover {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
+.containers {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32px;
+  gap: 16px;
 }

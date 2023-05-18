@@ -1,0 +1,26 @@
+.imageContainer {
+  width: 254px;
+  height: 254px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.buttonChangePhoto {
+  width: 253px;
+  height: 66px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.1em;
+
+  color: var(--white);
+  background: #131713;
+  border-radius: 58px;
+  transition: all 0.3s ease-in-out;
+}
+
+.buttonChangePhoto:hover {
+  background-color: var(--green);
+  border-color: var(--green);
+}
