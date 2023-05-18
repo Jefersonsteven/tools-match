@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+}
+
+.payment {
+    display: flex;
+}
+
+.cart {
+    display: flex;
+}
+
+.gateway {
+    display: flex;
+}
