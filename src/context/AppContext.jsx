@@ -47,13 +47,13 @@ function AppProvider({ children }) {
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
-
   const [title, setTitle] = useState("");
   const [cards, setCards] = useState([]);
   const [selectedType, setSelectedType] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [selected, setSelected] = useState({ category: '', type: '' ,order: {
     type:'',
@@ -88,6 +88,8 @@ function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
+        currentPage,
+        setCurrentPage,
         selected,
         setSelected,
         postDetail,
