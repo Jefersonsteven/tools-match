@@ -1,8 +1,9 @@
+
 import React, { useState } from "react";
 import { RiStarFill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 
-const FormReview = () => {
+const FormReview = ({ selectedOrder, onCloseModal }) => {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(true);
@@ -10,7 +11,6 @@ const FormReview = () => {
 
   const handleRatingClick = (value) => {
     if (rating === value) {
-      // Si se hace clic en la misma estrella, se colorea una menos
       setRating(value - 1);
     } else {
       setRating(value);
@@ -36,14 +36,12 @@ const FormReview = () => {
       });
 
       if (response.ok) {
-        // La reseña se envió correctamente
         console.log("Reseña enviada correctamente");
+        onCloseModal();
       } else {
-        // Hubo un error al enviar la reseña
         console.error("Error al enviar la reseña");
       }
 
-      // Reiniciamos los campos después de enviar
       setRating(0);
       setContent("");
     } catch (error) {
@@ -53,15 +51,13 @@ const FormReview = () => {
 
   const handleClose = () => {
     setIsOpen(false);
+    onCloseModal();
   };
 
-  if (!isOpen) {
-    return null;
-  }
-
+  
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="relative w-2/3 max-w-lg bg-green-100 p-8 rounded-lg shadow">
+    <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 ${isOpen ? "" : "hidden"}`}>
+      <div className="bg-white p-8 rounded-lg shadow-lg w-1/4 relative">
         <div className="absolute top-0 right-0 mt-2 mr-2">
           <button
             className="bg-yellow-500 rounded-full p-2"
@@ -71,9 +67,8 @@ const FormReview = () => {
           </button>
         </div>
         <h2 className="text-2xl font-bold mb-4">Opinar y Calificar</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="date" className="block bg-mb-1 text-sm font-medium">
+        <form onSubmit={handleSubmit}>          <div className="mb-4">
+            <label htmlFor="date" className="block text-sm font-medium">
               Fecha:
             </label>
             <div className="w-full border bg-white border-gray-300 rounded p-2 text-sm">
@@ -111,11 +106,19 @@ const FormReview = () => {
           </div>
           <div className="flex justify-center">
             <button
-              type="submit"              
-              className="bg-black hover:bg-gray-800 text-white font-bold py-1 px-3 rounded-full text-xs"
+              type="submit"
+              className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full text-sm"
               style={{ maxWidth: "200px" }}
             >
               Publicar Reseña
+            </button>
+          </div>
+          <div className="absolute top-0 right-0 mt-2 mr-2">
+            <button
+              className="bg-yellow-500 rounded-full p-2"
+              onClick={handleClose}
+            >
+              <AiOutlineClose className="text-black" />
             </button>
           </div>
         </form>

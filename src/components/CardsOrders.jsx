@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import FormReview from "./FormReview";
 
 const CardsOrders = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
-const handleOpenModal = (order) => {
+  const handleOpenModal = (order) => {
     setSelectedOrder(order);
     setIsModalOpen(true);
   };
 
-    
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const mockOrders = [
     {
       id: "1",
@@ -36,30 +39,28 @@ const handleOpenModal = (order) => {
     <div className="flex justify-end">
       <div className="w-full max-w-xl">
         {mockOrders.map((order) => (
-          <div
-            key={order.id}
-            className="p-4 my-2 bg-white rounded-md shadow-md"
-          >
+          <div key={order.id} className="p-4 my-2 bg-white rounded-md shadow-md">
             <div className="flex justify-between">
               <h3 className="text-black font-bold">{order.title}</h3>
               <p className="text-black font-bold">{order.price}</p>
             </div>
             <p className={order.type === "Venta" ? "text-green-500" : "text-yellow-500"}>
               {order.type === "Venta" ? "Venta" : "Arriendo"}
-            </p>  
-      
-      <button
-              className="bg-blue-500 text-white font-bold py-1 px-3 rounded"
-              onClick={() => handleOpenModal(order)}
-            >
-              Reseña
-            </button>
+            </p>
+            <div className="flex justify-end"> {/* Nueva línea */}
+              <button
+                className="bg-black text-white py-1 px-3 rounded-1 rounded-r"
+                onClick={() => handleOpenModal(order)}
+              >
+                Reseña
+              </button>
+            </div>
           </div>
         ))}
       </div>
       {isModalOpen && (
         <div className="modal">
-          <FormReview order={selectedOrder} />
+          <FormReview order={selectedOrder} onCloseModal={handleCloseModal} />
         </div>
       )}
     </div>
@@ -67,4 +68,3 @@ const handleOpenModal = (order) => {
 };
 
 export default CardsOrders;
-
