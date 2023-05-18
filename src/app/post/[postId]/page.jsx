@@ -6,11 +6,16 @@ import { useContext, useEffect } from "react";
 import styles from "./post.module.css";
 import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function PostDetail({}) {
   const { postId } = useParams();
   const { postDetail, setPostDetail, userId } = useContext(AppContext);
   const pd = postDetail;
+
+  function addCart(){
+    return true
+  }
 
   const pd2 = {
     author: {
@@ -25,7 +30,7 @@ function PostDetail({}) {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/admin/post/${postId}`)
+    fetch(`/api/admin/post/${postId}`)
       .then((response) => response.json())
       .then((data) => setPostDetail(data));
   }, [setPostDetail, postId]);
@@ -67,15 +72,6 @@ function PostDetail({}) {
                   ))}
                 </figure>
               </div>
-              <figure className={styles.figure}>
-                <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
-                <Image
-                  src={pd.author.map}
-                  width={600}
-                  height={400}
-                  alt={pd.author.zipCode + " " + pd.author.country}
-                />
-              </figure>
             </section>
             <section className={styles.section_description}>
               <div className={styles.description_title}>
@@ -92,7 +88,16 @@ function PostDetail({}) {
               </div>
             </section>
             <section className={styles.section_user}>
-              <div>
+              <figure className={styles.figure}>
+                <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
+                <Image
+                  src={pd.author.map}
+                  width={600}
+                  height={400}
+                  alt={pd.author.zipCode + " " + pd.author.country}
+                />
+              </figure>
+              <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image
                     src={pd?.photo[0]}
@@ -108,12 +113,15 @@ function PostDetail({}) {
                   </h5>
                   <h5>⭐{pd2.author.rating}.0</h5>
                 </div>
-              </div>
+              </Link>
             </section>
             <section className={styles.section_button}>
               {userId === pd.author.id && <button>Eliminar</button>}
               {userId !== pd.author.id && pd.type === "SALE" && (
-                <button>Comprar</button>
+                <Link 
+                href={ addCart() && "/cart"}>
+                  <button>Comprar</button>
+                </Link>
               )}
               {userId !== pd.author.id && pd.type === "RENTAL" && (
                 <button>Arrendar</button>
