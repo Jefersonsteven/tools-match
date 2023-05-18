@@ -1,5 +1,4 @@
 "use client";
-import Header from "@/components/Header/Header";
 import style from "./payment.module.css";
 import { useState, useEffect } from "react";
 

@@ -16,9 +16,9 @@ const Cards = () => {
       setCards(res.data);
       setFilteredCards(res.data);
     });
-  }, [setCards, setFilteredCards, URL_API]);
+  }, [setCards, setFilteredCards]);
 
-  const paginatedUrl = `/paginated?page=${currentPage}&limit=${cardsPerPage}`;
+  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
 
   const startIndex = (currentPage - 1) * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
@@ -54,8 +54,6 @@ const Cards = () => {
           setCurrentPage={setCurrentPage}
         />
       </div>
-    </AppProvider>
-    </div>
   );
 };
 
