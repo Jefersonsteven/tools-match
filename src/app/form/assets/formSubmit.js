@@ -38,7 +38,6 @@ export const submitLogInFormData = async (
   } else {
     throw new Error(responseOfValidation.error);
   }
-
   if (dbUserData.logged) {
     setUserData(dbUserData);
 
