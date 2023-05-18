@@ -29,12 +29,12 @@ function Payment() {
         validateForm({ ...form, [name]: value }, errors, setErros, setDisabled);
     }
 
-    const body = {
-        items: cart,
-        payer: {
-            name: form.email
-        }
-    }
+    // const body = {
+    //     items: cart,
+    //     payer: {
+    //         name: form.email
+    //     }
+    // }
 
     const temp = {
         postDetail: 1,
