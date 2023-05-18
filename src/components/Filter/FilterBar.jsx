@@ -42,7 +42,6 @@ export default function FilterBar() {
         cards = orderData || [];
       }
 
-      set
       setCards(cards);
     };
 
