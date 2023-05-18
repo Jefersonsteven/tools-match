@@ -20,7 +20,7 @@ export default function PerfilUsuario() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/admin/user/${perfilId}`)
+    fetch(`/api/admin/user/${perfilId}`)
       .then((response) => response.json())
       .then((data) => setUser(data));
   }, [perfilId]);
@@ -71,7 +71,7 @@ export default function PerfilUsuario() {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser)
+        axios.put(`/api/admin/user/${editingUser.id}`, updatedUser)
           .then((response) => {
             console.log(response.data);
             setEditingUser(null);
@@ -88,11 +88,11 @@ export default function PerfilUsuario() {
 
     try {
       axios.put(
-        `http://localhost:3000/api/admin/user/${editingUser.id}`,
+        `/api/admin/user/${editingUser.id}`,
         updatedUser
       );
       console.log("User updated in DB");
-      fetch(`http://localhost:3000/api/admin/user/${perfilId}`)
+      fetch(`/api/admin/user/${perfilId}`)
         .then((response) => response.json())
         .then((data) => setUser(data));
       setEditingUser(null);

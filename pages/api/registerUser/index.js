@@ -1,11 +1,10 @@
 export default async function handler(req, res) {
-  const URL_BASE = "http://localhost:3000";
   const { method } = req;
   const { firstname, lastname, email, password, phoneNumber } = req.body;
   if (method == "POST") {
     try {
       if (!firstname || !lastname || !email || !password || !phoneNumber) throw new Error("Faltan datos por completar");
-      const response = await fetch(`${URL_BASE}/api/user/${email}`);
+      const response = await fetch(`/api/user/${email}`);
       const user = await response.json();
       if (user) throw new Error("Cuenta ya registrada con ese email");
       else {

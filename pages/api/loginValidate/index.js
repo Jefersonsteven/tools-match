@@ -1,7 +1,6 @@
 import crypto from "crypto";
 
 export default async function handler(req, res) {
-  const URL_BASE = "http://localhost:3000";
   const { method } = req;
   const { email } = req.body;
   let { password } = req.body;
@@ -16,7 +15,7 @@ export default async function handler(req, res) {
         if (password == user.password) {
           if (!user.hidden) {
             const response = await fetch(
-              `${URL_BASE}/api/admin/user/${user.id}`,
+              `/api/admin/user/${user.id}`,
               {
                 method: "PUT",
                 headers: {

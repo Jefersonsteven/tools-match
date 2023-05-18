@@ -38,7 +38,7 @@ function CreatePost() {
                 newPost.photo = urls;
                 newPost.price = Math.floor(newPost.price);
 
-                const post = await fetch("http://localhost:3000/api/post", {
+                const post = await fetch("/api/post", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

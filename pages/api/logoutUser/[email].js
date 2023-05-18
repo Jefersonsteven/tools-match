@@ -1,10 +1,9 @@
 export default async function handler(req, res) {
-  const URL_BASE = "http://localhost:3000";
   const { method } = req;
   const { email } = req.query;
   try {
     if (method == "PUT") {
-      const findUser = await fetch(`${URL_BASE}/api/user/${email}`);
+      const findUser = await fetch(`/api/user/${email}`);
       const user = await findUser.json();
       if (user) {
         await fetch(`${URL_BASE}/api/admin/user/${user.id}`, {
