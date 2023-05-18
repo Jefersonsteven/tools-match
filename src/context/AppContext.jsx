@@ -5,7 +5,6 @@ import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 
-import axios from "axios";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
@@ -13,6 +12,20 @@ function AppProvider({ children }) {
   const [postDetail, setPostDetail] = useState({});
   const [userData, setUserData] = useState(typeof window !== 'undefined' && JSON.parse(localStorage.getItem("token")));
   const [userId, setUserId] = useState(typeof window !== 'undefined' && JSON.parse(localStorage.getItem("id")));
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState(null);
+
+  if (typeof window !== 'undefined') {
+    // Acceso a localStorage aquí
+    const storedToken = localStorage.getItem("token");
+    const storedId = localStorage.getItem("id");
+
+    // Resto del código que depende de localStorage
+    if (storedId && storedToken) {
+      setUserData(storedToken)
+      setUserId(storedId)
+    }
+  }
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -49,6 +62,7 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
+
 
   const [selected, setSelected] = useState({ category: '', type: '' ,order: {
     type:'',

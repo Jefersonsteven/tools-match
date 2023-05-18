@@ -5,19 +5,20 @@ import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import Paginated from "../paginated/Paginated";
 
+
 const Cards = () => {
   const { cards, setCards, setFilteredCards } = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 8;
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/admin/post").then((res) => {
+    axios.get(`/api/admin/post`).then((res) => {
       setCards(res.data);
       setFilteredCards(res.data);
     });
-  }, [setCards, setFilteredCards]);
+  }, [setCards, setFilteredCards, URL_API]);
 
-  const paginatedUrl = `http://localhost:3000/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
+  const paginatedUrl = `/paginated?page=${currentPage}&limit=${cardsPerPage}`;
 
   const startIndex = (currentPage - 1) * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
@@ -28,7 +29,6 @@ const Cards = () => {
   const isPageEmpty = currentCards.length === 0;
 
   return (
-    <AppProvider>
       <div className="p-4 px-2">
         <div className="grid grid-cols-4 gap-9">
           {currentCards.map((tool) => (
@@ -55,6 +55,7 @@ const Cards = () => {
         />
       </div>
     </AppProvider>
+    </div>
   );
 };
 
