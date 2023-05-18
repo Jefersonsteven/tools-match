@@ -10,22 +10,12 @@ const AppContext = createContext();
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(typeof window !== 'undefined' && JSON.parse(localStorage.getItem("token")));
-  const [userId, setUserId] = useState(typeof window !== 'undefined' && JSON.parse(localStorage.getItem("id")));
-  const [userData, setUserData] = useState(null);
-  const [userId, setUserId] = useState(null);
-
-  if (typeof window !== 'undefined') {
-    // Acceso a localStorage aquí
-    const storedToken = localStorage.getItem("token");
-    const storedId = localStorage.getItem("id");
-
-    // Resto del código que depende de localStorage
-    if (storedId && storedToken) {
-      setUserData(storedToken)
-      setUserId(storedId)
-    }
-  }
+  const [userData, setUserData] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("token"))
+  );
+  const [userId, setUserId] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("id"))
+  );
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -63,11 +53,14 @@ function AppProvider({ children }) {
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
 
-
-  const [selected, setSelected] = useState({ category: '', type: '' ,order: {
-    type:'',
-    order:''
-  }});//lo agrego JeanHey para filtros de cards en el back
+  const [selected, setSelected] = useState({
+    category: "",
+    type: "",
+    order: {
+      type: "",
+      order: "",
+    },
+  }); //lo agrego JeanHey para filtros de cards en el back
 
   return (
     <AppContext.Provider
