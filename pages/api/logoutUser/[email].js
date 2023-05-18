@@ -1,6 +1,7 @@
 export default async function handler(req, res) {
   const { method } = req;
   const { email } = req.query;
+  const URL_BASE = process.env.DEPLOY_BACK || "http://localhost:3000";
   try {
     if (method == "PUT") {
       const findUser = await fetch(`/api/user/${email}`);

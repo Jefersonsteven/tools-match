@@ -1,6 +1,7 @@
 export default async function handler(req, res) {
   const { method } = req;
   const { firstname, lastname, email, password, phoneNumber } = req.body;
+  const URL_BASE = process.env.DEPLOY_BACK || 'http://localhost:3000'
   if (method == "POST") {
     try {
       if (!firstname || !lastname || !email || !password || !phoneNumber) throw new Error("Faltan datos por completar");
