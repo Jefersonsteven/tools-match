@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       const user = await response.json();
       if (user) throw new Error("Cuenta ya registrada con ese email");
       else {
-        const response = await fetch(`${URL_BASE}/api/user`, {
+        const response = await fetch(`/api/user`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

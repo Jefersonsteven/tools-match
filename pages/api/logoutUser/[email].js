@@ -6,7 +6,7 @@ export default async function handler(req, res) {
       const findUser = await fetch(`/api/user/${email}`);
       const user = await findUser.json();
       if (user) {
-        await fetch(`${URL_BASE}/api/admin/user/${user.id}`, {
+        await fetch(`/api/admin/user/${user.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
