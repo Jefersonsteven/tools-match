@@ -18,8 +18,6 @@ export const submitLogInFormData = async (
     password: loginData.password,
   };
 
-  console.log(router);
-  console.log(router.push);
   let responseOfValidation = await newPetition(
     "PUT",
     "http://localhost:3000/api/loginValidate",
