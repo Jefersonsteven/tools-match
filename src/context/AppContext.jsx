@@ -5,16 +5,17 @@ import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 
-import axios from "axios";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
   const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("token"))
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("token"))
   );
-  const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
+  const [userId, setUserId] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("id"))
+  );
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -52,15 +53,14 @@ function AppProvider({ children }) {
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
 
-  const [selected, setSelected] = useState({ category: '', type: '' ,order: {
-    type:'',
-    order:''
-  }});//lo agrego JeanHey para filtros de cards en el back
-
-  const tools = async () => {
-    const response = await axios.get("http://localhost:3000/api/admin/post");
-    return response.data;
-  };
+  const [selected, setSelected] = useState({
+    category: "",
+    type: "",
+    order: {
+      type: "",
+      order: "",
+    },
+  }); //lo agrego JeanHey para filtros de cards en el back
 
   return (
     <AppContext.Provider
@@ -79,7 +79,6 @@ function AppProvider({ children }) {
         setSortBy,
         searchTerm,
         setSearchTerm,
-        tools,
         filteredCards,
         setFilteredCards,
         rent,
