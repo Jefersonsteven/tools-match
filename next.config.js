@@ -5,6 +5,7 @@ const nextConfig = {
       "res.cloudinary.com",
       "www.google.com",
       "www.homedepot.com.mx",
+      "encrypted-tbn0.gstatic.com",
       "maps.googleapis.com",
     ],
   },
@@ -16,6 +17,7 @@ const nextConfig = {
     MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
     MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN,
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    URL_API: process.env.URL_API
   },
 };
 
