@@ -19,6 +19,7 @@ const ImageUploader = ({ setSelectedFile, form }) => {
     <>
       <div className={styles.imageContainer}>
         <Image
+          className={styles.image}
           src={
             imageUrl
               ? imageUrl
@@ -26,9 +27,10 @@ const ImageUploader = ({ setSelectedFile, form }) => {
               ? form.photo
               : "/assets/userPhotoDefault.png"
           }
+          alt="Uploaded"
           width={254}
           height={254}
-          alt="Uploaded"
+          style={{ height: "100%", objectFit: "cover" }}
         />
       </div>
 

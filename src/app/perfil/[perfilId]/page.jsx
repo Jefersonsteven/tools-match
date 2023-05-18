@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import Card from "@/components/Cards/Card";
 
 import styles from "./perfil.module.css";
 import { AppContext } from "@/context/AppContext";
@@ -63,6 +64,27 @@ export default function PerfilUsuario() {
               Editar datos
             </Link>
           </div>
+        </div>
+      </section>
+      <section>
+        <h2>Tienda</h2>
+        <div>
+          {userData.posts.length ? (
+            userData.posts.map((post) => {
+              return (
+                <Card
+                  key={post.id}
+                  photo={post.photo[0]}
+                  title={post.title}
+                  price={post.price}
+                  type={`${post.type === "RENTAL" ? "Arriendo" : "Venta"}`}
+                  id={post.id}
+                />
+              );
+            })
+          ) : (
+            <p>No hay productos publicados</p>
+          )}
         </div>
       </section>
     </>

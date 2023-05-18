@@ -16,6 +16,7 @@ function AppProvider({ children }) {
     JSON.parse(localStorage.getItem("token"))
   );
   const [userId, setUserId] = useState(JSON.parse(localStorage.getItem("id")));
+  const [userPosts, setuserPosts] = useState([]);
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -130,6 +131,8 @@ function AppProvider({ children }) {
         countries,
         setCountries,
         newPetition,
+        userPosts,
+        setuserPosts,
       }}
     >
       {children}
