@@ -109,11 +109,7 @@ const FormReview = () => {
               />
             ))}
           </div>
-          <div className="flex justify-center
-
-
-
-">
+          <div className="flex justify-center">
             <button
               type="submit"              
               className="bg-black hover:bg-gray-800 text-white font-bold py-1 px-3 rounded-full text-xs"

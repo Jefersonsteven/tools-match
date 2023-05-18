@@ -9,6 +9,8 @@ import { AppContext } from "@/context/AppContext";
 import Swal from "sweetalert2";
 
 import Link from "next/link";
+import CardsReview from "@/components/CardsReview";
+import CardsOrders from "@/components/CardsOrders";
 
 export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
@@ -17,10 +19,66 @@ export default function PerfilUsuario() {
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
 
+  const mockReviews = [
+    {
+      id: 1,
+      authorId: 1,
+      rating: 4,
+      content: "Recomiendo a Celes, se nota que es una persona honesta y es muy amable. Le bajo un punto porque no admite pago por mercado pago, solo efectivo",
+    },
+    {
+      id: 2,
+      authorId: 2,
+      rating: 5,
+      content: "Arrende la cortadora de cesped y no andaba muy bien, me devolvio mi dinero",
+    },
+    {
+      id: 3,
+      authorId: 3,
+      rating: 1,
+      content: "Arrende la amoladora, nunca me la trajo, todavia estoy esperando",
+    },
+    {
+      id: 4,
+      authorId: 4,
+      rating: 5,
+      content: "Le compre el set de jardineria, todo bien.",
+    },
+  ];
+  
+  const mockAuthors = {
+    1: {
+      id: 1,
+      name: "Juan",
+      photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzwreugxnlmImJ5PTfcUCyRaeebl3dFILAlQ&usqp=CAU",
+    },
+    2: {
+      id: 2,
+      name: "María",
+      photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9p_uNbufEmwkBM0nI0Rikxewub7z9gIGWHDDtiOweMRx58IUe_qZnDSwrqVHJwElifZU&usqp=CAU",
+    },
+    3: {
+      id: 3,
+      name: "Pedro",
+      photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQywX3xEBz6HuunsE0XJeTMXdEeL4EChAo4A&usqp=CAU",
+    },
+    4: {
+      id: 4,
+      name: "Laura",
+      photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmp9uWxwev84Uff5D80j1aCBuZUDVMeKRKFN0A4X12mH_BZmW7ULcpqThqTSitTS46kz8&usqp=CAU",
+    },
+  };
+
+  
+
   useEffect(() => {
     fetch(`http://localhost:3000/api/admin/user/${perfilId}`)
       .then((response) => response.json())
-      .then((data) => setUser(data));
+      .then((data) => {
+        setUser(data);
+        console.log(data)
+      })
+
   }, [perfilId]);
 
   const handleEdit = () => {
@@ -109,6 +167,34 @@ export default function PerfilUsuario() {
     }
   };
 
+  const [authors, setAuthors] = useState({});
+
+  useEffect(() => {
+    const authorIds = [...new Set(userData.received.map((review) => review.authorId))];
+
+    const fetchAuthors = async () => {
+      try {
+        const responses = await Promise.all(
+          authorIds.map((authorId) =>
+            axios.get(`http://localhost:3000/api/admin/user/${authorId}`)
+          )
+        );
+
+        const fetchedAuthors = responses.reduce((authorsMap, response) => {
+          const author = response.data;
+          return { ...authorsMap, [author.id]: author };
+        }, {});
+
+        setAuthors(fetchedAuthors);
+      } catch (error) {
+        console.error("Error fetching authors:", error);
+      }
+    };
+
+    fetchAuthors();
+  }, [user.received]);
+
+
   return (
     <>
       <section className={styles.section}>
@@ -154,6 +240,14 @@ export default function PerfilUsuario() {
           </div>
         </div>
       </section>
+      <div className="flex gap-4">
+      <div className="w-2/3">
+        <CardsReview reviews={mockReviews} authors={mockAuthors} />
+      </div>
+      <div className="w-1/3">
+        <CardsOrders />
+      </div>
+    </div>
     </>
   );
 }
