@@ -5,11 +5,11 @@ export default async function handler(req, res) {
   if (method == "POST") {
     try {
       if (!firstname || !lastname || !email || !password || !phoneNumber) throw new Error("Faltan datos por completar");
-      const response = await fetch(`/api/user/${email}`);
+      const response = await fetch(`${URL_BASE}/api/user/${email}`);
       const user = await response.json();
       if (user) throw new Error("Cuenta ya registrada con ese email");
       else {
-        const response = await fetch(`/api/user`, {
+        const response = await fetch(`${URL_BASE}/api/user`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

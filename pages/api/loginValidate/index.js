@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         if (password == user.password) {
           if (!user.hidden) {
             const response = await fetch(
-              `/api/admin/user/${user.id}`,
+              `${URL_BASE}/api/admin/user/${user.id}`,
               {
                 method: "PUT",
                 headers: {
