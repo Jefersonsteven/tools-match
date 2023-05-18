@@ -3,9 +3,14 @@
 import style from "./Paginated.module.css";
 import { useEffect, useState } from "react";
 
-export default function Paginated({ url, currentPage, setCurrentPage }) {
+export default function Paginated({
+  url,
+  currentPage,
+  setCurrentPage,
+  totalPagesProp,
+}) {
   const [paginatedData, setPaginatedData] = useState([]);
-  const [totalPages, setTotalPages] = useState([]);
+  const [totalPages, setTotalPages] = useState(totalPagesProp); // Cambiar el nombre de la variable para evitar conflictos
 
   useEffect(() => {
     const fetchData = async () => {

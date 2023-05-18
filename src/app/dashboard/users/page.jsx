@@ -36,7 +36,7 @@ function Users() {
   const [showModal, setShowModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(5);
   const filteredUsuarios = records.filter((usuario) => {
     return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
   });
@@ -49,9 +49,7 @@ function Users() {
 
   const handleDeleteUser = async (id) => {
     try {
-      const userDelete = await axios.delete(
-        `http://localhost:3000/api/admin/user/${id}`
-      );
+      const userDelete = await axios.delete(`/api/admin/user/${id}`);
       console.log(userDelete.data);
       Swal.fire({
         title: "Usuario eliminado",
