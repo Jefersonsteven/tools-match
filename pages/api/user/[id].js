@@ -35,6 +35,7 @@ export default async function handler(req, res) {
           lastname,
           password,
           phoneNumber,
+          country,
           zipCode,
           country,
           photo,
