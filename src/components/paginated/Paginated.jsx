@@ -3,23 +3,28 @@
 import style from "./Paginated.module.css";
 import { useEffect, useState } from "react";
 
-export default function Paginated({ url, currentPage, setCurrentPage }) {
-  const [paginatedCards, setPaginatedCards] = useState([]);
-  const [totalPages, setTotalPages] = useState();
+export default function Paginated({
+  url,
+  currentPage,
+  setCurrentPage,
+  totalPagesProp,
+}) {
+  const [paginatedData, setPaginatedData] = useState([]);
+  const [totalPages, setTotalPages] = useState(totalPagesProp); // Cambiar el nombre de la variable para evitar conflictos
 
   useEffect(() => {
-    const fetchCards = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch(url);
         const data = await response.json();
-        setTotalPages(data.pageInfo.totalPages)
-        setPaginatedCards(data.posts);
+        setPaginatedData(data.users);
+        setTotalPages(data.pageInfo.totalPages);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchCards();
+    fetchData();
   }, [url, currentPage]);
 
   const handlePreviousPage = () => {
