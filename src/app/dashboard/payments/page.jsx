@@ -33,7 +33,7 @@ function Users() {
 
   const handleDeleteUser = async (id) => {
     try {
-      const userDelete = await axios.delete(`http://localhost:3000/api/admin/user/${id}`);
+      const userDelete = await axios.delete(`/api/admin/user/${id}`);
         console.log(userDelete.data);
         Swal.fire({
           title:'Usuario eliminado',
@@ -58,7 +58,7 @@ function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios('http://localhost:3000/api/admin/user');
+        const response = await axios('/api/admin/user');
         const users = await response.data;
   
         if (users.length > 0) {
@@ -96,7 +96,7 @@ function Users() {
       phoneNumber: formData.get('phonenumber'),
       reports: formData.get('reports'),
     };
-    axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser)
+    axios.put(`/api/admin/user/${editingUser.id}`, updatedUser)
       .then((response) => {
         console.log(response.data);
         setEditingUser(null);

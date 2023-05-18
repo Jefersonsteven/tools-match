@@ -37,7 +37,7 @@ function Posts() {
   const handleDeleteUser = async (id) => {
     try {
       const userDelete = await axios.delete(
-        `http://localhost:3000/api/admin/post/${id}`
+        `/api/admin/post/${id}`
       );
       console.log(userDelete.data);
       Swal.fire({
