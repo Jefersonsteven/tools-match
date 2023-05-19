@@ -36,18 +36,27 @@ const CardsOrders = () => {
   ];
 
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-center">
       <div className="w-full max-w-xl">
         {mockOrders.map((order) => (
-          <div key={order.id} className="p-4 my-2 bg-white rounded-md shadow-md">
+          <div
+            key={order.id}
+            className="p-4 my-2 bg-white rounded-md shadow-md"
+          >
             <div className="flex justify-between">
               <h3 className="text-black font-bold">{order.title}</h3>
               <p className="text-black font-bold">{order.price}</p>
             </div>
-            <p className={order.type === "Venta" ? "text-green-500" : "text-yellow-500"}>
+            <p
+              className={
+                order.type === "Venta" ? "text-green-500" : "text-yellow-500"
+              }
+            >
               {order.type === "Venta" ? "Venta" : "Arriendo"}
             </p>
-            <div className="flex justify-end"> {/* Nueva línea */}
+            <div className="flex justify-end">
+              {" "}
+              {/* Nueva línea */}
               <button
                 className="bg-black text-white py-1 px-3 rounded-1 rounded-r"
                 onClick={() => handleOpenModal(order)}
