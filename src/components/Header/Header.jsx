@@ -29,9 +29,10 @@ function Header() {
 
   const handleCloseSession = async () => {
     if (userData) {
+      push("/");
+      await endSession(userData.email);
       removeFromLocalStorage("token");
       removeFromLocalStorage("id");
-      endSession(userData.email);
       setUserData(null);
       setUserId(null);
       const Toast = Swal.mixin({
@@ -50,7 +51,6 @@ function Header() {
         icon: "info",
         title: "Sesión cerrada",
       });
-      push("/");
     }
   };
 
