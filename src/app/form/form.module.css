@@ -193,14 +193,14 @@
   height: 49px;
   margin-bottom: 40px;
   margin-top: 43px;
-  background: #131713;
+
   border-radius: 30px;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
   letter-spacing: 0.1em;
-  color: var(--white);
+
   cursor: pointer;
 }
 
