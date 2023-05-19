@@ -1,12 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./payment.module.css";
 import validateForm from "./assets/validateForm";
 import payMercadoPago from "./assets/payMercadopago";
+import { SiMercadopago } from 'react-icons/si'
+import { AppContext } from "@/context/AppContext";
 
 function Payment() {
     const [disabled, setDisabled] = useState(true);
     const [gateway, setGateway] = useState(false);
+    const { userData } = useContext(AppContext);
 
     const [form, setForm] = useState({
         fullname: "",
@@ -66,9 +69,9 @@ function Payment() {
     };
 
     return (
-        <main>
-            <section className={styles.form}>
-                <form action="">
+        <main className={styles.container}>
+            <section className={styles.form_container}>
+                <form className={styles.form}>
                     <div>
                         <label htmlFor="">Nombre Completo:</label>
                         <input
@@ -114,14 +117,14 @@ function Payment() {
             <section className={styles.payment}>
                 <div className={styles.cart}>
                     <div className={styles.cartItems}></div>
-                    <div>
+                    <div className={styles.total}>
                         <h3>TOTAL:</h3>
                         <h3>TOTAL</h3>
                     </div>
                 </div>
                 <div className={styles.gateway}>
                     <button
-                        onClick={() => setGateway((state) => !state)}
+                        onClick={() => setGateway(true)}
                         disabled={disabled}
                     >
                         Opciones de Pago
@@ -131,8 +134,10 @@ function Payment() {
                             <button>Contra Entrega</button>
                             <button>Tarjeta de credito</button>
                             <button
+                                className={styles.mercadopago}
                                 onClick={handleMercadoPago}>
-                                Mercado Pago
+                                <SiMercadopago size={35} color="#fff" />
+                                <p>Mercado Pago</p>
                             </button>
                         </div>
                     )}

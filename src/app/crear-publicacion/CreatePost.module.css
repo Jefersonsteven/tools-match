@@ -67,7 +67,7 @@
     }
     
     .buttons button:hover {
-        background-color: var(--black);
+        background-color: var(--green);
     }
     
     .desactived {
