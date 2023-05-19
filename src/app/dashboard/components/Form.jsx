@@ -100,6 +100,13 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
          name="admin"
          defaultValue={editingUser.admin}
        />
+       <label className={style.label} htmlFor="reports">HIDDEN:</label>
+  <input className={style.input}
+         type="text"
+         id="admin"
+         name="admin"
+         defaultValue={editingUser.admin}
+       />
   <button className={style.buttonGuardar} type="submit">Guardar</button>
   <button className={style.buttonCancelar}type="button" onClick={() => setEditingUser(null)}>
   Cancelar

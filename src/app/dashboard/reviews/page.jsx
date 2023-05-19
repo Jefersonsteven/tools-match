@@ -9,6 +9,8 @@ import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
+import { TfiPencilAlt } from "react-icons/tfi"
+
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -33,6 +35,8 @@ function Users() {
   const [records, setRecords] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+
 
 
 
@@ -111,21 +115,48 @@ function Users() {
       });
   };
 
-  const handleDeleteClick = (title, id) => {
-    Swal.fire({
-
-      title:'¿Estás seguro?',
-      text:`Estás por eliminar la reseña "${title}"`,
-      icon:'warning',
-      showCancelButton: true,
-      confirmButtonText:'Si, eliminar',
-      cancelButtonText:'Cancelar',      
-    }).then((result)=> {
-      if(result.isConfirmed) {
-        handleDeleteUser(id);
-      }
-    })
+  const handleDeleteClick = () => {
+    if (selectedItems.length > 0) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: `Estás por eliminar ${selectedItems.length} reseña(s)`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleDeleteSelected();
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'No hay reseñas seleccionadas',
+        text: 'Por favor, selecciona al menos una reseña para eliminar',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar',
+      });
+    }
   };
+
+  const handleSelectItem = (itemId) => {
+    if (selectedItems.includes(itemId)) {
+      setSelectedItems(selectedItems.filter((id) => id !== itemId));
+    } else {
+      setSelectedItems([...selectedItems, itemId]);
+    }
+  };
+
+  const handleDeleteSelected = () => {
+    selectedItems.forEach((itemId) => {
+      handleDeleteUser(itemId);
+    });
+  
+    setSelectedItems([]); // Limpiar los elementos seleccionados después de eliminarlos
+  };
+
+
+
 
 
 
@@ -141,7 +172,7 @@ function Users() {
           <thead>
             <tr>
             <th><MdVerifiedUser/></th>
-            <th>ID</th>
+            
     <th>TITULO</th>
     <th>CONTENIDO</th>
     <th>PUNTAJE</th>
@@ -156,21 +187,25 @@ function Users() {
            <tbody className={style.bodyTabla}>
             {filteredUsuarios.map((d, i) => (
               <tr className={style.namesTable} key={i}>
-                <td><FaRegUserCircle/></td>
-                <td>{d.id}</td>            
+                <td> <input
+          type="checkbox"
+          checked={selectedItems.includes(d.id)}
+          onChange={() => handleSelectItem(d.id)}
+        /></td>
+                          
                 <td>{d.title}</td>
                 <td>{d.content}</td>
                 <td>{d.rating}</td>
                 <td>{d.author.email}</td>
-                <td>{d.createdAt}</td>
-                <td>{d.updatedAt}</td>
+                <td>{d.createdAt.slice(0, 10)}</td>
+                <td>{d.updatedAt.slice(0, 10)}</td>
                 <td>{d.post.title}</td>
                 <td>{d.received.email}</td>
                 <td>
-                  <button
-                    className={style.botonDelete}
-                    onClick={() => handleDeleteClick(d.title, d.id)}
-                  >
+                <button
+  className={style.botonDelete}
+  onClick={handleDeleteClick}
+>
                     BAN
                   </button>
                 </td>

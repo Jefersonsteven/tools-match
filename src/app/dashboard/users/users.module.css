@@ -83,6 +83,11 @@
 
 }
 
+.table tr {
+    border-bottom: 1px solid black;
+
+}
+
 .namesTable{
     color: rgb(54, 54, 54);
 }
@@ -96,24 +101,19 @@
     font-weight: 600;
 }
 
+
 .contenedorTable {
-    background-color: rgba(0, 0, 0, 0.193);
     padding: 18px;
     margin-top: 0px;
     margin-right: -10px;
     border-radius: 3px;
     padding-left: 26px;
     padding-right: 0px;
-    box-shadow: 0 0 30px;
-    border: 3px solid #000803;
-    overflow: auto;
     max-height: 750px;
+    display: flex;
+    justify-content: center;
 }
 
-.bodyTabla {
-    overflow: auto !important;
-    max-height: 500px !important;
-}
 
 
 .botonEditar {
@@ -143,17 +143,10 @@
     justify-content: center;
     text-decoration: underline;
 }
-/* 
-.noUsuarios{
-   
-    color: #f80101;
-    -webkit-text-fill-color: rgb(255, 0, 0);
-    -webkit-text-stroke: 1px rgb(0, 0, 0);
-    padding: 1rem;
-    font-weight: bold;
-    text-align: center;
-    padding-left: 230px;
-    padding-right: 250px;
-    margin-left: 30px;
 
-} */
+.contenedorTable table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: inherit;
+    border-spacing: 7px;
+}
