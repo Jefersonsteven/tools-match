@@ -10,7 +10,8 @@ export const submitLogInFormData = async (
   router,
   saveInLocalStorage,
   form,
-  setForm
+  setForm,
+  setDataMessage
 ) => {
   let dbUserData = null;
   const body = {
@@ -18,6 +19,7 @@ export const submitLogInFormData = async (
     password: loginData.password,
   };
 
+  setDataMessage("Validando credenciales...");
   let responseOfValidation = await newPetition(
     "PUT",
     "/api/loginValidate",
@@ -25,6 +27,7 @@ export const submitLogInFormData = async (
   );
 
   if (!responseOfValidation.error) {
+    setDataMessage("Iniciando sesión...");
     dbUserData = await newPetition(
       "GET",
       `/api/user/${loginData.email}`,
@@ -64,11 +67,7 @@ export const submitSignUpFormData = async (registerData, router) => {
     phoneNumber: registerData.phoneNumber,
   };
 
-  let data = await newPetition(
-    "POST",
-    "/api/registerUser",
-    body
-  );
+  let data = await newPetition("POST", "/api/registerUser", body);
 
   if (data.newUser) {
     Swal.fire({

@@ -21,7 +21,7 @@
     height: 100%;
     background-color: rgb(255, 255, 255);
     z-index: 998;
-    border: 3px solid green
+    border: 3px solid #535E53
   }
   
   .modalContent {

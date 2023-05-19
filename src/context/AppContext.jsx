@@ -6,7 +6,6 @@ import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 import { newPetition } from "./assets/customFetch";
 
-
 const AppContext = createContext();
 
 function AppProvider({ children }) {
@@ -18,6 +17,8 @@ function AppProvider({ children }) {
   const [userId, setUserId] = useState(
     typeof window !== "undefined" && JSON.parse(localStorage.getItem("id"))
   );
+
+  const [userPosts, setuserPosts] = useState([]);
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -53,14 +54,16 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const [selected, setSelected] = useState({ category: '', type: '' ,order: {
-    type:'',
-    order:'',
-  },
-  title:"",
-  });//lo agrego JeanHey para filtros de cards en el back
+  const [selected, setSelected] = useState({
+    category: "",
+    type: "",
+    order: {
+      type: "",
+      order: "",
+    },
+    title: "",
+  }); //lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 
   const [countries, setCountries] = useState({
@@ -87,11 +90,13 @@ function AppProvider({ children }) {
     VE: "Venezuela",
   });
 
+  // *---------------------------------------* //
+  // * Paginated *//
+  const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
+
   return (
     <AppContext.Provider
       value={{
-        currentPage,
-        setCurrentPage,
         selected,
         setSelected,
         postDetail,
@@ -131,10 +136,13 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
-
+        currentPage,
+        setCurrentPage,
         countries,
         setCountries,
         newPetition,
+        userPosts,
+        setuserPosts,
       }}
     >
       {children}
