@@ -18,6 +18,8 @@ function AppProvider({ children }) {
     typeof window !== "undefined" && JSON.parse(localStorage.getItem("id"))
   );
 
+  const [userPosts, setuserPosts] = useState([]);
+
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
     title: "",
@@ -139,6 +141,8 @@ function AppProvider({ children }) {
         countries,
         setCountries,
         newPetition,
+        userPosts,
+        setuserPosts,
       }}
     >
       {children}

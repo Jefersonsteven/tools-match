@@ -2,30 +2,35 @@
 import Cards from "@/components/Cards/Cards";
 import FilterBar from "@/components/Filter/FilterBar";
 import Paginated from "@/components/paginated/Paginated";
-import style from "./Home.module.css";
+import styles from "./Home.module.css";
 import Image from "next/image";
+import Slider from "./Slider";
 
 function Home({ cards, currentPage, setCards, setCurrentPage }) {
   return (
-    <div className="flex flex-col mt-8 p-28 min-h-screen">
-      <div className={style.container}>
-        <div>
-          <h1 className={style.publicity}>
-            Unete a la Comunidad TOOLSMATCH <br /> !Registrate hoy mismo y
-            comienza a aprovechar todas las ventajas de nuestra Comunidad de
-            compradores y vendedores locales!
-          </h1>
+    <div>
+      {/* ---------- Banner de publicidad --------- */}
+      <div className={styles.container}>
+        <div className={styles.banner}>
+          <p className={styles.bannerTitle}>Unete a la Comunidad TOOLSMATCH</p>
+          <p className={styles.bannerSubTitle}>
+            !Registrate hoy mismo y comienza a aprovechar todas las ventajas de
+            nuestra Comunidad de compradores y vendedores locales!
+          </p>
         </div>
-        <div className={style.image}>
+        <div className={styles.image}>
           <Image
-            src="/images/image/construction.png"
+            src="/images/image/construction.jpg"
             alt="ToolsMatch"
-            width={500}
+            width={600}
             height={500}
           />
         </div>
       </div>
-      <h2 className="text-4xl font-bold text-center m-5">
+
+      <Slider />
+      {/* -----------------------------------------  */}
+      <h2 className={styles.info}>
         Renta o Compra Herramientas en Tu Comunidad
       </h2>
       <div className="container mx-auto px-4">

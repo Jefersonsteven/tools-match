@@ -1,0 +1,29 @@
+.carouselContainer {
+    max-width: 300px; /* Ajusta el ancho máximo del contenedor del carrusel */
+    margin: 0 auto; /* Centra el carrusel horizontalmente */
+  }
+  
+  .carousel {
+    width: 100%; /* Ajusta el ancho del carrusel al 100% del contenedor */
+  }
+  
+  .carousel .slider-wrapper {
+    height: 100px; /* Ajusta la altura del carrusel según tus necesidades */
+  }
+  
+  .carousel .carousel-status {
+    display: none; /* Oculta la paginación del carrusel */
+  }
+  
+  .carousel .slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .carousel .slide .carousel-image {
+    display: block;
+    margin: 0 auto; /* Centra las imágenes horizontalmente */
+    max-width: 80px; /* Ajusta el ancho máximo de las imágenes */
+    max-height: 80px; /* Ajusta la altura máxima de las imágenes */
+  }
