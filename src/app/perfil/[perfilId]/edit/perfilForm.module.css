@@ -5,6 +5,17 @@
   min-height: 75vh;
 }
 
+.editTitle {
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.045em;
+}
+
 .imageContainer {
   display: flex;
 
@@ -171,5 +182,6 @@
   justify-content: center;
   align-items: center;
   margin-top: 32px;
+  margin-bottom: 32px;
   gap: 16px;
 }
