@@ -83,7 +83,7 @@ export default function PerfilUsuario() {
 
   useEffect(() => {
     const authorIds = [
-      ...new Set(userData.received.map((review) => review.authorId)),
+      ...new Set(userData?.received.map((review) => review.authorId)),
     ];
 
     const fetchAuthors = async () => {
@@ -106,7 +106,7 @@ export default function PerfilUsuario() {
     };
 
     fetchAuthors();
-  }, [userData.received]);
+  }, [userData?.received]);
 
   return (
     <>

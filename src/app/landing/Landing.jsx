@@ -4,12 +4,10 @@ import style from "./landing.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Modal from "./modal";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/footer/Footer";
 
 export default function LandingPage() {
-  const [modalOpen, setModalOpen] = useState(false);
   const [showNavbarMenu, setShowNavbarMenu] = useState(false);
 
   const handleOpenModal = () => {
