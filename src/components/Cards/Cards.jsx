@@ -22,6 +22,7 @@ const Cards = () => {
   }, [setCards, setFilteredCards]);
 
   /* ----------PAGINATED ----------- */
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -35,6 +36,8 @@ const Cards = () => {
   const isPageEmpty = currentCards.length === 0;
 
   const totalPages = Math.ceil(setFilteredCards.length / cardsPerPage);
+
+  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
 
   /* --------------------------------- */
 
@@ -63,6 +66,7 @@ const Cards = () => {
         </div>
         {cards.length > cardsPerPage && (
           <Paginated
+            url={paginatedUrl}
             currentPage={currentPage}
             itemsPerPage={cardsPerPage}
             totalPagesProp={Math.ceil(cards.length / cardsPerPage)}
