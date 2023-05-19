@@ -5,6 +5,7 @@ import Paginated from "@/components/paginated/Paginated";
 import styles from "./Home.module.css";
 import Image from "next/image";
 import Slider from "./Slider";
+import InfiniteSlider from "@/components/InfiniteSlider/InfiniteSlider";
 
 function Home({ cards, currentPage, setCards, setCurrentPage }) {
   return (
@@ -27,8 +28,8 @@ function Home({ cards, currentPage, setCards, setCurrentPage }) {
           />
         </div>
       </div>
-
-      <Slider />
+      <InfiniteSlider />
+      {/*       <Slider /> */}
       {/* -----------------------------------------  */}
       <h2 className={styles.info}>
         Renta o Compra Herramientas en Tu Comunidad

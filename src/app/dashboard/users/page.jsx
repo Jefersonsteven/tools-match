@@ -1,11 +1,11 @@
 "use client";
 import style from "./users.module.css";
-import { useCallback } from "react";
+
 import Modal from "../components/Modal";
 import { Fragment, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
+
 import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
