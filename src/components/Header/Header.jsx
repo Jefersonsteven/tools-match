@@ -67,11 +67,11 @@ function Header() {
               height={70}
             />
           </Link>
-          {userId && userData.admin &&
+          {userId && userData.admin && (
             <Link href="/dashboard/users">
               <button>Dashboard</button>
             </Link>
-          }
+          )}
         </figure>
         <nav className={styles.nav}>
           {pathname !== "/team" ? (
@@ -124,7 +124,7 @@ function Header() {
 
                   <Link href="/cart" className={styles.cart}>
                     <FaShoppingCart size="25" color="white" />
-                    {cart.count > 0 && (
+                    {cart?.count > 0 && (
                       <span className={styles.cartCount}>{cart.count}</span>
                     )}
                   </Link>

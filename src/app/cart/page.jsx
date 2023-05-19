@@ -13,9 +13,14 @@ export default function Page() {
   const { cart, setCart, userData } = useContext(AppContext);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (!userData?.name) router.push("/form/login");
-  // }, [router, userData]);
+  useEffect(() => {
+    // if (!userData?.name) router.push("/form/login");
+    if (!cart)
+      setCart({
+        count: 0,
+        items: [],
+      });
+  }, [router, userData]);
 
   function deleteItem(id) {
     setCart({
@@ -44,12 +49,12 @@ export default function Page() {
             <div className={style.cartAmount}>
               <h3>Total:</h3>
               <h3>
-                {cart.count > 0
+                {cart?.count > 0
                   ? `$${cart.items.reduce((acc, item) => acc + item.price, 0)}`
                   : `$0`}
               </h3>
             </div>
-            {cart.count > 0 ? (
+            {cart?.count > 0 ? (
               cart.items.map((item) => (
                 <div className={style.cartItem} key={item.id}>
                   <Image
@@ -82,7 +87,7 @@ export default function Page() {
             <Link href="/home">
               <button>Seguir Comprando</button>
             </Link>
-            <Link href="/payment">
+            <Link href={cart?.count > 0 ? "/payment" : "/cart"}>
               <button>Comprar</button>
             </Link>
           </div>

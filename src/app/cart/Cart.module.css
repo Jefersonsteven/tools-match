@@ -1,6 +1,13 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+}
 .cartContainer{
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 .backContainer{
     display: flex;
@@ -8,7 +15,7 @@
     width: 100%;
     gap: 1rem;
     cursor: pointer;
-    align-items: center;
+    
 }
 .backContainer h3{
     display: flex;
@@ -16,7 +23,8 @@
     font-size: 2rem;
     font-weight: 700;
     color: var(--black-light);
-
+    align-items: center;
+    gap: 1rem;
 }
 .back{
     width: 70px;
@@ -24,7 +32,6 @@
     padding: 10px;
     background-color: var(--orange);
     border-radius: 20px;
-    margin: 50px 0px 0 50px;
 }
 .cartContainer h2{
     font-size: 3rem;

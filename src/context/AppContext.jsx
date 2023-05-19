@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
@@ -94,25 +94,27 @@ function AppProvider({ children }) {
   // * Paginated *//
   const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
 
-  // *---------------------------------------* //
+  // * Cart localStorage *//
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("cart")) {
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            count: 0,
+            items: [],
+          })
+        );
+      }
+    }
+  }, []);
+
   // * Cart *//
-  const [cart, setCart] = useState({
-    count: 2,
-    items: [
-      {
-        id: 1,
-        title: "Producto 1",
-        price: 100,
-        photo: ["/images/logo/toolM.png"],
-      },
-      {
-        id: 2,
-        title: "Producto 2",
-        price: 200,
-        photo: ["/images/image/construction.jpg"],
-      },
-    ],
-  }); //agregado por Adriana
+  const [cart, setCart] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("cart")) //agregado por Adriana y Jefferson
+  );
+
+  // *---------------------------------------* //
 
   return (
     <AppContext.Provider
@@ -173,4 +175,3 @@ function AppProvider({ children }) {
 }
 
 export { AppProvider, AppContext };
-
