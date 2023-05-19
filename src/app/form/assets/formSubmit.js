@@ -7,9 +7,10 @@ export const submitLogInFormData = async (
   setUserData,
   setUserId,
   rememberSession,
-  setRememberSession,
   router,
-  saveInLocalStorage
+  saveInLocalStorage,
+  form,
+  setForm
 ) => {
   let dbUserData = null;
   const body = {
@@ -19,20 +20,19 @@ export const submitLogInFormData = async (
 
   let responseOfValidation = await newPetition(
     "PUT",
-    "http://localhost:3000/api/loginValidate",
+    "/api/loginValidate",
     body
   );
 
   if (!responseOfValidation.error) {
     dbUserData = await newPetition(
       "GET",
-      `http://localhost:3000/api/user/${loginData.email}`,
+      `/api/user/${loginData.email}`,
       false
     );
   } else {
     throw new Error(responseOfValidation.error);
   }
-
   if (dbUserData.logged) {
     setUserData(dbUserData);
 
@@ -42,6 +42,7 @@ export const submitLogInFormData = async (
       setUserId(dbUserData.id);
     } else {
       setUserId(dbUserData.id);
+      setForm({ ...form, authorId: dbUserData.id });
     }
     customAlert(
       5000,
@@ -65,7 +66,7 @@ export const submitSignUpFormData = async (registerData, router) => {
 
   let data = await newPetition(
     "POST",
-    "http://localhost:3000/api/registerUser",
+    "/api/registerUser",
     body
   );
 
