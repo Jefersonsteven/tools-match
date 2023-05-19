@@ -33,19 +33,31 @@
   display: flex;
   justify-content: center;
   column-gap: 32px;
+  margin: 32px 40px;
 }
 
-.sectionsContainer > section {
+.sectionsContainer > section,
+.reviewContainer {
+  padding: 32px;
+  background-color: var(--white-dark);
+  border-radius: 5px;
 }
 
 .sectionsContainer > section:nth-child(1) {
-  width: 60%;
   background-color: var(--white-dark);
-  padding: 32px;
+  width: 70%;
 }
 .sectionsContainer > section:nth-child(2) {
   width: 30%;
-  padding: 32px;
+  background-color: var(--white-dark);
+}
+
+.reviewContainer {
+  margin-top: 16px;
+  margin: 32px 40px;
+
+  display: flex;
+  flex-direction: column;
   background-color: var(--white-dark);
 }
 

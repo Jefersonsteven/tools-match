@@ -77,7 +77,7 @@ export default function PerfilUsuario() {
 
   useEffect(() => {
     !userData && push("/");
-  }, [userData]);
+  }, [userData, push]);
 
   const [authors, setAuthors] = useState({});
 
@@ -106,34 +106,7 @@ export default function PerfilUsuario() {
     };
 
     fetchAuthors();
-  }, [user.received]);
-
-  useEffect(() => {
-    const authorIds = [
-      ...new Set(userData.received.map((review) => review.authorId)),
-    ];
-
-    const fetchAuthors = async () => {
-      try {
-        const responses = await Promise.all(
-          authorIds.map((authorId) =>
-            axios.get(`http://localhost:3000/api/admin/user/${authorId}`)
-          )
-        );
-
-        const fetchedAuthors = responses.reduce((authorsMap, response) => {
-          const author = response.data;
-          return { ...authorsMap, [author.id]: author };
-        }, {});
-
-        setAuthors(fetchedAuthors);
-      } catch (error) {
-        console.error("Error fetching authors:", error);
-      }
-    };
-
-    fetchAuthors();
-  }, [user.received]);
+  }, [userData.received]);
 
   return (
     <>
@@ -192,14 +165,6 @@ export default function PerfilUsuario() {
               </div>
             </div>
           </section>
-          <div className="flex gap-4">
-            <div className="w-2/3">
-              <CardsReview reviews={mockReviews} authors={mockAuthors} />
-            </div>
-            <div className="w-1/3">
-              <CardsOrders />
-            </div>
-          </div>
           <div className={styles.sectionsContainer}>
             <section>
               <h3 className={styles.sectionTitleH3}>Herramientas Publicadas</h3>
@@ -227,7 +192,16 @@ export default function PerfilUsuario() {
             </section>
             <section>
               <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
+              <div className="w-full items-center ">
+                <CardsOrders />
+              </div>
             </section>
+          </div>
+          <div className="flex gap-4">
+            <div className={styles.reviewContainer}>
+              <h3 className={styles.sectionTitleH3}>Reseñas</h3>
+              <CardsReview reviews={mockReviews} authors={mockAuthors} />
+            </div>
           </div>
         </>
       )}
