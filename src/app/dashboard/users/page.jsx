@@ -10,6 +10,7 @@ import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
+import { TfiPencilAlt } from "react-icons/tfi"
 
 /*PARA PAGINATED*/
 import Paginated from "@/components/paginated/Paginated";
@@ -21,7 +22,7 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   };
   return (
     <div className={style.searchBar}>
-      <input type="text" value={searchTerm} onChange={handleSearchTermChange} />
+      <input type="text" value={searchTerm} onChange={handleSearchTermChange} placeholder="Email"/>
       <FaSearch />
     </div>
   );
@@ -35,6 +36,9 @@ function Users() {
   const [records, setRecords] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([])
+
+
 
   const filteredUsuarios = records.filter((usuario) => {
     return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
@@ -62,6 +66,7 @@ function Users() {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
+      fetchUsers();
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -71,10 +76,10 @@ function Users() {
         confirmButtonText: "Aceptar",
       });
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    const fetchUsers = async () => {
+
+const fetchUsers = async () => {
       try {
         const response = await axios("/api/admin/user"); //PAGINATED
         const users = await response.data;
@@ -86,13 +91,15 @@ function Users() {
           setColumns(columns);
           setRecords(users);
         }
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  }
+    
 
+  useEffect(() => {
     fetchUsers();
-  }, [handleDeleteUser]);
+  }, []);
 
   // const filteredUsuarios = records.filter((usuario) => {
   //   return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
@@ -145,17 +152,31 @@ function Users() {
   const handleDeleteClick = (firstname, id) => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: `Estás por eliminar al usuario "${firstname}"`,
+      text: `Estás por eliminar ${selectedUsers.length} usuarios`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleDeleteUser(id);
+        selectedUsers.forEach((userId) => handleDeleteUser(userId));
+        setSelectedUsers([]);
       }
     });
   };
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    
+    if (checked) {
+      setSelectedUsers([...selectedUsers, name]);
+    } else {
+      setSelectedUsers(selectedUsers.filter(userId => userId !== name));
+    }
+  };
+
+   
+
 
   return (
     <div className={style.contenedorPadre}>
@@ -171,41 +192,43 @@ function Users() {
                 <th>
                   <MdVerifiedUser />
                 </th>
-                <th>ID</th>
                 <th>NOMBRE</th>
                 <th>APELLIDO</th>
                 <th>EMAIL</th>
                 <th>TELEFONO</th>
                 <th>RANGO</th>
-                <th>LOGGIN</th>
                 <th>HIDDEN</th>
-                <th>CP</th>
                 <th>REPORTES</th>
                 <th>PUBLICACIONES</th>
-                <th>RESEÑAS</th>
                 <th>ORDENES</th>
+    <th>RESEÑAS</th>
+    <th>RECIBOS</th>
+    <th>PAIS</th>
+    <th><TfiPencilAlt/></th>
               </tr>
             </thead>
 
             <tbody className={style.bodyTabla}>
               {displayedUsers.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
-                  <td>
-                    <FaRegUserCircle />
-                  </td>
-                  <td>{d.id}</td>
+                  <td><input 
+                  type="checkbox" 
+                  name={`fila${i}`} 
+                  checked={selectedUsers.includes(`fila${i}`)}
+                  onChange={handleCheckboxChange}
+                  /></td>
                   <td>{d.firstname}</td>
                   <td>{d.lastname}</td>
                   <td>{d.email}</td>
                   <td>{d.phoneNumber}</td>
                   <td>{d.admin ? "Admin" : "Usuario"}</td>
-                  <td>{d.logged ? "Conectado" : "Desconectado"}</td>
                   <td>{d.hidden ? "True" : "False"}</td>
-                  <td>{d.zipCode ? "True" : "False"}</td>
-                  <td>{d.reports}</td>
+                  <td>{d.reports.length}</td>
                   <td>{d.posts.length}</td>
-                  <td>{d.reviews.length}</td>
                   <td>{d.orders.length}</td>
+                <td>{d.reviews.length}</td>
+                <td>{d.received.length}</td>
+                <td>{d.country ? d.country : '?'}</td>
                   <td>
                     <button
                       className={style.botonEditar}
@@ -229,6 +252,15 @@ function Users() {
             <p>No hay Usuarios🚩</p>
           </div>
         )}
+        {editingUser && (
+      <Modal show={showModal} onClose={()=> setShowModal(false)}>
+  <UserForm
+  editingUser={editingUser}
+  handleSubmit={handleSubmit}
+  setEditingUser={setEditingUser}
+ />
+ </Modal>
+)}
       </div>
       {/*--------- PAGINATED ---------- */}
       {filteredUsuarios.length > 0 && (

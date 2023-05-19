@@ -13,8 +13,7 @@
   
 .input {
     padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #2b9d0d;
+    border: 1px solid #28a745;
     font-size: 14px;
   }
 
@@ -26,22 +25,46 @@
     margin-top: 10px;
     padding: 5px 10px;
     border-radius: 5px;
-    border: none;
+    border: 1px solid #ff0404;
     font-size: 14px;
     color: #fff;
     background-color: #ff0404;
     cursor: pointer;
   }
+
+  .buttonCancelar:hover {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ff0404;
+    font-size: 14px;
+    color: #ff0404;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+
   
 .buttonGuardar {
     margin-top: 10px;
     padding: 5px 10px;
     border-radius: 5px;
-    border: none;
+    border: 1px solid #28a745;
     font-size: 14px;
     color: #fff;
     cursor: pointer;
     background-color: #28a745;
+  }
+
+  .buttonGuardar:hover {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #28a745;
+    font-size: 14px;
+    color: #28a745;
+    cursor: pointer;
+    background-color: #fff;
   }
 
 

@@ -10,6 +10,8 @@ import UserForm from "../components/Form";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Paginated from "@/components/paginated/Paginated";
+import { TfiPencilAlt } from "react-icons/tfi";
+
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -17,7 +19,7 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   };
   return (
     <div className={style.searchBar}>
-      <input type="text" value={searchTerm} onChange={handleSearchTermChange} />
+      <input type="text" value={searchTerm} onChange={handleSearchTermChange} placeholder="Titulo" />
       <FaSearch />
     </div>
   );
@@ -29,6 +31,7 @@ function Posts() {
   const [records, setRecords] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([])
 
   /*----------PAGINATED----------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,6 +48,7 @@ function Posts() {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
+      fetchUsers();
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -56,26 +60,34 @@ function Posts() {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios("/api/admin/post");
-        const users = await response.data;
 
-        if (users.length > 0) {
-          const columns = Object.keys(users[0]).map((column) =>
-            column.toUpperCase()
-          );
-          setColumns(columns);
-          setRecords(users);
-        }
-      } catch (error) {
-        console.error("Error fetching users:", error);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios("/api/admin/post");
+      const users = await response.data;
+
+      if (users.length > 0) {
+        const columns = Object.keys(users[0]).map((column) =>
+          column.toUpperCase()
+        );
+        setColumns(columns);
+        setRecords(users);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
+
+
+  useEffect(() => {
     fetchUsers();
-  }, [handleDeleteUser]);
+  }, []);
+
+
+
+
 
   const filteredUsuarios = records.filter((usuario) => {
     return usuario.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -111,16 +123,28 @@ function Posts() {
   const handleDeleteClick = (firstname, id) => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: `Estás por eliminar al usuario "${firstname}"`,
+      text: `Estás por eliminar ${selectedUsers.length} publicaciones`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Si, eliminar",
+      confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleDeleteUser(id);
+        selectedUsers.forEach((userId) => handleDeleteUser(userId));
+        setSelectedUsers([]);
       }
     });
+  };
+    
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    
+    if (checked) {
+      setSelectedUsers([...selectedUsers, name]);
+    } else {
+      setSelectedUsers(selectedUsers.filter(userId => userId !== name));
+    }
   };
 
   /* ----------PAGINATED ----------- */
@@ -150,7 +174,7 @@ function Posts() {
                 <th>
                   <MdVerifiedUser />
                 </th>
-                <th>ID</th>
+                
                 <th>TITULO</th>
                 <th>CATEGORIA</th>
                 <th>CONTENIDO</th>
@@ -159,24 +183,34 @@ function Posts() {
                 <th>AUTOR</th>
                 <th>CREADA</th>
                 <th>MODIFICADA</th>
+                <th><TfiPencilAlt/></th>
               </tr>
             </thead>
             <tbody className={style.bodyTabla}>
               {currentPublications.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
                   <td>
-                    <FaToolbox />
+                  <input 
+                  type="checkbox" 
+                  name={`fila${i}`} 
+                  checked={selectedUsers.includes(`fila${i}`)}
+                  onChange={handleCheckboxChange}
+                  />
                   </td>
-                  <td>{d.id}</td>
+                  
                   <td>{d.title}</td>
                   <td>{d.category}</td>
                   <td>{d.content}</td>
                   <td>{d.price}</td>
                   <td>{d.type}</td>
-                  <td>{d.authorId}</td>
-                  <td>{d.createdAt}</td>
-                  <td>{d.updatedAt}</td>
+                  <td>{d.author.email}</td>
+                  <td>{d.createdAt.slice(0, 10)}</td>
+                  <td>{d.updatedAt.slice(0, 10)}</td>
                   <td>
+                     <button
+                  className={style.botonEditar}
+                    onClick={()=> handleClick(d.id)}>EDITAR
+                    </button>
                     <button
                       className={style.botonDelete}
                       onClick={() => handleDeleteClick(d.firstname, d.id)}
@@ -193,6 +227,16 @@ function Posts() {
             <p>No hay Publicaciones🚩</p>
           </div>
         )}
+         {editingUser && (
+      <Modal show={showModal} onClose={()=> setShowModal(false)}>
+  <UserForm
+  editingUser={editingUser}
+  handleSubmit={handleSubmit}
+  setEditingUser={setEditingUser}
+ />
+ </Modal>
+)}
+
       </div>
       {/* ---------- PAGINATED ---------- */}
 
