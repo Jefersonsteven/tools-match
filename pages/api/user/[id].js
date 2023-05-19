@@ -19,7 +19,8 @@ export default async function handler(req, res) {
     });
     res.status(200).json(user);
   } else if (req.method === "PUT") {
-    const { firstname, lastname, phoneNumber, country, zipCode } = req.body;
+    const { firstname, lastname, phoneNumber, zipCode, country, photo } =
+      req.body;
     let { password } = req.body;
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
@@ -36,6 +37,8 @@ export default async function handler(req, res) {
           phoneNumber,
           country,
           zipCode,
+          country,
+          photo,
         },
       });
       res.status(200).json(user);

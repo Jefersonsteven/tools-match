@@ -1,15 +1,18 @@
-"use client";
 import Card from "./Card";
 import { AppContext } from "@/context/AppContext";
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import Paginated from "../paginated/Paginated";
-
+import { App } from "antd";
 
 const Cards = () => {
-  const { cards, setCards, setFilteredCards } = useContext(AppContext);
-  const [currentPage, setCurrentPage] = useState(1);
+  const { cards, setCards, setFilteredCards, currentPage, setCurrentPage } =
+    useContext(AppContext);
+
+  /*----------PAGINATED----------*/
+
   const cardsPerPage = 8;
+  /*-------------------------------*/
 
   useEffect(() => {
     axios.get(`/api/admin/post`).then((res) => {
@@ -18,17 +21,28 @@ const Cards = () => {
     });
   }, [setCards, setFilteredCards]);
 
-  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
+  /* ----------PAGINATED ----------- */
 
-  const startIndex = (currentPage - 1) * cardsPerPage;
-  const endIndex = startIndex + cardsPerPage;
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentCards = Array.isArray(cards)
-    ? cards.slice(startIndex, endIndex)
+    ? cards.slice(indexOfFirstCard, indexOfLastCard)
     : [];
 
   const isPageEmpty = currentCards.length === 0;
 
+  const totalPages = Math.ceil(setFilteredCards.length / cardsPerPage);
+
+  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
+
+  /* --------------------------------- */
+
   return (
+    <AppProvider>
       <div className="p-4 px-2">
         <div className="grid grid-cols-4 gap-9">
           {currentCards.map((tool) => (
@@ -42,18 +56,27 @@ const Cards = () => {
               />
             </div>
           ))}
+
+          {/* ----------- PAGINATED ---------- */}
           {isPageEmpty && (
             <p className="text-center mt-4">
               No hay publicaciones disponibles.
             </p>
           )}
         </div>
-        <Paginated
-          url={paginatedUrl}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        {cards.length > cardsPerPage && (
+          <Paginated
+            url={paginatedUrl}
+            currentPage={currentPage}
+            itemsPerPage={cardsPerPage}
+            totalPagesProp={Math.ceil(cards.length / cardsPerPage)}
+            onPageChange={handlePageChange}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
+        {/* --------------------------------- */}
       </div>
+    </AppProvider>
   );
 };
 

@@ -1,0 +1,187 @@
+.section {
+  display: flex;
+  width: 100%;
+  margin-top: 61px;
+  min-height: 75vh;
+}
+
+.editTitle {
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.045em;
+}
+
+.imageContainer {
+  display: flex;
+
+  justify-content: center;
+  align-items: start;
+  margin-left: 16px;
+  width: 20%;
+}
+
+.formContainer {
+  width: 50%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+}
+
+.image {
+  width: 254px;
+  height: 254px;
+  background-color: var(--black-light);
+  border-radius: 20px;
+}
+
+.editUserDatForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 15px;
+  width: 534px;
+}
+
+.editUserDatForm p {
+  text-align: center;
+}
+
+.buttonSubmit,
+.buttonCancel {
+  width: 253px;
+  height: 66px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  background: #131713;
+  border-radius: 58px;
+  transition: all 0.3s ease-in-out;
+}
+
+.buttonSubmit:disabled,
+.buttonCancel:disabled {
+  background-color: var(--black-light);
+  color: var(--white);
+}
+
+.buttonCancel:disabled:hover,
+.buttonSubmit:disabled:hover {
+  background-color: var(--black-light);
+  border-color: var(--black-light);
+}
+
+.buttonSubmit:hover,
+.buttonCancel:hover,
+.changePwdButton:hover {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
+.inputsContainer {
+  display: flex;
+  column-gap: 40px;
+  justify-content: space-between;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 534px;
+  margin-bottom: 49px;
+}
+
+.inputContainer input {
+  width: 100%;
+  height: 55px;
+  padding: 16px;
+}
+
+.inputContainer input:disabled {
+  background-color: var(--black-light);
+}
+
+.inputContainer label,
+.selectContainer label {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+  color: #131713;
+}
+.selectContainer select {
+  width: 100%;
+  height: 55px;
+  padding: 16px;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.selectContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 534px;
+}
+
+.IoCaretBack {
+  color: var(--white);
+  background-color: var(--green);
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  margin-top: 32px;
+  margin-left: 32px;
+}
+
+.changePwdButton {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  background: #131713;
+  border-radius: 58px;
+  width: 253px;
+  height: 66px;
+  color: var(--white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease-in-out;
+}
+
+.changePwdButton:hover {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
+.containers {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  gap: 16px;
+}

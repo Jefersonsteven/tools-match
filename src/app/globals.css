@@ -7,12 +7,12 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   --black: #131713;
-  --white: #DCF1D9;
-  --orange: #F0960E;
-  --white-dark: #BDCFBA;
-  --black-light: #535E53;
-  --green: #21BF60;
-  --red: #EF3A3A;
+  --white: #dcf1d9;
+  --orange: #f0960e;
+  --white-dark: #bdcfba;
+  --black-light: #535e53;
+  --green: #21bf60;
+  --red: #ef3a3a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,6 +47,26 @@ html {
   font-size: 62.5%;
 }
 
+button {
+  padding: 15px 30px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--black);
+  color: var(--white);
+  padding: 15px 30px;
+  height: 49px;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--white);
+  color: var(--black);
+  border: 1px solid var(--black);
+  cursor: pointer;
+}
+
 body {
   width: 100%;
   height: 100%;
@@ -56,6 +76,6 @@ body {
   background: var(--white);
   position: relative;
 }
-ul li{
+ul li {
   list-style: none;
 }

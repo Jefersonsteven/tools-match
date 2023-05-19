@@ -4,6 +4,7 @@ import { createContext, useState } from "react";
 import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
+import { newPetition } from "./assets/customFetch";
 
 const AppContext = createContext();
 
@@ -16,6 +17,8 @@ function AppProvider({ children }) {
   const [userId, setUserId] = useState(
     typeof window !== "undefined" && JSON.parse(localStorage.getItem("id"))
   );
+
+  const [userPosts, setuserPosts] = useState([]);
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -45,7 +48,6 @@ function AppProvider({ children }) {
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
-
   const [title, setTitle] = useState("");
   const [cards, setCards] = useState([]);
   const [selectedType, setSelectedType] = useState("");
@@ -60,7 +62,37 @@ function AppProvider({ children }) {
       type: "",
       order: "",
     },
+    title: "",
   }); //lo agrego JeanHey para filtros de cards en el back
+  // * Data de países *//
+
+  const [countries, setCountries] = useState({
+    null: "---",
+    AR: "Argentina",
+    BO: "Bolivia",
+    BR: "Brasil",
+    CL: "Chile",
+    CO: "Colombia",
+    CR: "Costa Rica",
+    CU: "Cuba",
+    EC: "Ecuador",
+    SV: "El Salvador",
+    GT: "Guatemala",
+    HT: "Haití",
+    HN: "Honduras",
+    MX: "México",
+    NI: "Nicaragua",
+    PA: "Panamá",
+    PY: "Paraguay",
+    PE: "Perú",
+    DO: "República Dominicana",
+    UY: "Uruguay",
+    VE: "Venezuela",
+  });
+
+  // *---------------------------------------* //
+  // * Paginated *//
+  const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
 
   return (
     <AppContext.Provider
@@ -104,6 +136,13 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
+        currentPage,
+        setCurrentPage,
+        countries,
+        setCountries,
+        newPetition,
+        userPosts,
+        setuserPosts,
       }}
     >
       {children}

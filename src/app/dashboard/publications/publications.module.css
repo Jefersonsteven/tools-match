@@ -83,12 +83,17 @@
 
 }
 
+.table tr {
+    border-bottom: 1px solid black;
+
+}
+
 .namesTable{
     color: rgb(54, 54, 54);
 }
 
 .namesTable td {
-    padding-right: 20px;
+    padding-right: 0px;
     padding-top: 7px;
     padding-bottom: 7px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.16);
@@ -96,24 +101,20 @@
     font-weight: 600;
 }
 
+
 .contenedorTable {
-    background-color: rgba(0, 0, 0, 0.193);
+    display: flex;
+    justify-content: center;
+
     padding: 18px;
     margin-top: 0px;
     margin-right: -10px;
     border-radius: 3px;
-    padding-left: 60px;
+    padding-left: 26px;
     padding-right: 0px;
-    box-shadow: 0 0 30px;
-    border: 3px solid #000803;
-    overflow: auto;
-    max-height: 700px;
+    max-height: 750px;
 }
 
-.bodyTabla {
-    overflow: auto !important;
-    max-height: 500px !important;
-}
 
 
 .botonEditar {
@@ -133,9 +134,20 @@
     color: white
 }
 
+.swal2-title {
+    font-size: large;
+}
+
 .noUsuarios {
     color: black;
     display: flex;
     justify-content: center;
     text-decoration: underline;
+}
+
+.contenedorTable table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: inherit;
+    border-spacing: 7px;
 }

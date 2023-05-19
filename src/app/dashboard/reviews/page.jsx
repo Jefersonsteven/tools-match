@@ -1,5 +1,5 @@
 "use client";
-import style from "./payments.module.css";
+import style from "./reviews.module.css";
 import Modal from "../components/Modal";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -8,6 +8,9 @@ import { FaRegUserCircle } from "react-icons/fa";
 import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { icons } from "react-icons";
+import { TfiPencilAlt } from "react-icons/tfi";
+
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -15,7 +18,12 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   };
   return (
     <div className={style.searchBar}>
-      <input type="text" value={searchTerm} onChange={handleSearchTermChange} />
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchTermChange}
+        placeholder="Titulo"
+      />
       <FaSearch />
     </div>
   );
@@ -27,26 +35,29 @@ function Users() {
   const [records, setRecords] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+
 
   const handleDeleteUser = async (id) => {
     try {
-      const userDelete = await axios.delete(`/api/admin/user/${id}`);
+      const userDelete = await axios.delete(`/api/admin/review/${id}`);
       console.log(userDelete.data);
       Swal.fire({
-        title: "Usuario eliminado",
-        text: "El usuario ha sido eliminado exitosamente",
-        icon: "success",
-        confirmButtonText: "Aceptar",
+        title: 'Reseña eliminada',
+        text: 'La reseña ha sido eliminada exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
       });
       fetchUsers();
     } catch (error) {
       console.error(error);
       Swal.fire({
-        title: "Error al Eliminar el Usuario",
-        text: "Ha ocurrido un error al eliminar el usuario, porfavor intenta de nuevo",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
+        title: 'Error al Eliminar la reseña',
+        text: 'Ha ocurrido un error al eliminar la reseña, porfavor intenta de nuevo',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+      })
+
     }
   };
 
@@ -72,7 +83,7 @@ function Users() {
   }, []);
 
   const filteredUsuarios = records.filter((usuario) => {
-    return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
+    return usuario.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   const handleClick = (userId) => {
@@ -102,25 +113,55 @@ function Users() {
       });
   };
 
-  const handleDeleteClick = (firstname, id) => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: `Estás por eliminar al usuario "${firstname}"`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Si, eliminar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleDeleteUser(id);
-      }
-    });
+  const handleDeleteClick = () => {
+    if (selectedItems.length > 0) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: `Estás por eliminar ${selectedItems.length} reseña(s)`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleDeleteSelected();
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'No hay reseñas seleccionadas',
+        text: 'Por favor, selecciona al menos una reseña para eliminar',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar',
+      });
+    }
   };
+
+  const handleSelectItem = (itemId) => {
+    if (selectedItems.includes(itemId)) {
+      setSelectedItems(selectedItems.filter((id) => id !== itemId));
+    } else {
+      setSelectedItems([...selectedItems, itemId]);
+    }
+  };
+
+  const handleDeleteSelected = () => {
+    selectedItems.forEach((itemId) => {
+      handleDeleteUser(itemId);
+    });
+
+    setSelectedItems([]); // Limpiar los elementos seleccionados después de eliminarlos
+  };
+
+
+
+
+
 
   return (
     <div className={style.contenedorPadre}>
       <div className={style.searchbarContainer}>
-        <h2>Administracion de Pagos</h2>
+        <h2>Reseñas de los usuarios</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
       <div className={style.contenedorTable}>
@@ -128,50 +169,53 @@ function Users() {
           <table className={style.table}>
             <thead>
               <tr>
-                <th>
-                  <MdVerifiedUser />
-                </th>
-                <th>NOMBRE</th>
-                <th>APELLIDO</th>
-                <th>EMAIL</th>
-                <th>TELEFONO</th>
-                <th>REPORTS</th>
+                <th><MdVerifiedUser /></th>
+
+                <th>TITULO</th>
+                <th>CONTENIDO</th>
+                <th>PUNTAJE</th>
+                <th>USUARIO</th>
+                <th>CREADA</th>
+                <th>MODIFICADA</th>
+                <th>PUBLICACION</th>
+                <th>AUTOR PUBLICACION</th>
               </tr>
             </thead>
 
             <tbody className={style.bodyTabla}>
               {filteredUsuarios.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
+                  <td> <input
+                    type="checkbox"
+                    checked={selectedItems.includes(d.id)}
+                    onChange={() => handleSelectItem(d.id)}
+                  /></td>
+
+                  <td>{d.title}</td>
+                  <td>{d.content}</td>
+                  <td>{d.rating}</td>
+                  <td>{d.author.email}</td>
+                  <td>{d.createdAt.slice(0, 10)}</td>
+                  <td>{d.updatedAt.slice(0, 10)}</td>
+                  <td>{d.post.title}</td>
+                  <td>{d.received.email}</td>
                   <td>
-                    <FaRegUserCircle />
-                  </td>
-                  <td>{d.firstname}</td>
-                  <td>{d.lastname}</td>
-                  <td>{d.email}</td>
-                  <td>{d.phoneNumber}</td>
-                  <td>{d.reports}</td>
-                  <td>
-                    <button
-                      className={style.botonEditar}
-                      onClick={() => handleClick(d.id)}
-                    >
-                      EDITAR
-                    </button>
                     <button
                       className={style.botonDelete}
-                      onClick={() => handleDeleteClick(d.firstname, d.id)}
+                      onClick={handleDeleteClick}
                     >
                       BAN
                     </button>
                   </td>
                 </tr>
               ))}
+
+
+
             </tbody>
           </table>
         ) : (
-          <div className={style.noUsuarios}>
-            <p>No hay Pagos</p>
-          </div>
+          <div className={style.noUsuarios}><p>No hay reseñas🚩</p></div>
         )}
         {editingUser && (
           <Modal show={showModal} onClose={() => setShowModal(false)}>
@@ -182,8 +226,9 @@ function Users() {
             />
           </Modal>
         )}
-      </div>
-    </div>
+
+      </div >
+    </div >
   );
 }
 
