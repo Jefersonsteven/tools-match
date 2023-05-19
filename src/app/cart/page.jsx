@@ -3,7 +3,7 @@
 import { useState, useContext } from "react";
 import Modal from "react-modal";
 import { AppContext } from "@/context/AppContext";
-import styles from "./cart.module.css";
+import styles from "./Cart.module.css";
 import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
 
