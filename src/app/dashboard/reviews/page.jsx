@@ -9,7 +9,7 @@ import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
-import { TfiPencilAlt } from "react-icons/tfi"
+import { TfiPencilAlt } from "react-icons/tfi";
 
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
@@ -42,14 +42,15 @@ function Users() {
 
   const handleDeleteUser = async (id) => {
     try {
-      const userDelete = await axios.delete(`http://localhost:3000/api/admin/review/${id}`);
+      const userDelete = await axios.delete(`/api/admin/review/${id}`);
         console.log(userDelete.data);
         Swal.fire({
           title:'Reseña eliminada',
           text: 'La reseña ha sido eliminada exitosamente',
           icon: 'success',
           confirmButtonText: 'Aceptar'
-        });  
+        });
+        fetchUsers(); 
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -62,26 +63,25 @@ function Users() {
     }
   };
   
+  const fetchUsers = async () => {
+    try {
+      const response = await axios('/api/admin/review');
+      const users = await response.data;
+
+      if (users.length > 0) {
+        const columns = Object.keys(users[0]).map((column) => column.toUpperCase());
+        setColumns(columns);
+        setRecords(users);
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios('http://localhost:3000/api/admin/review');
-        const users = await response.data;
-  
-        if (users.length > 0) {
-          const columns = Object.keys(users[0]).map((column) => column.toUpperCase());
-          setColumns(columns);
-          setRecords(users);
-        }
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-  
     fetchUsers();
-  }, [handleDeleteUser]);
+  }, []);
 
 
   const filteredUsuarios = records.filter((usuario) => {
@@ -105,7 +105,7 @@ function Users() {
       phoneNumber: formData.get('phonenumber'),
       reports: formData.get('reports'),
     };
-    axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser)
+    axios.put(`/api/admin/user/${editingUser.id}`, updatedUser)
       .then((response) => {
         console.log(response.data);
         setEditingUser(null);

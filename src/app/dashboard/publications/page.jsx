@@ -32,7 +32,6 @@ function Posts() {
   const [showModal, setShowModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([])
 
-
   /*----------PAGINATED----------*/
   const [currentPage, setCurrentPage] = useState(1);
   const publicationsPerPage = 8;
@@ -41,7 +40,7 @@ function Posts() {
   const handleDeleteUser = async (id) => {
     try {
       const userDelete = await axios.delete(
-        `http://localhost:3000/api/admin/post/${id}`
+        `/api/admin/post/${id}`
       );
       console.log(userDelete.data);
       Swal.fire({
@@ -50,6 +49,7 @@ function Posts() {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
+      fetchUsers();
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -61,26 +61,34 @@ function Posts() {
     }
   };
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios("/api/admin/post");
-        const users = await response.data;
 
-        if (users.length > 0) {
-          const columns = Object.keys(users[0]).map((column) =>
-            column.toUpperCase()
-          );
-          setColumns(columns);
-          setRecords(users);
-        }
-      } catch (error) {
-        console.error("Error fetching users:", error);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios("/api/admin/post");
+      const users = await response.data;
+
+      if (users.length > 0) {
+        const columns = Object.keys(users[0]).map((column) =>
+          column.toUpperCase()
+        );
+        setColumns(columns);
+        setRecords(users);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
+
+
+  useEffect(() => {
     fetchUsers();
-  }, [handleDeleteUser]);
+  }, []);
+
+
+
+
 
   const filteredUsuarios = records.filter((usuario) => {
     return usuario.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -139,11 +147,6 @@ function Posts() {
       setSelectedUsers(selectedUsers.filter(userId => userId !== name));
     }
   };
-
-
-
-
-
 
   /* ----------PAGINATED ----------- */
   const handlePageChange = (pageNumber) => {

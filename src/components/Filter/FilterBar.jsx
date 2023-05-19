@@ -4,48 +4,24 @@ import SearchBar from '../SearchBar/SearchBar';
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useState, useContext } from 'react';
 import { FaFilter, FaSort } from 'react-icons/fa';
+import { fetchCards } from './UseFetchCard';
+
 
 export default function FilterBar() {
-  const { cards, setCards, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy, selected, setSelected } = useContext(AppContext);
+  const { setCards, title, setTitle,selected, setSelected } = useContext(AppContext);
 
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   
   const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
-    const response = await fetch(`http://localhost:3000/api/filter/${newTitle}`);
+    const response = await fetch(`/api/filters/title/${newTitle}`);
     const data = await response.json();
     setCards(data || []);
   };
+  
   useEffect(() => {
-    const getCategoryParam = () => selected.category ? `category=${selected.category}` : '';
-    const getTypeParam = () => selected.type ? `type=${selected.type}` : '';
-
-    const fetchCards = async () => {
-      const categoryParam = getCategoryParam();
-      const typeParam = getTypeParam();
-      const orderParam = selected.order ? `order=${selected.order.order}&` : '';
-
-      const response = await fetch(`http://localhost:3000/api/filter?${categoryParam}&${typeParam}`);
-      const data = await response.json();
-      let cards = data ||  [];
-
-      if (selected.order?.type === 'price') {
-        const orderResponse = await fetch(`http://localhost:3000/api/orderPrice?${orderParam}${typeParam}&${categoryParam}`);
-        const orderData = await orderResponse.json();
-        cards = orderData || [];
-      }
-
-      if (selected.order?.type === 'alpha') {
-        const orderResponse = await fetch(`http://localhost:3000/api/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}`);
-        const orderData = await orderResponse.json();
-        cards = orderData || [];
-      }
-
-      setCards(cards);
-    };
-
-    fetchCards();
+    fetchCards(selected, setCards);
   }, [selected]);
 
   const handleCategoryChange = (event) => {
@@ -108,7 +84,11 @@ export default function FilterBar() {
               <div className="absolute bg-white shadow mt-1 top-12 left-0">
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('')}
+                  onClick={() => setSelected({ ...selected, order: {
+                    ...selected.order,
+                    type: "",
+                    order: ""
+                  } })}
                 >
                   Default
                 </button>
@@ -154,13 +134,21 @@ export default function FilterBar() {
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('ratingAsc')}
+                  onClick={() => setSelected({ ...selected, order: {
+                    ...selected.order,
+                    type: "rating",
+                    order: "asc"
+                  }})}
                 >
                   Rating (Asc)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('ratingDesc')}
+                  onClick={() => setSelected({ ...selected, order: {
+                    ...selected.order,
+                    type: "rating",
+                    order: "desc"
+                  }})}
                 >
                   Rating (Des)
                 </button>

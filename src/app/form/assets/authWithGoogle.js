@@ -47,7 +47,7 @@ export const getDataFromDB = async (
 
   dbUserData = await newPetition(
     "GET",
-    `http://localhost:3000/api/user/${userDataProvider.email}`,
+    `/api/user/${userDataProvider.email}`,
     false
   );
 
@@ -79,27 +79,31 @@ export const createNewUserOrLogIn = async (
   userDataProvider,
   setUserData,
   setUserId,
-  router
+  router,
+  setDataMessage
 ) => {
   let dbUserData = null;
   let password = generatePassword();
+
+  console.log(setDataMessage);
+  setDataMessage("Iniciando sesión...");
 
   const body = {
     ...userDataProvider,
     password,
   };
-
   dbUserData = await newPetition(
     "GET",
-    `http://localhost:3000/api/user/${userDataProvider.email}`,
+    `/api/user/${userDataProvider.email}`,
     false
   );
 
   if (!dbUserData) {
+    setDataMessage("Creando cuenta en toolmatch...");
     await newPetition("POST", "http://localhost:3000/api/user", body);
     dbUserData = await newPetition(
       "GET",
-      `http://localhost:3000/api/user/${userDataProvider.email}`,
+      `/api/user/${userDataProvider.email}`,
       false
     );
   }
@@ -115,5 +119,4 @@ export const createNewUserOrLogIn = async (
     "success",
     `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`
   );
-  push("/");
 };

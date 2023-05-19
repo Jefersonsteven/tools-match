@@ -61,6 +61,7 @@ function Users() {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
+      fetchUsers();
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -71,26 +72,31 @@ function Users() {
       });
     }
   };
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios("/api/admin/user"); //PAGINATED
-        const users = await response.data;
 
-        if (users.length > 0) {
-          const columns = Object.keys(users[0]).map((column) =>
-            column.toUpperCase()
-          );
-          setColumns(columns);
-          setRecords(users);
-        }
-      } catch (error) {
-        console.error("Error fetching users:", error);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios("/api/admin/user"); //PAGINATED
+      const users = await response.data;
+
+      if (users.length > 0) {
+        const columns = Object.keys(users[0]).map((column) =>
+          column.toUpperCase()
+        );
+        setColumns(columns);
+        setRecords(users);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
+
+
+
+  useEffect(() => {
     fetchUsers();
-  }, [handleDeleteUser]);
+  }, []);
 
   // const filteredUsuarios = records.filter((usuario) => {
   //   return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
