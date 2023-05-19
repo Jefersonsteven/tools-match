@@ -6,7 +6,6 @@ import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 import { newPetition } from "./assets/customFetch";
 
-
 const AppContext = createContext();
 
 function AppProvider({ children }) {
@@ -18,6 +17,8 @@ function AppProvider({ children }) {
   const [userId, setUserId] = useState(
     typeof window !== "undefined" && JSON.parse(localStorage.getItem("id"))
   );
+
+  const [userPosts, setuserPosts] = useState([]);
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -55,12 +56,15 @@ function AppProvider({ children }) {
   const [filter, setFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [selected, setSelected] = useState({ category: '', type: '' ,order: {
-    type:'',
-    order:'',
-  },
-  title:"",
-  });//lo agrego JeanHey para filtros de cards en el back
+  const [selected, setSelected] = useState({
+    category: "",
+    type: "",
+    order: {
+      type: "",
+      order: "",
+    },
+    title: "",
+  }); //lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 
   const [countries, setCountries] = useState({
@@ -135,6 +139,8 @@ function AppProvider({ children }) {
         countries,
         setCountries,
         newPetition,
+        userPosts,
+        setuserPosts,
       }}
     >
       {children}

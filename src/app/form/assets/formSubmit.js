@@ -64,11 +64,7 @@ export const submitSignUpFormData = async (registerData, router) => {
     phoneNumber: registerData.phoneNumber,
   };
 
-  let data = await newPetition(
-    "POST",
-    "/api/registerUser",
-    body
-  );
+  let data = await newPetition("POST", "/api/registerUser", body);
 
   if (data.newUser) {
     Swal.fire({

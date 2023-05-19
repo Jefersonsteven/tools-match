@@ -24,7 +24,8 @@ import Loader from "@/components/Loader/Loader";
 
 export default function Login() {
   const router = useRouter();
-  const { setUserData, setUserId, saveInLocalStorage, form, setForm } = useContext(AppContext);
+  const { setUserData, setUserId, saveInLocalStorage, form, setForm } =
+    useContext(AppContext);
   const [rememberSession, setRememberSession] = useState(false);
   const [fetchingData, setFetchingData] = useState(false);
   const [fetchingAuth, setFetchingAuth] = useState(false);
@@ -129,13 +130,7 @@ export default function Login() {
         </label>
       </div>
       <div className={styles.submitContainer}>
-        <button
-          className={`${styles.buttonSubmit} ${
-            errors.flag && styles.buttonSubmitDisabled
-          }`}
-          type="submit"
-          disabled={errors.flag ? true : fetchingData ? true : false}
-        >
+        <button disabled={errors.flag ? true : fetchingData ? true : false}>
           {fetchingData ? <Loader /> : "Iniciar sesión"}
         </button>
         <span>|</span>
