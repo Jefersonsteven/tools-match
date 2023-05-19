@@ -23,6 +23,7 @@ function Header() {
     userId,
     removeFromLocalStorage,
     endSession,
+    cart,
   } = useContext(AppContext);
 
   const [submenu, setSubmenu] = useState(false);
@@ -66,11 +67,11 @@ function Header() {
               height={70}
             />
           </Link>
-          {userId && userData.admin &&
+          {userId && userData.admin && (
             <Link href="/dashboard/users">
               <button>Dashboard</button>
             </Link>
-          }
+          )}
         </figure>
         <nav className={styles.nav}>
           {pathname !== "/team" ? (
@@ -99,6 +100,7 @@ function Header() {
                 <div className={styles.nav}>
                   <div className={styles.perfil}>
                     <FaUserCircle
+                      size={25}
                       onClick={() => setSubmenu((state) => !state)}
                       color="white"
                     />
@@ -120,8 +122,11 @@ function Header() {
                     </ul>
                   </div>
 
-                  <Link href="/cart">
-                    <FaShoppingCart color="white" />
+                  <Link href="/cart" className={styles.cart}>
+                    <FaShoppingCart size="25" color="white" />
+                    {cart?.count > 0 && (
+                      <span className={styles.cartCount}>{cart.count}</span>
+                    )}
                   </Link>
                 </div>
               )}

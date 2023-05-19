@@ -13,8 +13,8 @@ function PostDetail({}) {
   const { postDetail, setPostDetail, userId } = useContext(AppContext);
   const pd = postDetail;
 
-  function addCart(){
-    return true
+  function addCart() {
+    return true;
   }
 
   const pd2 = {
@@ -118,8 +118,7 @@ function PostDetail({}) {
             <section className={styles.section_button}>
               {userId === pd.author.id && <button>Eliminar</button>}
               {userId !== pd.author.id && pd.type === "SALE" && (
-                <Link 
-                href={ addCart() && "/cart"}>
+                <Link href={addCart() && "/cart"}>
                   <button>Comprar</button>
                 </Link>
               )}
