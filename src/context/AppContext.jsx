@@ -57,8 +57,10 @@ function AppProvider({ children }) {
 
   const [selected, setSelected] = useState({ category: '', type: '' ,order: {
     type:'',
-    order:''
-  }});//lo agrego JeanHey para filtros de cards en el back
+    order:'',
+  },
+  title:"",
+  });//lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 
   const [countries, setCountries] = useState({

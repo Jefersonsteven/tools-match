@@ -26,7 +26,7 @@ export const fetchCards = async (selected, setCards) => {
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
-  if(selected.category=="" && selected.type=="" && selected.order.type=="" && selected.order.order=="") {
+  if(selected.category=="" && selected.type=="" && selected.order.type=="" && selected.order.order=="" && !selected.title) {
     const orderResponse = await fetch(`/api/admin/post`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
