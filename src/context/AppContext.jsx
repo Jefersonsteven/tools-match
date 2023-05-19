@@ -4,6 +4,8 @@ import { createContext, useState } from "react";
 import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
+import { newPetition } from "./assets/customFetch";
+
 
 const AppContext = createContext();
 
@@ -45,26 +47,51 @@ function AppProvider({ children }) {
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
-
   const [title, setTitle] = useState("");
   const [cards, setCards] = useState([]);
   const [selectedType, setSelectedType] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const [selected, setSelected] = useState({
-    category: "",
-    type: "",
-    order: {
-      type: "",
-      order: "",
-    },
-  }); //lo agrego JeanHey para filtros de cards en el back
+  const [selected, setSelected] = useState({ category: '', type: '' ,order: {
+    type:'',
+    order:'',
+  },
+  title:"",
+  });//lo agrego JeanHey para filtros de cards en el back
+  // * Data de países *//
+
+  const [countries, setCountries] = useState({
+    null: "---",
+    AR: "Argentina",
+    BO: "Bolivia",
+    BR: "Brasil",
+    CL: "Chile",
+    CO: "Colombia",
+    CR: "Costa Rica",
+    CU: "Cuba",
+    EC: "Ecuador",
+    SV: "El Salvador",
+    GT: "Guatemala",
+    HT: "Haití",
+    HN: "Honduras",
+    MX: "México",
+    NI: "Nicaragua",
+    PA: "Panamá",
+    PY: "Paraguay",
+    PE: "Perú",
+    DO: "República Dominicana",
+    UY: "Uruguay",
+    VE: "Venezuela",
+  });
 
   return (
     <AppContext.Provider
       value={{
+        currentPage,
+        setCurrentPage,
         selected,
         setSelected,
         postDetail,
@@ -104,6 +131,10 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
+
+        countries,
+        setCountries,
+        newPetition,
       }}
     >
       {children}
