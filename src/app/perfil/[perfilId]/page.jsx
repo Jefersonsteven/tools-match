@@ -83,13 +83,13 @@ export default function PerfilUsuario() {
 
   useEffect(() => {
     const authorIds = [
-      ...new Set(userData.received.map((review) => review.authorId)),
+      ...new Set(userData?.received.map((review) => review.authorId)),
     ];
 
     const fetchAuthors = async () => {
       try {
         const responses = await Promise.all(
-          authorIds.map((authorId) =>
+          authorIds?.map((authorId) =>
             axios.get(`http://localhost:3000/api/admin/user/${authorId}`)
           )
         );
@@ -106,7 +106,7 @@ export default function PerfilUsuario() {
     };
 
     fetchAuthors();
-  }, [userData.received]);
+  }, [userData?.received]);
 
   return (
     <>
@@ -199,7 +199,9 @@ export default function PerfilUsuario() {
           </div>
           <div className="flex gap-4">
             <div className={styles.reviewContainer}>
-              <h3 className={styles.sectionTitleH3}>Reseñas</h3>
+              <h3 className={styles.sectionTitleH3}>
+                Reseñas de tus herramientas
+              </h3>
               <CardsReview reviews={mockReviews} authors={mockAuthors} />
             </div>
           </div>

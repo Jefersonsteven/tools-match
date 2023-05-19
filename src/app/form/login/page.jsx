@@ -138,7 +138,7 @@ export default function Login() {
       </div>
       <div className={styles.submitContainer}>
         <button disabled={errors.flag ? true : fetchingData ? true : false}>
-          {fetchingData ? <Loader /> : "Iniciar sesión"}
+          Iniciar sesión
         </button>
         <span>|</span>
         <button

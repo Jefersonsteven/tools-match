@@ -1,16 +1,16 @@
 "use client";
 import style from "./users.module.css";
-import { useCallback } from "react";
+
 import Modal from "../components/Modal";
 import { Fragment, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
+
 import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { icons } from "react-icons";
-import { TfiPencilAlt } from "react-icons/tfi"
+
+import { TfiPencilAlt } from "react-icons/tfi";
 
 /*PARA PAGINATED*/
 import Paginated from "@/components/paginated/Paginated";
@@ -22,7 +22,12 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   };
   return (
     <div className={style.searchBar}>
-      <input type="text" value={searchTerm} onChange={handleSearchTermChange} placeholder="Email"/>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchTermChange}
+        placeholder="Email"
+      />
       <FaSearch />
     </div>
   );
@@ -36,9 +41,7 @@ function Users() {
   const [records, setRecords] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState([])
-
-
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
   const filteredUsuarios = records.filter((usuario) => {
     return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
@@ -56,7 +59,7 @@ function Users() {
   const displayedUsers = filteredUsuarios.slice(startIndex, endIndex);
   /*-------------------------------*/
 
-  const handleDeleteUser = useCallback(async (id) => {
+  const handleDeleteUser = async (id) => {
     try {
       const userDelete = await axios.delete(`/api/admin/user/${id}`);
       console.log(userDelete.data);
@@ -78,24 +81,22 @@ function Users() {
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      const response = await axios("/api/admin/user"); //PAGINATED
+      const users = await response.data;
 
-const fetchUsers = async () => {
-      try {
-        const response = await axios("/api/admin/user"); //PAGINATED
-        const users = await response.data;
-
-        if (users.length > 0) {
-          const columns = Object.keys(users[0]).map((column) =>
-            column.toUpperCase()
-          );
-          setColumns(columns);
-          setRecords(users);
-        }
+      if (users.length > 0) {
+        const columns = Object.keys(users[0]).map((column) =>
+          column.toUpperCase()
+        );
+        setColumns(columns);
+        setRecords(users);
+      }
     } catch (error) {
       console.error("Error fetching users:", error);
     }
-  }
-    
+  };
 
   useEffect(() => {
     fetchUsers();
@@ -167,16 +168,13 @@ const fetchUsers = async () => {
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
-    
+
     if (checked) {
       setSelectedUsers([...selectedUsers, name]);
     } else {
-      setSelectedUsers(selectedUsers.filter(userId => userId !== name));
+      setSelectedUsers(selectedUsers.filter((userId) => userId !== name));
     }
   };
-
-   
-
 
   return (
     <div className={style.contenedorPadre}>
@@ -201,22 +199,26 @@ const fetchUsers = async () => {
                 <th>REPORTES</th>
                 <th>PUBLICACIONES</th>
                 <th>ORDENES</th>
-    <th>RESEÑAS</th>
-    <th>RECIBOS</th>
-    <th>PAIS</th>
-    <th><TfiPencilAlt/></th>
+                <th>RESEÑAS</th>
+                <th>RECIBOS</th>
+                <th>PAIS</th>
+                <th>
+                  <TfiPencilAlt />
+                </th>
               </tr>
             </thead>
 
             <tbody className={style.bodyTabla}>
               {displayedUsers.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
-                  <td><input 
-                  type="checkbox" 
-                  name={`fila${i}`} 
-                  checked={selectedUsers.includes(`fila${i}`)}
-                  onChange={handleCheckboxChange}
-                  /></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name={`fila${i}`}
+                      checked={selectedUsers.includes(`fila${i}`)}
+                      onChange={handleCheckboxChange}
+                    />
+                  </td>
                   <td>{d.firstname}</td>
                   <td>{d.lastname}</td>
                   <td>{d.email}</td>
@@ -226,9 +228,9 @@ const fetchUsers = async () => {
                   <td>{d.reports.length}</td>
                   <td>{d.posts.length}</td>
                   <td>{d.orders.length}</td>
-                <td>{d.reviews.length}</td>
-                <td>{d.received.length}</td>
-                <td>{d.country ? d.country : '?'}</td>
+                  <td>{d.reviews.length}</td>
+                  <td>{d.received.length}</td>
+                  <td>{d.country ? d.country : "?"}</td>
                   <td>
                     <button
                       className={style.botonEditar}
@@ -253,14 +255,14 @@ const fetchUsers = async () => {
           </div>
         )}
         {editingUser && (
-      <Modal show={showModal} onClose={()=> setShowModal(false)}>
-  <UserForm
-  editingUser={editingUser}
-  handleSubmit={handleSubmit}
-  setEditingUser={setEditingUser}
- />
- </Modal>
-)}
+          <Modal show={showModal} onClose={() => setShowModal(false)}>
+            <UserForm
+              editingUser={editingUser}
+              handleSubmit={handleSubmit}
+              setEditingUser={setEditingUser}
+            />
+          </Modal>
+        )}
       </div>
       {/*--------- PAGINATED ---------- */}
       {filteredUsuarios.length > 0 && (

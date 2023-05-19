@@ -7,6 +7,7 @@ import { useState } from "react";
 import Modal from "./modal";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/footer/Footer";
+import InfiniteSlider from "@/components/InfiniteSlider/InfiniteSlider";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -50,14 +51,15 @@ export default function LandingPage() {
               No esperes más en ToolsMatch es tu mejor opción.
             </p>
           </h1>
-          <div className={style.mainGoHome}>
-            <Link href="/home">Ingresar</Link>
-          </div>
+        </div>
+        <div className={style.mainGoHome}>
+          <Link href="/home">Ingresar</Link>
         </div>
       </main>
       <section className={style.sponsorsContainer}>
         <h2 className={style.sponsorsTitle}>Nuestros Patrocinadores</h2>
-        <div className={style.sponsorsLogos}>
+        <InfiniteSlider />
+        {/*         <div className={style.sponsorsLogos}>
           <Image
             src="/images/sponsors/dewaltt.png"
             alt="sponsors"
@@ -130,7 +132,7 @@ export default function LandingPage() {
             width={180}
             height={180}
           />
-        </div>
+        </div> */}
       </section>
     </div>
   );
