@@ -16,7 +16,7 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userData?.name) router.push("/form/login");
+    // if (!userData?.name) router.push("/form/login");
     const status = params.get("status");
     if (status === "approved") {
       // se borra el estado del carrito

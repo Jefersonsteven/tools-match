@@ -1,16 +1,21 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "@/context/AppContext";
 import style from "./Cart.module.css";
 import Image from "next/image";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { IoCaretBack } from "react-icons/io5";
 
 export default function Page() {
-  const { cart, setCart } = useContext(AppContext);
+  const { cart, setCart, userData } = useContext(AppContext);
   const router = useRouter();
+
+  // useEffect(() => {
+  //   if (!userData?.name) router.push("/form/login");
+  // }, [router, userData]);
 
   function deleteItem(id) {
     setCart({
@@ -26,6 +31,12 @@ export default function Page() {
 
   return (
     <main className={style.container}>
+      <div onClick={handleBack} className={style.backContainer}>
+        <div className={style.back}>
+          <IoCaretBack size={50} color="var(--white)" />
+        </div>
+        <h3>Volver</h3>
+      </div>
       <section className={style.cartContainer}>
         <h2>Carrito de Compras</h2>
         <div className={style.cart}>
@@ -68,7 +79,9 @@ export default function Page() {
             )}
           </div>
           <div className={style.cartButton}>
-            <button onClick={handleBack}>Seguir Comprando</button>
+            <Link href="/home">
+              <button>Seguir Comprando</button>
+            </Link>
             <Link href="/payment">
               <button>Comprar</button>
             </Link>
