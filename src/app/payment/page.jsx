@@ -29,6 +29,12 @@ function Payment() {
         validateForm({ ...form, [name]: value }, errors, setErros, setDisabled);
     }
 
+    async function handleMercadoPago() {
+        const { LinkDePagoSandbox, LinkDePagoInit } = await payMercadoPago(temp);
+
+        window.open(LinkDePagoSandbox, '_blank')
+    }
+
     // const body = {
     //     items: cart,
     //     payer: {
@@ -125,7 +131,7 @@ function Payment() {
                             <button>Contra Entrega</button>
                             <button>Tarjeta de credito</button>
                             <button
-                                onClick={() => payMercadoPago(temp)}>
+                                onClick={handleMercadoPago}>
                                 Mercado Pago
                             </button>
                         </div>
