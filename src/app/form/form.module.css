@@ -204,7 +204,7 @@
   cursor: pointer;
 }
 
-.buttonSubmitDisabled {
+.buttonSubmit:disabled {
   opacity: 0.3;
   cursor: auto;
 }
@@ -299,6 +299,11 @@
   transition: 0.2s ease;
 }
 
+.socialSignIn:disabled {
+  opacity: 0.3;
+  cursor: auto;
+}
+
 .icon {
   width: auto;
   height: 30px;
@@ -311,4 +316,13 @@
 
 .sessionCheckboxContainer {
   margin-top: 27px;
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32px;
+  gap: 16px;
 }

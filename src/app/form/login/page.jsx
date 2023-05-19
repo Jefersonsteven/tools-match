@@ -28,7 +28,9 @@ export default function Login() {
     useContext(AppContext);
   const [rememberSession, setRememberSession] = useState(false);
   const [fetchingData, setFetchingData] = useState(false);
-  const [fetchingAuth, setFetchingAuth] = useState(false);
+
+  const [dataMessage, setDataMessage] = useState("");
+
   const [viewPwd, setViewPwd] = useState(false);
   const [loginData, setLoginData] = useState({
     email: "",
@@ -54,6 +56,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setFetchingData(true);
+    setDataMessage("Enviando datos al servidor...");
     try {
       await submitLogInFormData(
         loginData,
@@ -63,7 +66,8 @@ export default function Login() {
         router,
         saveInLocalStorage,
         form,
-        setForm
+        setForm,
+        setDataMessage
       );
     } catch (error) {
       Swal.fire({
@@ -78,14 +82,17 @@ export default function Login() {
 
   const handleAuth = async (event) => {
     event.preventDefault();
-    setFetchingAuth(true);
+    setFetchingData(true);
+    setDataMessage("Autenticando con Google...");
     try {
       const userDataProvider = await callLoginGoogle();
+      setDataMessage("Obteniendo información...");
       await getDataFromDB(userDataProvider, setUserData, setUserId, router);
     } catch (error) {
       console.log(error);
     }
-    setFetchingAuth(false);
+    setDataMessage("");
+    setFetchingData(false);
   };
 
   return (
@@ -137,19 +144,21 @@ export default function Login() {
         <button
           className={`${styles.socialSignIn}`}
           onClick={handleAuth}
-          disabled={fetchingAuth}
+          disabled={fetchingData}
         >
-          {fetchingAuth ? (
-            <Loader />
-          ) : (
-            <>
-              <span>Iniciar con</span> <FcGoogle className={styles.icon} />
-            </>
-          )}
+          <span>Iniciar con</span> <FcGoogle className={styles.icon} />
         </button>
       </div>
       <div className={styles.linkContainer}>
         <Link href="/form/recover">Olvide mi contraseña</Link>
+      </div>
+      <div className={styles.loaderContainer}>
+        {fetchingData && (
+          <>
+            <Loader />
+            <p>{dataMessage && dataMessage}</p>
+          </>
+        )}
       </div>
     </form>
   );
