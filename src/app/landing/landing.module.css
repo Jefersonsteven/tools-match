@@ -103,12 +103,11 @@
   color: var(--white);
   font-size: 2.5rem;
   margin-top: 20px;
-
   cursor: pointer;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -64px;
+  bottom: -20px;
   z-index: 1;
 }
 .mainGoHome:hover {

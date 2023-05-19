@@ -94,6 +94,26 @@ function AppProvider({ children }) {
   // * Paginated *//
   const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
 
+  // *---------------------------------------* //
+  // * Cart *//
+  const [cart, setCart] = useState({
+    count: 2,
+    items: [
+      {
+        id: 1,
+        title: "Producto 1",
+        price: 100,
+        photo: ["/images/logo/toolM.png"],
+      },
+      {
+        id: 2,
+        title: "Producto 2",
+        price: 200,
+        photo: ["/images/image/construction.jpg"],
+      },
+    ],
+  }); //agregado por Adriana
+
   return (
     <AppContext.Provider
       value={{
@@ -143,6 +163,8 @@ function AppProvider({ children }) {
         newPetition,
         userPosts,
         setuserPosts,
+        cart,
+        setCart,
       }}
     >
       {children}
