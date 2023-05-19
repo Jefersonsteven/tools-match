@@ -1,5 +1,6 @@
 "use client";
 import style from "./users.module.css";
+import { useCallback } from "react";
 import Modal from "../components/Modal";
 import { Fragment, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -39,19 +40,23 @@ function Users() {
 
 
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
   const filteredUsuarios = records.filter((usuario) => {
     return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   /*---------- PAGINATED ----------*/
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   const startIndex = (currentPage - 1) * perPage;
   const endIndex = startIndex + perPage;
   const displayedUsers = filteredUsuarios.slice(startIndex, endIndex);
   /*-------------------------------*/
 
-  const handleDeleteUser = async (id) => {
+  const handleDeleteUser = useCallback(async (id) => {
     try {
       const userDelete = await axios.delete(`/api/admin/user/${id}`);
       console.log(userDelete.data);
@@ -66,7 +71,7 @@ function Users() {
       console.error(error);
       Swal.fire({
         title: "Error al Eliminar el Usuario",
-        text: "Ha ocurrido un error al eliminar el usuario, porfavor intenta de nuevo",
+        text: "Ha ocurrido un error al eliminar el usuario, por favor intenta de nuevo",
         icon: "error",
         confirmButtonText: "Aceptar",
       });
@@ -74,25 +79,23 @@ function Users() {
   };
 
 
-  const fetchUsers = async () => {
-    try {
-      const response = await axios("/api/admin/user"); //PAGINATED
-      const users = await response.data;
+const fetchUsers = async () => {
+      try {
+        const response = await axios("/api/admin/user"); //PAGINATED
+        const users = await response.data;
 
-      if (users.length > 0) {
-        const columns = Object.keys(users[0]).map((column) =>
-          column.toUpperCase()
-        );
-        setColumns(columns);
-        setRecords(users);
-      }
+        if (users.length > 0) {
+          const columns = Object.keys(users[0]).map((column) =>
+            column.toUpperCase()
+          );
+          setColumns(columns);
+          setRecords(users);
+        }
     } catch (error) {
       console.error("Error fetching users:", error);
     }
-  };
-
-
-
+  }
+    
 
   useEffect(() => {
     fetchUsers();
@@ -265,6 +268,9 @@ function Users() {
           url={`/api/admin/paginatedUser?page=${currentPage}&limit=${perPage}`}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
+          perPage={perPage}
+          onPageChange={handlePageChange}
+          totalPagesProp={Math.ceil(perPage.length / perPage)}
         />
       )}
       {/*------------------------------ */}

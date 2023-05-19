@@ -1,3 +1,4 @@
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -39,6 +40,7 @@
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  height: 30px;
 }
 
 .arrowButton:active {
