@@ -1,5 +1,5 @@
 import Card from "./Card";
-import { AppContext } from "@/context/AppContext";
+import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import Paginated from "../paginated/Paginated";
