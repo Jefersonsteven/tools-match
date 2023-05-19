@@ -4,7 +4,6 @@ import style from "./Footer.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-// import Terms from "./terms/Terms";
 
 export default function Footer() {
   const [termsOpen, setTermsOpen] = useState(false);
@@ -25,7 +24,7 @@ export default function Footer() {
         <p>Copyright - ToolsMatch</p>
       </div>
       <div className={style.footerTerms}>
-        <Link href="terms">Términos y Condiciones</Link>
+        <Link href="/terms">Términos y Condiciones</Link>
       </div>
       {/* {termsOpen && <Terms onClose={() => setTermsOpen(false)} />} */}
     </footer>

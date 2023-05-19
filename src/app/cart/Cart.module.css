@@ -5,7 +5,7 @@
     gap: 5rem;
 }
 .cartContainer{
-    display: flex;
+    display: flex; 
     justify-content: space-between;
     width: 100%;
 }

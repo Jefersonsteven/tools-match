@@ -1,6 +1,6 @@
-import style from "./terms.module.css";
+import style from "./Terms.module.css";
 
-const Terms = ({ onClose }) => {
+function Terms() {
   return (
     <div className={style.termsContainer}>
       <div id="terms-and-conditions" className={style.terms}>
@@ -51,12 +51,11 @@ const Terms = ({ onClose }) => {
           con estos términos y condiciones será sometida a los tribunales
           competentes de dicho país.
         </p>
-        <button className={style.termsButton} onClick={onClose}>
-          Cerrar
-        </button>
+
+        {/* HACER EL ROUTER BACK */}
       </div>
     </div>
   );
-};
+}
 
 export default Terms;
