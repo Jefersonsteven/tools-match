@@ -3,8 +3,9 @@ const mercadopago = require("mercadopago");
 export default async function handler(req, res) {
   const { method } = req;
   if (method == "POST") {
-    const { items, payer, postId } = req.body;
-    const URL_BASE = process.env.DEPLOY_BACK || 'http://localhost:3000'
+    const { items, payer } = req.body;
+    //const URL_BASE = process.env.DEPLOY_BACK || 'http://localhost:3000'
+    const URL_BASE = ' https://41c4-190-250-144-185.ngrok.io' || 'http://localhost:3000'
     const response = await fetch(`${URL_BASE}/api/user/${payer.name}`);
     const user = await response.json();
 
@@ -18,8 +19,8 @@ export default async function handler(req, res) {
       items,
       payer,
       back_urls: {
-        success: `${URL_BASE}/post/${postId}`,
-        failure: `${URL_BASE}/paymant/${postId}`,
+        success: `${'http://localhost:3000'}/payment`,
+        failure: `${URL_BASE}/payment`,
         pending: `${URL_BASE}`,
       },
       notification_url:

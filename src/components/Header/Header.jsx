@@ -66,7 +66,7 @@ function Header() {
               height={70}
             />
           </Link>
-          {userData.admin &&
+          {userId && userData.admin &&
             <Link href="/dashboard/users">
               <button>Dashboard</button>
             </Link>
