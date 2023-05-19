@@ -5,6 +5,10 @@ export default async function handler(req, res) {
   if (method == "POST") {
     try {
       const response = await mercadopago.payment.get(req.body.data.id);
+      if (response.body.status !== "approved") {
+        res.status(200).send();
+        return;
+      }
       const name = response.body.additional_info.payer.first_name;
       const URL_BASE = process.env.DEPLOY_BACK || "http://localhost:3000";
       const responseUser = await fetch(`${URL_BASE}/api/user/${name}`);
@@ -21,9 +25,10 @@ export default async function handler(req, res) {
             userId: user.id,
           }),
         });
-        res.status(200).json({ success: true });
-      } else
+      } else {
         throw new Error("No se va a poder registrar su compra en el historial");
+      }
+      res.status(200).send();
     } catch (error) {
       res.status(500).json({ error });
     }
