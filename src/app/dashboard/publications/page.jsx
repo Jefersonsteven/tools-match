@@ -1,6 +1,7 @@
 "use client";
 import style from "./publications.module.css";
 import Modal from "../components/Modal";
+import React, { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
@@ -31,14 +32,12 @@ function Posts() {
 
   /*----------PAGINATED----------*/
   const [currentPage, setCurrentPage] = useState(1);
-  const publicationsPerPage = 8;
+  const publicationsPerPage = 5;
   /*-------------------------------*/
 
-  const handleDeleteUser = async (id) => {
+  const handleDeleteUser = useCallback(async (id) => {
     try {
-      const userDelete = await axios.delete(
-        `/api/admin/post/${id}`
-      );
+      const userDelete = await axios.delete(`/api/admin/post/${id}`);
       console.log(userDelete.data);
       Swal.fire({
         title: "Usuario eliminado",
@@ -55,7 +54,7 @@ function Posts() {
         confirmButtonText: "Aceptar",
       });
     }
-  };
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -135,6 +134,7 @@ function Posts() {
     indexOfFirstPublication,
     indexOfLastPublication
   );
+  const isPageEmpty = currentPublications.length === 0;
   /* --------------------------------- */
   return (
     <div className={style.contenedorPadre}>
@@ -195,6 +195,7 @@ function Posts() {
         )}
       </div>
       {/* ---------- PAGINATED ---------- */}
+
       {filteredUsuarios.length > publicationsPerPage && (
         <Paginated
           currentPage={currentPage}

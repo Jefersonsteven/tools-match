@@ -1,0 +1,64 @@
+
+.info{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 4rem;
+}
+
+
+/* ---------- Banner de publicidad --------- */
+.container {
+    display: flex;
+    margin-top: 0;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 80px;
+	width: 90%;
+	position: relative;
+	height: 200px;
+	border-radius: 10px;
+	overflow: hidden;
+	background-image: linear-gradient(to bottom right, #8aad61, #A784E0);
+    justify-content: flex-end
+    
+  }
+  
+  .image {
+    width: 100%;
+    object-fit: cover;
+    clip-path: ellipse(100% 100% at 100% 50%);
+    max-width : 600px;
+	width: 100%;
+	position: relative;
+  }
+
+  .banner{
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    margin-left: 30px;
+  }
+  
+  .bannerTitle {
+    font-size: 3.5rem;
+    color: var(--black);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    
+  }
+  
+  .bannerSubTitle {
+    font-size: 3rem;
+    color: var(--black);
+    margin-top: 10px;
+    font-style: italic; 
+    
+  }
+/* -----------------------------------------  */

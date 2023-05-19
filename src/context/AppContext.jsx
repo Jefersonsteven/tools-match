@@ -54,7 +54,6 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
 
   const [selected, setSelected] = useState({
     category: "",
@@ -91,11 +90,13 @@ function AppProvider({ children }) {
     VE: "Venezuela",
   });
 
+  // *---------------------------------------* //
+  // * Paginated *//
+  const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
+
   return (
     <AppContext.Provider
       value={{
-        currentPage,
-        setCurrentPage,
         selected,
         setSelected,
         postDetail,
@@ -135,7 +136,8 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
-
+        currentPage,
+        setCurrentPage,
         countries,
         setCountries,
         newPetition,
