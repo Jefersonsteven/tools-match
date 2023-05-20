@@ -4,6 +4,9 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     // Obtener todos los posts
     const posts = await prisma.post.findMany({
+      where: {
+        hidden: false,
+      },
       include: {
         author: true,
         reviews: true,
