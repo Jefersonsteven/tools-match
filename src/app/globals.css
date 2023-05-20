@@ -35,7 +35,7 @@ button {
   justify-content: center;
   background-color: var(--black);
   color: var(--white);
-  padding: 15px 30px;
+
   height: 49px;
   transition: all 0.3s ease-in-out;
 }
@@ -43,7 +43,7 @@ button {
 button:hover {
   background-color: var(--white);
   color: var(--black);
-  border: 1px solid var(--black);
+
   cursor: pointer;
 }
 

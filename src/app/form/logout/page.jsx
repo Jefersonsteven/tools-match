@@ -238,8 +238,15 @@ export default function Logout() {
         <div className={styles.submitContainer}>
           <button
             className={styles.buttonSubmit}
-            type="submit"
-            disabled={errors.flag ? true : fetchingData ? true : false}
+            disabled={
+              errors.flag
+                ? true
+                : checkbox
+                ? fetchingData
+                  ? true
+                  : false
+                : true
+            }
           >
             Registrarse
           </button>

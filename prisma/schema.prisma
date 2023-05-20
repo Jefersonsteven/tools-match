@@ -37,6 +37,7 @@ model Post {
   content   String
   photo     String[]
   category  String
+  brand     String?
   price     Float
   type      Type     @default(SALE)
   hidden    Boolean  @default(false)

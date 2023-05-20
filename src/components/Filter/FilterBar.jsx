@@ -1,25 +1,25 @@
-'use client'
-import CategoryFilter from './CategoryFilter';
-import SearchBar from '../SearchBar/SearchBar';
+"use client";
+import CategoryFilter from "./CategoryFilter";
+import SearchBar from "../SearchBar/SearchBar";
 import { AppContext, AppProvider } from "@/context/AppContext";
-import React, { useEffect, useState, useContext } from 'react';
-import { FaFilter, FaSort } from 'react-icons/fa';
-import { fetchCards } from './UseFetchCard';
-
+import React, { useEffect, useState, useContext } from "react";
+import { FaFilter, FaSort } from "react-icons/fa";
+import { fetchCards } from "./UseFetchCard";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle,selected, setSelected } = useContext(AppContext);
+  const { setCards, title, setTitle, selected, setSelected } =
+    useContext(AppContext);
 
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showFilterOptions, setShowFilterOptions] = useState(false);
-  
+
   const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
     const response = await fetch(`/api/filters/title/${newTitle}`);
     const data = await response.json();
     setCards(data || []);
   };
-  
+
   useEffect(() => {
     fetchCards(selected, setCards);
   }, [selected]);
@@ -46,11 +46,10 @@ export default function FilterBar() {
           </div>
           {showFilterOptions && (
             <div className="absolute bg-white shadow mt-1 top-12 left-0">
-              <div className="py-2 px-4 bg-gray-200 font-medium">Tipo de Transacción</div>
-              <select
-                value={selected.type}
-                onChange={handleTypeChange}
-              >
+              <div className="py-2 px-4 bg-gray-200 font-medium">
+                Tipo de Transacción
+              </div>
+              <select value={selected.type} onChange={handleTypeChange}>
                 <option value="">Todos</option>
                 <option value="RENTAL">Arriendo</option>
                 <option value="SALE">Venta</option>
@@ -58,14 +57,14 @@ export default function FilterBar() {
               <div className="py-2 px-4 bg-gray-200 font-medium">Categoría</div>
               <CategoryFilter
                 categories={[
-                  'electrica',
-                  'manual',
-                  'medicion',
-                  'corte',
-                  'jardin',
-                  'fontaneria',
-                  'pintar',
-                  'soldar',
+                  "electrica",
+                  "manual",
+                  "medicion",
+                  "corte",
+                  "jardin",
+                  "fontaneria",
+                  "pintar",
+                  "soldar",
                 ]}
                 selectedCategory={selected.category}
                 handleCategoryChange={handleCategoryChange}
@@ -84,71 +83,106 @@ export default function FilterBar() {
               <div className="absolute bg-white shadow mt-1 top-12 left-0">
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "",
-                    order: ""
-                  } })}
+                  onClick={() =>
+                    setSelected({
+                      ...selected,
+                      order: {
+                        ...selected.order,
+                        type: "",
+                        order: "",
+                      },
+                    })
+                  }
                 >
                   Default
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "alpha",
-                    order: "A-Z"
-                  } })}
+                  onClick={() =>
+                    setSelected({
+                      ...selected,
+                      order: {
+                        ...selected.order,
+                        type: "alpha",
+                        order: "A-Z",
+                      },
+                    })
+                  }
                 >
                   Nombre (A-Z)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "alpha",
-                    order: "Z-A"
-                  } })}
+                  onClick={() =>
+                    setSelected({
+                      ...selected,
+                      order: {
+                        ...selected.order,
+                        type: "alpha",
+                        order: "Z-A",
+                      },
+                    })
+                  }
                 >
                   Nombre (Z-A)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "price",
-                    order: "asc"
-                  } })}
+                  onClick={() =>
+                    setSelected({
+                      ...selected,
+                      order: {
+                        ...selected.order,
+                        type: "price",
+                        order: "asc",
+                      },
+                    })
+                  }
                 >
                   Precio (Asc)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "price",
-                    order: "desc"
-                  } })}
+                  onClick={() =>
+                    setSelected({
+                      ...selected,
+                      order: {
+                        ...selected.order,
+                        type: "price",
+                        order: "desc",
+                      },
+                    })
+                  }
                 >
                   Precio (Des)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "rating",
-                    order: "asc"
-                  }})}
+                  onClick={() =>
+                    setSelected({
+                      ...selected,
+                      order: {
+                        ...selected.order,
+                        type: "rating",
+                        order: "asc",
+                      },
+                    })
+                  }
                 >
                   Rating (Asc)
                 </button>
                 <button
                   className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "rating",
-                    order: "desc"
-                  }})}
+                  onClick={() =>
+                    setSelected({
+                      ...selected,
+                      order: {
+                        ...selected.order,
+                        type: "rating",
+                        order: "desc",
+                      },
+                    })
+                  }
                 >
                   Rating (Des)
                 </button>
@@ -158,11 +192,13 @@ export default function FilterBar() {
         </div>
       </div>
 
-      <div style={{ width: '400px' }}>
-        <SearchBar title={title} onTitleChange={handleTitleChange} style={{ width: '150px' }} />
+      <div style={{ width: "500px" }}>
+        <SearchBar
+          title={title}
+          onTitleChange={handleTitleChange}
+          style={{ width: "150px" }}
+        />
       </div>
-
     </AppProvider>
-  )
+  );
 }
-

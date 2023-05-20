@@ -107,16 +107,23 @@ function Header() {
                         submenu ? styles.openSubmenu : styles.closeSubmenu
                       }
                     >
-                      <li onClick={handleCloseSession}>
-                        <Link href={userData ? "/" : "/form/login"}>
-                          {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
-                        </Link>
-                      </li>
                       {userData && (
                         <li>
                           <Link href={`/perfil/${userId}`}>Perfil</Link>
                         </li>
                       )}
+                      {userData && (
+                        <li>
+                          <Link href={`/perfil/${userId}/changePassword`}>
+                            Cambiar contraseña
+                          </Link>
+                        </li>
+                      )}
+                      <li onClick={handleCloseSession}>
+                        <Link href={userData ? "/" : "/form/login"}>
+                          {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
+                        </Link>
+                      </li>
                     </ul>
                   </div>
 
