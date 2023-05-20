@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaSearch } from "react-icons/fa";
+import style from "./SearchBar.module.css"
 
 export default function SearchBar({ title, onTitleChange }) {
 
@@ -8,17 +9,16 @@ export default function SearchBar({ title, onTitleChange }) {
   };
 
   return (
-    <div className="relative w-full">
+    <div className={style.searchbar}>
       <input
         type="text"
-        placeholder="Buscar herramienta..."
-        className="block w-full py-5 pl-8 pr-16 leading-tight rounded-full bg-white border-2 border-gray-300 focus:outline-none focus:border-blue-500 mr-2"
+        placeholder="Buscar herramienta..."        
         value={title}
         onChange={handleTitleChange}
       />
-      <button className="absolute top-0 right-0 mt-1.5 mr-1.5 p-5 rounded-full bg-green-500 ml">
-        <FaSearch className="text-white" />
-      </button>
+      <div className={style.icon}>
+        <FaSearch color='var(--white)'/>
+      </div>
     </div>
   );
 }
