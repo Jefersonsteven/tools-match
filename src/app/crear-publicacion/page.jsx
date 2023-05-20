@@ -108,18 +108,18 @@ function CreatePost() {
           });
         }
 
-        // setForm({
-        //   title: "",
-        //   content: "",
-        //   brand: "",
-        //   photo: [],
-        //   category: "",
-        //   price: "",
-        //   type: "",
-        //   authorId: userId,
-        // });
-        // setImagesPrint([]);
-        // setUrlsImages([]);
+        setForm({
+          title: "",
+          content: "",
+          brand: "",
+          photo: [],
+          category: "",
+          price: "",
+          type: "",
+          authorId: userId,
+        });
+        setImagesPrint([]);
+        setUrlsImages([]);
       }
       setMessage("");
       setFetching(false);
