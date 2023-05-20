@@ -1,11 +1,11 @@
-import prisma from "../../../../prisma/client";
+import prisma from "../../../../../prisma/client";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
     // Obtener todos los posts
     const posts = await prisma.post.findMany({
       where: {
-        hidden: false,
+        hidden: true,
       },
       include: {
         author: true,

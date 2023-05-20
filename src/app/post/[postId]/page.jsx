@@ -13,8 +13,8 @@ function PostDetail({}) {
   const { postDetail, setPostDetail, userId } = useContext(AppContext);
   const pd = postDetail;
 
-  function addCart(){
-    return true
+  function addCart() {
+    return true;
   }
 
   const pd2 = {
@@ -23,10 +23,6 @@ function PostDetail({}) {
       image_perfil:
         "https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg",
     },
-    images: [
-      "https://us.123rf.com/450wm/godruma/godruma1802/godruma180200012/95380266-taladro-manual-o-m%C3%A1quina-de-perforaci%C3%B3n-equipada-con-un-accesorio-de-herramienta-de-corte-o-de.jpg",
-      "https://us.123rf.com/450wm/vivacityimages/vivacityimages2004/vivacityimages200400051/144863343-vista-lateral-del-taladro-manual-a-bater%C3%ADa.jpg",
-    ],
   };
 
   useEffect(() => {
@@ -88,7 +84,7 @@ function PostDetail({}) {
               </div>
             </section>
             <section className={styles.section_user}>
-              <figure className={styles.figure}>
+              {/* <figure className={styles.figure}>
                 <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
                 <Image
                   src={pd.author.map}
@@ -96,11 +92,11 @@ function PostDetail({}) {
                   height={400}
                   alt={pd.author.zipCode + " " + pd.author.country}
                 />
-              </figure>
+              </figure> */}
               <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image
-                    src={pd?.photo[0]}
+                    src={pd.author.photo}
                     width={96}
                     height={96}
                     alt={pd.author.firstname}
@@ -117,10 +113,10 @@ function PostDetail({}) {
             </section>
             <section className={styles.section_button}>
               {userId === pd.author.id && <button>Eliminar</button>}
+              {/* TODO: Eliminar post */}
               {userId !== pd.author.id && pd.type === "SALE" && (
-                <Link 
-                href={ addCart() && "/cart"}>
-                  <button>Comprar</button>
+                <Link href={addCart() && "/cart"}>
+                  <button>Agregar al carrito</button>
                 </Link>
               )}
               {userId !== pd.author.id && pd.type === "RENTAL" && (

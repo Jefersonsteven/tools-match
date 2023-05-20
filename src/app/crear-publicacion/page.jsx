@@ -1,17 +1,25 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DragAndDrop } from "@/components/DragAndDrop/DragAndDrop";
 import * as style from "./CreatePost.module.css";
 import { validatePost } from "./asset/validate";
 import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
 import Loader from "@/components/Loader/Loader";
+import Swal from "sweetalert2";
 
 function CreatePost() {
-  const { form, setForm, errors, setErrors, userId } = useContext(AppContext);
+  const { form, setForm, errors, setErrors, userId, userData } =
+    useContext(AppContext);
   const [urlsImages, setUrlsImages] = useState([]);
+  const [imagesPrint, setImagesPrint] = useState([]);
+  const router = useRouter();
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (!userData?.firstname) router.push("/form/login");
+  }, [userData, router]);
 
   function handleForm(event) {
     const name = event.target.name;
@@ -19,6 +27,34 @@ function CreatePost() {
     if (typeof form[name] !== undefined) {
       validatePost({ ...form, [name]: value }, errors, setErrors);
       setForm({ ...form, [name]: value });
+    }
+  }
+
+  async function uploadImages(images) {
+    const URLS = images.map(async (file) => await uploadImage(file));
+    const urls = await Promise.all(URLS);
+    return urls;
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!userData.zipCode || !userData.country) {
+      Swal.fire({
+        title: "Vamos a Editar perfil?",
+        text: "No has agregado el pais de residencia o el codigo postal",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, Vamos!!",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push(`/perfil/${userData.id}/edit`);
+        } else if (result.isDenied) {
+          router.push(`/home`);
+        }
+      });
+      return;
     }
   }
 
@@ -51,19 +87,43 @@ function CreatePost() {
         });
         const data = await post.json();
 
-        setForm({
-          title: "",
-          content: "",
-          photo: [],
-          category: "",
-          price: "",
-          type: "",
-          authorId: userId,
-        });
+        console.log(data);
+
+        if (data.id) {
+          Swal.fire({
+            title: "¡Publicación creada!",
+            text: "Tu publicación se ha creado correctamente.",
+            icon: "success",
+          }).then(() => {
+            // Redireccionar al usuario
+            router.push("/home");
+          });
+
+          // ...
+        } else {
+          Swal.fire({
+            title: "Error",
+            text: "Hubo un problema al crear la publicación.",
+            icon: "error",
+          });
+        }
+
+        // setForm({
+        //   title: "",
+        //   content: "",
+        //   brand: "",
+        //   photo: [],
+        //   category: "",
+        //   price: "",
+        //   type: "",
+        //   authorId: userId,
+        // });
+        // setImagesPrint([]);
+        // setUrlsImages([]);
       }
+      setMessage("");
+      setFetching(false);
     }
-    setMessage("");
-    setFetching(false);
   }
 
   return (
@@ -113,6 +173,25 @@ function CreatePost() {
             <span>{errors.content}</span>
           </div>
           <div>
+            <label htmlFor="">Marca</label>
+            <select onChange={handleForm} name="brand" id="">
+              <option value="false">Selecciona una Marca</option>
+              <option value="stanley">Stanley</option>
+              <option value="skil">Skil</option>
+              <option value="philips">Philips</option>
+              <option value="bosch">Bosch</option>
+              <option value="castellari">Castellari</option>
+              <option value="dewalt">DeWalt</option>
+              <option value="dremel">Dremel</option>
+              <option value="fischer">Fischer</option>
+              <option value="karcher">Karcher</option>
+              <option value="libus">Libus</option>
+              <option value="makita">Makita</option>
+              <option value="truper">Truper</option>
+            </select>
+            <span>{errors.brand}</span>
+          </div>
+          <div>
             <label htmlFor="">Precio</label>
             <input
               onChange={handleForm}
@@ -124,12 +203,8 @@ function CreatePost() {
           </div>
           <div>
             <label htmlFor="">Categoria</label>
-            <select
-              onChange={handleForm}
-              name="category"
-              id=""
-              placeholder="categoria"
-            >
+            <select onChange={handleForm} name="category" id="">
+              <option value="false">Selecciona Categoria</option>
               <option value="electrica">Herramienta Electrica</option>
               <option value="manual">Herramienta Manual</option>
               <option value="medicion">Herramienta de Medicion</option>
@@ -155,7 +230,10 @@ function CreatePost() {
         </form>
       </section>
       <section>
-        <DragAndDrop />
+        <DragAndDrop
+          imagesPrint={imagesPrint}
+          setImagesPrint={setImagesPrint}
+        />
       </section>
     </main>
   );

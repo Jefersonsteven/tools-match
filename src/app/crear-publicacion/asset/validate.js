@@ -11,13 +11,17 @@ export function validatePost(form, errors, setErrors) {
     else newErrors.content = ""
     if (form.content === "") newErrors.content = "Llenar este espacio"
 
+    //? Validate Brand
+    if (form.brand === "" || form.brand === "false") newErrors.brand = "Escoge una Marca";
+    else newErrors.brand = ""
+
     //? Validate Price
     if (form.price === "0") newErrors.price = "El precio no puede ser 0";
     else newErrors.price = ""
     if (form.price === "") newErrors.price = "Llenar este espacio"
 
     //? Validate Category
-    if (form.category === "") newErrors.category = "Escoge una categoria";
+    if (form.category === "" || form.category === "false") newErrors.category = "Escoge una categoria";
     else newErrors.category = ""
 
     //? Validate Images

@@ -9,7 +9,7 @@ import { MdVerifiedUser } from "react-icons/md";
 import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { icons } from "react-icons";
 import { TfiPencilAlt } from "react-icons/tfi";
 
 /*PARA PAGINATED*/

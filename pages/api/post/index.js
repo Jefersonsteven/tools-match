@@ -3,13 +3,15 @@ import prisma from "../../../prisma/client";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     // Crear un nuevo post
-    const { title, content, photo, category, price, type, authorId } = req.body;
+    const { title, content, photo, category, brand, price, type, authorId } =
+      req.body;
     const post = await prisma.post.create({
       data: {
         title,
         content,
         photo,
         category,
+        brand,
         price,
         type,
         authorId,

@@ -8,11 +8,10 @@ export default function SearchBar({ title, onTitleChange }) {
   };
 
   return (
-    <div className="relative w-full">
+    <div className={style.searchbar}>
       <input
         type="text"
         placeholder="Buscar herramienta..."
-        className="block w-full py-5 pl-8 pr-16 leading-tight rounded-full bg-white border-2 border-gray-300 focus:outline-none focus:border-blue-500 mr-2"
         value={title}
         onChange={handleTitleChange}
       />

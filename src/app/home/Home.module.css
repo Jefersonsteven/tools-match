@@ -12,11 +12,9 @@
   justify-content: center;
   align-items: center;
   margin: auto;
-
   width: 100%;
   position: relative;
   height: 200px;
-
   overflow: hidden;
   background-image: linear-gradient(to bottom right, #8aad61, #a784e0);
   justify-content: flex-end;
@@ -29,6 +27,7 @@
   max-width: 600px;
   width: 100%;
   position: relative;
+  height: 100%;
 }
 
 .banner {
@@ -56,4 +55,53 @@
   margin-top: 10px;
   font-style: italic;
 }
-/* -----------------------------------------  */
+
+/* ---------- RESPONSIVE - Banner de publicidad --------- */ 
+@media screen and (max-width: 1120px ) {
+  .bannerTitle{
+    font-size: 2.5rem;
+  } 
+  .bannerSubTitle {
+    font-size: 2rem;
+  }
+}  
+@media screen and (max-width: 920px ) {
+  .container {
+    height: 150px;
+  }
+  
+} 
+@media screen and (max-width: 720px ) {
+  .container {
+    height: 100px;
+  }
+  .bannerTitle{
+    font-size: 2rem;
+  } 
+  .bannerSubTitle {
+    font-size: 1.5rem;
+  }
+}   
+@media screen and (max-width: 520px ) {
+  .container {
+    height: 80px;
+  }
+  .bannerTitle{
+    font-size: 2rem;
+  } 
+  .bannerSubTitle {
+    font-size: 1.5rem;
+  }
+} 
+@media screen and (max-width: 320px ) {
+  .container {
+    height: 60px;
+  }
+  .bannerTitle{
+    font-size: 1.5rem;
+  } 
+  .bannerSubTitle {
+    font-size: 1rem;
+  }
+}     
+/* ------------------------------------------------------  */
