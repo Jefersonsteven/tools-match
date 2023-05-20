@@ -157,9 +157,11 @@ export default function PerfilUsuario() {
             </section>
           </div>
           <div className="flex gap-4">
-            <div className={styles.reviewContainer}>
-              <h3 className={styles.sectionTitleH3}>Reseñas</h3>
-              <CardsReview reviews={reviews} authors={Object.values(authors)} />
+            <div className={styles.reviewContainer}>              
+              <h3 className={styles.sectionTitleH3}>
+                Reseñas de tus herramientas
+              </h3>
+              <CardsReview reviews={reviews} authors={Object.values(authors)} />             
             </div>
           </div>
         </>

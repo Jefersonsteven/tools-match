@@ -23,6 +23,7 @@ function Header() {
     userId,
     removeFromLocalStorage,
     endSession,
+    cart,
   } = useContext(AppContext);
 
   const [submenu, setSubmenu] = useState(false);
@@ -55,83 +56,91 @@ function Header() {
   };
 
   return (
-    <header className={styles.header}>
-      <figure className={styles.logo}>
-        <Link href="/">
-          <Image
-            src="/../public/images/logo/toolsMatch.jpg"
-            alt="logo"
-            width={70}
-            height={70}
-          />
-        </Link>
-        {
-          <Link href="/dashboard/users">
-            <button>Dashboard</button>
+    <div>
+      <header className={styles.header}>
+        <figure className={styles.logo}>
+          <Link href="/">
+            <Image
+              src="/../public/images/logo/toolsMatch.jpg"
+              alt="logo"
+              width={70}
+              height={70}
+            />
           </Link>
-        }
-      </figure>
-      <nav className={styles.nav}>
-        {pathname !== "/team" ? (
-          <>
-            <ul className={styles.nav}>
-              <li>
-                <Link href="/team">Nosotros</Link>
-              </li>
-              <li>
-                <Link href="/home">
-                  {pathname === "/" ? "Home" : "Publicaciones"}
-                </Link>
-              </li>
-              <li>
-                {pathname !== "/" && (
-                  <Link href={userData ? "/crear-publicacion" : "/form/login"}>
-                    Crear Publicaciones
+          {userId && userData.admin && (
+            <Link href="/dashboard/users">
+              <button>Dashboard</button>
+            </Link>
+          )}
+        </figure>
+        <nav className={styles.nav}>
+          {pathname !== "/team" ? (
+            <>
+              <ul className={styles.nav}>
+                <li>
+                  <Link href="/team">Nosotros</Link>
+                </li>
+                <li>
+                  <Link href="/home">
+                    {pathname === "/" ? "Home" : "Publicaciones"}
                   </Link>
-                )}
+                </li>
+                <li>
+                  {pathname !== "/" && (
+                    <Link
+                      href={userData ? "/crear-publicacion" : "/form/login"}
+                    >
+                      Crear Publicaciones
+                    </Link>
+                  )}
+                </li>
+              </ul>
+
+              {pathname !== "/" && (
+                <div className={styles.nav}>
+                  <div className={styles.perfil}>
+                    <FaUserCircle
+                      size={25}
+                      onClick={() => setSubmenu((state) => !state)}
+                      color="white"
+                    />
+                    <ul
+                      className={
+                        submenu ? styles.openSubmenu : styles.closeSubmenu
+                      }
+                    >
+                      <li onClick={handleCloseSession}>
+                        <Link href={userData ? "/" : "/form/login"}>
+                          {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
+                        </Link>
+                      </li>
+                      {userData && (
+                        <li>
+                          <Link href={`/perfil/${userId}`}>Perfil</Link>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  <Link href="/cart" className={styles.cart}>
+                    <FaShoppingCart size="25" color="white" />
+                    {cart?.count > 0 && (
+                      <span className={styles.cartCount}>{cart.count}</span>
+                    )}
+                  </Link>
+                </div>
+              )}
+            </>
+          ) : (
+            <ul className={styles.home}>
+              <li>
+                <Link href="/home">Home</Link>
               </li>
             </ul>
-
-            {pathname !== "/" && (
-              <div className={styles.nav}>
-                <div className={styles.perfil}>
-                  <FaUserCircle
-                    onClick={() => setSubmenu((state) => !state)}
-                    color="white"
-                  />
-                  <ul
-                    className={
-                      submenu ? styles.openSubmenu : styles.closeSubmenu
-                    }
-                  >
-                    <li onClick={handleCloseSession}>
-                      <Link href={userData ? "/" : "/form/login"}>
-                        {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
-                      </Link>
-                    </li>
-                    {userData && (
-                      <li>
-                        <Link href={`/perfil/${userId}`}>Perfil</Link>
-                      </li>
-                    )}
-                  </ul>
-                </div>
-
-                <Link href="/cart">
-                  <FaShoppingCart color="white" />
-                </Link>
-              </div>
-            )}
-          </>
-        ) : (
-          <ul className={styles.home}>
-            <li>
-              <Link href="/home">Home</Link>
-            </li>
-          </ul>
-        )}
-      </nav>
-    </header>
+          )}
+        </nav>
+      </header>
+    </div>
   );
 }
 

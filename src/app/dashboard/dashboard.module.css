@@ -5,7 +5,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 210px;
+    padding-bottom: 860px;
+    padding-top: 95px;
     height: 100%;
 }
 
@@ -46,8 +47,8 @@
 }
 
 .body {
-    width: 88vw;
-    height: 100vh;
+    width: auto;
+    height: auto;
     background-color: rgba(0, 0, 0, 0);
     color: rgb(0, 0, 0);
     display: flex;
@@ -58,4 +59,22 @@
     color: rgb(255, 0, 0);
     height: 1000px;
     width: 100%;
+  }
+
+.boton.active {
+    background-color: #21BF60;
+  }
+
+.boton.active a {
+    background-color: #21BF60;
+    color: #131713;
+  }
+  
+.boton.active:hover {
+    background-color: #21BF60;
+  }
+
+.boton.active:hover a {
+    background-color: #21BF60;
+    color: #131713;
   }

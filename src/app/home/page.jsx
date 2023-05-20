@@ -2,14 +2,38 @@
 import Cards from "@/components/Cards/Cards";
 import FilterBar from "@/components/Filter/FilterBar";
 import Paginated from "@/components/paginated/Paginated";
+import styles from "./Home.module.css";
+import Image from "next/image";
+import Slider from "./Slider";
+import InfiniteSlider from "@/components/InfiniteSlider/InfiniteSlider";
 
-function Home({cards, currentPage, setCards, setCurrentPage } ) {
-
+function Home({ cards, currentPage, setCards, setCurrentPage }) {
   return (
-    <div className="flex flex-col mt-8 p-28 min-h-screen">
-      <h1 className="text-4xl font-bold text-center m-5">
+    <div>
+      {/* ---------- Banner de publicidad --------- */}
+      <div className={styles.container}>
+        <div className={styles.banner}>
+          <p className={styles.bannerTitle}>Unete a la Comunidad TOOLSMATCH</p>
+          <p className={styles.bannerSubTitle}>
+            !Registrate hoy mismo y comienza a aprovechar todas las ventajas de
+            nuestra Comunidad de compradores y vendedores locales!
+          </p>
+        </div>
+        <div className={styles.image}>
+          <Image
+            src="/images/image/construction.jpg"
+            alt="ToolsMatch"
+            width={600}
+            height={500}
+          />
+        </div>
+      </div>
+      <InfiniteSlider />
+      {/*       <Slider /> */}
+      {/* -----------------------------------------  */}
+      <h2 className={styles.info}>
         Renta o Compra Herramientas en Tu Comunidad
-      </h1>
+      </h2>
       <div className="container mx-auto px-4">
         <div className="bg-green-80 flex justify-between py-4 px-4 sm:px-6 lg:px-8">
           <FilterBar />
@@ -19,7 +43,7 @@ function Home({cards, currentPage, setCards, setCurrentPage } ) {
             <Cards className="mb-1" />
           </div>
         </div>
-      </div>     
+      </div>
     </div>
   );
 }

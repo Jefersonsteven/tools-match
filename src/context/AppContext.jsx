@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
@@ -54,7 +54,6 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
 
   const [selected, setSelected] = useState({
     category: "",
@@ -91,11 +90,35 @@ function AppProvider({ children }) {
     VE: "Venezuela",
   });
 
+  // *---------------------------------------* //
+  // * Paginated *//
+  const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
+
+  // * Cart localStorage *//
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("cart")) {
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            count: 0,
+            items: [],
+          })
+        );
+      }
+    }
+  }, []);
+
+  // * Cart *//
+  const [cart, setCart] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("cart")) //agregado por Adriana y Jefferson
+  );
+
+  // *---------------------------------------* //
+
   return (
     <AppContext.Provider
       value={{
-        currentPage,
-        setCurrentPage,
         selected,
         setSelected,
         postDetail,
@@ -135,12 +158,15 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
-
+        currentPage,
+        setCurrentPage,
         countries,
         setCountries,
         newPetition,
         userPosts,
         setuserPosts,
+        cart,
+        setCart,
       }}
     >
       {children}

@@ -20,7 +20,7 @@ export default function FilterBar() {
 
   useEffect(() => {
     fetchCards(selected, setCards);
-  }, [selected]);
+  }, [selected, setCards]);
 
   const handleCategoryChange = (event) => {
     setSelected({ ...selected, category: event.target.value }); // Mantener las propiedades existentes y actualizar solo la propiedad category
