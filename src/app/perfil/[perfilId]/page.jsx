@@ -186,7 +186,7 @@ export default function PerfilUsuario() {
                     );
                   })
                 ) : (
-                  <div class="flex items-center justify-center w-full">
+                  <div class="flex items-center justify-center ">
                     <p className="text-2xl text-center">
                       No tienes herramientas publicadas
                     </p>
