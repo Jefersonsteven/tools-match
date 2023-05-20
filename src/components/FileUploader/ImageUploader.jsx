@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
-import styles from "./imageUploader.module.css";
+import styles from "./ImageUploader.module.css";
 import Image from "next/image";
 
 const ImageUploader = ({ setSelectedFile, form }) => {
