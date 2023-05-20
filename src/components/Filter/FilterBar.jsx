@@ -5,21 +5,19 @@ import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useState, useContext } from 'react';
 import { FaFilter, FaSort } from 'react-icons/fa';
 import { fetchCards } from './UseFetchCard';
+import style from "./FilterBar.module.css"
 
 
 export default function FilterBar() {
-  const { setCards, title, setTitle,selected, setSelected } = useContext(AppContext);
+  const { setCards, title, setTitle, selected, setSelected } = useContext(AppContext);
 
-  const [showSortOptions, setShowSortOptions] = useState(false);
-  const [showFilterOptions, setShowFilterOptions] = useState(false);
-  
-  const handleTitleChange = async (newTitle) => {
+    const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
     const response = await fetch(`/api/filters/title/${newTitle}`);
     const data = await response.json();
     setCards(data || []);
   };
-  
+
   useEffect(() => {
     fetchCards(selected, setCards);
   }, [selected]);
@@ -36,26 +34,20 @@ export default function FilterBar() {
     <AppProvider>
       <div className="relative z-10">
         <div className="flex-1 flex flex-row items-center flex justify-between px-2">
-          <div className="mr-2">
-            <button
-              className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4 flex items-center"
-              onClick={() => setShowFilterOptions(!showFilterOptions)}
+          <div className={`mr-2 relative ${style.button}`}>
+            <div
+              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none`}
             >
               Filtrar <FaFilter className="ml-2" />
-            </button>
-          </div>
-          {showFilterOptions && (
-            <div className="absolute bg-white shadow mt-1 top-12 left-0">
-              <div className="py-2 px-4 bg-gray-200 font-medium">Tipo de Transacción</div>
-              <select
-                value={selected.type}
-                onChange={handleTypeChange}
-              >
-                <option value="">Todos</option>
-                <option value="RENTAL">Arriendo</option>
-                <option value="SALE">Venta</option>
-              </select>
-              <div className="py-2 px-4 bg-gray-200 font-medium">Categoría</div>
+            </div>
+          <div className={style.filter}>
+              <h3>Tipo de Transacción:</h3>
+              <div>
+                <button onClick={handleTypeChange} value="">Todos</button>
+                <button onClick={handleTypeChange} value="RENTAL">Arriendo</button>
+                <button onClick={handleTypeChange} value="SALE">Venta</button>
+              </div>
+              <h3>Categoría:</h3>
               <CategoryFilter
                 categories={[
                   'electrica',
@@ -71,89 +63,93 @@ export default function FilterBar() {
                 handleCategoryChange={handleCategoryChange}
               />
             </div>
-          )}
-
-          <div className="flex space-x-4 relative">
-            <button
-              className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4 flex items-center"
-              onClick={() => setShowSortOptions(!showSortOptions)}
+          </div>
+          <div className={`flex relative ${style.button}`}>
+            <div
+              className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none"
             >
               Ordenar <FaSort className="ml-2" />
-            </button>
-            {showSortOptions && (
-              <div className="absolute bg-white shadow mt-1 top-12 left-0">
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
+            </div>
+            <div className={style.order}>
+              <button
+                onClick={() => setSelected({
+                  ...selected, order: {
                     ...selected.order,
                     type: "",
                     order: ""
-                  } })}
-                >
-                  Default
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
+                  }
+                })}
+              >
+                Default
+              </button>
+              <button
+                onClick={() => setSelected({
+                  ...selected, order: {
                     ...selected.order,
                     type: "alpha",
                     order: "A-Z"
-                  } })}
-                >
-                  Nombre (A-Z)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
+                  }
+                })}
+              >
+                Nombre (A-Z)
+              </button>
+              <button
+                onClick={() => setSelected({
+                  ...selected, order: {
                     ...selected.order,
                     type: "alpha",
                     order: "Z-A"
-                  } })}
-                >
-                  Nombre (Z-A)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
+                  }
+                })}
+              >
+                Nombre (Z-A)
+              </button>
+              <button
+                onClick={() => setSelected({
+                  ...selected, order: {
                     ...selected.order,
                     type: "price",
                     order: "asc"
-                  } })}
-                >
-                  Precio (Asc)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
+                  }
+                })}
+              >
+                Precio (Asc)
+              </button>
+              <button
+                onClick={() => setSelected({
+                  ...selected, order: {
                     ...selected.order,
                     type: "price",
                     order: "desc"
-                  } })}
-                >
-                  Precio (Des)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
+                  }
+                })}
+              >
+                Precio (Des)
+              </button>
+              <button
+                onClick={() => setSelected({
+                  ...selected, order: {
                     ...selected.order,
                     type: "rating",
                     order: "asc"
-                  }})}
-                >
-                  Rating (Asc)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
+                  }
+                })}
+              >
+                Rating (Asc)
+              </button>
+              <button
+                onClick={() => setSelected({
+                  ...selected, order: {
                     ...selected.order,
                     type: "rating",
                     order: "desc"
-                  }})}
-                >
-                  Rating (Des)
-                </button>
-              </div>
-            )}
+                  }
+                })}
+              >
+                Rating (Des)
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
