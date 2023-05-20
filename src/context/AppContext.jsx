@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
@@ -26,6 +26,7 @@ function AppProvider({ children }) {
     content: "",
     photo: [],
     category: "",
+    brand: "",
     price: "",
     type: "",
     authorId: userId,
@@ -36,6 +37,7 @@ function AppProvider({ children }) {
     content: "",
     photo: "",
     category: "",
+    brand: "",
     price: "",
     type: "",
     authorId: "",
@@ -94,6 +96,28 @@ function AppProvider({ children }) {
   // * Paginated *//
   const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
 
+  // * Cart localStorage *//
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("cart")) {
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            count: 0,
+            items: [],
+          })
+        );
+      }
+    }
+  }, []);
+
+  // * Cart *//
+  const [cart, setCart] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("cart")) //agregado por Adriana y Jefferson
+  );
+
+  // *---------------------------------------* //
+
   return (
     <AppContext.Provider
       value={{
@@ -143,6 +167,8 @@ function AppProvider({ children }) {
         newPetition,
         userPosts,
         setuserPosts,
+        cart,
+        setCart,
       }}
     >
       {children}
@@ -151,4 +177,3 @@ function AppProvider({ children }) {
 }
 
 export { AppProvider, AppContext };
-

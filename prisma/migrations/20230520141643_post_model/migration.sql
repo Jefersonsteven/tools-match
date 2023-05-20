@@ -31,6 +31,7 @@ CREATE TABLE "Post" (
     "content" TEXT NOT NULL,
     "photo" TEXT[],
     "category" TEXT NOT NULL,
+    "brand" TEXT,
     "price" DOUBLE PRECISION NOT NULL,
     "type" "Type" NOT NULL DEFAULT 'SALE',
     "hidden" BOOLEAN NOT NULL DEFAULT false,

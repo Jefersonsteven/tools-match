@@ -1,0 +1,59 @@
+.filter, .order {
+    position:absolute;
+    left:0;
+    top: 43px;
+    width: 100%;
+    background: var(--black);
+    color: var(--white); 
+    display: none; 
+}
+
+.filter button,
+.order button {
+    width: 100%;
+    border-radius: 0px;
+    border-bottom: 1px solid var(--white);
+    text-transform: capitalize;  
+}
+
+.filter h3 {
+    background: var(--black-light);
+    padding: 5px;
+}
+
+.button:hover .filter, 
+.button:hover .order {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+
+
+
+/* .window,
+.window2 {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    position: absolute;
+    background-color: var(--white);
+    width: 237px;
+    padding: 10px;
+}
+
+.window2 {
+    top: 44px;
+    left: 0;
+}
+
+.window {
+    top: 230px;
+}
+
+.filter {
+    display: flex;
+    width: 100%;
+} */

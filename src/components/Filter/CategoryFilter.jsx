@@ -7,18 +7,14 @@ export default function CategoryFilter({ categories, selectedCategory, handleCat
   return (
     <div>
       <label htmlFor="category"></label>
-      <select
-        id="category"
-        value={selectedCategory}
-        onChange={handleCategoryChange}
-      >
-        <option value="">Todas</option>
+      <div>
+        <button onClick={handleCategoryChange} value="">Todas</button>
         {categories.map((category) => (
-          <option key={category} value={category}>
+          <button onClick={handleCategoryChange} key={category} value={category}>
             {category}
-          </option>
+          </button>
         ))}
-      </select>
+      </div>
     </div>
   );
 }

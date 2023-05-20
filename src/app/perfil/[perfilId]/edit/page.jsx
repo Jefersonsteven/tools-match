@@ -61,7 +61,7 @@ const EditUser = () => {
         setInPetition("Aplicando cambios...");
         let response = await newPetition("PUT", `/api/user/${userData.email}`, {
           ...form,
-          photo: uploadedImageUrl,
+          photo: uploadedImageUrl ? uploadedImageUrl : userData.photo,
         });
 
         console.log(response);
