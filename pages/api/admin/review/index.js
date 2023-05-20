@@ -4,6 +4,9 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const reviews = await prisma.review.findMany({
+        where: {
+          hidden: false,
+        },
         include: {
           author: true,
           post: true,

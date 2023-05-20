@@ -135,11 +135,11 @@ function Posts() {
       }
     });
   };
-    
+
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
-    
+
     if (checked) {
       setSelectedUsers([...selectedUsers, name]);
     } else {
@@ -174,7 +174,7 @@ function Posts() {
                 <th>
                   <MdVerifiedUser />
                 </th>
-                
+
                 <th>TITULO</th>
                 <th>CATEGORIA</th>
                 <th>CONTENIDO</th>
@@ -183,21 +183,21 @@ function Posts() {
                 <th>AUTOR</th>
                 <th>CREADA</th>
                 <th>MODIFICADA</th>
-                <th><TfiPencilAlt/></th>
+                <th><TfiPencilAlt /></th>
               </tr>
             </thead>
             <tbody className={style.bodyTabla}>
               {currentPublications.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
                   <td>
-                  <input 
-                  type="checkbox" 
-                  name={`fila${i}`} 
-                  checked={selectedUsers.includes(`fila${i}`)}
-                  onChange={handleCheckboxChange}
-                  />
+                    <input
+                      type="checkbox"
+                      name={`fila${i}`}
+                      checked={selectedUsers.includes(`fila${i}`)}
+                      onChange={handleCheckboxChange}
+                    />
                   </td>
-                  
+
                   <td>{d.title}</td>
                   <td>{d.category}</td>
                   <td>{d.content}</td>
@@ -207,9 +207,9 @@ function Posts() {
                   <td>{d.createdAt.slice(0, 10)}</td>
                   <td>{d.updatedAt.slice(0, 10)}</td>
                   <td>
-                     <button
-                  className={style.botonEditar}
-                    onClick={()=> handleClick(d.id)}>EDITAR
+                    <button
+                      className={style.botonEditar}
+                      onClick={() => handleClick(d.id)}>EDITAR
                     </button>
                     <button
                       className={style.botonDelete}
@@ -227,15 +227,15 @@ function Posts() {
             <p>No hay Publicaciones🚩</p>
           </div>
         )}
-         {editingUser && (
-      <Modal show={showModal} onClose={()=> setShowModal(false)}>
-  <UserForm
-  editingUser={editingUser}
-  handleSubmit={handleSubmit}
-  setEditingUser={setEditingUser}
- />
- </Modal>
-)}
+        {editingUser && (
+          <Modal show={showModal} onClose={() => setShowModal(false)}>
+            <UserForm
+              editingUser={editingUser}
+              handleSubmit={handleSubmit}
+              setEditingUser={setEditingUser}
+            />
+          </Modal>
+        )}
 
       </div>
       {/* ---------- PAGINATED ---------- */}
