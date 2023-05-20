@@ -76,7 +76,7 @@ function Users() {
         confirmButtonText: "Aceptar",
       });
     }
-  };
+  }, []);
 
 
 const fetchUsers = async () => {
