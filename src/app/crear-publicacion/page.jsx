@@ -7,6 +7,7 @@ import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
 import Loader from "@/components/Loader/Loader";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 function CreatePost() {
   const { form, setForm, errors, setErrors, userId, userData } =
