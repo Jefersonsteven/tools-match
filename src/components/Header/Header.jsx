@@ -103,7 +103,6 @@ function Header() {
                       size={25}
                       onClick={() => setSubmenu((state) => !state)}
                       color="white"
-                      title="Perfil de usuario" // Cambio en el texto al pasar el mouse
                     />
                     <ul
                       className={
@@ -124,15 +123,11 @@ function Header() {
                   </div>
 
                   <Link href="/cart" className={styles.cart}>
-                    <FaShoppingCart
-                      size="25"
-                      color="white"
-                      title="Carrito de compras"
-                    />{" "}
-                    {/* Cambio en el texto al pasar el mouse */}
+                    <FaShoppingCart size="25" color="white" />
                     {cart.count > 0 && (
                       <span className={styles.cartCount}>{cart.count}</span>
                     )}
+                    <span className={styles.cartText}>Carrito de compras</span>
                   </Link>
                 </div>
               )}
