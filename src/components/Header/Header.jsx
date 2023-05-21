@@ -103,35 +103,34 @@ function Header() {
                       size={25}
                       onClick={() => setSubmenu((state) => !state)}
                       color="white"
+                      title="Perfil de usuario" // Cambio en el texto al pasar el mouse
                     />
                     <ul
                       className={
                         submenu ? styles.openSubmenu : styles.closeSubmenu
                       }
                     >
-                      {userData && (
-                        <li>
-                          <Link href={`/perfil/${userId}`}>Perfil</Link>
-                        </li>
-                      )}
-                      {userData && (
-                        <li>
-                          <Link href={`/perfil/${userId}/changePassword`}>
-                            Cambiar contraseña
-                          </Link>
-                        </li>
-                      )}
                       <li onClick={handleCloseSession}>
                         <Link href={userData ? "/" : "/form/login"}>
                           {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
                         </Link>
                       </li>
+                      {userData && (
+                        <li>
+                          <Link href={`/perfil/${userId}`}>Perfil</Link>
+                        </li>
+                      )}
                     </ul>
                   </div>
 
                   <Link href="/cart" className={styles.cart}>
-                    <FaShoppingCart size="25" color="white" />
-                    {cart?.count > 0 && (
+                    <FaShoppingCart
+                      size="25"
+                      color="white"
+                      title="Carrito de compras"
+                    />{" "}
+                    {/* Cambio en el texto al pasar el mouse */}
+                    {cart.count > 0 && (
                       <span className={styles.cartCount}>{cart.count}</span>
                     )}
                   </Link>

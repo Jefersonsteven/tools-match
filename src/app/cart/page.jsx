@@ -87,7 +87,7 @@ export default function Page() {
               <button>Seguir Comprando</button>
             </Link>
             <Link href={cart?.count > 0 ? "/payment" : "/cart"}>
-              <button>Comprar</button>
+              <button>Finalizar la Compra</button>
             </Link>
           </div>
         </div>

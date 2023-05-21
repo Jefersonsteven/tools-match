@@ -28,7 +28,7 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userData.id) {
+    if (!userData?.id) {
       router.push("/form/login");
     }
 
@@ -54,7 +54,7 @@ function Page() {
         text: "Tu compra ha sido aprobada correctamente.",
         icon: "success",
       }).then(() => {
-        router.push(`/perfil/${userData.id}`);
+        router.push(`/perfil/${userData?.id}`);
       });
     }
   }, [params, router, setCart, userData]);
@@ -62,9 +62,9 @@ function Page() {
   useEffect(() => {
     if (!form.fullname) {
       const FORM = {
-        fullname: `${userData.firstname} ${userData.lastname}`,
-        email: userData.email,
-        phoneNumber: userData.phoneNumber,
+        fullname: `${userData?.firstname} ${userData?.lastname}`,
+        email: userData?.email,
+        phoneNumber: userData?.phoneNumber,
         address: "",
       };
       setForm(FORM);
@@ -90,7 +90,7 @@ function Page() {
       };
     }),
     payer: {
-      name: userData.email,
+      name: userData?.email,
     },
   };
 
