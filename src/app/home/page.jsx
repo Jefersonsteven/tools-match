@@ -35,11 +35,11 @@ function Home({ cards, currentPage, setCards, setCurrentPage }) {
         Renta o Compra Herramientas en Tu Comunidad
       </h2>
       <div className="container mx-auto px-4">
-        <div className="bg-green-80 flex justify-between py-4 px-4 sm:px-6 lg:px-8">
+        <div className="  w-full bg-green-80 flex justify-center py-4 px-4 sm:px-6 lg:px-8">
           <FilterBar />
         </div>
         <div className="flex-grow">
-          <div className="flex flex-wrap my-4 mx-0">
+          <div className="  w-full flex justify-center flex-wrap my-4 mx-0">
             <Cards className="mb-1" />
           </div>
         </div>

@@ -1,17 +1,17 @@
-'use client'
-import CategoryFilter from './CategoryFilter';
-import SearchBar from '../SearchBar/SearchBar';
+"use client";
+import CategoryFilter from "./CategoryFilter";
+import SearchBar from "../SearchBar/SearchBar";
 import { AppContext, AppProvider } from "@/context/AppContext";
-import React, { useEffect, useState, useContext } from 'react';
-import { FaFilter, FaSort } from 'react-icons/fa';
-import { fetchCards } from './UseFetchCard';
-import style from "./FilterBar.module.css"
-
+import React, { useEffect, useState, useContext } from "react";
+import { FaFilter, FaSort } from "react-icons/fa";
+import { fetchCards } from "./UseFetchCard";
+import style from "./FilterBar.module.css";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected } = useContext(AppContext);
+  const { setCards, title, setTitle, selected, setSelected } =
+    useContext(AppContext);
 
-    const handleTitleChange = async (newTitle) => {
+  const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
     const response = await fetch(`/api/filters/title/${newTitle}`);
     const data = await response.json();
@@ -40,24 +40,30 @@ export default function FilterBar() {
             >
               Filtrar <FaFilter className="ml-2" />
             </div>
-          <div className={style.filter}>
+            <div className={style.filter}>
               <h3>Tipo de Transacción:</h3>
               <div>
-                <button onClick={handleTypeChange} value="">Todos</button>
-                <button onClick={handleTypeChange} value="RENTAL">Arriendo</button>
-                <button onClick={handleTypeChange} value="SALE">Venta</button>
+                <button onClick={handleTypeChange} value="">
+                  Todos
+                </button>
+                <button onClick={handleTypeChange} value="RENTAL">
+                  Arriendo
+                </button>
+                <button onClick={handleTypeChange} value="SALE">
+                  Venta
+                </button>
               </div>
               <h3>Categoría:</h3>
               <CategoryFilter
                 categories={[
-                  'electrica',
-                  'manual',
-                  'medicion',
-                  'corte',
-                  'jardin',
-                  'fontaneria',
-                  'pintar',
-                  'soldar',
+                  "electrica",
+                  "manual",
+                  "medicion",
+                  "corte",
+                  "jardin",
+                  "fontaneria",
+                  "pintar",
+                  "soldar",
                 ]}
                 selectedCategory={selected.category}
                 handleCategoryChange={handleCategoryChange}
@@ -65,100 +71,120 @@ export default function FilterBar() {
             </div>
           </div>
           <div className={`flex relative ${style.button}`}>
-            <div
-              className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none"
-            >
+            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none">
               Ordenar <FaSort className="ml-2" />
             </div>
             <div className={style.order}>
               <button
-                onClick={() => setSelected({
-                  ...selected, order: {
-                    ...selected.order,
-                    type: "",
-                    order: ""
-                  }
-                })}
+                onClick={() =>
+                  setSelected({
+                    ...selected,
+                    order: {
+                      ...selected.order,
+                      type: "",
+                      order: "",
+                    },
+                  })
+                }
               >
                 Default
               </button>
               <button
-                onClick={() => setSelected({
-                  ...selected, order: {
-                    ...selected.order,
-                    type: "alpha",
-                    order: "A-Z"
-                  }
-                })}
+                onClick={() =>
+                  setSelected({
+                    ...selected,
+                    order: {
+                      ...selected.order,
+                      type: "alpha",
+                      order: "A-Z",
+                    },
+                  })
+                }
               >
                 Nombre (A-Z)
               </button>
               <button
-                onClick={() => setSelected({
-                  ...selected, order: {
-                    ...selected.order,
-                    type: "alpha",
-                    order: "Z-A"
-                  }
-                })}
+                onClick={() =>
+                  setSelected({
+                    ...selected,
+                    order: {
+                      ...selected.order,
+                      type: "alpha",
+                      order: "Z-A",
+                    },
+                  })
+                }
               >
                 Nombre (Z-A)
               </button>
               <button
-                onClick={() => setSelected({
-                  ...selected, order: {
-                    ...selected.order,
-                    type: "price",
-                    order: "asc"
-                  }
-                })}
+                onClick={() =>
+                  setSelected({
+                    ...selected,
+                    order: {
+                      ...selected.order,
+                      type: "price",
+                      order: "asc",
+                    },
+                  })
+                }
               >
                 Precio (Asc)
               </button>
               <button
-                onClick={() => setSelected({
-                  ...selected, order: {
-                    ...selected.order,
-                    type: "price",
-                    order: "desc"
-                  }
-                })}
+                onClick={() =>
+                  setSelected({
+                    ...selected,
+                    order: {
+                      ...selected.order,
+                      type: "price",
+                      order: "desc",
+                    },
+                  })
+                }
               >
                 Precio (Des)
               </button>
               <button
-                onClick={() => setSelected({
-                  ...selected, order: {
-                    ...selected.order,
-                    type: "rating",
-                    order: "asc"
-                  }
-                })}
+                onClick={() =>
+                  setSelected({
+                    ...selected,
+                    order: {
+                      ...selected.order,
+                      type: "rating",
+                      order: "asc",
+                    },
+                  })
+                }
               >
                 Rating (Asc)
               </button>
               <button
-                onClick={() => setSelected({
-                  ...selected, order: {
-                    ...selected.order,
-                    type: "rating",
-                    order: "desc"
-                  }
-                })}
+                onClick={() =>
+                  setSelected({
+                    ...selected,
+                    order: {
+                      ...selected.order,
+                      type: "rating",
+                      order: "desc",
+                    },
+                  })
+                }
               >
                 Rating (Des)
               </button>
             </div>
-
           </div>
         </div>
       </div>
 
-      <div style={{ width: '400px' }}>
-        <SearchBar title={title} onTitleChange={handleTitleChange} style={{ width: '150px' }} />
+      <div style={{ width: "500px" }}>
+        <SearchBar
+          title={title}
+          onTitleChange={handleTitleChange}
+          style={{ width: "150px" }}
+        />
       </div>
-
     </AppProvider>
-  )
+  );
 }
-
