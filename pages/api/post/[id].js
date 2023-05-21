@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     });
     res.status(200).json(post);
   } else if (req.method === "PUT") {
-    const { title, content, photo, category, price, type } = req.body;
+    const { title, content, photo, category, brand, price, type } = req.body;
     const post = await prisma.post.update({
       where: {
         id: id,
@@ -25,6 +25,7 @@ export default async function handler(req, res) {
         content,
         photo,
         category,
+        brand,
         price,
         type,
       },

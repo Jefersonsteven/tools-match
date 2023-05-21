@@ -4,6 +4,7 @@ import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import Paginated from "../paginated/Paginated";
 import { App } from "antd";
+import Loader from "../Loader/Loader";
 
 const Cards = () => {
   const { cards, setCards, setFilteredCards, currentPage, setCurrentPage } =
@@ -58,11 +59,7 @@ const Cards = () => {
           ))}
 
           {/* ----------- PAGINATED ---------- */}
-          {isPageEmpty && (
-            <p className="text-center mt-4">
-              No hay publicaciones disponibles.
-            </p>
-          )}
+          {isPageEmpty && <Loader />}
         </div>
         {cards.length > cardsPerPage && (
           <Paginated

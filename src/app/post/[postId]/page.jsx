@@ -1,21 +1,20 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import styles from "./post.module.css";
 import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 function PostDetail({}) {
   const { postId } = useParams();
-  const { postDetail, setPostDetail, userId } = useContext(AppContext);
+  const { postDetail, setPostDetail, userId, cart, setCart } =
+    useContext(AppContext);
   const pd = postDetail;
-
-  function addCart() {
-    return true;
-  }
+  const router = useRouter();
 
   const pd2 = {
     author: {
@@ -23,11 +22,59 @@ function PostDetail({}) {
       image_perfil:
         "https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg",
     },
-    images: [
-      "https://us.123rf.com/450wm/godruma/godruma1802/godruma180200012/95380266-taladro-manual-o-m%C3%A1quina-de-perforaci%C3%B3n-equipada-con-un-accesorio-de-herramienta-de-corte-o-de.jpg",
-      "https://us.123rf.com/450wm/vivacityimages/vivacityimages2004/vivacityimages200400051/144863343-vista-lateral-del-taladro-manual-a-bater%C3%ADa.jpg",
-    ],
   };
+
+  function addCart() {
+    if (!cart.items.some((item) => item.id == postDetail.id)) {
+      console.log("Entrando en if");
+      setCart({
+        count: cart.count + 1,
+        items: [...cart.items, postDetail],
+      });
+
+      if (typeof window !== "undefined")
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            count: cart.count + 1,
+            items: [...cart.items, postDetail],
+          })
+        );
+
+      Swal.fire({
+        title: "¡Agregado al carrito!",
+        text: "El artículo se ha agregado al carrito correctamente.",
+        icon: "success",
+      });
+    }
+  }
+
+  async function handleDeletePost() {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará el post. ¿Deseas continuar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const postDeleted = await axios.delete(
+          `/api/admin/post/${postDetail.id}`
+        );
+        await Swal.fire(
+          "¡Eliminado!",
+          "El post ha sido eliminado correctamente.",
+          "success"
+        );
+        router.push("/home");
+      } catch (error) {
+        Swal.fire("Error", "Hubo un problema al eliminar el post.", "error");
+      }
+    }
+  }
 
   useEffect(() => {
     fetch(`/api/admin/post/${postId}`)
@@ -100,7 +147,7 @@ function PostDetail({}) {
               <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image
-                    src={pd?.photo[0]}
+                    src={pd.author.photo}
                     width={96}
                     height={96}
                     alt={pd.author.firstname}
@@ -116,14 +163,11 @@ function PostDetail({}) {
               </Link>
             </section>
             <section className={styles.section_button}>
-              {userId === pd.author.id && <button>Eliminar</button>}
-              {userId !== pd.author.id && pd.type === "SALE" && (
-                <Link href={addCart() && "/cart"}>
-                  <button>Comprar</button>
-                </Link>
+              {userId === pd.author.id && (
+                <button onClick={handleDeletePost}>Eliminar</button>
               )}
-              {userId !== pd.author.id && pd.type === "RENTAL" && (
-                <button>Arrendar</button>
+              {userId !== pd.author.id && (
+                <button onClick={addCart}>Agregar al carrito</button>
               )}
             </section>
           </>
