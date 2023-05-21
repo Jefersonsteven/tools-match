@@ -21,3 +21,8 @@
     cursor: pointer;
 
 }
+.contact{
+    display: flex;
+    color: #fff;
+    padding: auto;
+}
