@@ -12,6 +12,8 @@ export default function FilterBar() {
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderFilter, setOrderFilter] = useState("");
+  const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
+
 
   const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
@@ -38,6 +40,13 @@ export default function FilterBar() {
     setSelected({ ...selected, type: typeValue });
     setTypeFilter(typeValue);
   };
+
+  const handleBrandChange = (event) => {
+    const brandValue = event.target.value;
+    setSelected({ ...selected, brand: brandValue });
+    setBrandFilter(brandValue);
+  };
+
 
   const handleOrderChange = (type, order) => {
     setSelected({ ...selected, order: { type, order } });
@@ -143,6 +152,51 @@ export default function FilterBar() {
                   className={categoryFilter === "soldar" ? style.selected : ""}
                 >
                   Soldar
+                </button>
+              </div>
+              <h3>Marca:</h3>
+              <div>
+                <button
+                  onClick={handleBrandChange}
+                  value=""
+                  className={brandFilter === "" ? style.selected : ""}
+                >
+                  Todas
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Phillips"
+                  className={brandFilter === "Phillips" ? style.selected : ""}
+                >
+                  Phillips
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Stanley"
+                  className={brandFilter === "Stanley" ? style.selected : ""}
+                >
+                  Stanley
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Bosch"
+                  className={brandFilter === "Bosch" ? style.selected : ""}
+                >
+                  Bosch
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Dewalt"
+                  className={brandFilter === "Dewalt" ? style.selected : ""}
+                >
+                  Dewalt
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Jefferson"
+                  className={brandFilter === "Jefferson" ? style.selected : ""}
+                >
+                  Jefferson
                 </button>
               </div>
             </div>
