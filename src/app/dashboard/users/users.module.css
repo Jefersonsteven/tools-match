@@ -63,7 +63,7 @@
     background-color: rgba(255, 255, 255, 0.612);
     border-radius: 5px;
     transition-duration: 0.4s;
-    padding: 2px;
+    padding: 0.5rem;
 }
 
 .botonDelete:hover {
@@ -123,7 +123,7 @@
     background-color: rgba(255, 255, 255, 0.612);
     border-radius: 5px;
     transition-duration: 0.4s;
-    padding: 2px;
+    padding: 0.5rem;
     margin-right: 8px;
 }
 
@@ -149,4 +149,54 @@
     border-color: inherit;
     border-collapse: inherit;
     border-spacing: 7px;
+}
+
+.td_button {
+    display: flex;
+}
+
+.disabledButton {
+    color: #383838;
+    border: 2px solid #383838;
+    background-color: rgba(255, 255, 255, 0.612);
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    padding: 0.5rem;
+    margin-right: 8px;
+
+}
+
+.disabledButton:hover {
+    color: #383838;
+    border: 2px solid #383838;
+    background-color: rgba(255, 255, 255, 0.612);
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    padding: 0.5rem;
+    margin-right: 8px;
+
+}
+
+.checkbox_padre {
+    display: flex;
+}
+
+.checkbox_padre h2 {
+    font-size: large;
+    padding-top: 1rem;
+    margin-right: 1rem;
+}
+
+.checkbox_padre button {
+    background-color: rgba(255, 255, 255, 0.612);
+    border: 2px solid rgba(255, 67, 67, 0.802);
+    color: #f80101;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.checkbox_padre button:hover {
+    border: 2px solid rgba(255, 67, 67, 0.802);
+    background-color: rgba(255, 0, 0, 0.685);
+    color: white
 }

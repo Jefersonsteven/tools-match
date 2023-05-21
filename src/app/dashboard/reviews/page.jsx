@@ -63,7 +63,7 @@ function Users() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios("/api/admin/user");
+      const response = await axios("/api/admin/review");
       const users = await response.data;
 
       if (users.length > 0) {

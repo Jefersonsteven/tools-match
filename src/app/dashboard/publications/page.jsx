@@ -11,6 +11,10 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import Paginated from "@/components/paginated/Paginated";
 import { TfiPencilAlt } from "react-icons/tfi";
+import { TiDelete, TiPencil } from "react-icons/ti";
+import PublicationForm from "../components/PublicationForm";
+
+
 
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
@@ -32,6 +36,7 @@ function Posts() {
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([])
+  const [selectedUserCount, setSelectedUserCount] = useState(0);
 
   /*----------PAGINATED----------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,11 +108,11 @@ function Posts() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const updatedUser = {
-      firstname: formData.get("firstname"),
-      lastname: formData.get("lastname"),
-      email: formData.get("email"),
-      phoneNumber: formData.get("phonenumber"),
-      reports: formData.get("reports"),
+      title: formData.get("title"),
+      // lastname: formData.get("lastname"),
+      // email: formData.get("email"),
+      // phoneNumber: formData.get("phonenumber"),
+      // reports: formData.get("reports"),
     };
     axios
       .put(`/api/admin/post/${editingUser.id}`, updatedUser)
@@ -160,12 +165,23 @@ function Posts() {
   );
   const isPageEmpty = currentPublications.length === 0;
   /* --------------------------------- */
+
+  const buttonClass = selectedUserCount > 0 ? style.disabledButton : '';
+
+
+
   return (
     <div className={style.contenedorPadre}>
+
+
+
       <div className={style.searchbarContainer}>
         <h2>Publicaciones</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
+
+
+
       <div className={style.contenedorTable}>
         {currentPublications.length > 0 ? (
           <table className={style.table}>
@@ -174,18 +190,23 @@ function Posts() {
                 <th>
                   <MdVerifiedUser />
                 </th>
-
                 <th>TITULO</th>
                 <th>CATEGORIA</th>
                 <th>CONTENIDO</th>
                 <th>PRECIO</th>
                 <th>TIPO</th>
                 <th>AUTOR</th>
+                <th>MARCA</th>
                 <th>CREADA</th>
                 <th>MODIFICADA</th>
-                <th><TfiPencilAlt /></th>
+                <th>ACCIONES</th>
               </tr>
             </thead>
+
+
+
+
+
             <tbody className={style.bodyTabla}>
               {currentPublications.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
@@ -197,27 +218,41 @@ function Posts() {
                       onChange={handleCheckboxChange}
                     />
                   </td>
-
                   <td>{d.title}</td>
                   <td>{d.category}</td>
                   <td>{d.content}</td>
                   <td>{d.price}</td>
                   <td>{d.type}</td>
                   <td>{d.author.email}</td>
+                  <td>{d.brand}</td>
                   <td>{d.createdAt.slice(0, 10)}</td>
                   <td>{d.updatedAt.slice(0, 10)}</td>
-                  <td>
+
+
+
+
+                  <td className={style.td_button}>
                     <button
-                      className={style.botonEditar}
-                      onClick={() => handleClick(d.id)}>EDITAR
-                    </button>
-                    <button
-                      className={style.botonDelete}
-                      onClick={() => handleDeleteClick(d.firstname, d.id)}
+                      className={`${style.botonEditar} ${buttonClass}`}
+                      onClick={() => handleClick(d.id)}
+                      disabled={selectedUserCount > 0}                      
                     >
-                      BAN
+                      <TiPencil size={30}/>
                     </button>
-                  </td>
+                    <button
+                      className={`${style.botonDelete} ${buttonClass}`}
+                      onClick={() => handleDeleteClick(d.firstname, d.id)}
+                      disabled={selectedUserCount > 0}
+                    >
+                      <TiDelete size={30}/>
+                    </button>
+                  </td>  
+
+
+
+
+
+
                 </tr>
               ))}
             </tbody>
@@ -229,15 +264,19 @@ function Posts() {
         )}
         {editingUser && (
           <Modal show={showModal} onClose={() => setShowModal(false)}>
-            <UserForm
+            <PublicationForm
               editingUser={editingUser}
               handleSubmit={handleSubmit}
               setEditingUser={setEditingUser}
             />
           </Modal>
         )}
-
       </div>
+
+
+
+
+
       {/* ---------- PAGINATED ---------- */}
 
       {filteredUsuarios.length > publicationsPerPage && (
@@ -252,6 +291,11 @@ function Posts() {
         />
       )}
       {/* ------------------------------- */}
+
+
+
+
+      
     </div>
   );
 }

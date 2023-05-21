@@ -58,9 +58,15 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
     handleSubmit(e);
   };
 
+  const handleAdminChange = (e) => {
+    setEditingUser({ ...editingUser, admin: e.target.value === "admin" });
+  };
+
+
 
   return (
   <>
+  <div className={style.contendorPadre}>
   <form className={style.form} onClick={handleClick} onSubmit={handleSubmit}>
   <label className={style.label}htmlFor="firstname">Nombre:</label>
   <input className={style.input}
@@ -93,25 +99,42 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
           maxLength={15}
           required
        />
-  <label className={style.label} htmlFor="reports">Rango:</label>
+       {/* <label className={style.label} htmlFor="country">Pais:</label>
   <input className={style.input}
          type="text"
-         id="admin"
-         name="admin"
-         defaultValue={editingUser.admin}
+         id="country"
+         name="country"
+         defaultValue={editingUser.country}
        />
-       <label className={style.label} htmlFor="reports">HIDDEN:</label>
-  <input className={style.input}
-         type="text"
-         id="admin"
-         name="admin"
-         defaultValue={editingUser.admin}
-       />
+  <label className={style.label}>Rango:</label>
+        <label className={style.checkboxLabel}>
+          Admin:
+          <input
+            className={style.checkbox}
+            type="radio"
+            name="admin"
+            value="admin"
+            checked={editingUser.admin}
+            onChange={handleAdminChange}
+          />
+        </label>
+        <label className={style.checkboxLabel}>
+          Usuario:
+          <input
+            className={style.checkbox}
+            type="radio"
+            name="admin"
+            value="usuario"
+            checked={!editingUser.admin}
+            onChange={handleAdminChange}
+          />
+        </label> */}
   <button className={style.buttonGuardar} type="submit">Guardar</button>
   <button className={style.buttonCancelar}type="button" onClick={() => setEditingUser(null)}>
   Cancelar
   </button>
   </form>
+  </div>
   </>
   );
   }
