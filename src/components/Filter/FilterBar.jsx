@@ -2,18 +2,25 @@
 import CategoryFilter from "./CategoryFilter";
 import SearchBar from "../SearchBar/SearchBar";
 import { AppContext, AppProvider } from "@/context/AppContext";
-import React, { useEffect, useState, useContext } from "react";
-import { FaFilter, FaSort } from "react-icons/fa";
-import { fetchCards } from "./UseFetchCard";
-import style from "./FilterBar.module.css";
+import React, { useEffect, useState, useContext } from 'react';
+import { FaFilter, FaSort } from 'react-icons/fa';
+import { fetchCards } from './UseFetchCard';
+import style from "./FilterBar.module.css"
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected } =
-    useContext(AppContext);
+  const { setCards, title, setTitle, selected, setSelected } = useContext(AppContext);
+  const [typeFilter, setTypeFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [orderFilter, setOrderFilter] = useState("");
+  const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
+
 
   const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
     const response = await fetch(`/api/filters/title/${newTitle}`);
+    if (newTitle.length === 0) {
+      setSelected({ ...selected, title: "" });
+    }
     const data = await response.json();
     setCards(data || []);
   };
@@ -23,17 +30,33 @@ export default function FilterBar() {
   }, [selected, setCards]);
 
   const handleCategoryChange = (event) => {
-    setSelected({ ...selected, category: event.target.value }); // Mantener las propiedades existentes y actualizar solo la propiedad category
+    const categoryValue = event.target.value;
+    setSelected({ ...selected, category: categoryValue });
+    setCategoryFilter(categoryValue);
   };
 
   const handleTypeChange = (event) => {
-    setSelected({ ...selected, type: event.target.value }); // Mantener las propiedades existentes y actualizar solo la propiedad type
+    const typeValue = event.target.value;
+    setSelected({ ...selected, type: typeValue });
+    setTypeFilter(typeValue);
+  };
+
+  const handleBrandChange = (event) => {
+    const brandValue = event.target.value;
+    setSelected({ ...selected, brand: brandValue });
+    setBrandFilter(brandValue);
+  };
+
+
+  const handleOrderChange = (type, order) => {
+    setSelected({ ...selected, order: { type, order } });
+    setOrderFilter(`${type}-${order}`);
   };
 
   return (
     <AppProvider>
       <div className="relative z-10">
-        <div className="flex-1 flex flex-row items-center flex justify-between px-2">
+        <div className="flex-1 flex flex-row items-center justify-between px-2">
           <div className={`mr-2 relative ${style.button}`}>
             <div
               className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none`}
@@ -43,31 +66,139 @@ export default function FilterBar() {
             <div className={style.filter}>
               <h3>Tipo de Transacción:</h3>
               <div>
-                <button onClick={handleTypeChange} value="">
+                <button
+                  onClick={handleTypeChange}
+                  value=""
+                  className={typeFilter === "" ? style.selected : ""}
+                >
                   Todos
                 </button>
-                <button onClick={handleTypeChange} value="RENTAL">
+                <button
+                  onClick={handleTypeChange}
+                  value="RENTAL"
+                  className={typeFilter === "RENTAL" ? style.selected : ""}
+                >
                   Arriendo
                 </button>
-                <button onClick={handleTypeChange} value="SALE">
+                <button
+                  onClick={handleTypeChange}
+                  value="SALE"
+                  className={typeFilter === "SALE" ? style.selected : ""}
+                >
                   Venta
                 </button>
               </div>
               <h3>Categoría:</h3>
-              <CategoryFilter
-                categories={[
-                  "electrica",
-                  "manual",
-                  "medicion",
-                  "corte",
-                  "jardin",
-                  "fontaneria",
-                  "pintar",
-                  "soldar",
-                ]}
-                selectedCategory={selected.category}
-                handleCategoryChange={handleCategoryChange}
-              />
+              <div>
+                <button
+                  onClick={handleCategoryChange}
+                  value=""
+                  className={categoryFilter === "" ? style.selected : ""}
+                >
+                  Todas
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="electrica"
+                  className={categoryFilter === "electrica" ? style.selected : ""}
+                >
+                  Eléctrica
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="manual"
+                  className={categoryFilter === "manual" ? style.selected : ""}
+                >
+                  Manual
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="medicion"
+                  className={categoryFilter === "medicion" ? style.selected : ""}
+                >
+                  Medición
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="corte"
+                  className={categoryFilter === "corte" ? style.selected : ""}
+                >
+                  Corte
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="jardin"
+                  className={categoryFilter === "jardin" ? style.selected : ""}
+                >
+                  Jardín
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="fontaneria"
+                  className={categoryFilter === "fontaneria" ? style.selected : ""}
+                >
+                  Fontanería
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="pintar"
+                  className={categoryFilter === "pintar" ? style.selected : ""}
+                >
+                  Pintar
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="soldar"
+                  className={categoryFilter === "soldar" ? style.selected : ""}
+                >
+                  Soldar
+                </button>
+              </div>
+              <h3>Marca:</h3>
+              <div>
+                <button
+                  onClick={handleBrandChange}
+                  value=""
+                  className={brandFilter === "" ? style.selected : ""}
+                >
+                  Todas
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Phillips"
+                  className={brandFilter === "Phillips" ? style.selected : ""}
+                >
+                  Phillips
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Stanley"
+                  className={brandFilter === "Stanley" ? style.selected : ""}
+                >
+                  Stanley
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Bosch"
+                  className={brandFilter === "Bosch" ? style.selected : ""}
+                >
+                  Bosch
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Dewalt"
+                  className={brandFilter === "Dewalt" ? style.selected : ""}
+                >
+                  Dewalt
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Jefferson"
+                  className={brandFilter === "Jefferson" ? style.selected : ""}
+                >
+                  Jefferson
+                </button>
+              </div>
             </div>
           </div>
           <div className={`flex relative ${style.button}`}>
@@ -76,100 +207,44 @@ export default function FilterBar() {
             </div>
             <div className={style.order}>
               <button
-                onClick={() =>
-                  setSelected({
-                    ...selected,
-                    order: {
-                      ...selected.order,
-                      type: "",
-                      order: "",
-                    },
-                  })
-                }
+                onClick={() => handleOrderChange("", "")}
+                className={orderFilter === "" ? style.selected : ""}
               >
                 Default
               </button>
               <button
-                onClick={() =>
-                  setSelected({
-                    ...selected,
-                    order: {
-                      ...selected.order,
-                      type: "alpha",
-                      order: "A-Z",
-                    },
-                  })
-                }
+                onClick={() => handleOrderChange("alpha", "asc")}
+                className={orderFilter === "alpha-asc" ? style.selected : ""}
               >
                 Nombre (A-Z)
               </button>
               <button
-                onClick={() =>
-                  setSelected({
-                    ...selected,
-                    order: {
-                      ...selected.order,
-                      type: "alpha",
-                      order: "Z-A",
-                    },
-                  })
-                }
+                onClick={() => handleOrderChange("alpha", "desc")}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Nombre (Z-A)
               </button>
               <button
-                onClick={() =>
-                  setSelected({
-                    ...selected,
-                    order: {
-                      ...selected.order,
-                      type: "price",
-                      order: "asc",
-                    },
-                  })
-                }
+                onClick={() => handleOrderChange("price", "asc")}
+                className={orderFilter === "price-asc" ? style.selected : ""}
               >
                 Precio (Asc)
               </button>
               <button
-                onClick={() =>
-                  setSelected({
-                    ...selected,
-                    order: {
-                      ...selected.order,
-                      type: "price",
-                      order: "desc",
-                    },
-                  })
-                }
+                onClick={() => handleOrderChange("price", "desc")}
+                className={orderFilter === "price-desc" ? style.selected : ""}
               >
                 Precio (Des)
               </button>
               <button
-                onClick={() =>
-                  setSelected({
-                    ...selected,
-                    order: {
-                      ...selected.order,
-                      type: "rating",
-                      order: "asc",
-                    },
-                  })
-                }
+                onClick={() => handleOrderChange("rating", "asc")}
+                className={orderFilter === "rating-asc" ? style.selected : ""}
               >
                 Rating (Asc)
               </button>
               <button
-                onClick={() =>
-                  setSelected({
-                    ...selected,
-                    order: {
-                      ...selected.order,
-                      type: "rating",
-                      order: "desc",
-                    },
-                  })
-                }
+                onClick={() => handleOrderChange("rating", "desc")}
+                className={orderFilter === "rating-desc" ? style.selected : ""}
               >
                 Rating (Des)
               </button>
@@ -177,12 +252,11 @@ export default function FilterBar() {
           </div>
         </div>
       </div>
-
-      <div style={{ width: "500px" }}>
+      <div style={{ width: '400px' }}>
         <SearchBar
           title={title}
           onTitleChange={handleTitleChange}
-          style={{ width: "150px" }}
+          style={{ width: '150px' }}
         />
       </div>
     </AppProvider>
