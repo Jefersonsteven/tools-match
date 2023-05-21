@@ -19,7 +19,7 @@ function CreatePost() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    if (!userData?.firstname) router.push("/form/login");
+    if (!userData.firstname) router.push("/form/login");
   }, [userData, router]);
 
   function handleForm(event) {
