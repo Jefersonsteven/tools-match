@@ -11,7 +11,6 @@ import Swal from "sweetalert2";
 import { icons } from "react-icons";
 import { TfiPencilAlt } from "react-icons/tfi";
 
-
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
@@ -37,27 +36,25 @@ function Users() {
   const [showModal, setShowModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
-
   const handleDeleteUser = async (id) => {
     try {
       const userDelete = await axios.delete(`/api/admin/review/${id}`);
       console.log(userDelete.data);
       Swal.fire({
-        title: 'Reseña eliminada',
-        text: 'La reseña ha sido eliminada exitosamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
+        title: "Reseña eliminada",
+        text: "La reseña ha sido eliminada exitosamente",
+        icon: "success",
+        confirmButtonText: "Aceptar",
       });
       fetchUsers();
     } catch (error) {
       console.error(error);
       Swal.fire({
-        title: 'Error al Eliminar la reseña',
-        text: 'Ha ocurrido un error al eliminar la reseña, porfavor intenta de nuevo',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-      })
-
+        title: "Error al Eliminar la reseña",
+        text: "Ha ocurrido un error al eliminar la reseña, porfavor intenta de nuevo",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
     }
   };
 
@@ -116,12 +113,12 @@ function Users() {
   const handleDeleteClick = () => {
     if (selectedItems.length > 0) {
       Swal.fire({
-        title: '¿Estás seguro?',
+        title: "¿Estás seguro?",
         text: `Estás por eliminar ${selectedItems.length} reseña(s)`,
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Si, eliminar',
-        cancelButtonText: 'Cancelar',
+        confirmButtonText: "Si, eliminar",
+        cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
           handleDeleteSelected();
@@ -129,10 +126,10 @@ function Users() {
       });
     } else {
       Swal.fire({
-        title: 'No hay reseñas seleccionadas',
-        text: 'Por favor, selecciona al menos una reseña para eliminar',
-        icon: 'warning',
-        confirmButtonText: 'Aceptar',
+        title: "No hay reseñas seleccionadas",
+        text: "Por favor, selecciona al menos una reseña para eliminar",
+        icon: "warning",
+        confirmButtonText: "Aceptar",
       });
     }
   };
@@ -153,11 +150,6 @@ function Users() {
     setSelectedItems([]); // Limpiar los elementos seleccionados después de eliminarlos
   };
 
-
-
-
-
-
   return (
     <div className={style.contenedorPadre}>
       <div className={style.searchbarContainer}>
@@ -169,7 +161,9 @@ function Users() {
           <table className={style.table}>
             <thead>
               <tr>
-                <th><MdVerifiedUser /></th>
+                <th>
+                  <MdVerifiedUser />
+                </th>
 
                 <th>TITULO</th>
                 <th>CONTENIDO</th>
@@ -185,11 +179,14 @@ function Users() {
             <tbody className={style.bodyTabla}>
               {filteredUsuarios.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
-                  <td> <input
-                    type="checkbox"
-                    checked={selectedItems.includes(d.id)}
-                    onChange={() => handleSelectItem(d.id)}
-                  /></td>
+                  <td>
+                    {" "}
+                    <input
+                      type="checkbox"
+                      checked={selectedItems.includes(d.id)}
+                      onChange={() => handleSelectItem(d.id)}
+                    />
+                  </td>
 
                   <td>{d.title}</td>
                   <td>{d.content}</td>
@@ -209,13 +206,12 @@ function Users() {
                   </td>
                 </tr>
               ))}
-
-
-
             </tbody>
           </table>
         ) : (
-          <div className={style.noUsuarios}><p>No hay reseñas🚩</p></div>
+          <div className={style.noUsuarios}>
+            <p>No hay reseñas🚩</p>
+          </div>
         )}
         {editingUser && (
           <Modal show={showModal} onClose={() => setShowModal(false)}>
@@ -226,9 +222,8 @@ function Users() {
             />
           </Modal>
         )}
-
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
 
