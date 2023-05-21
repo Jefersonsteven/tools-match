@@ -5,8 +5,9 @@ import * as style from "./CreatePost.module.css";
 import { validatePost } from "./asset/validate";
 import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
-import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader/Loader";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 function CreatePost() {
   const { form, setForm, errors, setErrors, userId, userData } =
@@ -14,6 +15,8 @@ function CreatePost() {
   const [urlsImages, setUrlsImages] = useState([]);
   const [imagesPrint, setImagesPrint] = useState([]);
   const router = useRouter();
+  const [fetching, setFetching] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (!userData?.firstname) router.push("/form/login");
@@ -36,6 +39,7 @@ function CreatePost() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setFetching(true);
 
     if (!userData.zipCode || !userData.country) {
       Swal.fire({
@@ -60,8 +64,9 @@ function CreatePost() {
 
     if (!error && !post) {
       if (form.photo.length > 0) {
+        setMessage("Subiendo imagenes al servidor...");
         const urls = await uploadImages(form.photo, setUrlsImages);
-
+        setMessage("Creando publicación...");
         const newPost = { ...form };
         newPost.photo = urls;
         newPost.price = Math.floor(newPost.price);
@@ -108,6 +113,9 @@ function CreatePost() {
         setUrlsImages([]);
       }
     }
+
+    setMessage("");
+    setFetching(false);
   }
 
   return (
@@ -202,6 +210,14 @@ function CreatePost() {
           </div>
           <div className={style.button}>
             <button onClick={handleSubmit}>Publicar</button>
+          </div>
+          <div className={style.loaderContainer}>
+            {fetching && (
+              <>
+                <Loader />
+                <p>{message && message}</p>
+              </>
+            )}
           </div>
         </form>
       </section>

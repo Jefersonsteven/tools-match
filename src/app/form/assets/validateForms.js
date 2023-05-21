@@ -34,13 +34,25 @@ export function validateSignIn(inputs) {
     flag: false,
   };
 
-  !notNumbers.test(inputs.name) && (errors.name = "Inválido");
+  if (!notNumbers.test(inputs.name)) {
+    errors.name = "Inválido";
+    errors.flag = true;
+  }
 
-  !inputs.name && (errors.name = "");
+  if (!inputs.name) {
+    errors.name = "";
+    errors.flag = true;
+  }
 
-  !notNumbers.test(inputs.surname) && (errors.surname = "Inválido");
+  if (!notNumbers.test(inputs.surname)) {
+    errors.surname = "Inválido";
+    errors.flag = true;
+  }
 
-  !inputs.surname && (errors.surname = "");
+  if (!inputs.surname) {
+    errors.surname = "";
+    errors.flag = true;
+  }
 
   if (!emailRegex.test(inputs.email)) {
     errors.email = "Email inválido";

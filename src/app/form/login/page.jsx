@@ -137,7 +137,10 @@ export default function Login() {
         </label>
       </div>
       <div className={styles.submitContainer}>
-        <button disabled={errors.flag ? true : fetchingData ? true : false}>
+        <button
+          className={styles.buttonSubmit}
+          disabled={errors.flag ? true : fetchingData ? true : false}
+        >
           Iniciar sesión
         </button>
         <span>|</span>
