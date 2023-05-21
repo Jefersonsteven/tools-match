@@ -3,47 +3,56 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
-    const { order, type, category } = req.query;
-    try {
-      let datos;
-      if(!order) {
-        res.status(400).json({message: "the order parameter must exist"})
-      }
-      if (type && category) {
-        datos = await prisma.post.findMany({
-          where: {
-            type: type,
-            category: category
-          },
-        });
-      } else if (category && !type) {
-        datos = await prisma.post.findMany({
-          where: {
-            category: category
-          },
-        });
-      } else if (type) {
-        datos = await prisma.post.findMany({
-          where: {
-            type: type
-          },
-        });
-      } else if (!type && !category) {
-        datos = await prisma.post.findMany({});
-      }
+  if (req.method !== 'GET') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
 
-      datos.sort((a, b) => a.title.localeCompare(b.title, 'es', { sensitivity: 'base' }));
+  const { order, type, category, brand } = req.query;
 
-      if (order && order.toLowerCase() === 'z-a') {
-        datos.reverse();
-      }
+  if (!order) {
+    return res.status(400).json({ message: 'The order parameter must exist' });
+  }
 
-      res.status(200).json(datos);
-    } catch (error) {
-      res.status(500).json({ message: "error server internal" });
+  try {
+    const where = {
+      hidden: false
+    };
+
+    if (type) where.type = type;
+    if (category) where.category = category;
+    if (brand) where.brand = brand;
+
+    let datos;
+
+    if (type && category && brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (!type && category && brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (type && !category && brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (category && !type && !brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (type && !brand && !category) {
+      datos = await prisma.post.findMany({ where });
+    } else if (type && !brand && category) {
+      datos = await prisma.post.findMany({ where });
+    } else if (!type && !category && brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (!type && !category && !brand) {
+      datos = await prisma.post.findMany({ where });
+    } else {
+      return res.status(400).json({ message: 'Invalid query parameters' });
     }
-  } else {
-    res.status(405).json({ message: 'method not allowed' });
+
+    datos.sort((a, b) => a.title.localeCompare(b.title, 'es', { sensitivity: 'base' }));
+
+    if (order.toLowerCase() === 'z-a') {
+      datos.reverse();
+    }
+
+    return res.status(200).json(datos);
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
   }
 }
+

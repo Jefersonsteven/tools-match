@@ -6,6 +6,7 @@ export default async function handler(req, res) {
     try {
       const posts = await prisma.post.findMany({
         where: {
+          hidden:false,
           title: {
             contains: id.toLowerCase(), 
             mode: "insensitive", 
