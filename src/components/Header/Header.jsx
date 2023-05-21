@@ -59,7 +59,7 @@ function Header() {
     <div>
       <header className={styles.header}>
         <figure className={styles.logo}>
-          <Link href="/">
+          <Link href="/home">
             <Image
               src="/../public/images/logo/toolsMatch.jpg"
               alt="logo"

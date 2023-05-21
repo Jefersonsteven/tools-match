@@ -4,6 +4,8 @@ import style from "./Terms.module.css";
 import React, { useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { IoCaretBack } from "react-icons/io5";
 
 function Terms() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,6 +13,7 @@ function Terms() {
   const [messageText, setMessageText] = useState("");
   const [showButtons, setShowButtons] = useState(true);
   const [showQuestion, setShowQuestion] = useState(true);
+  const router = useRouter();
 
   const handleButtonClick = async (message) => {
     setShowMessage(true);
@@ -19,8 +22,18 @@ function Terms() {
     setShowQuestion(false);
   };
 
+  function handleBack() {
+    router.back();
+  }
+
   return (
     <div className={style.termsContainer}>
+      <div onClick={handleBack} className={style.backContainer}>
+        <div className={style.back}>
+          <IoCaretBack size={50} color="var(--white)" />
+        </div>
+        <h3>Volver</h3>
+      </div>
       <div id="terms-and-conditions" className={style.terms}>
         <div className={style.termsHeader}>
           <h2 className={style.termsTitle}>

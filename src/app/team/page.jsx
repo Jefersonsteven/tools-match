@@ -1,8 +1,13 @@
+"use client";
+
 import style from "./Team.module.css";
 import Image from "next/image";
-import Footer from "../../components/footer/Footer";
+import { useRouter } from "next/navigation";
+import { IoCaretBack } from "react-icons/io5";
 
 export default function Team() {
+  const router = useRouter();
+
   const team = [
     {
       name: "Axel",
@@ -38,8 +43,18 @@ export default function Team() {
     },
   ];
 
+  function handleBack() {
+    router.back();
+  }
+
   return (
     <div>
+      <div onClick={handleBack} className={style.backContainer}>
+        <div className={style.back}>
+          <IoCaretBack size={50} color="var(--white)" />
+        </div>
+        <h3>Volver</h3>
+      </div>
       <section className={style.teamContainer}>
         <div className={style.infoTeam}>
           <p className={style.teamSubTitle}>
