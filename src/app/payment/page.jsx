@@ -173,13 +173,13 @@ function Page() {
             {cart.items.map((item) => (
               <div key={item.id} className={styles.item}>
                 <h4>{item.title}</h4>
-                <h4>{item.price}</h4>
+                <h4>${item.price}</h4>
               </div>
             ))}
           </div>
           <div className={styles.total}>
             <h3>TOTAL:</h3>
-            <h3>{cart.items.reduce((acc, item) => acc + item.price, 0)}</h3>
+            <h3>${cart.items.reduce((acc, item) => acc + item.price, 0)}</h3>
           </div>
         </div>
         <div className={styles.gateway}>

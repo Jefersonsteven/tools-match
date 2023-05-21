@@ -75,8 +75,6 @@ function CreatePost() {
         });
         const data = await post.json();
 
-        console.log(data);
-
         if (data.id) {
           Swal.fire({
             title: "¡Publicación creada!",

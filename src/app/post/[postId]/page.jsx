@@ -25,7 +25,7 @@ function PostDetail({}) {
   };
 
   function addCart() {
-    if (!cart.items.some((item) => (item.id = postDetail.id))) {
+    if (!cart.items.some((item) => item.id === postDetail.id)) {
       setCart({
         count: cart.count + 1,
         items: [...cart.items, postDetail],
@@ -165,11 +165,8 @@ function PostDetail({}) {
               {userId === pd.author.id && (
                 <button onClick={handleDeletePost}>Eliminar</button>
               )}
-              {userId !== pd.author.id && pd.type === "SALE" && (
+              {userId !== pd.author.id && (
                 <button onClick={addCart}>Agregar al carrito</button>
-              )}
-              {userId !== pd.author.id && pd.type === "RENTAL" && (
-                <button>Arrendar</button>
               )}
             </section>
           </>
