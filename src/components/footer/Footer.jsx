@@ -12,12 +12,13 @@ export default function Footer() {
     <footer className={style.footer}>
       <div className={style.footerLogo}>
         <Link href="/home">
-          <Image
+          Tools Match
+          {/* <Image
             src="/../public/images/logo/toolsMatch.jpg"
             alt="logo"
             width={70}
             height={70}
-          />
+          /> */}
         </Link>
       </div>
       <div className={style.footerRights}>

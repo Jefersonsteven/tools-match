@@ -34,6 +34,9 @@ function Page() {
 
     const status = params.get("status");
     if (status === "approved") {
+      
+      axios.post('/api/order')
+
       setCart({
         count: 0,
         items: [],
@@ -99,28 +102,6 @@ function Page() {
     window.location.href = LinkDePagoSandbox;
   }
 
-  // const temp = {
-  //   items: [
-  //     {
-  //       title: "Martillo",
-  //       content: "Martillo usada 3 veces",
-  //       quantity: 5,
-  //       unit_price: 2,
-  //       currency_id: "USD",
-  //     },
-  //     {
-  //       title: "Destornillador",
-  //       description: "En buen estado, se utilizó una única vez",
-  //       quantity: 1,
-  //       unit_price: 5,
-  //       currency_id: "USD",
-  //     },
-  //   ],
-  //   payer: {
-  //     name: "test_user_1555855231@testuser.com",
-  //   },
-  // };
-
   return (
     <main className={styles.container}>
       <section className={styles.form_container}>
@@ -173,13 +154,13 @@ function Page() {
             {cart.items.map((item) => (
               <div key={item.id} className={styles.item}>
                 <h4>{item.title}</h4>
-                <h4>{item.price}</h4>
+                <h4>${item.price}</h4>
               </div>
             ))}
           </div>
           <div className={styles.total}>
             <h3>TOTAL:</h3>
-            <h3>{cart.items.reduce((acc, item) => acc + item.price, 0)}</h3>
+            <h3>${cart.items.reduce((acc, item) => acc + item.price, 0)}</h3>
           </div>
         </div>
         <div className={styles.gateway}>

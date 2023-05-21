@@ -81,12 +81,17 @@
 
 .description_categories {
     display: flex;
-    gap: 8px;
+    gap: 30px;
     width: 100%;
     padding: 15px;
     background-color: var(--black-light);
     border-radius: 5px;
     font-weight: bold;
+}
+
+.description_categories div {
+    display: flex;
+    gap: 5px;
 }
 
 .description_categories h5 {
