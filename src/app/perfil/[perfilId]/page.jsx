@@ -145,7 +145,11 @@ export default function PerfilUsuario() {
                     );
                   })
                 ) : (
-                  <p>No hay productos publicados</p>
+                  <div class="flex items-center justify-center ">
+                    <p className="text-2xl text-center">
+                      No tienes herramientas publicadas
+                    </p>
+                  </div>
                 )}
               </div>
             </section>

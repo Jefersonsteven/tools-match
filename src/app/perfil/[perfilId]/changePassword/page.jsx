@@ -91,7 +91,7 @@ const ChangePassword = () => {
       if (!validatePassword.error) {
         let setPassword = await newPetition(
           "PUT",
-          `/api/user/${userData.email}`,
+          `/api/forgetPassword/${userData.email}`,
           { password: form.newPassword }
         );
         console.log(setPassword);

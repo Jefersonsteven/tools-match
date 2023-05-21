@@ -44,9 +44,6 @@
     font-weight: 700;
 }
 
-.payment {
-}
-
 .cart {
     background-color: var(--black-light);
 }
@@ -57,6 +54,7 @@
     justify-content: space-between;
     border-radius: 20px;
     padding: 10px 25px;
+    gap: 20px;
 }
 
 .cartItems {
@@ -101,4 +99,12 @@
 
 .mercadopago:hover > svg path {
     fill: var(--black);
+}
+
+.item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    color: var(--white);
+    font-weight: 700;
 }
