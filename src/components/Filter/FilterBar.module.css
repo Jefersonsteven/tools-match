@@ -27,10 +27,15 @@
     flex-direction: column;
 }
 
+button.selected {
+    background-color: white;
+    color: black;
+  }
 
 
 
 
+/* /////////////////////////////////////////////////////////// */
 
 
 /* .window,
