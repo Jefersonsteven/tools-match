@@ -1,0 +1,126 @@
+.contenedorPadre {
+    display: flex;
+  }
+  
+  .form {
+      display: grid;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px;
+      background-color: #BDCFBA;
+    }
+    
+  .label {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    
+  .input {
+      padding: 5px;
+      background-color: #FFFFFF;
+      opacity: 0.5;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+  
+    .input-invalido {
+      border-color: red;
+    }
+    
+  .buttonCancelar {
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 58px;
+      border: 1px solid #F0960E;
+      font-size: 14px;
+      color: #DCF1D9;
+      background-color: #F0960E;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  
+    .buttonCancelar:hover {
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 58px;
+      border: 1px solid #F0960E;
+      font-size: 14px;
+      color: #131713;
+      background-color: #dcf1d944;
+      cursor: pointer;
+    }
+  
+  
+    
+  .buttonGuardar {
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 58px;
+      border: 1px solid #131713;
+      font-size: 14px;
+      color: #DCF1D9;
+      cursor: pointer;
+      background-color: #131713;
+      font-weight: bold;
+    }
+  
+    .buttonGuardar:hover {
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 58px;
+      border: 1px solid #131713;
+      font-size: 14px;
+      color: #131713;
+      cursor: pointer;
+      background-color: #dcf1d944;
+    }
+  
+  
+  
+  /* .formContainer{
+      display: flex;
+      position: absolute;
+      width: 552px;
+      height: 366px;
+      left: 532px;
+      top: 158px;
+      background-color: #8ca388;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #131713;
+      border-radius: 12px;
+      box-shadow: rgba(0, 0, 0, 0.8) 15px 15px 50px;
+  }
+  
+  .formHeader {
+      padding-bottom: 10px;
+  }
+  
+  .input textarea{
+      border: 0;
+      outline: none;
+      width: 280px;
+  }
+  
+  .field{
+      border: solid 1px #ccc;
+      padding: 10px;
+  
+      
+  }
+  
+  .field:focus{
+      border-color: #18A383;
+  }
+  
+  .center-content{
+      text-align: center;
+  }
+  
+  .submitButton { 
+      
+  }
+   */
+  

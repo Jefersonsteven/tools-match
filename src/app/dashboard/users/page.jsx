@@ -12,6 +12,8 @@ import Swal from "sweetalert2";
 import { icons } from "react-icons";
 import { TiDelete, TiPencil } from "react-icons/ti";
 
+import Loader from "@/components/Loader/Loader";
+
 
 /*PARA PAGINATED*/
 import Paginated from "@/components/paginated/Paginated";
@@ -40,11 +42,21 @@ function Users() {
   const [searchTerm, setSearchTerm] = useState("");
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
+
+
   const [editingUser, setEditingUser] = useState(null);
+
+
   const [showModal, setShowModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedUserCount, setSelectedUserCount] = useState(0);
   const [areButtonsDisabled, setAreButtonsDisabled] = useState(true);
+
+  const [loading, setLoading] = useState(false);
+
+
+
+  const[admin, setAdmin] = useState(false);
 
   
 
@@ -68,6 +80,7 @@ function Users() {
 
   const fetchUsers = async () => {
     try {
+      setLoading(true);
       const response = await axios("/api/admin/user"); //PAGINATED
       const users = await response.data;
 
@@ -78,8 +91,10 @@ function Users() {
         setColumns(columns);
         setRecords(users);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error);
+      setLoading(false);
     }
   };
 
@@ -103,9 +118,11 @@ function Users() {
       firstname: formData.get("firstname"),
       lastname: formData.get("lastname"),
       phoneNumber: formData.get("phonenumber"),
-      // country: formData.get("country"),
-      // admin: formData.get("admin"),
+      country: formData.get("country"),
+      admin,
     };
+
+    console.log(updatedUser);
 
     Swal.fire({
       title: "¿Estás seguro de los cambios?",
@@ -234,38 +251,38 @@ function Users() {
 
   const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
 
-  const handleAdminClick = (firstname, id) => {
-    Swal.fire({
-      title: "¿Estás seguro de asignar el rol de administrador?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, asignar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(`/api/admin/user/${id}`, { admin: true })
-          .then((response) => {
-            // Actualizar la lista de usuarios en el estado local
-            setRecords((prevRecords) =>
-              prevRecords.map((user) =>
-                user.id === id ? { ...user, admin: true } : user
-              )
-            );
+  // const handleAdminClick = (firstname, id) => {
+  //   Swal.fire({
+  //     title: "¿Estás seguro de asignar el rol de administrador?",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#d33",
+  //     cancelButtonColor: "#3085d6",
+  //     confirmButtonText: "Sí, asignar",
+  //     cancelButtonText: "Cancelar",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axios
+  //         .put(`/api/admin/user/${id}`, { admin: true })
+  //         .then((response) => {
+  //           // Actualizar la lista de usuarios en el estado local
+  //           setRecords((prevRecords) =>
+  //             prevRecords.map((user) =>
+  //               user.id === id ? { ...user, admin: true } : user
+  //             )
+  //           );
   
-            Swal.fire({
-              title: "¡Rol de administrador asignado correctamente!",
-              icon: "success",
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    });
-  };
+  //           Swal.fire({
+  //             title: "¡Rol de administrador asignado correctamente!",
+  //             icon: "success",
+  //           });
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //         });
+  //     }
+  //   });
+  // };
 
 
 
@@ -282,7 +299,19 @@ function Users() {
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
 
+    
+      {loading ? (
 
+
+<div className="loader-container">
+  <Loader className="loader" />
+</div>
+      
+    ) : ( <div>
+
+   
+      
+        
       {selectedUserCount > 1 && (
       <div className={style.checkbox_padre}>
       <h2>Hay {selectedUserCount} usuarios seleccionados</h2>
@@ -295,7 +324,7 @@ function Users() {
       </div>
       )}
 
-      
+    
       <div className={style.contenedorTable}>
         {filteredUsuarios.length > 0 ? (
           <table className={style.table}>
@@ -323,13 +352,13 @@ function Users() {
 
 
             <tbody className={style.bodyTabla}>
-              {displayedUsers.map((d, i) => (
-                <tr className={style.namesTable} key={i}>
+              {displayedUsers.map((d) => (
+                <tr className={style.namesTable} key={d.id}>
                   <td>
                     <input
                       type="checkbox"
-                      name={`fila${i}`}
-                      checked={selectedUsers.includes(`fila${i}`)}
+                      name={`fila${d.id}`}
+                      checked={selectedUsers.includes(`fila${d.id}`)}
                       onChange={handleCheckboxChange}
                     />
                   </td>
@@ -345,7 +374,7 @@ function Users() {
                   <td>{d.reviews.length}</td>
                   <td>{d.received.length}</td>
                   <td>{d.country ? d.country : "?"}</td>
-                  <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td>
+                  {/* <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td> */}
 
 
                   <td className={style.td_button}>
@@ -378,14 +407,24 @@ function Users() {
           </div>
         )}
         {editingUser && (
+
+
+
           <Modal show={showModal} onClose={() => setShowModal(false)}>
+
             <UserForm
+              admin={admin}
+              setAdmin={setAdmin}
               editingUser={editingUser}
               handleSubmit={handleSubmit}
               setEditingUser={setEditingUser}
             />
           </Modal>
         )}
+
+
+
+
       </div>
       {/*--------- PAGINATED ---------- */}
       {filteredUsuarios.length > 0 && (
@@ -398,6 +437,7 @@ function Users() {
           totalPagesProp={Math.ceil(perPage.length / perPage)}
         />
       )}
+ </div>)}
       {/*------------------------------ */}
     </div>
   );

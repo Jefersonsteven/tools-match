@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import style from "./form.module.css"
+import style from "./PublicationForm.module.css"
 import { useState } from "react";
 
 function PublicationForm({editingUser, handleSubmit, setEditingUser}) {

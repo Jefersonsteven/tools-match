@@ -1,12 +1,18 @@
 "use client"
 
-import React from "react";
+import React, { useContext } from "react";
 import style from "./form.module.css"
 import { useState } from "react";
+import { AppContext } from "@/context/AppContext";
 
-function UserForm({editingUser, handleSubmit, setEditingUser}) {
+function UserForm({editingUser, handleSubmit, setEditingUser, admin, setAdmin}) {
+
+  const {countries} = useContext(AppContext)
 
   const [error, setError] = useState("");
+
+
+
 
 
   const handleClick = (e) => {
@@ -54,13 +60,25 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
     if (error) {
       return;
     }
+    console.log("Valores enviados:", editingUser);
 
     handleSubmit(e);
   };
 
+
+
+
+
   const handleAdminChange = (e) => {
-    setEditingUser({ ...editingUser, admin: e.target.value === "admin" });
+    if(editingUser.admin === true)
+    setEditingUser({...editingUser, admin: false })
+    else setEditingUser({...editingUser, admin: true });
   };
+
+
+
+
+
 
 
 
@@ -99,36 +117,67 @@ function UserForm({editingUser, handleSubmit, setEditingUser}) {
           maxLength={15}
           required
        />
-       {/* <label className={style.label} htmlFor="country">Pais:</label>
-  <input className={style.input}
-         type="text"
-         id="country"
-         name="country"
-         defaultValue={editingUser.country}
-       />
-  <label className={style.label}>Rango:</label>
-        <label className={style.checkboxLabel}>
-          Admin:
-          <input
-            className={style.checkbox}
-            type="radio"
-            name="admin"
-            value="admin"
-            checked={editingUser.admin}
-            onChange={handleAdminChange}
-          />
-        </label>
-        <label className={style.checkboxLabel}>
-          Usuario:
-          <input
-            className={style.checkbox}
-            type="radio"
-            name="admin"
-            value="usuario"
-            checked={!editingUser.admin}
-            onChange={handleAdminChange}
-          />
-        </label> */}
+       <label className={style.label} htmlFor="country">País:</label>
+       <select
+  className={style.input}
+  id="country"
+  name="country"
+  defaultValue={editingUser.country} // Asegúrate de que el valor de `editingUser.country` sea el código de país, por ejemplo "AR"
+  onChange={(e) => {
+    const countryCode = e.target.value;
+    setEditingUser({ ...editingUser, country: countryCode });
+  }}
+>
+  {Object.entries(countries).map(([countryCode, countryName]) => (
+    <option key={countryCode} value={countryCode}>
+      {countryName}
+    </option>
+  ))}
+</select>
+
+
+
+
+
+
+<label className={style.label}>Rango:</label>
+<label className={style.checkboxLabel}>
+  Admin:
+  <input
+    className={style.checkbox}
+    type="checkbox" // Cambiado a radio
+    name="admin"
+    checked={editingUser.admin}
+    onChange={handleAdminChange}
+  />
+</label>
+
+
+
+
+
+{/* <label className={style.checkboxLabel}>
+  Usuario:
+  <input
+    className={style.checkbox}
+    type="radio" // Cambiado a radio
+    name="admin"
+    value={ false } // Cambiado a "false"
+    checked={!editingUser.admin}
+    onChange={handleAdminChange}
+  />
+</label> */}
+
+
+
+
+
+
+
+
+
+
+
   <button className={style.buttonGuardar} type="submit">Guardar</button>
   <button className={style.buttonCancelar}type="button" onClick={() => setEditingUser(null)}>
   Cancelar
