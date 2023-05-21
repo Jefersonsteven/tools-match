@@ -165,7 +165,7 @@ export default function FilterBar() {
                 </button>
                 <button
                   onClick={handleBrandChange}
-                  value="Phillips"
+                  value="philips"
                   className={brandFilter === "Phillips" ? style.selected : ""}
                 >
                   Phillips
@@ -186,17 +186,66 @@ export default function FilterBar() {
                 </button>
                 <button
                   onClick={handleBrandChange}
-                  value="Dewalt"
+                  value="dewalt"
                   className={brandFilter === "Dewalt" ? style.selected : ""}
                 >
                   Dewalt
                 </button>
                 <button
                   onClick={handleBrandChange}
-                  value="Jefferson"
-                  className={brandFilter === "Jefferson" ? style.selected : ""}
+                  value="skil"
+                  className={brandFilter === "Skil" ? style.selected : ""}
                 >
-                  Jefferson
+                  Skil
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="castellari"
+                  className={brandFilter === "castellari" ? style.selected : ""}
+                >
+                  Castellari
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="dremel"
+                  className={brandFilter === "dremel" ? style.selected : ""}
+                >
+                  Dremel
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="fischer"
+                  className={brandFilter === "fischer" ? style.selected : ""}
+                >
+                  Fischer
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="karcher"
+                  className={brandFilter === "karcher" ? style.selected : ""}
+                >
+                  Karcher
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="libus"
+                  className={brandFilter === "libus" ? style.selected : ""}
+                >
+                  Libus
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="makita"
+                  className={brandFilter === "makita" ? style.selected : ""}
+                >
+                  Makita
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="truper"
+                  className={brandFilter === "truper" ? style.selected : ""}
+                >
+                  Truper
                 </button>
               </div>
             </div>
