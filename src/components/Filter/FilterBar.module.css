@@ -28,7 +28,7 @@
 }
 
 button.selected {
-    background-color: white;
+    background-color: rgba(245, 245, 245, 0.925);
     color: black;
   }
 
