@@ -20,12 +20,14 @@ export default function PerfilUsuario() {
   const { userId, userData, countries } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
   const [authors, setAuthors] = useState({});
+  const [userOrders, setUserOrders] = useState([]);
+
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/admin/user/${userId}`
+          `/api/admin/user/${userId}`
         );
 
         const receivedReviews = response.data.received;
@@ -46,7 +48,7 @@ export default function PerfilUsuario() {
 
       const fetchedAuthors = await Promise.all(
         authorIds.map((authorId) =>
-          axios.get(`http://localhost:3000/api/admin/user/${authorId}`)
+          axios.get(`/api/admin/user/${authorId}`)
         )
       );
 
@@ -59,12 +61,39 @@ export default function PerfilUsuario() {
   fetchAuthors();
 }, [reviews]);
 
+useEffect(() => {
+  const fetchUserOrders = async () => {
+    try {
+      const response = await axios.get(`/api/admin/user/${userId}`);
+      const userData = response.data;
+      const orders = userData.orders || [];
+      
+      const orderDetailsPromises = orders.map(async (order) => {
+        const postId = order.postId;
+        const postResponse = await axios.get(`/api/post/${postId}`);
+        const postDetails = postResponse.data;
+        return {
+          ...order,
+          title: postDetails.title,
+          type: postDetails.type,
+          price: postDetails.price,
+        };
+      });
+      
+      const orderDetails = await Promise.all(orderDetailsPromises);
+      setUserOrders(orderDetails);
+    } catch (error) {
+      console.error("Error fetching user orders:", error);
+    }
+  };
+
+  fetchUserOrders();
+}, [userId]);
   
 
   useEffect(() => {
     !userData && push("/");
   }, [userData, push]);
-
 
 
   return (
@@ -152,7 +181,7 @@ export default function PerfilUsuario() {
             <section>
               <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
               <div className="w-full items-center ">
-                <CardsOrders />
+              <CardsOrders userOrders={userOrders} />
               </div>
             </section>
           </div>
