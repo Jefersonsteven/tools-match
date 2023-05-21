@@ -37,6 +37,7 @@ export default function Footer() {
               alt="mail"
               width={30}
               height={30}
+              className={style.contactMail}
             />
           </Link>
           <Link href="https://www.twitter.com/toolsmatch/">
@@ -45,6 +46,7 @@ export default function Footer() {
               alt="mail"
               width={30}
               height={30}
+              className={style.contactTwitter}
             />
           </Link>
         </div>
