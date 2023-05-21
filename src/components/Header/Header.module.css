@@ -96,6 +96,7 @@
 /* ---------- CARRITO DE COMPRA --------- */
 .cart {
   position: relative;
+  display: inline-block;
 }
 .cartCount {
   position: absolute;
@@ -110,4 +111,23 @@
   width: 20px;
   height: 20px;
   text-align: center;
+}
+.cartText {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.cart:hover .cartText {
+  opacity: 1;
+  visibility: visible;
 }

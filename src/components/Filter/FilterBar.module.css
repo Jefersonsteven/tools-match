@@ -27,10 +27,15 @@
     flex-direction: column;
 }
 
+button.selected {
+    background-color: rgba(245, 245, 245, 0.886);
+    color: black;
+  }
 
 
 
 
+/* /////////////////////////////////////////////////////////// */
 
 
 /* .window,

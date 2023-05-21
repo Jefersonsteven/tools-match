@@ -110,8 +110,8 @@
     color: #fff;
 }
 .cartButton button{
-    width: 202px;
+    width: 208px;
 }
 .cartButton button:nth-child(1):hover{
-    width: 204px;
+    width: 208px;
 }

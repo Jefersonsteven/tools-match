@@ -26,7 +26,31 @@ export default function Footer() {
       <div className={style.footerTerms}>
         <Link href="/terms">Términos y Condiciones</Link>
       </div>
-      {/* {termsOpen && <Terms onClose={() => setTermsOpen(false)} />} */}
+      <div className={style.contact}>
+        <div className={style.contactTitle}>
+          <p>Contacto</p>
+        </div>
+        <div className={style.contactInfo}>
+          <Link href="mailto:toolsmatch@gmail.com">
+            <Image
+              src="/images/icons/mail.png"
+              alt="mail"
+              width={30}
+              height={30}
+              className={style.contactMail}
+            />
+          </Link>
+          <Link href="https://www.twitter.com/toolsmatch/">
+            <Image
+              src="/images/icons/twitter.png"
+              alt="mail"
+              width={30}
+              height={30}
+              className={style.contactTwitter}
+            />
+          </Link>
+        </div>
+      </div>
     </footer>
   );
 }

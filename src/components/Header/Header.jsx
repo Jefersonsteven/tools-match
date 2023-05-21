@@ -59,7 +59,7 @@ function Header() {
     <div>
       <header className={styles.header}>
         <figure className={styles.logo}>
-          <Link href="/">
+          <Link href="/home">
             <Image
               src="/../public/images/logo/toolsMatch.jpg"
               alt="logo"
@@ -109,31 +109,25 @@ function Header() {
                         submenu ? styles.openSubmenu : styles.closeSubmenu
                       }
                     >
-                      {userData && (
-                        <li>
-                          <Link href={`/perfil/${userId}`}>Perfil</Link>
-                        </li>
-                      )}
-                      {userData && (
-                        <li>
-                          <Link href={`/perfil/${userId}/changePassword`}>
-                            Cambiar contraseña
-                          </Link>
-                        </li>
-                      )}
                       <li onClick={handleCloseSession}>
                         <Link href={userData ? "/" : "/form/login"}>
                           {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
                         </Link>
                       </li>
+                      {userData && (
+                        <li>
+                          <Link href={`/perfil/${userId}`}>Perfil</Link>
+                        </li>
+                      )}
                     </ul>
                   </div>
 
                   <Link href="/cart" className={styles.cart}>
                     <FaShoppingCart size="25" color="white" />
-                    {cart?.count > 0 && (
+                    {cart.count > 0 && (
                       <span className={styles.cartCount}>{cart.count}</span>
                     )}
+                    <span className={styles.cartText}>Carrito de compras</span>
                   </Link>
                 </div>
               )}
