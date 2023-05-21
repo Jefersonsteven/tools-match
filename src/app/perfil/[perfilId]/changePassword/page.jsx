@@ -18,7 +18,7 @@ const ChangePassword = () => {
     endSession,
     removeFromLocalStorage,
   } = useContext(AppContext);
-  const { push } = useRouter();
+  const { push, back } = useRouter();
 
   const [form, setForm] = useState({
     currentPassword: "",
@@ -138,11 +138,18 @@ const ChangePassword = () => {
     }
   };
 
+  function handleBack() {
+    back();
+  }
+
   return (
     <>
-      <Link href={`/perfil/${userId}/edit`}>
-        <IoCaretBack size={50} className={styles.IoCaretBack} />
-      </Link>
+      <div onClick={handleBack} className={styles.backContainer}>
+        <div className={styles.back}>
+          <IoCaretBack size={50} color="var(--white)" />
+        </div>
+        <h3>Volver</h3>
+      </div>
       <section className={styles.section}>
         <form className={styles.formChangePassword} onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>
