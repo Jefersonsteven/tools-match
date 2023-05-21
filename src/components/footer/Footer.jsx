@@ -31,7 +31,10 @@ export default function Footer() {
           <p>Contacto</p>
         </div>
         <div className={style.contactInfo}>
-          <Link href="mailto:toolsmatch@gmail.com">
+          <Link
+            href="mailto:toolmatchnotificaciones@gmail.com.com"
+            target="blank"
+          >
             <Image
               src="/images/icons/mail.png"
               alt="mail"
