@@ -40,7 +40,7 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
       rating,
       content,
       authorId: selectedOrder.userId,
-      postId: selectedOrder.postId,
+      postId: selectedOrder.postId.toString(),
       receivedId,
       title,
     };
@@ -59,6 +59,7 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
         onCloseModal();
       } else {
         console.error("Error al enviar la reseña");
+        console.log(reviewData)
       }
 
       setRating(0);

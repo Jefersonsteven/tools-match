@@ -14,6 +14,10 @@ export default function FilterBar() {
     const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
     const response = await fetch(`/api/filters/title/${newTitle}`);
+    if (newTitle.length==0) {
+      setSelected({...selected,title:""})
+    }
+    
     const data = await response.json();
     setCards(data || []);
   };
