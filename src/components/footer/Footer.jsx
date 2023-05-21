@@ -27,21 +27,27 @@ export default function Footer() {
         <Link href="/terms">Términos y Condiciones</Link>
       </div>
       <div className={style.contact}>
-        <p>Contacto</p>
-        <Link href="mailto:toolsmatch.gmail.com">
-          <Image
-            src="/images/icons/mail.png"
-            alt="mail"
-            width={30}
-            height={30}
-          />
-          <Image
-            src="/images/icons/twitter.png"
-            alt="mail"
-            width={30}
-            height={30}
-          />
-        </Link>
+        <div className={style.contactTitle}>
+          <p>Contacto</p>
+        </div>
+        <div className={style.contactInfo}>
+          <Link href="mailto:toolsmatch@gmail.com">
+            <Image
+              src="/images/icons/mail.png"
+              alt="mail"
+              width={30}
+              height={30}
+            />
+          </Link>
+          <Link href="https://www.twitter.com/toolsmatch/">
+            <Image
+              src="/images/icons/twitter.png"
+              alt="mail"
+              width={30}
+              height={30}
+            />
+          </Link>
+        </div>
       </div>
     </footer>
   );

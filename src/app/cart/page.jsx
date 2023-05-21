@@ -7,7 +7,7 @@ import Image from "next/image";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { IoCaretBack } from "react-icons/io5";
+import Back from "@/components/back/Back";
 
 export default function Page() {
   const { cart, setCart, userData } = useContext(AppContext);
@@ -37,18 +37,9 @@ export default function Page() {
     });
   }
 
-  function handleBack() {
-    router.back();
-  }
-
   return (
     <main className={style.container}>
-      <div onClick={handleBack} className={style.backContainer}>
-        <div className={style.back}>
-          <IoCaretBack size={50} color="var(--white)" />
-        </div>
-        <h3>Volver</h3>
-      </div>
+      <Back />
       <section className={style.cartContainer}>
         <h2>Carrito de Compras</h2>
         <div className={style.cart}>

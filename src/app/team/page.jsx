@@ -3,7 +3,7 @@
 import style from "./Team.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { IoCaretBack } from "react-icons/io5";
+import Back from "@/components/back/Back";
 
 export default function Team() {
   const router = useRouter();
@@ -43,18 +43,9 @@ export default function Team() {
     },
   ];
 
-  function handleBack() {
-    router.back();
-  }
-
   return (
     <div>
-      <div onClick={handleBack} className={style.backContainer}>
-        <div className={style.back}>
-          <IoCaretBack size={50} color="var(--white)" />
-        </div>
-        <h3>Volver</h3>
-      </div>
+      <Back />
       <section className={style.teamContainer}>
         <div className={style.infoTeam}>
           <p className={style.teamSubTitle}>

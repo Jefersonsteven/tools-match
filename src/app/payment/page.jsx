@@ -8,6 +8,7 @@ import { AppContext } from "@/context/AppContext";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { IoCaretBack } from "react-icons/io5";
+import Back from "@/components/back/Back";
 
 function Page() {
   const [disabled, setDisabled] = useState(true);
@@ -128,12 +129,7 @@ function Page() {
 
   return (
     <div>
-      <div onClick={handleBack} className={styles.backContainer}>
-        <div className={styles.back}>
-          <IoCaretBack size={50} color="var(--white)" />
-        </div>
-        <h3>Volver</h3>
-      </div>
+      <Back />
       <main className={styles.container}>
         <section className={styles.form_container}>
           <form className={styles.form}>
