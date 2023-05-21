@@ -8,6 +8,7 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
   const [isOpen, setIsOpen] = useState(true);
   const currentDate = new Date().toISOString().split("T")[0];
   const [receivedId, setReceivedId] = useState("");
+  const [title, setTitle] = useState(""); 
 
   useEffect(() => {
     const fetchReceivedId = async () => {
@@ -15,6 +16,7 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
         const response = await fetch(`/api/admin/post/${selectedOrder.postId}`);
         const postData = await response.json();
         setReceivedId(postData.authorId);
+        setTitle(postData.title)
       } catch (error) {
         console.error("Error al obtener receivedId", error);
       }
@@ -40,6 +42,7 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
       authorId: selectedOrder.userId,
       postId: selectedOrder.postId,
       receivedId,
+      title,
     };
 
     try {
