@@ -7,6 +7,7 @@ import { SiMercadopago } from "react-icons/si";
 import { AppContext } from "@/context/AppContext";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 function Page() {
   const [disabled, setDisabled] = useState(true);
