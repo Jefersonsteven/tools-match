@@ -1,5 +1,4 @@
 import React from "react";
-//import CardOrder from "./CardOrder";
 import FormReview from "./FormReview";
 import { useState }from "react";
 
@@ -48,7 +47,7 @@ const CardsOrders = ({ userOrders }) => {
       </div>
       {isModalOpen && (
         <div className="modal">
-          <FormReview order={selectedOrder} onCloseModal={handleCloseModal} />
+          <FormReview selectedOrder={selectedOrder} onCloseModal={handleCloseModal} />
         </div>
       )}
     </div>
