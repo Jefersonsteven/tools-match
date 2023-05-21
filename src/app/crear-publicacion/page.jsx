@@ -39,6 +39,7 @@ function CreatePost() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setFetching(true);
 
     if (!userData.zipCode || !userData.country) {
       Swal.fire({
@@ -57,19 +58,10 @@ function CreatePost() {
       });
       return;
     }
-  }
 
-  async function uploadImages(images) {
-    const URLS = images.map(async (file) => await uploadImage(file));
-    const urls = await Promise.all(URLS);
-    return urls;
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setFetching(true);
     const error = Object.values(errors).some((e) => e.length > 0);
     const post = Object.values(form).some((e) => e.length === 0);
+
     if (!error && !post) {
       if (form.photo.length > 0) {
         setMessage("Subiendo imagenes al servidor...");
@@ -79,7 +71,7 @@ function CreatePost() {
         newPost.photo = urls;
         newPost.price = Math.floor(newPost.price);
 
-        const post = await fetch(`/api/post`, {
+        const post = await fetch("/api/post", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -87,8 +79,6 @@ function CreatePost() {
           body: JSON.stringify(newPost),
         });
         const data = await post.json();
-
-        console.log(data);
 
         if (data.id) {
           Swal.fire({
@@ -122,9 +112,10 @@ function CreatePost() {
         setImagesPrint([]);
         setUrlsImages([]);
       }
-      setMessage("");
-      setFetching(false);
     }
+
+    setMessage("");
+    setFetching(false);
   }
 
   return (
