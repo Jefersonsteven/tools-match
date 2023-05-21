@@ -16,12 +16,14 @@
   cursor: pointer;
   border-radius: 5px;
   width: 43px;
-  height: 37px;
+  height: 30px;
 }
 
 .pageNumber.active {
   background-color: white;
   color: black;
+  width: 45px;
+  height: 35px;
 }
 
 .leftArrow {
@@ -43,11 +45,11 @@
   height: 30px;
 }
 
-.arrowButton:active {
+/* .arrowButton:active {
   opacity: 0.8;
-}
+} */
 
-.highlight-arrow {
+/* .highlight-arrow {
   background-color: var(--green);
   color: white;
-}
+} */

@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RiStarFill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -8,6 +7,23 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const currentDate = new Date().toISOString().split("T")[0];
+  const [receivedId, setReceivedId] = useState("");
+  const [title, setTitle] = useState(""); 
+
+  useEffect(() => {
+    const fetchReceivedId = async () => {
+      try {
+        const response = await fetch(`/api/admin/post/${selectedOrder.postId}`);
+        const postData = await response.json();
+        setReceivedId(postData.authorId);
+        setTitle(postData.title)
+      } catch (error) {
+        console.error("Error al obtener receivedId", error);
+      }
+    };
+
+    fetchReceivedId();
+  }, [selectedOrder]);
 
   const handleRatingClick = (value) => {
     if (rating === value) {
@@ -23,7 +39,10 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
     const reviewData = {
       rating,
       content,
-      date: currentDate,
+      authorId: selectedOrder.userId,
+      postId: selectedOrder.postId.toString(),
+      receivedId,
+      title,
     };
 
     try {
@@ -40,6 +59,7 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
         onCloseModal();
       } else {
         console.error("Error al enviar la reseña");
+        console.log(reviewData)
       }
 
       setRating(0);
@@ -54,7 +74,6 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
     onCloseModal();
   };
 
-  
   return (
     <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 ${isOpen ? "" : "hidden"}`}>
       <div className="bg-white p-8 rounded-lg shadow-lg w-1/4 relative">
@@ -67,7 +86,8 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
           </button>
         </div>
         <h2 className="text-2xl font-bold mb-4">Opinar y Calificar</h2>
-        <form onSubmit={handleSubmit}>          <div className="mb-4">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium">
               Fecha:
             </label>
@@ -113,15 +133,15 @@ const FormReview = ({ selectedOrder, onCloseModal }) => {
               Publicar Reseña
             </button>
           </div>
-          <div className="absolute top-0 right-0 mt-2 mr-2">
-            <button
-              className="bg-yellow-500 rounded-full p-2"
-              onClick={handleClose}
-            >
-              <AiOutlineClose className="text-black" />
-            </button>
-          </div>
         </form>
+        <div className="absolute top-0 right-0 mt-2 mr-2">
+          <button
+            className="bg-yellow-500 rounded-full p-2"
+            onClick={handleClose}
+          >
+            <AiOutlineClose className="text-black" />
+          </button>
+        </div>
       </div>
     </div>
   );

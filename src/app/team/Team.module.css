@@ -1,3 +1,30 @@
+
+.backContainer{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 1rem;
+  cursor: pointer;
+  margin-top: 50px;
+  margin: 50px 0 0 50px;
+  
+}
+.backContainer h3{
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--black-light);
+  align-items: center;
+  gap: 1rem;
+}
+.back{
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+  background-color: var(--orange);
+  border-radius: 20px;
+}
 .teamContainer {
   background-color: #DCF1D9;
   width: 100%;
