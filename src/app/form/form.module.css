@@ -204,9 +204,21 @@
   cursor: pointer;
 }
 
+.buttonSubmit:hover {
+  background-color: var(--green);
+  color: var(--white);
+
+  cursor: pointer;
+}
+
 .buttonSubmit:disabled {
   opacity: 0.3;
   cursor: auto;
+}
+
+.buttonSubmit:disabled:hover {
+  background-color: var(--black);
+  color: var(--white);
 }
 
 .twoInputsContainer {

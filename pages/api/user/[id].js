@@ -23,10 +23,6 @@ export default async function handler(req, res) {
   } else if (req.method === "PUT") {
     const { firstname, lastname, phoneNumber, zipCode, map, country, photo } =
       req.body;
-    let { password } = req.body;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    password = crypto.createHash("sha256").update(data).digest("hex");
     try {
       const user = await prisma.user.update({
         where: {
@@ -35,7 +31,6 @@ export default async function handler(req, res) {
         data: {
           firstname,
           lastname,
-          password,
           phoneNumber,
           country,
           zipCode,

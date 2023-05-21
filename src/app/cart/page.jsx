@@ -14,13 +14,12 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    // if (!userData?.name) router.push("/form/login");
     if (!cart)
       setCart({
         count: 0,
         items: [],
       });
-  }, [router, userData]);
+  }, [router, userData, setCart, cart]);
 
   function deleteItem(id) {
     setCart({

@@ -4,56 +4,56 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  const { type, category, order } = req.query;
+  const { type, category, order, brand } = req.query;
 
-  if (method === 'GET') {
-    if (order !== 'asc' && order !== 'desc') {
-      res.status(400).json({ message: 'El parámetro type debe ser "asc" o "desc".' });
-      return;
+  if (method !== 'GET') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
+
+  if (order !== 'asc' && order !== 'desc') {
+    return res.status(400).json({ message: 'The "order" parameter must be "asc" or "desc".' });
+  }
+
+  try {
+    let where = { hidden: false };
+
+    if (type && category && brand) { // si existen todas
+      where = { ...where, type, category, brand };
+    } else if (!type && category && brand) {// si existe category y brand 
+      where = { ...where, category, brand };
+    } else if (type && !category && brand) {// si existe type y brand 
+      where = { ...where, type, brand };
+    } else if (category && !type && !brand) {// si solo existe category
+      where = { ...where, category };
+    } else if (type && !brand && !category) {// si solo existe type
+      where = { ...where, type };
+    } else if (!type && !category && brand) {// si solo existe brand
+      where = { ...where, brand };
+    } else if (category && type && !brand) {// si no existe brand
+      where = { ...where, category, type };
     }
 
-    try {
-      let posts;
-      if(!type && !category){
-        posts = await prisma.post.findMany({
-          orderBy: {
-            price: order === 'desc' ? SortOrder.desc : SortOrder.asc
-          }
-        });
-      }
-      if (type && category) {
-        posts = await prisma.post.findMany({
-          where: {
-            category: category,
-            type: type
-          },
-          orderBy: {
-            price: order === 'desc' ? SortOrder.desc : SortOrder.asc
-          }
-        });
-      } else if (category && !type) {
-        posts = await prisma.post.findMany({
-          where: {
-            category: category
-          },
-          orderBy: {
-            price: order === 'desc' ? SortOrder.desc : SortOrder.asc
-          }
-        });
-      } else if (type && !category){
-        posts = await prisma.post.findMany({
-          where: {
-            type: type
-            },
-          orderBy: {
-            price: order === 'desc' ? SortOrder.desc : SortOrder.asc
-          }
-        });
-      }
+    const orderBy = {
+      price: order === 'desc' ? SortOrder.desc : SortOrder.asc
+    };
 
-      res.status(200).json(posts);
-    } catch (error) {
-      res.status(500).json({ message: 'Error al obtener datos' });
+    let posts;
+    if (Object.keys(where).length === 1) {
+      posts = await prisma.post.findMany({
+        where: {
+          hidden: false
+        },
+        orderBy
+      });
+    } else {
+      posts = await prisma.post.findMany({
+        where,
+        orderBy
+      });
     }
+
+    return res.status(200).json(posts);
+  } catch (error) {
+    return res.status(500).json({ message: 'Error getting data' });
   }
 }

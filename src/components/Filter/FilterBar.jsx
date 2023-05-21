@@ -1,6 +1,6 @@
-'use client'
-import CategoryFilter from './CategoryFilter';
-import SearchBar from '../SearchBar/SearchBar';
+"use client";
+import CategoryFilter from "./CategoryFilter";
+import SearchBar from "../SearchBar/SearchBar";
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useState, useContext } from 'react';
 import { FaFilter, FaSort } from 'react-icons/fa';
@@ -202,9 +202,7 @@ export default function FilterBar() {
             </div>
           </div>
           <div className={`flex relative ${style.button}`}>
-            <div
-              className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none"
-            >
+            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none">
               Ordenar <FaSort className="ml-2" />
             </div>
             <div className={style.order}>
