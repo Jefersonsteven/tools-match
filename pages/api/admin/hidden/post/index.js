@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     });
     res.status(200).json(posts);
   }
-  if (req.method === "DELETE") {
+  if (req.method === "PUT") {
     try {
       const { userIds } = req.body;
 
