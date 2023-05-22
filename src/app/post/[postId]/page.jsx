@@ -24,8 +24,7 @@ function PostDetail({}) {
   };
 
   function addCart() {
-    if (!cart.items.some((item) => item.id == postDetail.id)) {
-      console.log("Entrando en if");
+    if (!cart.items.some((item) => item.id === postDetail.id)) {
       setCart({
         count: cart.count + 1,
         items: [...cart.items, postDetail],
