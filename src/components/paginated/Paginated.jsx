@@ -62,7 +62,7 @@ export default function Paginated({
         </button>
 
         {/* Cuadritos de paginación */}
-        {Array.from({ length: totalPages - 1 }).map((_, index) => (
+        {Array.from({ length: totalPages }).map((_, index) => (
           <button
             key={index + 1}
             onClick={() => handlePageClick(index + 1)}
