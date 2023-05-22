@@ -132,7 +132,7 @@ function Header() {
 
                   <Link href="/cart" className={styles.cart}>
                     <FaShoppingCart size="25" color="white" />
-                    {cart.count > 0 && (
+                    {cart?.count > 0 && (
                       <span className={styles.cartCount}>{cart.count}</span>
                     )}
                     <span className={styles.cartText}>Carrito de compras</span>
