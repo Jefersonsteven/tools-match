@@ -31,7 +31,7 @@ export default function Footer() {
           <p>Contacto</p>
         </div>
         <div className={style.contactInfo}>
-          <Link href="mailto:toolsmatch@gmail.com">
+          <Link href="mailto:toolmatchnotificaciones@gmail.com.com">
             <Image
               src="/images/icons/mail.png"
               alt="mail"
@@ -40,7 +40,7 @@ export default function Footer() {
               className={style.contactMail}
             />
           </Link>
-          <Link href="https://www.twitter.com/toolsmatch/">
+          <Link href="https://www.twitter.com/toolsmatch/" target="blank">
             <Image
               src="/images/icons/twitter.png"
               alt="mail"

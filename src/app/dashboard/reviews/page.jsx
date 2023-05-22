@@ -15,7 +15,6 @@ import Loader from "@/components/Loader/Loader";
 
 
 
-
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
@@ -33,7 +32,7 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   );
 }
 
-function Users() {
+function Reviews() {
   const [searchTerm, setSearchTerm] = useState("");
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
@@ -240,7 +239,9 @@ function Users() {
           <table className={style.table}>
             <thead>
               <tr>
-                <th><MdVerifiedUser /></th>
+                <th>
+                  <MdVerifiedUser />
+                </th>
 
                 <th>TITULO</th>
                 <th>CONTENIDO</th>
@@ -281,13 +282,12 @@ function Users() {
                   </td>
                 </tr>
               ))}
-
-
-
             </tbody>
           </table>
         ) : (
-          <div className={style.noUsuarios}><p>No hay reseñas🚩</p></div>
+          <div className={style.noUsuarios}>
+            <p>No hay reseñas🚩</p>
+          </div>
         )}
         {editingUser && (
           <Modal show={showModal} onClose={() => setShowModal(false)}>
@@ -305,4 +305,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Reviews;

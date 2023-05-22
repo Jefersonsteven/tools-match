@@ -12,7 +12,7 @@ import { uploadImage } from "@/components/Cloudinary/upload";
 import Loader from "@/components/Loader/Loader";
 
 const EditUser = () => {
-  const { push } = useRouter();
+  const { push, back } = useRouter();
   const {
     userData,
     userId,
@@ -117,14 +117,21 @@ const EditUser = () => {
     push(`/perfil/${userData.id}`);
   };
 
+  const handleBack = () => {
+    back();
+  };
+
   return (
     <>
       {userData && (
         <>
           <div>
-            <Link href={`/perfil/${userId}`}>
-              <IoCaretBack size={50} className={styles.IoCaretBack} />
-            </Link>
+            <div onClick={handleBack} className={styles.backContainer}>
+              <div className={styles.back}>
+                <IoCaretBack size={50} color="var(--white)" />
+              </div>
+              <h3>Volver</h3>
+            </div>
             <h2 className={styles.editTitle}>Editar perfil de toolmatch</h2>
           </div>
           <section className={styles.section}>
