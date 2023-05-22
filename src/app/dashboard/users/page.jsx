@@ -192,21 +192,27 @@ function Users() {
   };
 
   // CheckBox   ---------------------------------------------------------
-
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
   
-    if (checked) {
-      setSelectedUsers([...selectedUsers, name]);
-      setSelectedUserCount((prevCount) => prevCount + 1);
-    } else {
-      setSelectedUsers(selectedUsers.filter((userId) => userId !== name));
-      setSelectedUserCount((prevCount) => prevCount - 1);
-    }
+    setSelectedUsers((prevSelectedUsers) => {
+      if (checked) {
+        return [...prevSelectedUsers, name];
+      } else {
+        return prevSelectedUsers.filter((userId) => userId !== name);
+      }
+    });
   
-    setAreButtonsDisabled(selectedUserCount <= 1);
+    setSelectedUserCount((prevCount) => {
+      if (checked) {
+        return prevCount + 1;
+      } else {
+        return prevCount - 1;
+      }
+    });
   };
-
+  
+  console.log(selectedUsers);
 
   const handleDeleteUsers = () => {
     if (selectedUserCount > 0) {
@@ -221,8 +227,7 @@ function Users() {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          const userIds = selectedUsers.map((user) => user.id);
-  
+          let userIds = selectedUsers;
           // Eliminar usuarios
           axios
             .delete("/api/admin/user", {
@@ -234,13 +239,7 @@ function Users() {
                 (user) => !userIds.includes(user.id)
               );
               setRecords(updatedUsers);
-  
-              // Actualizar el estado selectedUsers para eliminar los usuarios eliminados
-              const updatedSelectedUsers = selectedUsers.filter(
-                (user) => !userIds.includes(user.id)
-              );
-              setSelectedUsers(updatedSelectedUsers);
-  
+
               Swal.fire({
                 title: "¡Usuarios eliminados correctamente!",
                 icon: "success",
@@ -257,38 +256,38 @@ function Users() {
 
   const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
 
-  // const handleAdminClick = (firstname, id) => {
-  //   Swal.fire({
-  //     title: "¿Estás seguro de asignar el rol de administrador?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#d33",
-  //     cancelButtonColor: "#3085d6",
-  //     confirmButtonText: "Sí, asignar",
-  //     cancelButtonText: "Cancelar",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axios
-  //         .put(`/api/admin/user/${id}`, { admin: true })
-  //         .then((response) => {
-  //           // Actualizar la lista de usuarios en el estado local
-  //           setRecords((prevRecords) =>
-  //             prevRecords.map((user) =>
-  //               user.id === id ? { ...user, admin: true } : user
-  //             )
-  //           );
+  const handleAdminClick = (firstname, id) => {
+    Swal.fire({
+      title: "¿Estás seguro de asignar el rol de administrador?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, asignar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`/api/admin/user/${id}`, { admin: true })
+          .then((response) => {
+            // Actualizar la lista de usuarios en el estado local
+            setRecords((prevRecords) =>
+              prevRecords.map((user) =>
+                user.id === id ? { ...user, admin: true } : user
+              )
+            );
   
-  //           Swal.fire({
-  //             title: "¡Rol de administrador asignado correctamente!",
-  //             icon: "success",
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
-  //     }
-  //   });
-  // };
+            Swal.fire({
+              title: "¡Rol de administrador asignado correctamente!",
+              icon: "success",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
 
 
 
@@ -361,12 +360,12 @@ function Users() {
               {displayedUsers.map((d) => (
                 <tr className={style.namesTable} key={d.id}>
                   <td>
-                    <input
-                      type="checkbox"
-                      name={`fila${d.id}`}
-                      checked={selectedUsers.includes(`fila${d.id}`)}
-                      onChange={handleCheckboxChange}
-                    />
+                  <input
+                          type="checkbox"
+                          name={d.id}
+                          checked={selectedUsers.includes(d.id)}
+                          onChange={handleCheckboxChange}
+                        />
                   </td>
                   <td>{d.firstname}</td>
                   <td>{d.lastname}</td>
@@ -380,7 +379,7 @@ function Users() {
                   <td>{d.reviews.length}</td>
                   <td>{d.received.length}</td>
                   <td>{d.country ? d.country : "?"}</td>
-                  {/* <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td> */}
+                  <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td>
 
 
                   <td className={style.td_button}>
@@ -444,10 +443,6 @@ function Users() {
         />
       )}
  </div>)}
-
-
-
- 
       {/*------------------------------ */}
     </div>
   );
