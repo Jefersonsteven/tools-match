@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         pending: `${URL_BASE}`,
       },
       notification_url:
-        `https://d645-181-98-73-247.ngrok-free.app/api/mercadopago/pago`,
+        `${URL_BASE}/api/mercadopago/pago`,
       auto_return: "approved",
     };
     try {
