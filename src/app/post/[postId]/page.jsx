@@ -149,7 +149,7 @@ function PostDetail({}) {
                   alt={pd.author.zipCode + " " + pd.author.country}
                 />
               </figure>
-              <Link href={`/perfil/${pd.authorId}`}>
+              <Link href={`/perfil/${pd.author.id}`}>
                 <figure>
                   <Image
                     src={pd.author.photo}
