@@ -81,6 +81,7 @@
 .button {
   display: flex;
   align-items: center;
+  gap: 30px
   width: 100%;
 }
 
@@ -94,6 +95,10 @@
   background-color: var(--black);
   font-weight: bold;
   color: var(--white);
+}
+
+.button button:nth-child(1) {
+  background-color: var(--red);
 }
 
 .button button:hover {
