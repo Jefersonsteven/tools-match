@@ -15,7 +15,6 @@
     border-bottom: 1px solid var(--white);
     text-transform: capitalize;  
 }
-
 .filter h3 {
     background: var(--black-light);
     padding: 5px;

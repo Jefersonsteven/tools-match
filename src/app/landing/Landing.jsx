@@ -55,7 +55,7 @@ export default function LandingPage() {
         </div>
       </main>
       <section className={style.sponsorsContainer}>
-        <h2 className={style.sponsorsTitle}>Nuestros Patrocinadores</h2>
+        <h2 className={style.sponsorsTitle}>Aliados Comerciales</h2>
         <InfiniteSlider />
         {/*         <div className={style.sponsorsLogos}>
           <Image
