@@ -8,29 +8,35 @@ import { AppContext } from "@/context/AppContext";
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import CardsReview from "@/components/CardsReview";
 import CardsOrders from "@/components/CardsOrders";
 import axios from 'axios'
 
+import Back from "@/components/back/Back";
+
 export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
   const { push } = useRouter();
+  const { perfilId } = useParams()
 
   const { userId, userData, countries } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
+  const [user, setUser] = useState({})
   const [authors, setAuthors] = useState({});
   const [userOrders, setUserOrders] = useState([]);
 
 
   useEffect(() => {
+    console.log(perfilId)
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `/api/admin/user/${userId}`
+          `/api/admin/user/${perfilId}`
         );
 
         const receivedReviews = response.data.received;
+        setUser(response.data)
         setReviews(receivedReviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -98,8 +104,9 @@ useEffect(() => {
 
   return (
     <>
-      {userData && (
+      {user && (
         <>
+          <Back />
           <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
           <section className={styles.section}>
             <div className={styles.userContainer}>
@@ -107,8 +114,8 @@ useEffect(() => {
                 <div className={styles.imageContainer}>
                   <Image
                     src={
-                      userData.photo
-                        ? userData.photo
+                      user.photo
+                        ? user.photo
                         : "/assets/userPhotoDefault.png"
                     }
                     width={254}
@@ -119,37 +126,44 @@ useEffect(() => {
                 <div>
                   <h2>
                     <strong>Usuario: </strong>
-                    {`@${userData.firstname}`}
+                    {`@${user.firstname}`}
                   </h2>
                   <h2>
                     <strong>Nombre completo: </strong>
-                    {`${userData.firstname} ${userData.lastname}`}
+                    {`${user.firstname} ${user.lastname}`}
                   </h2>
                   <h2>
                     <strong>Correo: </strong>
-                    {userData.email}
+                    {user.email}
                   </h2>
                   <h2>
                     <strong>País de residencia: </strong>
-                    {userData.country ? countries[userData.country] : "---"}
+                    {user.country ? countries[user.country] : "---"}
                   </h2>
                   <h2>
                     <strong>Código postal: </strong>
-                    {userData.zipCode ? userData.zipCode : "---"}
+                    {user.zipCode ? user.zipCode : "---"}
                   </h2>
                   <h2>
                     <strong>Celular: </strong>
-                    {userData.phoneNumber ? userData.phoneNumber : "---"}
+                    {user.phoneNumber ? user.phoneNumber : "---"}
                   </h2>
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <Link
+                {user.id == userData.id ? (
+                  <Link
                   href={`perfil/${userId}/edit`}
                   className={styles.editButton}
                 >
                   Editar datos
                 </Link>
+                )
+                :
+                <button>
+                  Reportar
+                </button>
+                }
               </div>
             </div>
           </section>
@@ -157,8 +171,8 @@ useEffect(() => {
             <section>
               <h3 className={styles.sectionTitleH3}>Herramientas Publicadas</h3>
               <div className="grid grid-cols-4 gap-9">
-                {userData.posts.length ? (
-                  userData.posts.map((post) => {
+                {user.posts ? (
+                  user.posts.map((post) => {
                     return (
                       <Card
                         key={post.id}
@@ -182,12 +196,14 @@ useEffect(() => {
                 )}
               </div>
             </section>
-            <section>
-              <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
-              <div className="w-full items-center ">
-              <CardsOrders userOrders={userOrders} />
-              </div>
-            </section>
+            { user.id == userData.id &&
+                <section>
+                  <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
+                  <div className="w-full items-center ">
+                  <CardsOrders userOrders={userOrders} />
+                  </div>
+                </section>
+            }
           </div>
           <div className="flex gap-4">
             <div className={styles.reviewContainer}>              
