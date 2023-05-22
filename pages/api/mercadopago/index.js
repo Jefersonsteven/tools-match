@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       items,
       payer,
       back_urls: {
-        success: `${'http://localhost:3000'}/payment`,
+        success: `${URL_BASE}/payment`,
         failure: `${URL_BASE}/payment`,
         pending: `${URL_BASE}`,
       },

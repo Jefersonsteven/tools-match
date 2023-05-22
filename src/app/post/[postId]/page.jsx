@@ -24,8 +24,7 @@ function PostDetail({}) {
   };
 
   function addCart() {
-    if (!cart.items.some((item) => item.id == postDetail.id)) {
-      console.log("Entrando en if");
+    if (!cart.items.some((item) => item.id === postDetail.id)) {
       setCart({
         count: cart.count + 1,
         items: [...cart.items, postDetail],
@@ -150,7 +149,7 @@ function PostDetail({}) {
                   alt={pd.author.zipCode + " " + pd.author.country}
                 />
               </figure>
-              <Link href={`/perfil/${pd.authorId}`}>
+              <Link href={`/perfil/${pd.author.id}`}>
                 <figure>
                   <Image
                     src={pd.author.photo}
