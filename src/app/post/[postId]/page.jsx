@@ -19,8 +19,6 @@ function PostDetail({}) {
   const pd2 = {
     author: {
       rating: 1.0,
-      image_perfil:
-        "https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg",
     },
   };
 
@@ -130,8 +128,15 @@ function PostDetail({}) {
               </div>
               <p>{pd.content}</p>
               <div className={styles.description_categories}>
-                <h5>Categoria:</h5>
-                <p>{pd.category}</p>
+                <div>
+                  <h5>Categoria:</h5>
+                  <p>{pd.category}</p>
+                </div>
+                <div>
+                  <h5>Marca:</h5>
+                  <p>{pd.brand}</p>
+                </div>
+
               </div>
             </section>
             <section className={styles.section_user}>

@@ -54,32 +54,40 @@ function Header() {
       });
     }
   };
+  
 
   return (
     <div>
-      <header className={styles.header}>
-        <figure className={styles.logo}>
-          <Link href="/home">
-            <Image
+      {typeof window !== 'undefined' &&
+        <header className={styles.header}>
+        <ul className={styles.logo}>
+          <li>
+          <Link href="/">
+            Tools Match
+            {/* <Image
               src="/../public/images/logo/toolsMatch.jpg"
               alt="logo"
               width={70}
               height={70}
-            />
+            /> */}
           </Link>
-          {userId && userData.admin && (
+          </li>
+          {userId && userData.admin && !(pathname.split('/')[1] === 'dashboard') && (
+            <li>
             <Link href="/dashboard/users">
               <button>Dashboard</button>
             </Link>
+            </li>
           )}
-        </figure>
+        </ul>
         <nav className={styles.nav}>
-          {pathname !== "/team" ? (
             <>
               <ul className={styles.nav}>
+                { pathname !== "/team" &&
                 <li>
                   <Link href="/team">Nosotros</Link>
                 </li>
+                }
                 <li>
                   <Link href="/home">
                     {pathname === "/" ? "Home" : "Publicaciones"}
@@ -132,15 +140,9 @@ function Header() {
                 </div>
               )}
             </>
-          ) : (
-            <ul className={styles.home}>
-              <li>
-                <Link href="/home">Home</Link>
-              </li>
-            </ul>
-          )}
         </nav>
       </header>
+      }
     </div>
   );
 }
