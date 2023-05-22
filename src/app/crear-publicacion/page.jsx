@@ -5,6 +5,7 @@ import * as style from "./CreatePost.module.css";
 import { validatePost } from "./asset/validate";
 import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
+import Back from "@/components/back/Back";
 import Loader from "@/components/Loader/Loader";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -210,6 +211,7 @@ function CreatePost() {
           </div>
           <div className={style.button}>
             <button onClick={handleSubmit}>Publicar</button>
+            <button onClick={()=>router.back()}>Cancelar</button>
           </div>
           <div className={style.loaderContainer}>
             {fetching && (
