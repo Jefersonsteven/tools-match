@@ -210,8 +210,8 @@ function CreatePost() {
             <span>{errors.category}</span>
           </div>
           <div className={style.button}>
-            <button onClick={handleSubmit}>Publicar</button>
             <button onClick={()=>router.back()}>Cancelar</button>
+            <button onClick={handleSubmit}>Publicar</button>
           </div>
           <div className={style.loaderContainer}>
             {fetching && (
