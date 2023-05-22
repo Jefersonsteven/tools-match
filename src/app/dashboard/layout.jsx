@@ -11,24 +11,19 @@ export default function DashboardLayout({ children }) {
   const router = useRouter();
   const { userData } = useContext(AppContext);
 
-  // // Verificar si el usuario no es administrador y redireccionar al home
-  // useEffect(() => {
-  //   if (!userData.admin) {
-  //     router.push('/');
-  //   }
-  // }, [userData.admin, router]);
-
-  // // Renderizar el panel de administrador solo si el usuario es administrador
-  // if (!userData.admin) {
-  //   return null;
-  // }
-
+  
   const [activeButton, setActiveButton] = useState('');
-
+  
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
   };
-
+  
+  // Verificar si el usuario no es administrador y redireccionar al home
+  useEffect(() => {
+    if (!userData.admin) {
+      router.push("/home");
+    }
+  },);
 
 
   return (
