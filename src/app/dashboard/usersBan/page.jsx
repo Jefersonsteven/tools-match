@@ -1,5 +1,5 @@
 "use client";
-import style from "./users.module.css";
+import style from "./usersBan.module.css";
 
 import Modal from "../components/Modal";
 import { Fragment, useEffect, useState, useCallback } from "react";
@@ -10,7 +10,7 @@ import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
-import { TiDelete, TiPencil } from "react-icons/ti";
+import { CiUnlock } from "react-icons/ci";
 
 import Loader from "@/components/Loader/Loader";
 
@@ -38,7 +38,7 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
 
 /*MODIFICADO PARA PAGINATED*/
 
-function Users() {
+function UsersBan() {
   const [searchTerm, setSearchTerm] = useState("");
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
@@ -81,7 +81,7 @@ function Users() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await axios("/api/admin/user"); //PAGINATED
+      const response = await axios("/api/admin/hidden/user"); //PAGINATED
       const users = await response.data;
 
       if (users.length > 0) {
@@ -103,84 +103,31 @@ function Users() {
   }, []);
 
 
-// Editar usuario -----------------------------
-
-  const handleClick = (userId) => {
-    const userToEdit = filteredUsuarios.find((user) => user.id === userId);
-    setEditingUser(userToEdit);
-    setShowModal(true);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const updatedUser = {
-      firstname: formData.get("firstname"),
-      lastname: formData.get("lastname"),
-      phoneNumber: formData.get("phonenumber"),
-      country: formData.get("country"),
-      admin,
-    };
-
-    console.log(updatedUser);
-
-    Swal.fire({
-      title: "¿Estás seguro de los cambios?",
-      icon: "success",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, guardar cambios",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(`/api/admin/user/${editingUser.id}`, updatedUser)
-          .then((response) => {
-            console.log(response.data);
-            setRecords((prevRecords)=>
-            prevRecords.map((user)=>
-            user.id === editingUser.id ? {...user, ...updatedUser}: user
-             )
-            );
-            setEditingUser(null);
-            Swal.fire({
-              title: "¡Usuario editado correctamente!",
-              icon: "success",
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    });
-  };
-
-  // -----------------------------------------------------------------
-
 
 // Funcion de eliminar usuario ----------------------------------------
 
   const handleDeleteClick = (firstname, id) => {
     Swal.fire({
-      title: `¿Estás seguro de eliminar a ${firstname}?`,
+      title: `¿Estás por sacar el veto a ${firstname}?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
+      confirmButtonColor: "#01d3f8",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, borrar",
+      confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(`/api/admin/user/${id}`)
+        const userIds = selectedUsers.map((userId) => records[parseInt(userId.substring(4))].id);
+        axios.delete("/api/admin/hidden/user", {
+          data: { userIds: userIds },
+        })
           .then((response) => {
             // Actualizar la lista de usuarios en el estado local
             const updatedUsers = records.filter((user) => user.id !== id);
             setRecords(updatedUsers);
             
             Swal.fire({
-              title: "¡Usuario eliminado correctamente!",
+              title: "¡Se ha quitado el veto correctamente!",
               icon: "success",
             });
           })
@@ -208,11 +155,11 @@ function Users() {
   };
 
 
-  const handleDeleteUsers = () => {
+  const handleUnbanUsers = () => {
     if (selectedUserCount > 0) {
       Swal.fire({
-        title: `Eliminar ${selectedUserCount} usuarios`,
-        text: `¿Estás seguro de eliminar los ${selectedUserCount} usuarios seleccionados?`,
+        title: `Sacar el veto a ${selectedUserCount} usuarios`,
+        text: `¿Estás seguro de sacar el veto a los ${selectedUserCount} usuarios seleccionados?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -225,7 +172,7 @@ function Users() {
   
           // Eliminar usuarios
           axios
-            .delete("/api/admin/user", {
+            .delete("/api/admin/hidden/user", {
               data: { userIds: userIds },
             })
             .then((response) => {
@@ -235,14 +182,8 @@ function Users() {
               );
               setRecords(updatedUsers);
   
-              // Actualizar el estado selectedUsers para eliminar los usuarios eliminados
-              const updatedSelectedUsers = selectedUsers.filter(
-                (user) => !userIds.includes(user.id)
-              );
-              setSelectedUsers(updatedSelectedUsers);
-  
               Swal.fire({
-                title: "¡Usuarios eliminados correctamente!",
+                title: "¡El veto fue sacado correctamente!",
                 icon: "success",
               });
             })
@@ -254,43 +195,7 @@ function Users() {
     }
   };
 
-
   const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
-
-  // const handleAdminClick = (firstname, id) => {
-  //   Swal.fire({
-  //     title: "¿Estás seguro de asignar el rol de administrador?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#d33",
-  //     cancelButtonColor: "#3085d6",
-  //     confirmButtonText: "Sí, asignar",
-  //     cancelButtonText: "Cancelar",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axios
-  //         .put(`/api/admin/user/${id}`, { admin: true })
-  //         .then((response) => {
-  //           // Actualizar la lista de usuarios en el estado local
-  //           setRecords((prevRecords) =>
-  //             prevRecords.map((user) =>
-  //               user.id === id ? { ...user, admin: true } : user
-  //             )
-  //           );
-  
-  //           Swal.fire({
-  //             title: "¡Rol de administrador asignado correctamente!",
-  //             icon: "success",
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
-  //     }
-  //   });
-  // };
-
-
 
 
 
@@ -301,7 +206,7 @@ function Users() {
 
 
       <div className={style.searchbarContainer}>
-        <h2>Usuarios</h2>
+        <h2>Usuarios vetados</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
 
@@ -323,9 +228,9 @@ function Users() {
       <h2>Hay {selectedUserCount} usuarios seleccionados</h2>
               <button
                  className={style.botonEliminar}
-                     onClick={handleDeleteUsers}
+                     onClick={handleUnbanUsers}
                 >
-                   Eliminar usuarios
+                   Anular veto
               </button>
       </div>
       )}
@@ -345,14 +250,13 @@ function Users() {
                 <th>EMAIL</th>
                 <th>TELEFONO</th>
                 <th>RANGO</th>
-                <th>HIDDEN</th>
                 <th>REPORTES</th>
                 <th>PUBLICACIONES</th>
                 <th>ORDENES</th>
                 <th>RESEÑAS</th>
                 <th>RECIBOS</th>
                 <th>PAIS</th>                
-                <th>ACCIONES</th>               
+                <th>ACCION</th>               
               </tr>
             </thead>
 
@@ -373,7 +277,6 @@ function Users() {
                   <td>{d.email}</td>
                   <td>{d.phoneNumber}</td>
                   <td>{d.admin ? "Admin" : "Usuario"}</td>
-                  <td>{d.hidden ? "True" : "False"}</td>
                   <td>{d.reports.length}</td>
                   <td>{d.posts.length}</td>
                   <td>{d.orders.length}</td>
@@ -384,20 +287,20 @@ function Users() {
 
 
                   <td className={style.td_button}>
-                    <button
+                    {/* <button
                       className={`${style.botonEditar} ${buttonClass}`}
                       onClick={() => handleClick(d.id)}
                       disabled={selectedUserCount > 1}
                       
                     >
                       <TiPencil size={30}/>
-                    </button>
+                    </button> */}
                     <button
                       className={`${style.botonDelete} ${buttonClass}`}
                       onClick={() => handleDeleteClick(d.firstname, d.id)}
                       disabled={selectedUserCount > 1}
                     >
-                      <TiDelete size={30}/>
+                      <CiUnlock size={30}/>
                     </button>
                   </td>  
 
@@ -409,7 +312,7 @@ function Users() {
           </table>
         ) : (
           <div className={style.noUsuarios}>
-            <p>No hay Usuarios🚩</p>
+            <p>No hay Usuarios vetados🚩</p>
           </div>
         )}
         {editingUser && (
@@ -453,4 +356,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default UsersBan;
