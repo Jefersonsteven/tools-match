@@ -8,6 +8,7 @@ import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Loader from "@/components/Loader/Loader";
 
 function PostDetail({}) {
   const { postId } = useParams();
@@ -90,7 +91,7 @@ function PostDetail({}) {
         <IoCaretBack size={50} color="var(--white)" />
       </Link>
       <main className={styles.main}>
-        {postDetail.author !== undefined && (
+        {postDetail.author !== undefined ? (
           <>
             <section className={styles.section_images}>
               <figure className={styles.figure}>
@@ -176,6 +177,11 @@ function PostDetail({}) {
               )}
             </section>
           </>
+        ) : (
+          <div class="flex flex-col items-center justify-center w-screen h-screen">
+            <Loader />
+            <h2>Cargando publicación...</h2>
+          </div>
         )}
       </main>
     </div>

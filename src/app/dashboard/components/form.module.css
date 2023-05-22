@@ -1,9 +1,14 @@
+.contenedorPadre {
+  display: flex;
+}
+
 .form {
-    display: flex;
+    display: grid;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     padding: 20px;
+    background-color: #BDCFBA;
   }
   
 .label {
@@ -13,7 +18,9 @@
   
 .input {
     padding: 5px;
-    border: 1px solid #28a745;
+    background-color: #FFFFFF;
+    opacity: 0.5;
+    border-radius: 5px;
     font-size: 14px;
   }
 
@@ -24,22 +31,23 @@
 .buttonCancelar {
     margin-top: 10px;
     padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #ff0404;
+    border-radius: 58px;
+    border: 1px solid #F0960E;
     font-size: 14px;
-    color: #fff;
-    background-color: #ff0404;
+    color: #DCF1D9;
+    background-color: #F0960E;
     cursor: pointer;
+    font-weight: bold;
   }
 
   .buttonCancelar:hover {
     margin-top: 10px;
     padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #ff0404;
+    border-radius: 58px;
+    border: 1px solid #F0960E;
     font-size: 14px;
-    color: #ff0404;
-    background-color: #fff;
+    color: #131713;
+    background-color: #dcf1d944;
     cursor: pointer;
   }
 
@@ -48,23 +56,24 @@
 .buttonGuardar {
     margin-top: 10px;
     padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #28a745;
+    border-radius: 58px;
+    border: 1px solid #131713;
     font-size: 14px;
-    color: #fff;
+    color: #DCF1D9;
     cursor: pointer;
-    background-color: #28a745;
+    background-color: #131713;
+    font-weight: bold;
   }
 
   .buttonGuardar:hover {
     margin-top: 10px;
     padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #28a745;
+    border-radius: 58px;
+    border: 1px solid #131713;
     font-size: 14px;
-    color: #28a745;
+    color: #131713;
     cursor: pointer;
-    background-color: #fff;
+    background-color: #dcf1d944;
   }
 
 

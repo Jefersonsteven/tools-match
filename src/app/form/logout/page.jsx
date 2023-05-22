@@ -230,7 +230,7 @@ export default function Logout() {
               value={checkbox}
               onClick={() => setCheckbox(!checkbox)}
             />
-            <Link href="/" target="_blank">
+            <Link href="/terms" target="_blank">
               Términos y condiciones
             </Link>
           </label>
