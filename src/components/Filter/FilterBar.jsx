@@ -262,13 +262,13 @@ export default function FilterBar() {
                 Default
               </button>
               <button
-                onClick={() => handleOrderChange("alpha", "asc")}
+                onClick={() => handleOrderChange("alpha", "A-Z")}
                 className={orderFilter === "alpha-asc" ? style.selected : ""}
               >
                 Nombre (A-Z)
               </button>
               <button
-                onClick={() => handleOrderChange("alpha", "desc")}
+                onClick={() => handleOrderChange("alpha", "Z-A")}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Nombre (Z-A)

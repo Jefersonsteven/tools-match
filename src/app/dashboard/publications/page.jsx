@@ -264,7 +264,6 @@ function Posts() {
                     </th>
                     <th>TITULO</th>
                     <th>CATEGORIA</th>
-                    <th>CONTENIDO</th>
                     <th>PRECIO</th>
                     <th>TIPO</th>
                     <th>AUTOR</th>
@@ -287,7 +286,6 @@ function Posts() {
                       </td>
                       <td>{d.title}</td>
                       <td>{d.category}</td>
-                      <td>{d.content}</td>
                       <td>{d.price}</td>
                       <td>{d.type}</td>
                       <td>{d.author.email}</td>

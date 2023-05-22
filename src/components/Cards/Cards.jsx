@@ -12,7 +12,7 @@ const Cards = () => {
 
   /*----------PAGINATED----------*/
 
-  const cardsPerPage = 8;
+  const cardsPerPage = 12;
   /*-------------------------------*/
 
   useEffect(() => {
