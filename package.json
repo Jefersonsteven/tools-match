@@ -22,7 +22,7 @@
     "firebase": "^9.21.0",
     "mailgun-js": "^0.22.0",
     "mercadopago": "^1.5.16",
-    "next": "^13.4.2",
+    "next": "^13.4.3",
     "nodemailer": "^6.9.2",
     "postcss": "8.4.23",
     "react": "^18.2.0",

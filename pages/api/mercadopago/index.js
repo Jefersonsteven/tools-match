@@ -4,8 +4,7 @@ export default async function handler(req, res) {
   const { method } = req;
   if (method == "POST") {
     const { items, payer } = req.body;
-    //const URL_BASE = process.env.DEPLOY_BACK || 'http://localhost:3000'
-    const URL_BASE = ' https://41c4-190-250-144-185.ngrok.io' || 'http://localhost:3000'
+    const URL_BASE = process.env.DEPLOY_BACK || 'http://localhost:3000'
     const response = await fetch(`${URL_BASE}/api/user/${payer.name}`);
     const user = await response.json();
 

@@ -8,7 +8,7 @@ export const fetchCards = async (selected, setCards) => {
   const brandParam = getBrandParam();
   const orderParam = selected.order ? `order=${selected.order.order}&` : '';
 
-  const response = await fetch(`/api/filters/allFilters?${categoryParam}&${typeParam}${brandParam}`);
+  const response = await fetch(`/api/filters/allFilters?${categoryParam}&${typeParam}&${brandParam}`);
   const data = await response.json();
   let cards = data || [];
 
