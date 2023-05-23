@@ -8,6 +8,9 @@ import { uploadImage } from "@/components/Cloudinary/upload";
 import Loader from "@/components/Loader/Loader";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { getLocation } from "./asset/getLocation";
+import axios from "axios";
+import Link from "next/link";
 
 function CreatePost() {
   const { form, setForm, errors, setErrors, userId, userData } =
@@ -17,6 +20,35 @@ function CreatePost() {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
+
+  function getCoords(){
+    getLocation()
+      .then((position) => {
+        const { latitude, longitude } = position.coords;
+        axios.post("/api/maps", { latitude, longitude })
+          .then((response) => {
+            axios.put(`/api/user/${userData.email}`, { map: response.data })
+          })
+      })
+      .catch((error) => {
+        console.error("Error al obtener la ubicación:", error.message);
+        Swal.fire({
+          title: "Compartenos tu ubicación",
+          text: "No has agregado tu ubicación, la necesitamos para ubicar el producto a publicar",
+          icon: "warning",
+          showConfirmButton: false,
+          timer: 4000
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+            router.push(`/home`);
+          }
+        });
+      });
+  }
+
+  useEffect(() => {
+    getCoords()
+  }, []);
   
   useEffect(() => {
     if (!userData.firstname) router.push("/form/login");
@@ -41,28 +73,12 @@ function CreatePost() {
     event.preventDefault();
     setFetching(true);
 
-    // if (!userData.zipCode || !userData.country) {
-      Swal.fire({
-        title: "Vamos a Editar perfil?",
-        text: "No has agregado el pais de residencia o el codigo postal",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sí, Vamos!!",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          router.push(`/perfil/${userData.id}/edit`);
-        } else if (result.isDenied) {
-          router.push(`/home`);
-        }
-      });
-    //   return;
-    // }  //TODO: arreglar la condicional. hacer peticion para obtener la data del usuario y preguntarme si tiene algo en la propiedad map
-
     const error = Object.values(errors).some((e) => e.length > 0);
     const post = Object.values(form).some((e) => e.length === 0);
 
-    if (!error && !post) {
+    const map = await axios.get(`/api/user/${userData.email}`);
+
+    if (map.data.map && !error && !post) {
       if (form.photo.length > 0) {
         setMessage("Subiendo imagenes al servidor...");
         const urls = await uploadImages(form.photo, setUrlsImages);
@@ -210,6 +226,7 @@ function CreatePost() {
           </div>
           <div className={style.button}>
             <button onClick={handleSubmit}>Publicar</button>
+            <Link href="/home">Cancelar</Link>
           </div>
           <div className={style.loaderContainer}>
             {fetching && (
