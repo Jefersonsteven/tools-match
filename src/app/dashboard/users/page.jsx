@@ -119,7 +119,7 @@ function Users() {
       lastname: formData.get("lastname"),
       phoneNumber: formData.get("phonenumber"),
       country: formData.get("country"),
-      admin,
+      admin: editingUser.admin,
     };
 
     console.log(updatedUser);
@@ -190,11 +190,12 @@ function Users() {
       }
     });
   };
-
+  
+  const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
   // CheckBox   ---------------------------------------------------------
   const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-  
+    const { name , checked } = event.target;
+    
     setSelectedUsers((prevSelectedUsers) => {
       if (checked) {
         return [...prevSelectedUsers, name];
@@ -202,7 +203,7 @@ function Users() {
         return prevSelectedUsers.filter((userId) => userId !== name);
       }
     });
-  
+    
     setSelectedUserCount((prevCount) => {
       if (checked) {
         return prevCount + 1;
@@ -212,13 +213,14 @@ function Users() {
     });
   };
   
-  console.log(selectedUsers);
 
   const handleDeleteUsers = () => {
     if (selectedUserCount > 0) {
+      const userIds = selectedUsers;
+    const userIdsString = userIds.join(', ');
       Swal.fire({
         title: `Eliminar ${selectedUserCount} usuarios`,
-        text: `¿Estás seguro de eliminar los ${selectedUserCount} usuarios seleccionados?`,
+        text: `¿Estás seguro de eliminar los usuarios con los siguientes IDs: ${userIdsString}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -227,13 +229,26 @@ function Users() {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          let userIds = selectedUsers;
-          // Eliminar usuarios
+          
+          
+        
+
+
           axios
-            .delete("/api/admin/user", {
-              data: { userIds: userIds },
+            .put("/api/admin/user", {
+                userIds: selectedUsers 
             })
+
+            
+            
+            
+            
+            
             .then((response) => {
+
+            
+              
+
               // Actualizar la lista de usuarios en el estado local
               const updatedUsers = records.filter(
                 (user) => !userIds.includes(user.id)
@@ -254,7 +269,6 @@ function Users() {
   };
 
 
-  const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
 
   const handleAdminClick = (firstname, id) => {
     Swal.fire({
@@ -379,7 +393,7 @@ function Users() {
                   <td>{d.reviews.length}</td>
                   <td>{d.received.length}</td>
                   <td>{d.country ? d.country : "?"}</td>
-                  <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td>
+                  {/* <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td> */}
 
 
                   <td className={style.td_button}>

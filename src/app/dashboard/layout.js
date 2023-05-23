@@ -28,6 +28,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <>
+      <>
       <div className={styles.body}>
         <div className={styles.contenedor}>
           <div className={styles.title}>
@@ -62,6 +63,8 @@ export default function DashboardLayout({ children }) {
         </div>
         {children}
       </div>
+      </>
     </>
+    
   );
 }

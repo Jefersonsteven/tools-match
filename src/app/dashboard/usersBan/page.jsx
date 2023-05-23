@@ -118,7 +118,7 @@ function UsersBan() {
     }).then((result) => {
       if (result.isConfirmed) {
         const userIds = selectedUsers.map((userId) => records[parseInt(userId.substring(4))].id);
-        axios.delete("/api/admin/hidden/user", {
+        axios.put("/api/admin/hidden/user", {
           data: { userIds: userIds },
         })
           .then((response) => {
@@ -141,25 +141,33 @@ function UsersBan() {
   // CheckBox   ---------------------------------------------------------
 
   const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-  
-    if (checked) {
-      setSelectedUsers([...selectedUsers, name]);
-      setSelectedUserCount((prevCount) => prevCount + 1);
-    } else {
-      setSelectedUsers(selectedUsers.filter((userId) => userId !== name));
-      setSelectedUserCount((prevCount) => prevCount - 1);
-    }
-  
-    setAreButtonsDisabled(selectedUserCount <= 1);
+    const { name , checked } = event.target;
+    
+    setSelectedUsers((prevSelectedUsers) => {
+      if (checked) {
+        return [...prevSelectedUsers, name];
+      } else {
+        return prevSelectedUsers.filter((userId) => userId !== name);
+      }
+    });
+    
+    setSelectedUserCount((prevCount) => {
+      if (checked) {
+        return prevCount + 1;
+      } else {
+        return prevCount - 1;
+      }
+    });
   };
-
+  
 
   const handleUnbanUsers = () => {
     if (selectedUserCount > 0) {
+      const userIds = selectedUsers;
+    const userIdsString = userIds.join(', ');
       Swal.fire({
         title: `Sacar el veto a ${selectedUserCount} usuarios`,
-        text: `¿Estás seguro de sacar el veto a los ${selectedUserCount} usuarios seleccionados?`,
+        text: `Sacaras el veto a los usuarios ${selectedUserCount}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -168,22 +176,34 @@ function UsersBan() {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          const userIds = selectedUsers.map((user) => user.id);
-  
-          // Eliminar usuarios
+          
+          
+        
+
+
           axios
-            .delete("/api/admin/hidden/user", {
-              data: { userIds: userIds },
+            .put("/api/admin/hidden/user", {
+                userIds: selectedUsers 
             })
+
+            
+            
+            
+            
+            
             .then((response) => {
+
+            
+              
+
               // Actualizar la lista de usuarios en el estado local
               const updatedUsers = records.filter(
                 (user) => !userIds.includes(user.id)
               );
               setRecords(updatedUsers);
-  
+
               Swal.fire({
-                title: "¡El veto fue sacado correctamente!",
+                title: "¡Los usuarios ya no estan vetados",
                 icon: "success",
               });
             })

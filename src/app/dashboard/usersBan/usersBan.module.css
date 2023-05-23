@@ -189,15 +189,15 @@
 
 .checkbox_padre button {
     background-color: rgba(255, 255, 255, 0.612);
-    border: 2px solid rgba(255, 67, 67, 0.802);
-    color: #f80101;
+    border: 2px solid  #01d3f8;
+    color:  black;
     padding-top: 0px;
     padding-bottom: 0px;
 }
 
 .checkbox_padre button:hover {
-    border: 2px solid rgba(255, 67, 67, 0.802);
-    background-color: rgba(255, 0, 0, 0.685);
+    border: 2px solid  #01d3f8;
+    background-color:  #01d3f8;
     color: white
 }
 
