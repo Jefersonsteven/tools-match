@@ -116,6 +116,12 @@ function AppProvider({ children }) {
     typeof window !== "undefined" && JSON.parse(localStorage.getItem("cart")) //agregado por Adriana y Jefferson
   );
 
+  // * Favorites *//
+  const [favorites, setFavorites] = useState(
+    typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem("favorites")) //agregado por Adriana
+  );
+
   // *---------------------------------------* //
 
   return (
@@ -169,6 +175,8 @@ function AppProvider({ children }) {
         setuserPosts,
         cart,
         setCart,
+        favorites,
+        setFavorites,
       }}
     >
       {children}
