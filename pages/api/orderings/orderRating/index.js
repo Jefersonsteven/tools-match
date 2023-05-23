@@ -2,7 +2,7 @@ import prisma from "../../../../prisma/client";
 
 export default async function handler(req, res) {
   const { method } = req;
-  const { order, type, category, brand } = req.query;
+  const { order, type, category, brand, title } = req.query;
 
   if (method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -15,21 +15,10 @@ export default async function handler(req, res) {
   try {
     let where = { hidden: false };
 
-    if (category && type && brand) {//cuando existen todas
-      where = { ...where, category, type, brand };
-    } else if (!category && type && brand) {// cuando existe type y brand
-      where = { ...where, type, brand };
-    } else if (category && !type && brand) {// cuando existe category y brand 
-      where = { ...where, category, brand };
-    } else if (!category && !type && brand) {// cuando solo existe brand
-      where = { ...where, brand };
-    } else if (category && type && !brand) {// cuando existe solo category y type 
-      where = { ...where, category, type };
-    } else if (!category && type && !brand) {//cuando existe solo type
-      where = { ...where, type };
-    } else if (category && !type && !brand) {// cuando existe solo category 
-      where = { ...where, category };
-    }
+    if (category) where.category = category;
+    if (type) where.type = type;
+    if (brand) where.brand = brand;
+    if (title) where.title = { contains: title, mode: 'insensitive' };
 
     const include = {
       reviews: true
