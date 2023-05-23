@@ -132,10 +132,11 @@ useEffect(() => {
                     <strong>Nombre completo: </strong>
                     {`${user.firstname} ${user.lastname}`}
                   </h2>
-                  <h2>
+                  {userData.id === perfilId &&
+                    <h2>
                     <strong>Correo: </strong>
                     {user.email}
-                  </h2>
+                  </h2>}
                   <h2>
                     <strong>País de residencia: </strong>
                     {user.country ? countries[user.country] : "---"}
@@ -144,10 +145,11 @@ useEffect(() => {
                     <strong>Código postal: </strong>
                     {user.zipCode ? user.zipCode : "---"}
                   </h2>
-                  <h2>
+                  {userData.id === perfilId &&
+                    <h2>
                     <strong>Celular: </strong>
                     {user.phoneNumber ? user.phoneNumber : "---"}
-                  </h2>
+                  </h2>}
                 </div>
               </div>
               <div className={styles.buttonContainer}>
