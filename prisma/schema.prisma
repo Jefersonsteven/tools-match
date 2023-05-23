@@ -3,11 +3,10 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgres://data_base_l6dn_user:B86hY8e5Rmz7iYLlNcF9zejHmerWkpJX@dpg-chh9vq9mbg54o2042eqg-a.oregon-postgres.render.com/data_base_l6dn"
-  // url               = env("POSTGRES_PRISMA_URL")
-  // directUrl         = env("POSTGRES_URL_NON_POOLING")
-  // shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL")
+  directUrl         = env("POSTGRES_URL_NON_POOLING")
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
