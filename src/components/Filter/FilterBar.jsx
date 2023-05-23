@@ -21,13 +21,13 @@ export default function FilterBar() {
     if(newTitle.length==0){
       setSelected({...selected,title: ""})
     }
-    console.log(selected.title.lenght)
-   
   };
   const handleTitleButton = async () => { 
+    setSelected({...selected,title: title})
     const response = await fetch(`/api/filters/title/${title}`)
     const data = await response.json();
     setCards(data || []);
+    console.log(selected.title)
   }
 
   useEffect(() => {
