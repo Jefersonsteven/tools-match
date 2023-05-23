@@ -66,8 +66,11 @@ export const getDataFromDB = async (
       router.push("/form/logout");
     }, 3000);
   } else {
+    const loginTime = new Date().getTime();
+
     saveInLocalStorage("token", dbUserData);
     saveInLocalStorage("id", dbUserData.id);
+    saveInLocalStorage("loginTime", loginTime);
     setUserData(dbUserData);
     setUserId(dbUserData.id);
 
@@ -113,8 +116,11 @@ export const createNewUserOrLogIn = async (
       false
     );
   }
+  const loginTime = new Date().getTime();
+
   saveInLocalStorage("token", dbUserData);
   saveInLocalStorage("id", dbUserData.id);
+  saveInLocalStorage("loginTime", loginTime);
   setUserData(dbUserData);
   setUserId(dbUserData.id);
 

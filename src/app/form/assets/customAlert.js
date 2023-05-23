@@ -10,6 +10,7 @@ export default function customAlert(timer, position, icon, title) {
     didOpen: (toast) => {
       toast.addEventListener("mouseenter", Swal.stopTimer);
       toast.addEventListener("mouseleave", Swal.resumeTimer);
+      toast.style.fontSize = "16px";
     },
   });
 

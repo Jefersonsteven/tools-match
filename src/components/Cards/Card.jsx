@@ -49,17 +49,17 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
           />
         </Link>
         <div className={styles.imageContainer}>
-        <Image
-          onError={(event) =>
-            (event.target.src =
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNQ5uqj17TEhCijObvQMPqwOXCIgOF36SvFw&usqp=CAU")
+          <Image
+            onError={(event) =>
+              (event.target.src =
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNQ5uqj17TEhCijObvQMPqwOXCIgOF36SvFw&usqp=CAU")
             }
             width={230}
             height={152}
             src={photo}
             alt={title}
             className={`${styles.cardImage} rounded-md`}
-            />
+          />
         </div>
         <div className={styles.cardInfo}>
           <div className={styles.cardContent}>
