@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       res.status(500).json({ message: "Error retrieving reviews" });
     }
   }
-  if (req.method === "DELETE") {
+  if (req.method === "PUT") {
     try {
       const { userIds } = req.body;
 

@@ -107,7 +107,7 @@
     width: 100%;
     display: grid;
     justify-items: center;
-    cursor: pointer;
+    /* cursor: pointer; */
     gap: 30px;
 }
 

@@ -18,7 +18,7 @@ export const uploadImage = async (file) => {
     const data = await response.json();
     const imageUrl = `https://res.cloudinary.com/${
       cloudinaryCore.config().cloud_name
-    }/image/upload/w_500,h_500,c_fill/${data.public_id}`;
+    }/image/upload/w_500,h_500,c_fit/${data.public_id}`;
     return imageUrl;
   } catch (error) {
     console.error(error);

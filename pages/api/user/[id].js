@@ -39,23 +39,6 @@ export default async function handler(req, res) {
           photo,
         },
       });
-      if (user.map === null) {
-        if (user.zipCode && user.country) {
-          const mapLink = await getStaticMapUrlByZipCode(
-            user.zipCode,
-            user.country
-          );
-          const userMap = await prisma.user.update({
-            where: {
-              email: id,
-            },
-            data: {
-              map: mapLink,
-            },
-          });
-          user.map = userMap.map;
-        }
-      }
       res.status(200).json(user);
     } catch (error) {
       res.status(500).json({ error: "Error updating user." });

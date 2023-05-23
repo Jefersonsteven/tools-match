@@ -183,8 +183,8 @@ function Reviews() {
   
           // Eliminar publicaciones
           axios
-            .delete("/api/admin/review", {
-              data: { userIds: userIds },
+            .put("/api/admin/review", {
+               userIds: userIds 
             })
             .then((response) => {
               // Actualizar la lista de publicaciones en el estado local o cualquier otra acción necesaria
