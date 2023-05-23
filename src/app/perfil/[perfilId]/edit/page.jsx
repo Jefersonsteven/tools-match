@@ -25,80 +25,127 @@ const EditUser = () => {
     firstname: userData?.firstname,
     lastname: userData?.lastname,
     email: userData?.email,
-    phoneNumber: userData?.phoneNumber,
+    phoneNumber: userData?.phoneNumber || "",
     country: userData?.country,
     zipCode: userData?.zipCode,
     photo: userData?.photo,
   });
+  const [errors, setErrors] = useState({
+    firstname: "",
+    lastname: "",
+    phoneNumber: "",
+    flag: false,
+  });
+
+  useEffect(() => {
+    setErrors(validateForm(form));
+  }, [form]);
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [inPetition, setInPetition] = useState("");
 
-  useEffect(() => console.log(form), [form]);
+  const validateForm = (inputs) => {
+    const notNumbers = /^[A-Za-z]+$/;
+
+    let errors = {
+      firstname: "",
+      lastname: "",
+      email: "",
+      phoneNumber: "",
+      flag: false,
+    };
+
+    if (!notNumbers.test(inputs.firstname)) {
+      errors.firstname = "Inválido";
+      errors.flag = true;
+    }
+
+    if (!inputs.firstname) {
+      errors.firstname = "";
+      errors.flag = true;
+    }
+
+    if (!notNumbers.test(inputs.lastname)) {
+      errors.lastname = "Inválido";
+      errors.flag = true;
+    }
+
+    if (!inputs.lastname) {
+      errors.lastname = "";
+      errors.flag = true;
+    }
+
+    (inputs.phoneNumber.length < 8 || inputs.phoneNumber.length > 15) &&
+      (errors.phoneNumber = "Número invalido");
+
+    if (!inputs.phoneNumber) {
+      errors.phoneNumber = "";
+      errors.flag = true;
+    }
+
+    return errors;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const body = {
-      email: form.email,
-      password: form.password,
-    };
-    setInPetition("Validando contraseña...");
+
     setIsActive(true);
     try {
-      let responseOfValidation = await newPetition(
-        "PUT",
-        "/api/loginValidate",
+      let uploadedImageUrl = null;
+      if (selectedFile) {
+        setInPetition("Subiendo nueva imagen...");
+        uploadedImageUrl = await uploadImage(selectedFile);
+      }
+      setInPetition("Aplicando cambios...");
+      let response = await newPetition("PUT", `/api/user/${userData.email}`, {
+        ...form,
+        photo: uploadedImageUrl ? uploadedImageUrl : userData.photo,
+      });
 
-        body
-      );
-
-      if (!responseOfValidation.error) {
-        let uploadedImageUrl = null;
-        if (selectedFile) {
-          setInPetition("Subiendo nueva imagen...");
-          uploadedImageUrl = await uploadImage(selectedFile);
-        }
-        setInPetition("Aplicando cambios...");
-        let response = await newPetition("PUT", `/api/user/${userData.email}`, {
-          ...form,
-          photo: uploadedImageUrl ? uploadedImageUrl : userData.photo,
+      if (!response.error) {
+        setInPetition("Cambios aplicados correctamente");
+        setUserData({ ...userData, ...response });
+        saveInLocalStorage("token", { ...userData, ...response });
+        push(`perfil/${userData.id}`);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+            toast.style.fontSize = "16px";
+          },
         });
 
-        console.log(response);
-        if (!response.error) {
-          setInPetition("Cambios aplicados correctamente");
-          setUserData({ ...userData, ...response });
-          saveInLocalStorage("token", { ...userData, ...response });
-          push(`perfil/${userData.id}`);
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "bottom-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
-
-          Toast.fire({
-            icon: "success",
-            title: "Cambios aplicados correctamente",
-          });
-        } else {
-          throw new Error(response.error);
-        }
+        Toast.fire({
+          icon: "success",
+          title: "Cambios aplicados correctamente",
+        });
       } else {
-        throw new Error(responseOfValidation.error);
+        throw new Error(response.error);
       }
     } catch (error) {
       console.log(error);
-      Swal.fire({
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+          toast.style.fontSize = "16px";
+        },
+      });
+
+      Toast.fire({
         icon: "error",
-        title: "Se produjo un error al intentar actualizar datos",
-        text: `Motivo del error: ${error}`,
-        footer: "Intenta nuevamente",
+        title: error || "Error al aplicar los cambios",
       });
     }
     setInPetition("");
@@ -157,6 +204,7 @@ const EditUser = () => {
                       value={form.firstname}
                       onChange={handleChange}
                     />
+                    <p>{errors.firstname && errors.firstname}</p>
                   </div>
                   <div className={styles.inputContainer}>
                     <label htmlFor="lastname">Apellido:</label>
@@ -166,6 +214,7 @@ const EditUser = () => {
                       value={form.lastname}
                       onChange={handleChange}
                     />
+                    <p>{errors.lastname && errors.lastname}</p>
                   </div>
                 </div>
                 <div className={styles.inputsContainer}>
@@ -186,6 +235,7 @@ const EditUser = () => {
                       value={form.phoneNumber && form.phoneNumber}
                       onChange={handleChange}
                     />
+                    <p>{errors.phoneNumber && errors.phoneNumber}</p>
                   </div>
                 </div>
                 <div className={styles.inputsContainer}>
@@ -220,16 +270,7 @@ const EditUser = () => {
                     />
                   </div>
                 </div>
-                <div className={styles.inputContainer}>
-                  <label htmlFor="password">
-                    Contraseña para aplicar cambios:
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                  />
-                </div>
+
                 <div className={styles.buttonsContainer}>
                   <button
                     className={styles.buttonCancel}

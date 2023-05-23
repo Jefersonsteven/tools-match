@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
+
   return (
     <AppProvider>
       <html lang="en">
