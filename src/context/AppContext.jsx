@@ -65,6 +65,7 @@ function AppProvider({ children }) {
       order: "",
     },
     title: "",
+    brand: "",
   }); //lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 
@@ -114,6 +115,12 @@ function AppProvider({ children }) {
   // * Cart *//
   const [cart, setCart] = useState(
     typeof window !== "undefined" && JSON.parse(localStorage.getItem("cart")) //agregado por Adriana y Jefferson
+  );
+
+  // * Favorites *//
+  const [favorites, setFavorites] = useState(
+    typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem("favorites")) //agregado por Adriana
   );
 
   // *---------------------------------------* //
@@ -169,6 +176,8 @@ function AppProvider({ children }) {
         setuserPosts,
         cart,
         setCart,
+        favorites,
+        setFavorites,
       }}
     >
       {children}
