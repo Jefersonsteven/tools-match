@@ -17,8 +17,7 @@ export default async function handler(req, res) {
           user: true,
         },
       });
-
-      res.status(201).json({ order });
+      res.status(201).json(order);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Error creating order" });
