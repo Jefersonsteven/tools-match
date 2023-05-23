@@ -1,4 +1,6 @@
 import prisma from "../../../../prisma/client";
+import axios from "axios";
+import getStaticMapUrlByZipCode from "../../maps/mapUtil";
 
 export default async function handler(req, res) {
   const { id } = req.query;

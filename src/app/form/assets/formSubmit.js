@@ -10,7 +10,8 @@ export const submitLogInFormData = async (
   router,
   saveInLocalStorage,
   form,
-  setForm
+  setForm,
+  setDataMessage
 ) => {
   let dbUserData = null;
   const body = {
@@ -18,18 +19,18 @@ export const submitLogInFormData = async (
     password: loginData.password,
   };
 
-  console.log(router);
-  console.log(router.push);
+  setDataMessage("Validando credenciales...");
   let responseOfValidation = await newPetition(
     "PUT",
-    "http://localhost:3000/api/loginValidate",
+    "/api/loginValidate",
     body
   );
 
   if (!responseOfValidation.error) {
+    setDataMessage("Iniciando sesión...");
     dbUserData = await newPetition(
       "GET",
-      `http://localhost:3000/api/user/${loginData.email}`,
+      `/api/user/${loginData.email}`,
       false
     );
   } else {
@@ -66,11 +67,7 @@ export const submitSignUpFormData = async (registerData, router) => {
     phoneNumber: registerData.phoneNumber,
   };
 
-  let data = await newPetition(
-    "POST",
-    "http://localhost:3000/api/registerUser",
-    body
-  );
+  let data = await newPetition("POST", "/api/registerUser", body);
 
   if (data.newUser) {
     Swal.fire({

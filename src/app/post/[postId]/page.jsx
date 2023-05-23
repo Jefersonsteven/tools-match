@@ -13,20 +13,14 @@ function PostDetail({}) {
   const { postDetail, setPostDetail, userId } = useContext(AppContext);
   const pd = postDetail;
 
-  function addCart(){
-    return true
+  function addCart() {
+    return true;
   }
 
   const pd2 = {
     author: {
       rating: 1.0,
-      image_perfil:
-        "https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg",
     },
-    images: [
-      "https://us.123rf.com/450wm/godruma/godruma1802/godruma180200012/95380266-taladro-manual-o-m%C3%A1quina-de-perforaci%C3%B3n-equipada-con-un-accesorio-de-herramienta-de-corte-o-de.jpg",
-      "https://us.123rf.com/450wm/vivacityimages/vivacityimages2004/vivacityimages200400051/144863343-vista-lateral-del-taladro-manual-a-bater%C3%ADa.jpg",
-    ],
   };
 
   useEffect(() => {
@@ -83,8 +77,14 @@ function PostDetail({}) {
               </div>
               <p>{pd.content}</p>
               <div className={styles.description_categories}>
+                <div>
                 <h5>Categoria:</h5>
                 <p>{pd.category}</p>
+                </div>
+                <div>
+                <h5>Marca:</h5>
+                <p>{pd.brand}</p>
+                </div>
               </div>
             </section>
             <section className={styles.section_user}>
@@ -100,7 +100,7 @@ function PostDetail({}) {
               <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image
-                    src={pd?.photo[0]}
+                    src={pd?.author.photo}
                     width={96}
                     height={96}
                     alt={pd.author.firstname}
@@ -118,8 +118,7 @@ function PostDetail({}) {
             <section className={styles.section_button}>
               {userId === pd.author.id && <button>Eliminar</button>}
               {userId !== pd.author.id && pd.type === "SALE" && (
-                <Link 
-                href={ addCart() && "/cart"}>
+                <Link href={addCart() && "/cart"}>
                   <button>Comprar</button>
                 </Link>
               )}

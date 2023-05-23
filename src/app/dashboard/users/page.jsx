@@ -1,13 +1,23 @@
 "use client";
 import style from "./users.module.css";
+
 import Modal from "../components/Modal";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
+
 import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { icons } from "react-icons";
+import { TiDelete, TiPencil } from "react-icons/ti";
+
+import Loader from "@/components/Loader/Loader";
+
+
+/*PARA PAGINATED*/
+import Paginated from "@/components/paginated/Paginated";
+/*-----------------*/
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -15,104 +25,128 @@ export function SearchBar({ searchTerm, setSearchTerm }) {
   };
   return (
     <div className={style.searchBar}>
-      <input type="text" value={searchTerm} onChange={handleSearchTermChange} />
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchTermChange}
+        placeholder="Email"
+      />
       <FaSearch />
     </div>
   );
 }
 
+/*MODIFICADO PARA PAGINATED*/
+
 function Users() {
   const [searchTerm, setSearchTerm] = useState("");
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
+
+
   const [editingUser, setEditingUser] = useState(null);
+
+
   const [showModal, setShowModal] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedUserCount, setSelectedUserCount] = useState(0);
+  const [areButtonsDisabled, setAreButtonsDisabled] = useState(true);
+
+  const [loading, setLoading] = useState(false);
 
 
 
-  const handleDeleteUser = async (id) => {
-    try {
-      const userDelete = await axios.delete(`http://localhost:3000/api/admin/user/${id}`);
-      console.log(userDelete.data);
-      Swal.fire({
-        title: 'Usuario eliminado',
-        text: 'El usuario ha sido eliminado exitosamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      });
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        title: 'Error al Eliminar el Usuario',
-        text: 'Ha ocurrido un error al eliminar el usuario, porfavor intenta de nuevo',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-      })
+  const[admin, setAdmin] = useState(false);
 
-    }
-  };
-
-
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios('http://localhost:3000/api/admin/user');
-        const users = await response.data;
-
-        if (users.length > 0) {
-          const columns = Object.keys(users[0]).map((column) => column.toUpperCase());
-          setColumns(columns);
-          setRecords(users);
-        }
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  
 
 
   const filteredUsuarios = records.filter((usuario) => {
     return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+  /*---------- PAGINATED ----------*/
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  const startIndex = (currentPage - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const displayedUsers = filteredUsuarios.slice(startIndex, endIndex);
+  /*-------------------------------*/
+
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await axios("/api/admin/user"); //PAGINATED
+      const users = await response.data;
+
+      if (users.length > 0) {
+        const columns = Object.keys(users[0]).map((column) =>
+          column.toUpperCase()
+        );
+        setColumns(columns);
+        setRecords(users);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+
+// Editar usuario -----------------------------
 
   const handleClick = (userId) => {
     const userToEdit = filteredUsuarios.find((user) => user.id === userId);
     setEditingUser(userToEdit);
-    setShowModal(true)
+    setShowModal(true);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const updatedUser = {
-      firstname: formData.get('firstname'),
-      lastname: formData.get('lastname'),
-      email: formData.get('email'),
-      phoneNumber: formData.get('phonenumber'),
-      reports: formData.get('reports'),
+      firstname: formData.get("firstname"),
+      lastname: formData.get("lastname"),
+      phoneNumber: formData.get("phonenumber"),
+      country: formData.get("country"),
+      admin: editingUser.admin,
     };
 
+    console.log(updatedUser);
+
     Swal.fire({
-      title: '¿Estás seguro de los cambios?',
-      icon: 'warning',
+      title: "¿Estás seguro de los cambios?",
+      icon: "success",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, guardar cambios',
-      cancelButtonText: 'Cancelar',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, guardar cambios",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:3000/api/admin/user/${editingUser.id}`, updatedUser)
+        axios
+          .put(`/api/admin/user/${editingUser.id}`, updatedUser)
           .then((response) => {
             console.log(response.data);
+            setRecords((prevRecords)=>
+            prevRecords.map((user)=>
+            user.id === editingUser.id ? {...user, ...updatedUser}: user
+             )
+            );
             setEditingUser(null);
             Swal.fire({
-              title: '¡Usuario editado correctamente!',
-              icon: 'success',
+              title: "¡Usuario editado correctamente!",
+              icon: "success",
             });
           })
           .catch((error) => {
@@ -122,94 +156,284 @@ function Users() {
     });
   };
 
+  // -----------------------------------------------------------------
+
+
+// Funcion de eliminar usuario ----------------------------------------
+
   const handleDeleteClick = (firstname, id) => {
     Swal.fire({
-
-      title: '¿Estás seguro?',
-      text: `Estás por eliminar al usuario "${firstname}"`,
-      icon: 'warning',
+      title: `¿Estás seguro de eliminar a ${firstname}?`,
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText: 'Cancelar',
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, borrar",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleDeleteUser(id);
+        axios
+          .delete(`/api/admin/user/${id}`)
+          .then((response) => {
+            // Actualizar la lista de usuarios en el estado local
+            const updatedUsers = records.filter((user) => user.id !== id);
+            setRecords(updatedUsers);
+            
+            Swal.fire({
+              title: "¡Usuario eliminado correctamente!",
+              icon: "success",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-    })
+    });
+  };
+  
+  const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
+  // CheckBox   ---------------------------------------------------------
+  const handleCheckboxChange = (event) => {
+    const { name , checked } = event.target;
+    
+    setSelectedUsers((prevSelectedUsers) => {
+      if (checked) {
+        return [...prevSelectedUsers, name];
+      } else {
+        return prevSelectedUsers.filter((userId) => userId !== name);
+      }
+    });
+    
+    setSelectedUserCount((prevCount) => {
+      if (checked) {
+        return prevCount + 1;
+      } else {
+        return prevCount - 1;
+      }
+    });
+  };
+  
+
+  const handleDeleteUsers = () => {
+    if (selectedUserCount > 0) {
+      const userIds = selectedUsers;
+    const userIdsString = userIds.join(', ');
+      Swal.fire({
+        title: `Eliminar ${selectedUserCount} usuarios`,
+        text: `¿Estás seguro de eliminar los usuarios con los siguientes IDs: ${userIdsString}?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, borrar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          
+          
+        
+
+
+          axios
+            .put("/api/admin/user", {
+                userIds: selectedUsers 
+            })
+
+            
+            
+            
+            
+            
+            .then((response) => {
+
+            
+              
+
+              // Actualizar la lista de usuarios en el estado local
+              const updatedUsers = records.filter(
+                (user) => !userIds.includes(user.id)
+              );
+              setRecords(updatedUsers);
+
+              Swal.fire({
+                title: "¡Usuarios eliminados correctamente!",
+                icon: "success",
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+    }
   };
 
 
 
+  const handleAdminClick = (firstname, id) => {
+    Swal.fire({
+      title: "¿Estás seguro de asignar el rol de administrador?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, asignar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`/api/admin/user/${id}`, { admin: true })
+          .then((response) => {
+            // Actualizar la lista de usuarios en el estado local
+            setRecords((prevRecords) =>
+              prevRecords.map((user) =>
+                user.id === id ? { ...user, admin: true } : user
+              )
+            );
+  
+            Swal.fire({
+              title: "¡Rol de administrador asignado correctamente!",
+              icon: "success",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
+
+
+
+
+
+//  -------------------------------------------------------------------------------------------
+     
   return (
     <div className={style.contenedorPadre}>
+
+
       <div className={style.searchbarContainer}>
         <h2>Usuarios</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
+
+    
+      {loading ? (
+
+
+<div className="loader-container">
+  <Loader className="loader" />
+</div>
+      
+    ) : ( <div>
+
+   
+      
+        
+      {selectedUserCount > 1 && (
+      <div className={style.checkbox_padre}>
+      <h2>Hay {selectedUserCount} usuarios seleccionados</h2>
+              <button
+                 className={style.botonEliminar}
+                     onClick={handleDeleteUsers}
+                >
+                   Eliminar usuarios
+              </button>
+      </div>
+      )}
+
+    
       <div className={style.contenedorTable}>
         {filteredUsuarios.length > 0 ? (
           <table className={style.table}>
+           
             <thead>
               <tr>
-                <th><MdVerifiedUser /></th>
-                <th>ID</th>
+                <th>
+                  <MdVerifiedUser />
+                </th>
                 <th>NOMBRE</th>
                 <th>APELLIDO</th>
                 <th>EMAIL</th>
                 <th>TELEFONO</th>
                 <th>RANGO</th>
-                <th>LOGGIN</th>
                 <th>HIDDEN</th>
-                <th>CP</th>
                 <th>REPORTES</th>
                 <th>PUBLICACIONES</th>
-                <th>RESEÑAS</th>
                 <th>ORDENES</th>
+                <th>RESEÑAS</th>
+                <th>RECIBOS</th>
+                <th>PAIS</th>                
+                <th>ACCIONES</th>               
               </tr>
             </thead>
 
+
             <tbody className={style.bodyTabla}>
-              {filteredUsuarios.map((d, i) => (
-                <tr className={style.namesTable} key={i}>
-                  <td><FaRegUserCircle /></td>
-                  <td>{d.id}</td>
+              {displayedUsers.map((d) => (
+                <tr className={style.namesTable} key={d.id}>
+                  <td>
+                  <input
+                          type="checkbox"
+                          name={d.id}
+                          checked={selectedUsers.includes(d.id)}
+                          onChange={handleCheckboxChange}
+                        />
+                  </td>
                   <td>{d.firstname}</td>
                   <td>{d.lastname}</td>
                   <td>{d.email}</td>
                   <td>{d.phoneNumber}</td>
                   <td>{d.admin ? "Admin" : "Usuario"}</td>
-                  <td>{d.logged ? "Conectado" : "Desconectado"}</td>
                   <td>{d.hidden ? "True" : "False"}</td>
-                  <td>{d.zipCode ? "True" : "False"}</td>
-                  <td>{d.reports}</td>
+                  <td>{d.reports.length}</td>
                   <td>{d.posts.length}</td>
-                  <td>{d.reviews.length}</td>
                   <td>{d.orders.length}</td>
-                  <td>
+                  <td>{d.reviews.length}</td>
+                  <td>{d.received.length}</td>
+                  <td>{d.country ? d.country : "?"}</td>
+                  {/* <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td> */}
+
+
+                  <td className={style.td_button}>
                     <button
-                      className={style.botonEditar}
-                      onClick={() => handleClick(d.id)}>EDITAR
-                    </button>
-                    <button
-                      className={style.botonDelete}
-                      onClick={() => handleDeleteClick(d.firstname, d.id)}
+                      className={`${style.botonEditar} ${buttonClass}`}
+                      onClick={() => handleClick(d.id)}
+                      disabled={selectedUserCount > 1}
+                      
                     >
-                      BAN
+                      <TiPencil size={30}/>
                     </button>
-                  </td>
+                    <button
+                      className={`${style.botonDelete} ${buttonClass}`}
+                      onClick={() => handleDeleteClick(d.firstname, d.id)}
+                      disabled={selectedUserCount > 1}
+                    >
+                      <TiDelete size={30}/>
+                    </button>
+                  </td>  
+
+
+                
                 </tr>
               ))}
-
-
-
             </tbody>
           </table>
         ) : (
-          <div className={style.noUsuarios}><p>No hay Usuarios🚩</p></div>
+          <div className={style.noUsuarios}>
+            <p>No hay Usuarios🚩</p>
+          </div>
         )}
         {editingUser && (
+
+
+
           <Modal show={showModal} onClose={() => setShowModal(false)}>
+
             <UserForm
+              admin={admin}
+              setAdmin={setAdmin}
               editingUser={editingUser}
               handleSubmit={handleSubmit}
               setEditingUser={setEditingUser}
@@ -217,7 +441,23 @@ function Users() {
           </Modal>
         )}
 
+
+
+
       </div>
+      {/*--------- PAGINATED ---------- */}
+      {filteredUsuarios.length > 0 && (
+        <Paginated
+          url={`/api/admin/paginatedUser?page=${currentPage}&limit=${perPage}`}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          perPage={perPage}
+          onPageChange={handlePageChange}
+          totalPagesProp={Math.ceil(perPage.length / perPage)}
+        />
+      )}
+ </div>)}
+      {/*------------------------------ */}
     </div>
   );
 }

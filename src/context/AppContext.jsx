@@ -1,31 +1,24 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
+import { newPetition } from "./assets/customFetch";
 
 const AppContext = createContext();
 
 function AppProvider({ children }) {
   // * Detalles de la publicación
   const [postDetail, setPostDetail] = useState({});
-  const [userData, setUserData] = useState(typeof window !== 'undefined' && JSON.parse(localStorage.getItem("token")));
-  const [userId, setUserId] = useState(typeof window !== 'undefined' && JSON.parse(localStorage.getItem("id")));
-  const [userData, setUserData] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [userData, setUserData] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("token"))
+  );
+  const [userId, setUserId] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("id"))
+  );
 
-  if (typeof window !== 'undefined') {
-    // Acceso a localStorage aquí
-    const storedToken = localStorage.getItem("token");
-    const storedId = localStorage.getItem("id");
-
-    // Resto del código que depende de localStorage
-    if (storedId && storedToken) {
-      setUserData(storedToken)
-      setUserId(storedId)
-    }
-  }
+  const [userPosts, setuserPosts] = useState([]);
 
   // * Formulario para crear publicaciones */
   const [form, setForm] = useState({
@@ -33,6 +26,7 @@ function AppProvider({ children }) {
     content: "",
     photo: [],
     category: "",
+    brand: "",
     price: "",
     type: "",
     authorId: userId,
@@ -43,6 +37,7 @@ function AppProvider({ children }) {
     content: "",
     photo: "",
     category: "",
+    brand: "",
     price: "",
     type: "",
     authorId: "",
@@ -55,7 +50,6 @@ function AppProvider({ children }) {
   const [sale, setSale] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [name, setName] = useState("");
-
   const [title, setTitle] = useState("");
   const [cards, setCards] = useState([]);
   const [selectedType, setSelectedType] = useState("");
@@ -63,11 +57,72 @@ function AppProvider({ children }) {
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
 
+  const [selected, setSelected] = useState({
+    category: "",
+    type: "",
+    order: {
+      type: "",
+      order: "",
+    },
+    title: "",
+  }); //lo agrego JeanHey para filtros de cards en el back
+  // * Data de países *//
 
-  const [selected, setSelected] = useState({ category: '', type: '' ,order: {
-    type:'',
-    order:''
-  }});//lo agrego JeanHey para filtros de cards en el back
+  const [countries, setCountries] = useState({
+    null: "---",
+    AR: "Argentina",
+    BO: "Bolivia",
+    BR: "Brasil",
+    CL: "Chile",
+    CO: "Colombia",
+    CR: "Costa Rica",
+    CU: "Cuba",
+    EC: "Ecuador",
+    SV: "El Salvador",
+    GT: "Guatemala",
+    HT: "Haití",
+    HN: "Honduras",
+    MX: "México",
+    NI: "Nicaragua",
+    PA: "Panamá",
+    PY: "Paraguay",
+    PE: "Perú",
+    DO: "República Dominicana",
+    UY: "Uruguay",
+    VE: "Venezuela",
+  });
+
+  // *---------------------------------------* //
+  // * Paginated *//
+  const [currentPage, setCurrentPage] = useState(1); //agregado por Adriana
+
+  // * Cart localStorage *//
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("cart")) {
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            count: 0,
+            items: [],
+          })
+        );
+      }
+    }
+  }, []);
+
+  // * Cart *//
+  const [cart, setCart] = useState(
+    typeof window !== "undefined" && JSON.parse(localStorage.getItem("cart")) //agregado por Adriana y Jefferson
+  );
+
+  // * Favorites *//
+  const [favorites, setFavorites] = useState(
+    typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem("favorites")) //agregado por Adriana
+  );
+
+  // *---------------------------------------* //
 
   return (
     <AppContext.Provider
@@ -111,6 +166,17 @@ function AppProvider({ children }) {
         saveInLocalStorage,
         removeFromLocalStorage,
         endSession,
+        currentPage,
+        setCurrentPage,
+        countries,
+        setCountries,
+        newPetition,
+        userPosts,
+        setuserPosts,
+        cart,
+        setCart,
+        favorites,
+        setFavorites,
       }}
     >
       {children}

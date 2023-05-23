@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const getStaticMapUrlByZipCode = async (zipCode, country) => {
-  const apiKey = process.env.GOOGLE_API_KEY;
-  const url = `https://maps.googleapis.com/maps/api/staticmap?center=${zipCode},${country}&zoom=12&size=600x400&maptype=roadmap&markers=color:red%7C&key=${apiKey}`;
+const getStaticMapUrlByCoordinates = async (latitude, longitude) => {
+  const url = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=12&size=600x400&maptype=roadmap&markers=color:red%7C${latitude},${longitude}&key=AIzaSyCUpL26pKZ0CSdNchdwEFr-qopnMtHvyvw`;
 
   try {
     const response = await axios.get(url);
@@ -13,4 +12,4 @@ const getStaticMapUrlByZipCode = async (zipCode, country) => {
   }
 };
 
-export default getStaticMapUrlByZipCode;
+export default getStaticMapUrlByCoordinates;

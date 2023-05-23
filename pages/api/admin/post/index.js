@@ -4,6 +4,9 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     // Obtener todos los posts
     const posts = await prisma.post.findMany({
+      where: {
+        hidden: false,
+      },
       include: {
         author: true,
         reviews: true,
@@ -15,5 +18,23 @@ export default async function handler(req, res) {
     res.status(200).json(posts);
   } else {
     res.status(405).json({ message: "Método HTTP no permitido" });
+  }
+  if (req.method === "PUT") {
+    try {
+      const { userIds } = req.body;
+
+      const users = await prisma.post.updateMany({
+        where: {
+          id: { in: userIds },
+        },
+        data: {
+          hidden: true,
+        },
+      });
+
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ error: "Error deleting posts." });
+    }
   }
 }

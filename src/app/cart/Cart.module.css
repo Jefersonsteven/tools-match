@@ -1,150 +1,117 @@
-/*---------------------CARDS-CART---------------------*/
-/*---------------------CARDS - SUGERENCIAS---------------------*/
-.cartContainer{
-    display: flex;
-    padding: 20px 50px;
-        justify-content: space-between;
-}
-.cartTitle{
-    text-align: left;
-    font-size: 4rem;
-        font-weight: bold;
-        margin: 0 50px;
-    margin-top: 20px;
-}
-.cardCart{
-    display: flex;
-        flex-direction: column;
-}
-.cardCart img{
-    width: 200px;    
-    height: 200px;
-    gap: 10px;
-}
-.cartDate{
-    color: black;
-}
-.cartList {
-    width: 50%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-  /*---------------------CARDS - CARRITO---------------------*/
-  .cartTitle2 {
-    position: relative;
-    font-size: 2.5rem;
-    font-weight: 500;
-    padding: 10px 10px;
-    background-color: var(--black);
-    width: 100%;
-    opacity: .5;
-    color: #DCF1D9;
-    text-align: center;
-    font-weight: 700;
-}
-
-.cardCart2{
-    margin-right: 50px;
-    margin-top: 20px;
-    margin-bottom: 20px; 
-    position: relative;
+.container{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 5px;
-    background-color: white;
-    border-radius: 10px;
-    justify-content: space-around;
+    gap: 5rem;
 }
-
-.cardCart2 img{
-    width: 200px;    
-    height: 200px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.cartContainer{
+    display: flex; 
+    justify-content: space-between;
+    width: 100%;
 }
-
-.cartDate2{
-    color: black;
-}
-
-.cartList2 {
-    background-color: var(--black-light);
-    width: 50%;
+.backContainer{
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center; 
-    align-items: space-between;
-    margin-bottom: 20px;
-}
-.saleTypeContent{    
-    display: none;
-  }
-
-
-/*---------------------TOTAL PRICE---------------------*/
-
-.cartTotal{
-    margin-left: 50%;
-}
-
-/*---------------------CARDS - DELETE---------------------*/
-.deleteCardCart{
-    color: red;
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background-color: transparent;
-    border: none;
-    font-size: 20px;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 1rem;
     cursor: pointer;
-}
-
-/*---------------------BUTTON BUY, GO BACK TO PRODUCTS AND ADD TO CART---------------------*/
-.addToCart{
-    background-color: var(--orange);
-    color: #DCF1D9;
-    width: 50%;
-    height: 50px;
-    align-items: center;
-    border-radius: 5px;
     
 }
-.buying{
-  bottom: 0;
-  right: 0;
-  background-color: #fff;
-  padding: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-  margin-block-start: auto;
-    
-}
-
-.buying1, .buying2{
-    color: #DCF1D9;
-    text-align: center;
-    align-items: center;
+.backContainer h3{
+    display: flex;
     justify-content: center;
-    padding-top: 10px;
-    width: 200px;
-    height: 50px;
-    border: none;
-    border-radius: 5px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--black-light);
+    align-items: center;
+    gap: 1rem;
+}
+.back{
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    background-color: var(--orange);
+    border-radius: 20px;
+}
+.cartContainer h2{
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--black-light);
+}
+.container{
+    min-height: 100vh;
+    padding: 50px;
+}
+.cart{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+}
+.cartCards{
+    background-color: var(--black-light);
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 3rem;
+    width: 635px;
+    border-radius: 20px;
+}
+.cartItem{
+    height: 124px;
+    display: flex;
+    gap: 2.5rem;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+}
+.cartItemImg{
+    border-radius: 10px;
+}
+.cartDetailContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.cartItemDetail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+.cartItemTitle{
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+.cartItemPrice{
     font-size: 2rem;
     font-weight: 500;
-    cursor: pointer;
+    color: var(--black-light);
 }
-.buying1{
-    background-color: var(--orange);
+.cartAmount{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--white);
 }
-.buying2{
-    background-color: var(--black);
+.cartButton{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-around;
+    width: 100%;
+    color: #fff;
+}
+.cartButton button{
+    width: 208px;
+}
+.cartButton button:nth-child(1):hover{
+    width: 208px;
 }

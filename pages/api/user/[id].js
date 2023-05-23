@@ -1,6 +1,7 @@
 import { parse } from "postcss";
 import prisma from "../../../prisma/client";
 import crypto from "crypto";
+import getStaticMapUrlByZipCode from "../maps/mapUtil";
 
 export default async function handler(req, res) {
   const { id } = req.query;
@@ -17,13 +18,11 @@ export default async function handler(req, res) {
         received: true,
       },
     });
+
     res.status(200).json(user);
   } else if (req.method === "PUT") {
-    const { firstname, lastname, phoneNumber, country, zipCode } = req.body;
-    let { password } = req.body;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    password = crypto.createHash("sha256").update(data).digest("hex");
+    const { firstname, lastname, phoneNumber, zipCode, map, country, photo } =
+      req.body;
     try {
       const user = await prisma.user.update({
         where: {
@@ -32,10 +31,12 @@ export default async function handler(req, res) {
         data: {
           firstname,
           lastname,
-          password,
           phoneNumber,
           country,
           zipCode,
+          map,
+          country,
+          photo,
         },
       });
       res.status(200).json(user);

@@ -63,7 +63,7 @@
     background-color: rgba(255, 255, 255, 0.612);
     border-radius: 5px;
     transition-duration: 0.4s;
-    padding: 2px;
+    padding: 0.5rem;
 }
 
 .botonDelete:hover {
@@ -83,6 +83,11 @@
 
 }
 
+.table tr {
+    border-bottom: 1px solid black;
+
+}
+
 .namesTable{
     color: rgb(54, 54, 54);
 }
@@ -96,24 +101,19 @@
     font-weight: 600;
 }
 
+
 .contenedorTable {
-    background-color: rgba(0, 0, 0, 0.193);
     padding: 18px;
     margin-top: 0px;
     margin-right: -10px;
     border-radius: 3px;
     padding-left: 26px;
     padding-right: 0px;
-    box-shadow: 0 0 30px;
-    border: 3px solid #000803;
-    overflow: auto;
     max-height: 750px;
+    display: flex;
+    justify-content: center;
 }
 
-.bodyTabla {
-    overflow: auto !important;
-    max-height: 500px !important;
-}
 
 
 .botonEditar {
@@ -123,7 +123,7 @@
     background-color: rgba(255, 255, 255, 0.612);
     border-radius: 5px;
     transition-duration: 0.4s;
-    padding: 2px;
+    padding: 0.5rem;
     margin-right: 8px;
 }
 
@@ -143,17 +143,68 @@
     justify-content: center;
     text-decoration: underline;
 }
-/* 
-.noUsuarios{
-   
-    color: #f80101;
-    -webkit-text-fill-color: rgb(255, 0, 0);
-    -webkit-text-stroke: 1px rgb(0, 0, 0);
-    padding: 1rem;
-    font-weight: bold;
-    text-align: center;
-    padding-left: 230px;
-    padding-right: 250px;
-    margin-left: 30px;
 
-} */
+.contenedorTable table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: inherit;
+    border-spacing: 7px;
+}
+
+.td_button {
+    display: flex;
+}
+
+.disabledButton {
+    color: #383838;
+    border: 2px solid #383838;
+    background-color: rgba(255, 255, 255, 0.612);
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    padding: 0.5rem;
+    margin-right: 8px;
+
+}
+
+.disabledButton:hover {
+    color: #383838;
+    border: 2px solid #383838;
+    background-color: rgba(255, 255, 255, 0.612);
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    padding: 0.5rem;
+    margin-right: 8px;
+
+}
+
+.checkbox_padre {
+    display: flex;
+}
+
+.checkbox_padre h2 {
+    font-size: large;
+    padding-top: 1rem;
+    margin-right: 1rem;
+}
+
+.checkbox_padre button {
+    background-color: rgba(255, 255, 255, 0.612);
+    border: 2px solid rgba(255, 67, 67, 0.802);
+    color: #f80101;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.checkbox_padre button:hover {
+    border: 2px solid rgba(255, 67, 67, 0.802);
+    background-color: rgba(255, 0, 0, 0.685);
+    color: white
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajusta la altura según tus necesidades */
+  }
+  

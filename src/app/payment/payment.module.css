@@ -1,0 +1,136 @@
+.backContainer{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 1rem;
+    cursor: pointer;
+    margin-top: 50px;
+    margin: 50px 0 0 50px;
+    
+  }
+  .backContainer h3{
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--black-light);
+    align-items: center;
+    gap: 1rem;
+  }
+  .back{
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    background-color: var(--orange);
+    border-radius: 20px;
+  }
+.container {
+    padding: 50px;
+    display: flex;
+    min-height: 77.1vh;
+}
+
+.form_container {
+    width: 100%;
+}
+
+.payment {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form  {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.form div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form span {
+    color: var(--red);
+    height: 24px;
+}
+
+.form input {
+    height: 48px;
+    padding-left: 10px;
+    border-radius: 5px;
+    width: 80%;
+}
+
+.form label {
+    font-weight: 700;
+}
+
+.cart {
+    background-color: var(--black-light);
+}
+
+.cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 20px;
+    padding: 10px 25px;
+    gap: 20px;
+}
+
+.cartItems {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    color: var(--white);
+    font-size: 2.2rem;
+    letter-spacing: 0.2rem;
+}
+
+.gateway {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.gateway div {
+    display: flex;
+    padding: 15px 25px;
+    justify-content: space-between;
+}
+
+.gateway > button:hover {
+    color: var(--white);
+    background-color: var(--black);
+    border: none;
+}
+
+.mercadopago{
+    background-color: #009ee3;
+    border-radius: 3px;
+    display: flex;
+    gap: 10px;
+}
+
+.mercadopago:hover > svg path {
+    fill: var(--black);
+}
+
+.item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    color: var(--white);
+    font-weight: 700;
+}

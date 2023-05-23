@@ -4,8 +4,12 @@ import Swal from "sweetalert2";
 import { newPetition } from "./petition";
 import generatePassword from "./passwordGenerator";
 import customAlert from "./customAlert";
+import saveInLocalStorage from "@/context/assets/saveInLocalStorage";
 
 const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+  prompt: "select_account",
+});
 
 export const callLoginGoogle = () => {
   return new Promise((resolve, reject) => {
@@ -47,7 +51,7 @@ export const getDataFromDB = async (
 
   dbUserData = await newPetition(
     "GET",
-    `http://localhost:3000/api/user/${userDataProvider.email}`,
+    `/api/user/${userDataProvider.email}`,
     false
   );
 
@@ -62,6 +66,8 @@ export const getDataFromDB = async (
       router.push("/form/logout");
     }, 3000);
   } else {
+    saveInLocalStorage("token", dbUserData);
+    saveInLocalStorage("id", dbUserData.id);
     setUserData(dbUserData);
     setUserId(dbUserData.id);
 
@@ -79,31 +85,36 @@ export const createNewUserOrLogIn = async (
   userDataProvider,
   setUserData,
   setUserId,
-  router
+  router,
+  setDataMessage
 ) => {
   let dbUserData = null;
   let password = generatePassword();
+
+  console.log(setDataMessage);
+  setDataMessage("Iniciando sesión...");
 
   const body = {
     ...userDataProvider,
     password,
   };
-
   dbUserData = await newPetition(
     "GET",
-    `http://localhost:3000/api/user/${userDataProvider.email}`,
+    `/api/user/${userDataProvider.email}`,
     false
   );
 
   if (!dbUserData) {
+    setDataMessage("Creando cuenta en toolmatch...");
     await newPetition("POST", "http://localhost:3000/api/user", body);
     dbUserData = await newPetition(
       "GET",
-      `http://localhost:3000/api/user/${userDataProvider.email}`,
+      `/api/user/${userDataProvider.email}`,
       false
     );
   }
-
+  saveInLocalStorage("token", dbUserData);
+  saveInLocalStorage("id", dbUserData.id);
   setUserData(dbUserData);
   setUserId(dbUserData.id);
 
@@ -115,5 +126,4 @@ export const createNewUserOrLogIn = async (
     "success",
     `Has iniciado sesión como ${dbUserData.firstname} ${dbUserData.lastname}`
   );
-  push("/");
 };

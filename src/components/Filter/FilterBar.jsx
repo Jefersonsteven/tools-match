@@ -1,180 +1,318 @@
-'use client'
-import CategoryFilter from './CategoryFilter';
-import SearchBar from '../SearchBar/SearchBar';
+"use client";
+import CategoryFilter from "./CategoryFilter";
+import SearchBar from "../SearchBar/SearchBar";
 import { AppContext, AppProvider } from "@/context/AppContext";
-import React, { useEffect, useState, useContext } from 'react';
-import { FaFilter, FaSort } from 'react-icons/fa';
+import React, { useEffect, useState, useContext } from "react";
+import { FaFilter, FaSort } from "react-icons/fa";
+import { fetchCards } from "./UseFetchCard";
+import style from "./FilterBar.module.css";
 
 export default function FilterBar() {
-  const { cards, setCards, title, setTitle, selectedType, setSelectedType, selectedCategory, setSelectedCategory, sortBy, setSortBy, selected, setSelected } = useContext(AppContext);
+  const { setCards, title, setTitle, selected, setSelected } =
+    useContext(AppContext);
+  const [typeFilter, setTypeFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [orderFilter, setOrderFilter] = useState("");
+  const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
-  const [showSortOptions, setShowSortOptions] = useState(false);
-  const [showFilterOptions, setShowFilterOptions] = useState(false);
-  
   const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
-    const response = await fetch(`http://localhost:3000/api/filter/${newTitle}`);
+    const response = await fetch(`/api/filters/title/${newTitle}`);
+    if (newTitle.length === 0) {
+      setSelected({ ...selected, title: "" });
+    }
     const data = await response.json();
     setCards(data || []);
   };
+
   useEffect(() => {
-    const getCategoryParam = () => selected.category ? `category=${selected.category}` : '';
-    const getTypeParam = () => selected.type ? `type=${selected.type}` : '';
-
-    const fetchCards = async () => {
-      const categoryParam = getCategoryParam();
-      const typeParam = getTypeParam();
-      const orderParam = selected.order ? `order=${selected.order.order}&` : '';
-
-      const response = await fetch(`http://localhost:3000/api/filter?${categoryParam}&${typeParam}`);
-      const data = await response.json();
-      let cards = data ||  [];
-
-      if (selected.order?.type === 'price') {
-        const orderResponse = await fetch(`http://localhost:3000/api/orderPrice?${orderParam}${typeParam}&${categoryParam}`);
-        const orderData = await orderResponse.json();
-        cards = orderData || [];
-      }
-
-      if (selected.order?.type === 'alpha') {
-        const orderResponse = await fetch(`http://localhost:3000/api/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}`);
-        const orderData = await orderResponse.json();
-        cards = orderData || [];
-      }
-
-      setCards(cards);
-    };
-
-    fetchCards();
-  }, [selected]);
+    fetchCards(selected, setCards);
+  }, [selected, setCards]);
 
   const handleCategoryChange = (event) => {
-    setSelected({ ...selected, category: event.target.value }); // Mantener las propiedades existentes y actualizar solo la propiedad category
+    const categoryValue = event.target.value;
+    setSelected({ ...selected, category: categoryValue });
+    setCategoryFilter(categoryValue);
   };
 
   const handleTypeChange = (event) => {
-    setSelected({ ...selected, type: event.target.value }); // Mantener las propiedades existentes y actualizar solo la propiedad type
+    const typeValue = event.target.value;
+    setSelected({ ...selected, type: typeValue });
+    setTypeFilter(typeValue);
+  };
+
+  const handleBrandChange = (event) => {
+    const brandValue = event.target.value;
+    setSelected({ ...selected, brand: brandValue });
+    setBrandFilter(brandValue);
+  };
+
+  const handleOrderChange = (type, order) => {
+    setSelected({ ...selected, order: { type, order } });
+    setOrderFilter(`${type}-${order}`);
   };
 
   return (
     <AppProvider>
       <div className="relative z-10">
-        <div className="flex-1 flex flex-row items-center flex justify-between px-2">
-          <div className="mr-2">
-            <button
-              className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4 flex items-center"
-              onClick={() => setShowFilterOptions(!showFilterOptions)}
+        <div className="flex-1 flex flex-row items-center justify-between px-2">
+          <div className={`mr-2 relative ${style.button}`}>
+            <div
+              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}
             >
               Filtrar <FaFilter className="ml-2" />
-            </button>
-          </div>
-          {showFilterOptions && (
-            <div className="absolute bg-white shadow mt-1 top-12 left-0">
-              <div className="py-2 px-4 bg-gray-200 font-medium">Tipo de Transacción</div>
-              <select
-                value={selected.type}
-                onChange={handleTypeChange}
-              >
-                <option value="">Todos</option>
-                <option value="RENTAL">Arriendo</option>
-                <option value="SALE">Venta</option>
-              </select>
-              <div className="py-2 px-4 bg-gray-200 font-medium">Categoría</div>
-              <CategoryFilter
-                categories={[
-                  'electrica',
-                  'manual',
-                  'medicion',
-                  'corte',
-                  'jardin',
-                  'fontaneria',
-                  'pintar',
-                  'soldar',
-                ]}
-                selectedCategory={selected.category}
-                handleCategoryChange={handleCategoryChange}
-              />
             </div>
-          )}
-
-          <div className="flex space-x-4 relative">
-            <button
-              className="py-4 px-40 bg-black text-white hover:bg-gray-800 mr-4 flex items-center"
-              onClick={() => setShowSortOptions(!showSortOptions)}
-            >
-              Ordenar <FaSort className="ml-2" />
-            </button>
-            {showSortOptions && (
-              <div className="absolute bg-white shadow mt-1 top-12 left-0">
+            <div className={style.filter}>
+              <h3>Tipo de Transacción:</h3>
+              <div>
                 <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('')}
+                  onClick={handleTypeChange}
+                  value=""
+                  className={typeFilter === "" ? style.selected : ""}
                 >
-                  Default
+                  Todos
                 </button>
                 <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "alpha",
-                    order: "A-Z"
-                  } })}
+                  onClick={handleTypeChange}
+                  value="RENTAL"
+                  className={typeFilter === "RENTAL" ? style.selected : ""}
                 >
-                  Nombre (A-Z)
+                  Arriendo
                 </button>
                 <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "alpha",
-                    order: "Z-A"
-                  } })}
+                  onClick={handleTypeChange}
+                  value="SALE"
+                  className={typeFilter === "SALE" ? style.selected : ""}
                 >
-                  Nombre (Z-A)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "price",
-                    order: "asc"
-                  } })}
-                >
-                  Precio (Asc)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSelected({ ...selected, order: {
-                    ...selected.order,
-                    type: "price",
-                    order: "desc"
-                  } })}
-                >
-                  Precio (Des)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('ratingAsc')}
-                >
-                  Rating (Asc)
-                </button>
-                <button
-                  className="py-2 px-4 hover:bg-gray-200"
-                  onClick={() => setSortBy('ratingDesc')}
-                >
-                  Rating (Des)
+                  Venta
                 </button>
               </div>
-            )}
+              <h3>Categoría:</h3>
+              <div>
+                <button
+                  onClick={handleCategoryChange}
+                  value=""
+                  className={categoryFilter === "" ? style.selected : ""}
+                >
+                  Todas
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="electrica"
+                  className={
+                    categoryFilter === "electrica" ? style.selected : ""
+                  }
+                >
+                  Eléctrica
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="manual"
+                  className={categoryFilter === "manual" ? style.selected : ""}
+                >
+                  Manual
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="medicion"
+                  className={
+                    categoryFilter === "medicion" ? style.selected : ""
+                  }
+                >
+                  Medición
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="corte"
+                  className={categoryFilter === "corte" ? style.selected : ""}
+                >
+                  Corte
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="jardin"
+                  className={categoryFilter === "jardin" ? style.selected : ""}
+                >
+                  Jardín
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="fontaneria"
+                  className={
+                    categoryFilter === "fontaneria" ? style.selected : ""
+                  }
+                >
+                  Fontanería
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="pintar"
+                  className={categoryFilter === "pintar" ? style.selected : ""}
+                >
+                  Pintar
+                </button>
+                <button
+                  onClick={handleCategoryChange}
+                  value="soldar"
+                  className={categoryFilter === "soldar" ? style.selected : ""}
+                >
+                  Soldar
+                </button>
+              </div>
+              <h3>Marca:</h3>
+              <div>
+                <button
+                  onClick={handleBrandChange}
+                  value=""
+                  className={brandFilter === "" ? style.selected : ""}
+                >
+                  Todas
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="philips"
+                  className={brandFilter === "Phillips" ? style.selected : ""}
+                >
+                  Phillips
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Stanley"
+                  className={brandFilter === "Stanley" ? style.selected : ""}
+                >
+                  Stanley
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="Bosch"
+                  className={brandFilter === "Bosch" ? style.selected : ""}
+                >
+                  Bosch
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="dewalt"
+                  className={brandFilter === "Dewalt" ? style.selected : ""}
+                >
+                  Dewalt
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="skil"
+                  className={brandFilter === "Skil" ? style.selected : ""}
+                >
+                  Skil
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="castellari"
+                  className={brandFilter === "castellari" ? style.selected : ""}
+                >
+                  Castellari
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="dremel"
+                  className={brandFilter === "dremel" ? style.selected : ""}
+                >
+                  Dremel
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="fischer"
+                  className={brandFilter === "fischer" ? style.selected : ""}
+                >
+                  Fischer
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="karcher"
+                  className={brandFilter === "karcher" ? style.selected : ""}
+                >
+                  Karcher
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="libus"
+                  className={brandFilter === "libus" ? style.selected : ""}
+                >
+                  Libus
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="makita"
+                  className={brandFilter === "makita" ? style.selected : ""}
+                >
+                  Makita
+                </button>
+                <button
+                  onClick={handleBrandChange}
+                  value="truper"
+                  className={brandFilter === "truper" ? style.selected : ""}
+                >
+                  Truper
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className={`flex relative ${style.button}`}>
+            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
+              Ordenar <FaSort className="ml-2" />
+            </div>
+            <div className={style.order}>
+              <button
+                onClick={() => handleOrderChange("", "")}
+                className={orderFilter === "" ? style.selected : ""}
+              >
+                Default
+              </button>
+              <button
+                onClick={() => handleOrderChange("alpha", "A-Z")}
+                className={orderFilter === "alpha-asc" ? style.selected : ""}
+              >
+                Nombre (A-Z)
+              </button>
+              <button
+                onClick={() => handleOrderChange("alpha", "Z-A")}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
+              >
+                Nombre (Z-A)
+              </button>
+              <button
+                onClick={() => handleOrderChange("price", "asc")}
+                className={orderFilter === "price-asc" ? style.selected : ""}
+              >
+                Precio (Asc)
+              </button>
+              <button
+                onClick={() => handleOrderChange("price", "desc")}
+                className={orderFilter === "price-desc" ? style.selected : ""}
+              >
+                Precio (Des)
+              </button>
+              <button
+                onClick={() => handleOrderChange("rating", "asc")}
+                className={orderFilter === "rating-asc" ? style.selected : ""}
+              >
+                Rating (Asc)
+              </button>
+              <button
+                onClick={() => handleOrderChange("rating", "desc")}
+                className={orderFilter === "rating-desc" ? style.selected : ""}
+              >
+                Rating (Des)
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      <div style={{ width: '400px' }}>
-        <SearchBar title={title} onTitleChange={handleTitleChange} style={{ width: '150px' }} />
+      <div style={{ width: "400px" }}>
+        <SearchBar
+          title={title}
+          onTitleChange={handleTitleChange}
+          style={{ width: "150px" }}
+        />
       </div>
-
     </AppProvider>
-  )
+  );
 }
-
