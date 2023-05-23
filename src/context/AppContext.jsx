@@ -5,6 +5,7 @@ import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 import { newPetition } from "./assets/customFetch";
+import checkSessionExpiration from "./assets/checkSessionExpiration";
 
 const AppContext = createContext();
 
@@ -115,6 +116,10 @@ function AppProvider({ children }) {
   const [cart, setCart] = useState(
     typeof window !== "undefined" && JSON.parse(localStorage.getItem("cart")) //agregado por Adriana y Jefferson
   );
+
+  useEffect(() => {
+    checkSessionExpiration();
+  }, []);
 
   // *---------------------------------------* //
 

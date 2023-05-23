@@ -326,10 +326,6 @@
   justify-content: center;
 }
 
-.sessionCheckboxContainer {
-  margin-top: 27px;
-}
-
 .loaderContainer {
   display: flex;
   flex-direction: column;

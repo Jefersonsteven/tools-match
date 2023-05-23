@@ -54,40 +54,41 @@ function Header() {
       });
     }
   };
-  
 
   return (
     <div>
-      {typeof window !== 'undefined' &&
+      {typeof window !== "undefined" && (
         <header className={styles.header}>
-        <ul className={styles.logo}>
-          <li>
-          <Link href="/">
-            Tools Match
-            {/* <Image
+          <ul className={styles.logo}>
+            <li>
+              <Link href="/">
+                Tools Match
+                {/* <Image
               src="/../public/images/logo/toolsMatch.jpg"
               alt="logo"
               width={70}
               height={70}
             /> */}
-          </Link>
-          </li>
-          {userId && userData.admin && !(pathname.split('/')[1] === 'dashboard') && (
-            <li>
-            <Link href="/dashboard/users">
-              <button>Dashboard</button>
-            </Link>
+              </Link>
             </li>
-          )}
-        </ul>
-        <nav className={styles.nav}>
+            {userId &&
+              userData.admin &&
+              !(pathname.split("/")[1] === "dashboard") && (
+                <li>
+                  <Link href="/dashboard/users">
+                    <button>Dashboard</button>
+                  </Link>
+                </li>
+              )}
+          </ul>
+          <nav className={styles.nav}>
             <>
               <ul className={styles.nav}>
-                { pathname !== "/team" &&
-                <li>
-                  <Link href="/team">Nosotros</Link>
-                </li>
-                }
+                {pathname !== "/team" && (
+                  <li>
+                    <Link href="/team">Nosotros</Link>
+                  </li>
+                )}
                 <li>
                   <Link href="/home">
                     {pathname === "/" ? "Home" : "Publicaciones"}
@@ -107,26 +108,45 @@ function Header() {
               {pathname !== "/" && (
                 <div className={styles.nav}>
                   <div className={styles.perfil}>
-                    <FaUserCircle
-                      size={25}
-                      onClick={() => setSubmenu((state) => !state)}
-                      color="white"
-                    />
+                    {userData && userData.photo ? (
+                      <Image
+                        className={styles.userImg}
+                        width={25}
+                        height={25}
+                        src={userData.photo}
+                        alt="user"
+                        onClick={() => setSubmenu((state) => !state)}
+                      />
+                    ) : (
+                      <FaUserCircle
+                        size={25}
+                        onClick={() => setSubmenu((state) => !state)}
+                        color="white"
+                      />
+                    )}
+
                     <ul
                       className={
                         submenu ? styles.openSubmenu : styles.closeSubmenu
                       }
                     >
+                      {userData && (
+                        <li>
+                          <Link href={`/perfil/${userId}`}>ver Perfil</Link>
+                        </li>
+                      )}
+                      {userData && (
+                        <li>
+                          <Link href={`/perfil/${userId}/changePassword`}>
+                            Cambiar contraseña
+                          </Link>
+                        </li>
+                      )}
                       <li onClick={handleCloseSession}>
                         <Link href={userData ? "/" : "/form/login"}>
                           {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
                         </Link>
                       </li>
-                      {userData && (
-                        <li>
-                          <Link href={`/perfil/${userId}`}>Perfil</Link>
-                        </li>
-                      )}
                     </ul>
                   </div>
 
@@ -140,9 +160,9 @@ function Header() {
                 </div>
               )}
             </>
-        </nav>
-      </header>
-      }
+          </nav>
+        </header>
+      )}
     </div>
   );
 }
