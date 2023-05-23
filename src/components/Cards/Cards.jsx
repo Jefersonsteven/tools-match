@@ -12,7 +12,7 @@ const Cards = () => {
 
   /*----------PAGINATED----------*/
 
-  const cardsPerPage = 8;
+  const cardsPerPage = 12;
   /*-------------------------------*/
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const Cards = () => {
           {/* ----------- PAGINATED ---------- */}
           {isPageEmpty && <Loader />}
         </div>
-        {cards.length > cardsPerPage && (
+        {cards.length !== 0 && (
           <Paginated
             url={paginatedUrl}
             currentPage={currentPage}

@@ -42,11 +42,11 @@ export default function LandingPage() {
             Si estás buscando una forma práctica y segura de compartir
             herramientas de construcción y otros equipos necesarios para el
             hogar entre vecinos, y/ó realizar una excelente inversión vendiendo
-            sus herramientas usadas en buen estado o rentarlas.
+            tus herramientas usadas en buen estado o rentarlas.
             <br />
             <br />
             <p className={style.toolsM}>
-              No esperes más en ToolsMatch es tu mejor opción.
+              No esperes más ToolsMatch es tu mejor opción.
             </p>
           </h1>
         </div>

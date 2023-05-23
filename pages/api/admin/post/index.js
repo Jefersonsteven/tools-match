@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   } else {
     res.status(405).json({ message: "Método HTTP no permitido" });
   }
-  if (req.method === "DELETE") {
+  if (req.method === "PUT") {
     try {
       const { userIds } = req.body;
 

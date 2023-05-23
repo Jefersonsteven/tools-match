@@ -185,3 +185,28 @@
   margin-bottom: 32px;
   gap: 16px;
 }
+
+.backContainer {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 32px;
+  gap: 1rem;
+  cursor: pointer;
+}
+.backContainer h3 {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--black-light);
+  align-items: center;
+  gap: 1rem;
+}
+.back {
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+  background-color: var(--orange);
+  border-radius: 20px;
+}

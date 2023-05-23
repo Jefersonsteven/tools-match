@@ -12,12 +12,13 @@ export default function Footer() {
     <footer className={style.footer}>
       <div className={style.footerLogo}>
         <Link href="/home">
-          <Image
+          Tools Match
+          {/* <Image
             src="/../public/images/logo/toolsMatch.jpg"
             alt="logo"
             width={70}
             height={70}
-          />
+          /> */}
         </Link>
       </div>
       <div className={style.footerRights}>
@@ -26,7 +27,31 @@ export default function Footer() {
       <div className={style.footerTerms}>
         <Link href="/terms">Términos y Condiciones</Link>
       </div>
-      {/* {termsOpen && <Terms onClose={() => setTermsOpen(false)} />} */}
+      <div className={style.contact}>
+        <div className={style.contactTitle}>
+          <p>Contacto</p>
+        </div>
+        <div className={style.contactInfo}>
+          <Link href="mailto:toolmatchnotificaciones@gmail.com.com">
+            <Image
+              src="/images/icons/mail.png"
+              alt="mail"
+              width={30}
+              height={30}
+              className={style.contactMail}
+            />
+          </Link>
+          <Link href="https://www.twitter.com/toolsmatch/" target="blank">
+            <Image
+              src="/images/icons/twitter.png"
+              alt="mail"
+              width={30}
+              height={30}
+              className={style.contactTwitter}
+            />
+          </Link>
+        </div>
+      </div>
     </footer>
   );
 }

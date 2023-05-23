@@ -4,8 +4,12 @@ import Swal from "sweetalert2";
 import { newPetition } from "./petition";
 import generatePassword from "./passwordGenerator";
 import customAlert from "./customAlert";
+import saveInLocalStorage from "@/context/assets/saveInLocalStorage";
 
 const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+  prompt: "select_account",
+});
 
 export const callLoginGoogle = () => {
   return new Promise((resolve, reject) => {
@@ -62,6 +66,8 @@ export const getDataFromDB = async (
       router.push("/form/logout");
     }, 3000);
   } else {
+    saveInLocalStorage("token", dbUserData);
+    saveInLocalStorage("id", dbUserData.id);
     setUserData(dbUserData);
     setUserId(dbUserData.id);
 
@@ -107,7 +113,8 @@ export const createNewUserOrLogIn = async (
       false
     );
   }
-
+  saveInLocalStorage("token", dbUserData);
+  saveInLocalStorage("id", dbUserData.id);
   setUserData(dbUserData);
   setUserId(dbUserData.id);
 

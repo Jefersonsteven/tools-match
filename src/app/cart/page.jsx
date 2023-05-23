@@ -6,43 +6,43 @@ import style from "./Cart.module.css";
 import Image from "next/image";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { IoCaretBack } from "react-icons/io5";
+import { useRouter } from "next/router"; // Importa desde next/router en lugar de next/navigation
+import Back from "@/components/back/Back";
 
 export default function Page() {
   const { cart, setCart, userData } = useContext(AppContext);
-  const router = useRouter();
 
   useEffect(() => {
-    if (!cart)
+    if (!cart) {
       setCart({
         count: 0,
         items: [],
       });
-  }, [router, userData, setCart, cart]);
+    }
+
+    if (userData?.firstName) {
+      router.push("/form/login");
+    }
+  }, [userData, setCart, cart]);
 
   function deleteItem(id) {
-    setCart({
-      ...cart,
-      count: cart.count - 1,
-      items: cart.items.filter((item) => item.id !== id),
+    setCart((prevCart) => {
+      const updatedItems = prevCart.items.filter((item) => item.id !== id);
+      const updatedCart = {
+        ...prevCart,
+        count: prevCart.count - 1,
+        items: updatedItems,
+      };
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
     });
-  }
-
-  function handleBack() {
-    router.back();
   }
 
   return (
     <main className={style.container}>
-      <div onClick={handleBack} className={style.backContainer}>
-        <div className={style.back}>
-          <IoCaretBack size={50} color="var(--white)" />
-        </div>
-        <h3>Volver</h3>
-      </div>
+      <Back />
       <section className={style.cartContainer}>
-        <h2>Carrito de Compras</h2>
+        {typeof window !== "undefined" && <h2>Carrito de Compras</h2>}
         <div className={style.cart}>
           <div className={style.cartCards}>
             <div className={style.cartAmount}>
@@ -87,7 +87,7 @@ export default function Page() {
               <button>Seguir Comprando</button>
             </Link>
             <Link href={cart?.count > 0 ? "/payment" : "/cart"}>
-              <button>Comprar</button>
+              <button>Finalizar la Compra</button>
             </Link>
           </div>
         </div>

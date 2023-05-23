@@ -2,6 +2,125 @@
   border-radius: 15px;
   margin-bottom: 10px;
   margin-right: 20px;
+  margin-left: 20px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  }
+
+.card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+  }
+  
+  .cardImage {
+    width: 100%;
+    height: 300px;
+    border-radius: 30px;
+    margin-top: 30px;
+  }
+  .cardContent {
+    padding: 5%;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+  }
+  
+  .cardName {
+    margin: 0 0 8px 0;
+    font-size: 1.8 rem;
+    color: black; 
+    font-weight:bold;   
+    padding-top: 20px;
+  }
+
+  .cardPrice {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+  
+  .cardDescription {
+    margin: 0;
+  }
+
+  .saleTypeContent{       
+    padding: 4%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cardPriceValue {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .priceType {
+    display: grid !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr !important;
+    grid-template-areas: "price" !important;
+    margin-left: 0.5rem;
+    margin-top: 20px;
+  }
+  .cardInfo {
+    width: 100%;
+    height: 250px;
+    margin-top: 70px;
+    box-shadow: 60px 10px 60px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+  
+  /* ---------- FAVORITOS ---------- */
+  .favoriteIconWrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+  }
+  
+  .favoriteIcon {
+    font-size: 35px;
+    color: yellow;
+    cursor: pointer;
+    padding: 4px;
+    margin-inline-start: auto;
+    border-radius: 50%;
+    border: 2px solid white; /* Agregado: borde verde */
+    background-color: white; /* Agregado: fondo blanco */
+  }
+  
+  .favoriteIcon:hover {
+    background-color: white; /* Agregado: al pasar el cursor, fondo verde */
+    color: green;
+  }
+  
+  .favoriteActive {
+    color: green; /* Modificado: color verde */
+  }
+  
+  
+  
+  
+  
+  
+
+  /* funcional
+.cardContainer {
+  border-radius: 15px;
+  margin-bottom: 10px;
+  margin-right: 20px;
   margin-left:20px
   }
 
@@ -22,6 +141,7 @@
     object-fit: cover;
     padding: 4%;
     border-radius:30px;
+    margin-top: 30px;
   }
   
   .cardContent {
@@ -65,3 +185,21 @@
     color: #666;
   }
   
+  /* ---------- FAVORITOS ---------- */
+  /* .favoriteIconWrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+  }
+  
+  .favoriteIcon {
+    font-size: 35px;
+    color: yellow;
+    cursor: pointer;
+    padding: 4px;
+  }
+  
+  .favoriteActive {
+    color: #00ff00;
+  } */

@@ -21,3 +21,23 @@
     cursor: pointer;
 
 }
+.contact{
+    display: flex;
+    color: #fff;
+    padding: auto;
+    align-items: center;
+}
+.contactInfo{
+    display: flex;
+    padding: 0 1rem;
+}
+.contactMail{
+    width: 35px;
+}
+.contactTwitter{
+    width: 45px;
+    margin-left: 10px;
+}
+.contactMail, .contactTwitter{
+    height: 35px;
+}

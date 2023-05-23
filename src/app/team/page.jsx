@@ -1,8 +1,13 @@
+"use client";
+
 import style from "./Team.module.css";
 import Image from "next/image";
-import Footer from "../../components/footer/Footer";
+import { useRouter } from "next/navigation";
+import Back from "@/components/back/Back";
 
 export default function Team() {
+  const router = useRouter();
+
   const team = [
     {
       name: "Axel",
@@ -40,6 +45,7 @@ export default function Team() {
 
   return (
     <div>
+      <Back />
       <section className={style.teamContainer}>
         <div className={style.infoTeam}>
           <p className={style.teamSubTitle}>

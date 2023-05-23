@@ -1,5 +1,6 @@
 import React from "react";
 import { RiStarFill, RiStarLine } from "react-icons/ri";
+import Image from "next/image";
 
 const CardsReview = ({ reviews, authors }) => {
   return (
@@ -17,18 +18,18 @@ const CardsReview = ({ reviews, authors }) => {
             <div className="user-info flex items-center p-4">
               <div className="user-photo w-12 h-12 rounded-full overflow-hidden mr-4">
                 {author && author.photo ? (
-                  <img
+                  <Image
                     src={author.photo}
                     alt={author.firstname}
                     className="w-full h-full object-cover"
                   />
-                  ) : (
-                    <img
-                      src="/assets/userPhotoDefault.png"
-                      alt="Default User Photo"
-                      className="w-full h-full object-cover"
-                    />
-                  )}                
+                ) : (
+                  <Image
+                    src="/assets/userPhotoDefault.png"
+                    alt="Default User Photo"
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </div>
               <div className="user-details">
                 <h3 className="text-lg font-semibold">
