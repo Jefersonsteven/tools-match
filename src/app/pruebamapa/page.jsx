@@ -4,6 +4,7 @@ import { getLocation } from "./getLocation";
 import axios from "axios";
 
 const MyPage = () => {
+  
   useEffect(() => {
     getLocation()
       .then((position) => {
@@ -13,6 +14,8 @@ const MyPage = () => {
         axios.post("/api/maps", { latitude, longitude }).then((response) => {
           console.log(response.data);
         });
+        // la respuesta de post me entrega una url
+        // /api/user/${userData.email} peticion put {map: respuesta del post}
       })
       .catch((error) => {
         console.error("Error al obtener la ubicación:", error.message);

@@ -103,6 +103,11 @@ function Header() {
                     </Link>
                   )}
                 </li>
+                {pathname !== "/favorite" && (
+                  <li>
+                    <Link href="/favorite">Favoritos</Link>
+                  </li>
+                )}
               </ul>
 
               {pathname !== "/" && (

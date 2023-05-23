@@ -1,5 +1,6 @@
 /*----------------------FOOTER----------------------*/
 .footer{
+    margin-top: auto;
     display: flex;
     background: var(--black);
     width: 100%;
@@ -12,15 +13,16 @@
 }
 
 .footerLogo{
-    color: yellow;
-    font-size: 1rem;
+    color: var(--white);
 }
 
-.footerTerms Link:hover{
+.footerTerms a:hover,
+.footerLogo:hover {
     color: yellow;
     cursor: pointer;
-
+    border-bottom: 1px solid var(--orange);
 }
+
 .contact{
     display: flex;
     color: #fff;

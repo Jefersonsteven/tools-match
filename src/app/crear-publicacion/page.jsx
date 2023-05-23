@@ -41,7 +41,7 @@ function CreatePost() {
     event.preventDefault();
     setFetching(true);
 
-    if (!userData.zipCode || !userData.country) {
+    // if (!userData.zipCode || !userData.country) {
       Swal.fire({
         title: "Vamos a Editar perfil?",
         text: "No has agregado el pais de residencia o el codigo postal",
@@ -56,8 +56,8 @@ function CreatePost() {
           router.push(`/home`);
         }
       });
-      return;
-    }
+    //   return;
+    // }  //TODO: arreglar la condicional. hacer peticion para obtener la data del usuario y preguntarme si tiene algo en la propiedad map
 
     const error = Object.values(errors).some((e) => e.length > 0);
     const post = Object.values(form).some((e) => e.length === 0);
@@ -98,7 +98,6 @@ function CreatePost() {
             icon: "success",
             title: "Publicación creada con éxito",
           }).then(() => {
-            // Redireccionar al usuario
             router.push("/home");
           });
 
@@ -198,6 +197,7 @@ function CreatePost() {
           <div>
             <label htmlFor="">Precio</label>
             <input
+              min="1"
               onChange={handleForm}
               type="number"
               name="price"
