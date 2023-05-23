@@ -31,7 +31,7 @@ const Favorite = () => {
           {/* Resto de los detalles de la card favorita */}
         </div>
       ) : (
-        <p>No hay una card favorita seleccionada.</p>
+        <p className={styles.favMsg}>No hay una card favorita seleccionada.</p>
       )}
     </div>
   );
