@@ -21,12 +21,13 @@ import { svgHide } from "../assets/hidePwd";
 import { callLoginGoogle, getDataFromDB } from "../assets/authWithGoogle";
 import { submitLogInFormData } from "../assets/formSubmit";
 import Loader from "@/components/Loader/Loader";
+import customAlert from "../assets/customAlert";
 
 export default function Login() {
   const router = useRouter();
   const { setUserData, setUserId, saveInLocalStorage, form, setForm } =
     useContext(AppContext);
-  const [rememberSession, setRememberSession] = useState(false);
+
   const [fetchingData, setFetchingData] = useState(false);
 
   const [dataMessage, setDataMessage] = useState("");
@@ -62,7 +63,6 @@ export default function Login() {
         loginData,
         setUserData,
         setUserId,
-        rememberSession,
         router,
         saveInLocalStorage,
         form,
@@ -70,12 +70,7 @@ export default function Login() {
         setDataMessage
       );
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error al iniciar sesión en ToolMatch",
-        text: error,
-        footer: "",
-      });
+      customAlert(5000, "bottom-end", "error", `${error}`);
     }
     setFetchingData(false);
   };
@@ -125,17 +120,7 @@ export default function Login() {
           {viewPwd ? svgView : svgHide}
         </div>
       </div>
-      <div className={styles.sessionCheckboxContainer}>
-        <label className={styles.label}>
-          <input
-            type="checkbox"
-            name="rememberSession"
-            value={rememberSession}
-            onClick={() => setRememberSession(!rememberSession)}
-          />
-          Mantener Sesión
-        </label>
-      </div>
+
       <div className={styles.submitContainer}>
         <button
           className={styles.buttonSubmit}

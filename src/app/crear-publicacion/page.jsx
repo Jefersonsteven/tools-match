@@ -17,7 +17,7 @@ function CreatePost() {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
-  
+
   useEffect(() => {
     if (!userData.firstname) router.push("/form/login");
   }, [userData, router]);
@@ -41,7 +41,7 @@ function CreatePost() {
     event.preventDefault();
     setFetching(true);
 
-    if (!userData.zipCode || !userData.country) {
+    // if (!userData.zipCode || !userData.country) {
       Swal.fire({
         title: "Vamos a Editar perfil?",
         text: "No has agregado el pais de residencia o el codigo postal",
@@ -56,8 +56,8 @@ function CreatePost() {
           router.push(`/home`);
         }
       });
-      return;
-    }
+    //   return;
+    // }  //TODO: arreglar la condicional. hacer peticion para obtener la data del usuario y preguntarme si tiene algo en la propiedad map
 
     const error = Object.values(errors).some((e) => e.length > 0);
     const post = Object.values(form).some((e) => e.length === 0);
@@ -81,12 +81,23 @@ function CreatePost() {
         const data = await post.json();
 
         if (data.id) {
-          Swal.fire({
-            title: "¡Publicación creada!",
-            text: "Tu publicación se ha creado correctamente.",
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+              toast.style.fontSize = "16px";
+            },
+          });
+
+          Toast.fire({
             icon: "success",
+            title: "Publicación creada con éxito",
           }).then(() => {
-            // Redireccionar al usuario
             router.push("/home");
           });
 
@@ -186,6 +197,7 @@ function CreatePost() {
           <div>
             <label htmlFor="">Precio</label>
             <input
+              min="1"
               onChange={handleForm}
               type="number"
               name="price"
