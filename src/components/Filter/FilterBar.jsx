@@ -6,6 +6,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { FaFilter, FaSort } from 'react-icons/fa';
 import { fetchCards } from './UseFetchCard';
 import style from "./FilterBar.module.css"
+import { data } from "autoprefixer";
 
 export default function FilterBar() {
   const { setCards, title, setTitle, selected, setSelected } = useContext(AppContext);
@@ -15,18 +16,22 @@ export default function FilterBar() {
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
 
-  const handleTitleChange = async (newTitle) => {
+  const handleTitleChange =  (newTitle) => {
     setTitle(newTitle);
-    const response = await fetch(`/api/filters/title/${newTitle}`);
-    if (newTitle.length === 0) {
-      setSelected({ ...selected, title: "" });
+    if(newTitle.length==0){
+      setSelected({...selected,title: ""})
     }
+    console.log(selected.title.lenght)
+   
+  };
+  const handleTitleButton = async () => { 
+    const response = await fetch(`/api/filters/title/${title}`)
     const data = await response.json();
     setCards(data || []);
-  };
+  }
 
   useEffect(() => {
-    fetchCards(selected, setCards);
+    fetchCards(selected, setCards, title);
   }, [selected, setCards]);
 
   const handleCategoryChange = (event) => {
@@ -262,13 +267,13 @@ export default function FilterBar() {
                 Default
               </button>
               <button
-                onClick={() => handleOrderChange("alpha", "asc")}
+                onClick={() => handleOrderChange("alpha", "A-Z")}
                 className={orderFilter === "alpha-asc" ? style.selected : ""}
               >
                 Nombre (A-Z)
               </button>
               <button
-                onClick={() => handleOrderChange("alpha", "desc")}
+                onClick={() => handleOrderChange("alpha", "Z-A")}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Nombre (Z-A)
@@ -305,6 +310,7 @@ export default function FilterBar() {
         <SearchBar
           title={title}
           onTitleChange={handleTitleChange}
+          onTitleButton = {handleTitleButton}
           style={{ width: '150px' }}
         />
       </div>
