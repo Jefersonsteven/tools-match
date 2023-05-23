@@ -24,6 +24,7 @@ import {
 } from "../assets/authWithGoogle";
 
 import { submitSignUpFormData } from "../assets/formSubmit";
+import Loader from "@/components/Loader/Loader";
 
 export default function Logout() {
   const router = useRouter();
@@ -31,6 +32,8 @@ export default function Logout() {
   const [viewPwd, setViewPwd] = useState(false);
   const [repeatViewPwd, setRepeatViewPwd] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
+  const [fetchingData, setFetchingData] = useState(false);
+  const [dataMessage, setDataMessage] = useState("");
 
   const [registerData, setRegisterData] = useState({
     name: "",
@@ -67,7 +70,9 @@ export default function Logout() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setFetchingData(true);
     try {
+      setDataMessage("Creando cuenta en toolmatch...");
       await submitSignUpFormData(registerData, router);
     } catch (error) {
       Swal.fire({
@@ -77,21 +82,27 @@ export default function Logout() {
         footer: "",
       });
     }
+    setDataMessage("");
+    setFetchingData(false);
   };
 
   const handleAuth = async (event) => {
     event.preventDefault();
+    setFetchingData(true);
     try {
+      setDataMessage("Autenticando con Google...");
       const userDataProvider = await callLoginGoogle();
       await createNewUserOrLogIn(
         userDataProvider,
         setUserData,
         setUserId,
-        router
+        router,
+        setDataMessage
       );
     } catch (error) {
       console.log(error);
     }
+    setFetchingData(false);
   };
 
   return (
@@ -219,28 +230,42 @@ export default function Logout() {
               value={checkbox}
               onClick={() => setCheckbox(!checkbox)}
             />
-            <Link href="/" target="_blank">
+            <Link href="/terms" target="_blank">
               Términos y condiciones
             </Link>
           </label>
         </div>
         <div className={styles.submitContainer}>
           <button
-            className={`${styles.buttonSubmit} ${
+            className={styles.buttonSubmit}
+            disabled={
               errors.flag
-                ? styles.buttonSubmitDisabled
-                : !checkbox && styles.buttonSubmitDisabled
-            }`}
-            type="submit"
-            disabled={errors.flag}
+                ? true
+                : checkbox
+                ? fetchingData
+                  ? true
+                  : false
+                : true
+            }
           >
             Registrarse
           </button>
           <span>|</span>
-          <button className={`${styles.socialSignIn}`} onClick={handleAuth}>
-            Registrarse con
-            <FcGoogle className={styles.icon} />
+          <button
+            className={`${styles.socialSignIn}`}
+            onClick={handleAuth}
+            disabled={fetchingData}
+          >
+            <span>Registrarse con</span> <FcGoogle className={styles.icon} />
           </button>
+        </div>
+        <div className={styles.loaderContainer}>
+          {fetchingData && (
+            <>
+              <Loader />
+              <p>{dataMessage && dataMessage}</p>
+            </>
+          )}
         </div>
       </form>
     </>

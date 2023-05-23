@@ -1,0 +1,19 @@
+.searchbar {
+  display: flex;
+  height: 49px;
+}
+
+.searchbar input {
+  border-radius: 25px 0 0 25px;
+  padding-left: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.searchbar div {
+  border-radius: 0 25px 25px 0;
+  background-color: var(--green);
+  width: 49px;
+  display: grid;
+  place-items: center;
+}

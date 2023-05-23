@@ -1,5 +1,4 @@
 "use client";
-import Header from "@/components/Header/Header";
 import style from "./payment.module.css";
 import { useState, useEffect } from "react";
 
@@ -9,13 +8,13 @@ export default function Page() {
 
   useEffect(() => {
     async function fetchPayments() {
-      const res = await fetch("http://localhost:3000/api/admin/payment");
+      const res = await fetch("/api/admin/payment");
       const data = await res.json();
       setPayments(data);
     }
 
     async function fetchOrders() {
-      const res = await fetch("http://localhost:3000/api/admin/order");
+      const res = await fetch("/api/admin/order");
       const data = await res.json();
       setOrders(data);
     }

@@ -4,12 +4,11 @@ import style from "./landing.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Modal from "./modal";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/footer/Footer";
+import InfiniteSlider from "@/components/InfiniteSlider/InfiniteSlider";
 
 export default function LandingPage() {
-  const [modalOpen, setModalOpen] = useState(false);
   const [showNavbarMenu, setShowNavbarMenu] = useState(false);
 
   const handleOpenModal = () => {
@@ -43,21 +42,22 @@ export default function LandingPage() {
             Si estás buscando una forma práctica y segura de compartir
             herramientas de construcción y otros equipos necesarios para el
             hogar entre vecinos, y/ó realizar una excelente inversión vendiendo
-            sus herramientas usadas en buen estado o rentarlas.
+            tus herramientas usadas en buen estado o rentarlas.
             <br />
             <br />
             <p className={style.toolsM}>
-              No esperes más en ToolsMatch es tu mejor opción.
+              No esperes más ToolsMatch es tu mejor opción.
             </p>
           </h1>
-          <div className={style.mainGoHome}>
-            <Link href="/home">Ingresar</Link>
-          </div>
+        </div>
+        <div className={style.mainGoHome}>
+          <Link href="/home">Ingresar</Link>
         </div>
       </main>
       <section className={style.sponsorsContainer}>
         <h2 className={style.sponsorsTitle}>Nuestros Patrocinadores</h2>
-        <div className={style.sponsorsLogos}>
+        <InfiniteSlider />
+        {/*         <div className={style.sponsorsLogos}>
           <Image
             src="/images/sponsors/dewaltt.png"
             alt="sponsors"
@@ -130,7 +130,7 @@ export default function LandingPage() {
             width={180}
             height={180}
           />
-        </div>
+        </div> */}
       </section>
     </div>
   );

@@ -4,9 +4,9 @@ import prisma from "../../../../prisma/client";
 
 export default async function handler(req, res) {
   const { method } = req;
-   const { page , limit } = req.query;
-   const intpage = parseInt(page);
-   const intLimit = parseInt(limit); 
+  const { page , limit } = req.query;
+  const intpage = parseInt(page);
+  const intLimit = parseInt(limit); 
 
   if (method === 'GET') {
     try {

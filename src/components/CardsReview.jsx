@@ -1,35 +1,56 @@
 import React from "react";
-import { RiStarFill } from "react-icons/ri";
+import { RiStarFill, RiStarLine } from "react-icons/ri";
 
-const CardsReview = ({ reviews, userId }) => {
+const CardsReview = ({ reviews, authors }) => {
   return (
-    <div className="cards-container">
-      {reviews.slice(0, 4).map((review) => (
-        <div className="card" key={review.id}>
-          <div className="user-info">
-            <div className="user-photo">
-              <img src={review.user.photo} alt={review.user.name} />
-            </div>
-            <div className="user-details">
-              <h3>{review.user.name}</h3>
-              <div className="rating">
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <RiStarFill
-                    key={value}
-                    className={`star-icon ${
-                      value <= review.rating ? "selected" : ""
-                    }`}
+    <div className="grid grid-cols-3 gap-4 bg-green-80">
+      {reviews.map((review) => {
+        const author = authors.find((author) => author.id === review.authorId);
+        const starCount = 5;
+        const rating = review.rating;
+
+        return (
+          <div
+            className="card rounded-md overflow-hidden shadow-md bg-white"
+            key={review.id}
+          >
+            <div className="user-info flex items-center p-4">
+              <div className="user-photo w-12 h-12 rounded-full overflow-hidden mr-4">
+                {author && author.photo ? (
+                  <img
+                    src={author.photo}
+                    alt={author.firstname}
+                    className="w-full h-full object-cover"
                   />
-                ))}
+                  ) : (
+                    <img
+                      src="/assets/userPhotoDefault.png"
+                      alt="Default User Photo"
+                      className="w-full h-full object-cover"
+                    />
+                  )}                
+              </div>
+              <div className="user-details">
+                <h3 className="text-lg font-semibold">
+                  {author ? author.firstname : ""}
+                </h3>
+                <div className="rating flex items-center">
+                  {Array.from({ length: starCount }, (_, index) => (
+                    <div key={index} className="mr-1">
+                      {index < rating ? (
+                        <RiStarFill className="text-yellow-500" />
+                      ) : (
+                        <RiStarLine className="text-yellow-500" />
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+            <p className="review-content px-4 pb-4">{review.content}</p>
           </div>
-          <p className="review-content">{review.content}</p>
-          {review.user.id === userId && (
-            <button className="edit-button">Edit</button>
-          )}
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

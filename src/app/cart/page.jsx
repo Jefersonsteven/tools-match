@@ -1,210 +1,193 @@
 "use client";
 
-import Card from "../../components/Cards/Card";
+import { useContext, useEffect } from "react";
+import { AppContext } from "@/context/AppContext";
 import style from "./Cart.module.css";
-import { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import Image from "next/image";
+import { AiFillCloseCircle } from "react-icons/ai";
 import Link from "next/link";
+import { useRouter } from "next/router"; // Importa desde next/router en lugar de next/navigation
+import Back from "@/components/back/Back";
 
 export default function Page() {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [showVenta, setShowVenta] = useState(false);
-  const [total, setTotal] = useState(0);
-  const [showCards, setShowCards] = useState(true);
-  const [cartItems, setCartItems] = useState(null);
+  const { cart, setCart, userData } = useContext(AppContext);
 
-  if (typeof window !== 'undefined') {
-    // Acceso a localStorage aquí
-    setCartItems(() => {
-      const items = localStorage.getItem("cartItems");
-      return items ? JSON.parse(items) : [];
+  useEffect(() => {
+    if (!cart) {
+      setCart({
+        count: 0,
+        items: [],
+      });
+    }
+
+    if (userData?.firstName) {
+      router.push("/form/login");
+    }
+  }, [userData, setCart, cart]);
+
+  function deleteItem(id) {
+    setCart((prevCart) => {
+      const updatedItems = prevCart.items.filter((item) => item.id !== id);
+      const updatedCart = {
+        ...prevCart,
+        count: prevCart.count - 1,
+        items: updatedItems,
+      };
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
     });
   }
 
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
-  const handleAddToCart = (tool) => {
-    const itemIndex = cartItems.findIndex((item) => item.name === tool.name);
-
-    if (itemIndex === -1) {
-      setCartItems([
-        ...cartItems,
-        {
-          imageUrl: tool.imageUrl,
-          name: tool.name,
-          price: tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler,
-          saleType: tool.price.alquiler > 0 ? "Arriendo" : "Venta",
-          added: false, // Para mostrar el mensaje de "Agregado al carrito"
-        },
-      ]);
-    } else {
-      const updatedCartItems = [...cartItems];
-      updatedCartItems[itemIndex].price +=
-        tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler;
-      setCartItems(updatedCartItems);
-    }
-  };
-
-  const handleBuyClick = () => {
-    const updatedCartItems = cartItems.filter((item) => !item.added);
-    setCartItems(updatedCartItems);
-    setShowVenta(true);
-    setShowCards(false); // Agrega esta línea para ocultar las cards al hacer click en el botón comprar
-    setCartItems([]);
-
-    // setTimeout(() => {
-    //   setShowVenta(false);
-    //   setShowCards(true); // Agrega esta línea para mostrar las cards al hacer click en el botón comprar
-    // }, 3000);
-  };
-
-  const handleRemoveFromCart = (index, price) => {
-    const updatedCartItems = cartItems.filter((item, i) => i !== index);
-    setCartItems(updatedCartItems);
-    setTotal((prevTotal) => prevTotal - price);
-  };
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    let sum = 0;
-    cartItems.forEach((cartItem) => {
-      sum += cartItem.price;
-    });
-    setTotal(sum);
-  }, [cartItems]);
-
-  const tools = [
-    {
-      name: "Perforadora",
-      category: "Excavación",
-      rating: 0,
-      price: { venta: 150, alquiler: 0 },
-      imageUrl:
-        "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRmUlklTGBNEDLcsUn6yeRL9ZrDGeUwk4k4QHz_2tquPp5hSC1REqd8eFuez3FFUwT6bE_Dt4n794uAvPOJ6MMVWzqqSmwHlxN1QwJ1FEQHn9gtv-qimIIixVE3toO52HEWk-w&usqp=CAc",
-      description:
-        "Martillo perforador de alta potencia con mandril de 1/2 pulgada",
-    },
-    {
-      name: "Martillo",
-      category: "Carpintería",
-      rating: 4,
-      price: { venta: 35, alquiler: 0 },
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6RE25sL7PPH-WQsGEqThwl_pnSf04ZHsCQtL1C5fjRyk9Stp7GZaC6PbI_GtfHS2hGS8&usqp=CAU",
-      description: "Martillo de carpintería con mango de madera",
-    },
-    {
-      name: "Sierra circular",
-      category: "Carpintería",
-      rating: 5,
-      price: { venta: 120, alquiler: 0 },
-      imageUrl:
-        "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSzLA__pyI7l9mqP3oDMx9o6MTBI3XpzaohFSRlVl3F5Cm6-I81gOBrGujE6LGTrMV6smj4CAQgJGtU1R1pV0kS97rfzCHwS61FaFM8-6H79ZOO7fwu0iuTXsgWUQ2C_IUpmwI&usqp=CAc",
-      description: "Sierra circular profesional con hoja de 12 pulgadas",
-    },
-    {
-      name: "Amoladora",
-      category: "Electricidad",
-      rating: 3,
-      price: { venta: 90, alquiler: 0 },
-      imageUrl:
-        "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR7XtSHjObVZ1gYSBGsiAjf1cYI66F5hAFeGP8kBtwabxOBdjYE8VypFH-OBj8Xf7M2mcL5w4RUEyEGrnQLkgM4lpE0wKApMy1Wgtmjs_czzJWBi9O66-W6tL6RUnfZPJ3rvw&usqp=CAc",
-      description: "Amoladora angular de 4.5 pulgadas con velocidad variable",
-    },
-    {
-      name: "Cortacésped",
-      category: "Jardinería",
-      rating: 4,
-      price: { venta: 175, alquiler: 0 },
-      imageUrl:
-        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRVszEOu1Pe7afrlEKJcGK__yfbJ4n62G1HTxzlT6N4TTSDmOPLTlh_iOcl4R3aCoWhUCpeT_luIlZmlh8grNTOIIEKpKMeJYdQ9YYQt7CpX7wY69myeitr9zaSaqIYAS_bPIY&usqp=CAc",
-      description: "Cortacésped a gasolina de 21 pulgadas con tracción trasera",
-    },
-    {
-      name: "Pala",
-      category: "Excavación",
-      rating: 2,
-      price: { venta: 40, alquiler: 0 },
-      imageUrl:
-        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQWsdFgFwKeh0QOobzWmz7Hg7-Eh49BHDpHQo3cumjg4Ygwea7UnGu3A9B0ZvwLxmS87SUwux3UGdIL_0qDlxr1nrwFEZmUvkye2ljFcEhyMrBmO0Oy3GF4R5KuUEfNl7PrXA&usqp=CAc",
-      description: "Pala cuadrada con mango de madera de 48 pulgadas",
-    },
-  ];
-
   return (
-    <div className="p-4">
-      <h2 className={style.cartTitle}>Te Puede Interesar</h2>
-      <div className={style.cartContainer}>
-        <div className={style.cartList}>
-          {tools?.map((tool) => (
-            <div className={style.cardCart} key={tool.name}>
-              <Card
-                imageUrl={tool.imageUrl}
-                name={tool.name}
-                price={`${
-                  tool.price.venta > 0 ? tool.price.venta : tool.price.alquiler
-                }`}
-                saleType={`${tool.price.alquiler > 0 ? "Arriendo" : "Venta"}`}
-              >
-                {tool.price.alquiler > 0 && (
-                  <div className="mt-2">
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={handleDateChange}
-                      dateFormat="dd/MM/yyyy"
-                      minDate={new Date()}
+    <main className={style.container}>
+      <Back />
+      <section className={style.cartContainer}>
+        {typeof window !== "undefined" && <h2>Carrito de Compras</h2>}
+        <div className={style.cart}>
+          <div className={style.cartCards}>
+            <div className={style.cartAmount}>
+              <h3>Total:</h3>
+              <h3>
+                {cart?.count > 0
+                  ? `$${cart.items.reduce((acc, item) => acc + item.price, 0)}`
+                  : `$0`}
+              </h3>
+            </div>
+            {cart?.count > 0 ? (
+              cart.items.map((item) => (
+                <div className={style.cartItem} key={item.id}>
+                  <Image
+                    className={style.cartItemImg}
+                    src={item.photo[0]}
+                    alt={item.title}
+                    width={100}
+                    height={100}
+                  />
+                  <div className={style.cartDetailContainer}>
+                    <div className={style.cartItemDetail}>
+                      <h3 className={style.cartItemTitle}>{item.title}</h3>
+                      <p className={style.cartItemPrice}>
+                        Precio ${item.price}
+                      </p>
+                    </div>
+                    <AiFillCloseCircle
+                      size={25}
+                      color="var(--red)"
+                      onClick={() => deleteItem(item.id)}
                     />
                   </div>
-                )}
-              </Card>
-              <button
-                className={style.addToCart}
-                onClick={() => handleAddToCart(tool)}
-              >
-                Agregar al Carrito
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className={style.cartList2}>
-          <h2 className={style.cartTitle2}>
-            TOTAL: <span className={style.cartTotal}>${total}</span>
-          </h2>
-          {cartItems?.map((item, index) => (
-            <div className={style.cardCart2} key={item.id}>
-              <button
-                className={style.deleteCardCart}
-                onClick={() => handleRemoveFromCart(index, item.price)}
-              >
-                x
-              </button>
-
-              <Card
-                imageUrl={item.imageUrl}
-                name={item.name}
-                price={`${item.price}`}
-              />
-            </div>
-          ))}
-          <div className={style.buying}>
-            <Link href="/home" className={style.buying1}>
-              Volver a Productos
+                </div>
+              ))
+            ) : (
+              <p className={style.cartEmpty}>No hay productos en el carrito</p>
+            )}
+          </div>
+          <div className={style.cartButton}>
+            <Link href="/home">
+              <button>Seguir Comprando</button>
             </Link>
-            <Link
-              className={style.buying2}
-              onClick={handleBuyClick}
-              href="/payment-provisional"
-              passHref
-            >
-              <span>Comprar</span>
+            <Link href={cart?.count > 0 ? "/payment" : "/cart"}>
+              <button>Finalizar la Compra</button>
             </Link>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
+
+/* codigo funcional de cart */
+// import { useContext, useEffect } from "react";
+// import { AppContext } from "@/context/AppContext";
+// import style from "./Cart.module.css";
+// import Image from "next/image";
+// import { AiFillCloseCircle } from "react-icons/ai";
+// import Link from "next/link";
+// import { useRouter } from "next/navigation";
+// import Back from "@/components/back/Back";
+
+// export default function Page() {
+//   const { cart, setCart, userData } = useContext(AppContext);
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     if (!cart) {
+//       setCart({
+//         count: 0,
+//         items: [],
+//       });
+//     }
+
+//     if (userData?.firstName) {
+//       router.push("/form/login");
+//     }
+//   }, [router, userData, setCart, cart]);
+
+//   function deleteItem(id) {
+//     setCart((prevCart) => {
+//       const updatedItems = prevCart.items.filter((item) => item.id !== id);
+//       return {
+//         ...prevCart,
+//         count: prevCart.count - 1,
+//         items: updatedItems,
+//       };
+//     });
+//   }
+
+//   return (
+//     <main className={style.container}>
+//       <Back />
+//       <section className={style.cartContainer}>
+//         <h2>Carrito de Compras</h2>
+//         <div className={style.cart}>
+//           <div className={style.cartCards}>
+//             <div className={style.cartAmount}>
+//               <h3>Total:</h3>
+//               <h3>
+//                 {cart?.count > 0
+//                   ? `$${cart.items.reduce((acc, item) => acc + item.price, 0)}`
+//                   : `$0`}
+//               </h3>
+//             </div>
+//             {cart?.count > 0 ? (
+//               cart.items.map((item) => (
+//                 <div className={style.cartItem} key={item.id}>
+//                   <Image
+//                     className={style.cartItemImg}
+//                     src={item.photo[0]}
+//                     alt={item.title}
+//                     width={100}
+//                     height={100}
+//                   />
+//                   <div className={style.cartDetailContainer}>
+//                     <div className={style.cartItemDetail}>
+//                       <h3 className={style.cartItemTitle}>{item.title}</h3>
+//                       <p className={style.cartItemPrice}>
+//                         Precio ${item.price}
+//                       </p>
+//                     </div>
+//                     <AiFillCloseCircle
+//                       size={25}
+//                       color="var(--red)"
+//                       onClick={() => deleteItem(item.id)}
+//                     />
+//                   </div>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className={style.cartEmpty}>No hay productos en el carrito</p>
+//             )}
+//           </div>
+//           <div className={style.cartButton}>
+//             <Link href="/home">
+//               <button>Seguir Comprando</button>
+//             </Link>
+//             <Link href={cart?.count > 0 ? "/payment" : "/cart"}>
+//               <button>Finalizar la Compra</button>
+//             </Link>
+//           </div>
+//         </div>
+//       </section>
+//     </main>
+//   );
+// }

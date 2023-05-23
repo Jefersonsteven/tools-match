@@ -1,0 +1,74 @@
+
+.termsContainer{
+    min-height: 100vh;
+}
+.termsTitle{
+    text-align: center;
+    font-size: 3rem;
+    margin: 3rem 0;
+    font-weight: 500;
+}
+.termsSubTitle{
+    background-color: var(--black-light);
+    text-align: flex-start;
+    font-size: 2rem;
+    margin: 2rem 0;
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+}
+.termsSubHeader{
+    padding: 10px 100px;
+    
+}
+.infoUtil{
+    background-color: var(--black-light);
+    text-align: flex-start;
+    font-size: 2rem;
+    margin: 2rem 0;
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+}
+.infoUtil p{
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 2rem;
+    font-size: 2rem;
+    color: var(--white);
+}
+.termButton{
+    display: flex;
+    font-size: 1.5rem;
+    justify-content: center;
+}
+.termButton button{
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+}
+.Close{
+    background-color: var(--black);
+    text-align: flex-start;
+    font-size: 2rem;
+    margin: 2rem 0;
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    height: 50px;
+    margin-top: 1rem;
+    margin-inline: auto;
+    margin-top: 20px;
+}
+.Modal{
+    padding: 20px;
+    height: 20%;
+    width: 60%;
+    opacity: 1;
+    background-color: var(--black-light);
+    border-radius: 10px;
+    margin-left: 30%;
+    max-width: 300px;
+    margin-top: 50%;
+    font-weight: 800;
+}

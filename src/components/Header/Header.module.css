@@ -1,95 +1,133 @@
 .header {
-    display: flex;
-    padding: 20px 50px;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--black);
-    color: var(--white);
-    height: 100px;
+  display: flex;
+  padding: 20px 50px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--black);
+  color: var(--white);
+  height: 100px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .logo button {
-    background-color: var(--white);
-    color: var(--black);
-    border-radius: 5px;
-    padding: 0 15px;
+  background-color: var(--white);
+  color: var(--black);
+  border-radius: 5px;
+  padding: 0 15px;
 }
 
 .logo button:hover {
-    background-color: var(--black);
-    color: var(--white);
+  background-color: var(--black);
+  color: var(--white);
 }
 .nav {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-    font-size: 1.6rem;
-    width: 100%;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  font-size: 1.6rem;
+  width: 100%;
 }
 
-.nav>ul {
-    justify-content: flex-end;
-    width: 100%;
+.nav > ul {
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .nav div {
-    width: 100px;
+  width: 100px;
 }
 
 .route {
-    padding: 3px 5px;
-    background-color: var(--white);
-    color: var(--black);
-    border-radius: 5px;
+  padding: 3px 5px;
+  background-color: var(--white);
+  color: var(--black);
+  border-radius: 5px;
 }
 
 .nav ul li:hover {
-    padding: 3px 5px;
-    background-color: var(--white);
-    color: var(--black);
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 3px 5px;
+  background-color: var(--white);
+  color: var(--black);
+  border-radius: 5px;
+  cursor: pointer;
 }
-
 
 .home {
-    display: flex;
+  display: flex;
 }
 .perfil {
-    width: 16px;
-    position: relative;
+  width: 16px;
+  position: relative;
 }
 
 .perfil ul li a {
-    width: 100%;
+  width: 100%;
 }
 
 .openSubmenu {
-    display: flex;
-    position: absolute;
-    width: 150px;
-    padding: 15px;
-    flex-direction: column;
-    gap: 2px;
-    right: 0;
-    z-index: 1;
-    background-color: var(--black);
+  display: flex;
+  position: absolute;
+  width: 200px;
+  padding: 15px;
+  flex-direction: column;
+  gap: 2px;
+  right: 0;
+  z-index: 1;
+  background-color: var(--black);
 }
 
 .closeSubmenu {
-    display: none;
-    position: absolute;
-    width: 150px;
-    padding: 15px;
-    flex-direction: column;
-    gap: 2px;
-    right: 0;
-    z-index: 1;
-    background-color: var(--black);
+  display: none;
+  position: absolute;
+  width: 150px;
+  padding: 15px;
+  flex-direction: column;
+  gap: 2px;
+  right: 0;
+  z-index: 1;
+  background-color: var(--black);
+}
+
+/* ---------- CARRITO DE COMPRA --------- */
+.cart {
+  position: relative;
+  display: inline-block;
+}
+.cartCount {
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  background-color: var(--orange);
+  color: var(--black);
+  border-radius: 50%;
+  padding: 3px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+.cartText {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.cart:hover .cartText {
+  opacity: 1;
+  visibility: visible;
 }
