@@ -28,6 +28,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <>
+      <>
       <div className={styles.body}>
         <div className={styles.contenedor}>
           <div className={styles.title}>
@@ -39,6 +40,12 @@ export default function DashboardLayout({ children }) {
               onClick={() => handleButtonClick('users')}
             >
               <Link href="/dashboard/users">Usuarios</Link>
+            </div>
+            <div
+              className={`${styles.boton} ${activeButton === 'vetados' && styles.active}`}
+              onClick={() => handleButtonClick('vetados')}
+            >
+              <Link href="/dashboard/usersBan">Vetados</Link>
             </div>
             <div
               className={`${styles.boton} ${activeButton === 'publications' && styles.active}`}
@@ -56,6 +63,8 @@ export default function DashboardLayout({ children }) {
         </div>
         {children}
       </div>
+      </>
     </>
+    
   );
 }

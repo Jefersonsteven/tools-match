@@ -181,8 +181,8 @@ function Posts() {
 
           // Eliminar publicaciones
           axios
-            .delete("/api/admin/post", {
-              data: { userIds: userIds },
+            .put("/api/admin/post", {
+                userIds: userIds 
             })
             .then((response) => {
               // Actualizar la lista de publicaciones en el estado local o cualquier otra acción necesaria
@@ -214,6 +214,7 @@ function Posts() {
     }
     setIsDeleteButtonDisabled(selectedItemCount + 1 > 1);
   }
+  
 
   /* ----------PAGINATED ----------- */
   const handlePageChange = (pageNumber) => {
