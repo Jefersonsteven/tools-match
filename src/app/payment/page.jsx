@@ -35,17 +35,18 @@ function Page() {
     const status = params.get("status");
     if (status === "approved") {
       TODO:
-      // axios.get(`/api/user/${userData.email}`)
-      //   .then(res => {
-      //     const paymentId = res.data.payments[res.data.payments.length - 1].id;
+      axios.get(`/api/user/${userData.email}`)
+        .then(res => {
+          console.log(res.data);
+          // const paymentId = res.data.payments[res.data.payments.length - 1].id;
 
-      //     return axios.post('/api/order', {
-      //       status: "complete",
-      //       userId: userData.id,
-      //       postId:cart.map(item => item.id),
-      //       paymentId: paymentId
-      //     })
-      //   }).then(order => console.log(order.data))
+          // return axios.post('/api/order', {
+          //   status: "complete",
+          //   userId: userData.id,
+          //   postId:cart.map(item => item.id),
+          //   paymentId: paymentId
+          // })
+        })
 
 
       setCart({
