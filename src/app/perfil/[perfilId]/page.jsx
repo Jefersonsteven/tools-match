@@ -9,8 +9,8 @@ import { AppContext } from "@/context/AppContext";
 import Link from "next/link";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import CardsReview from "@/components/CardsReview";
-import CardsOrders from "@/components/CardsOrders";
+import CardsReview from "@/components/Reviews/CardsReview";
+import CardsOrders from "@/components/Reviews/CardsOrders";
 import axios from 'axios'
 
 import Back from "@/components/back/Back";
