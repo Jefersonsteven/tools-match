@@ -28,8 +28,6 @@ function PostDetail() {
       .then((data) => setPostDetail(data));
   }, [setPostDetail, postId]);
 
-  console.log(pd);
-
   return (
     <div className={styles.main_container}>
       <Link
