@@ -21,7 +21,6 @@ export default function LandingPage() {
 
   return (
     <div className={style.landingPageContainer}>
-      <Header />
       <main className={style.mainInfo}>
         <div className={style.mainInfoApp}>
           <h1>
