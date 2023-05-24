@@ -6,9 +6,8 @@ import { useContext, useEffect } from "react";
 import styles from "./post.module.css";
 import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
-function PostDetail({}) {
+function PostDetail() {
   const { postId } = useParams();
   const { postDetail, setPostDetail, userId } = useContext(AppContext);
   const pd = postDetail;
@@ -28,6 +27,8 @@ function PostDetail({}) {
       .then((response) => response.json())
       .then((data) => setPostDetail(data));
   }, [setPostDetail, postId]);
+
+  console.log(pd);
 
   return (
     <div className={styles.main_container}>
@@ -91,7 +92,7 @@ function PostDetail({}) {
               <figure className={styles.figure}>
                 <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
                 <Image
-                  src={pd.author.map}
+                  src={pd?.author?.map}
                   width={600}
                   height={400}
                   alt={pd.author.zipCode + " " + pd.author.country}
@@ -100,7 +101,7 @@ function PostDetail({}) {
               <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image
-                    src={pd?.author.photo}
+                    src={pd.author.photo || "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"}
                     width={96}
                     height={96}
                     alt={pd.author.firstname}
