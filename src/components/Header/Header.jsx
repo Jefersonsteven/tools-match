@@ -55,9 +55,9 @@ function Header() {
     }
   };
 
+  const href = userData ? "/crear-publicacion" : "/form/login";
+
   return (
-    <div>
-      {typeof window !== "undefined" && (
         <header className={styles.header}>
           <ul className={styles.logo}>
             <li>
@@ -97,13 +97,13 @@ function Header() {
                 <li>
                   {pathname !== "/" && (
                     <Link
-                      href={userData ? "/crear-publicacion" : "/form/login"}
+                      href={userData && href}
                     >
                       Crear Publicaciones
                     </Link>
                   )}
                 </li>
-                {pathname !== "/favorite" && (
+                {pathname !== "/favorite" || pathname !== "/" && (
                   <li>
                     <Link href="/favorite">Favoritos</Link>
                   </li>
@@ -167,8 +167,6 @@ function Header() {
             </>
           </nav>
         </header>
-      )}
-    </div>
   );
 }
 

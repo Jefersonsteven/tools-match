@@ -1,13 +1,10 @@
 .searchbar {
   display: flex;
-  height: 50px;
-  padding-left: 5px;
-  padding-bottom: 5px;
-  width: 100%;
+  height: 45px;
 }
 
 .searchbar input {
-  border-radius: 10px 0 0 10px;
+  border-radius: 8px 0 0 8px;
   padding-left: 20px;
   max-width: 350px;
   width: 100%;
@@ -16,7 +13,26 @@
 .icon button{
   border-radius: 0 10px 10px 0;
   height: 45px;
-
 }
 
+.searchbar div {
+  border-radius: 0 8px 8px 0;
+  background-color: var(--green);
+  width: 49px;
+  display: grid;
+  place-items: center;
+}
 
+.searchButton {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: whitesmoke; /* color del icono */
+}
