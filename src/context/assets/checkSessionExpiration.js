@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 
 const checkSessionExpiration = () => {
-  console.log("función");
   const loginTime = localStorage.getItem("loginTime");
   if (loginTime) {
     const currentTime = new Date().getTime();

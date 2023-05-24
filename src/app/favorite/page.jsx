@@ -1,40 +1,62 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { AppContext } from "../../context/AppContext";
-import { FaHeart } from "react-icons/fa";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "@/context/AppContext";
+import Card from "@/components/Cards/Card";
 import styles from "./Favorites.module.css";
 import Link from "next/link";
-import Image from "next/image";
 import Back from "@/components/back/Back";
-import { useRouter } from "next/navigation";
 
-const Favorite = () => {
-  const router = useRouter();
-  const [favoriteCard, setFavoriteCard] = useState(null);
-
-  useEffect(() => {
-    // Recuperar los datos de la card favorita del local storage
-    const storedFavoriteCard = localStorage.getItem("favoriteCard");
-    if (storedFavoriteCard) {
-      setFavoriteCard(JSON.parse(storedFavoriteCard));
-    }
-  }, []);
-
+const Favorites = () => {
   return (
     <div>
       <Back />
-      {favoriteCard ? (
-        <div>
-          <h2 className={styles.favContent}>{favoriteCard.title}</h2>
-          <Image src={favoriteCard.photo} alt={favoriteCard.title} />
-          {/* Resto de los detalles de la card favorita */}
-        </div>
-      ) : (
-        <p className={styles.favMsg}>No hay una card favorita seleccionada.</p>
-      )}
+      <h2 className={styles.favTitle}>No Tiene Ningún Favorito</h2>
     </div>
   );
 };
+//   const { favorites, setFavorites } = useContext(AppContext);
+//   const [favoriteCards, setFavoriteCards] = useState([]);
 
-export default Favorite;
+//   useEffect(() => {
+//     const fetchFavoriteCards = async () => {
+//       try {
+//         const response = await fetch(
+//           `/api/favorites?id=${favorites.join(",")}`
+//         );
+//         if (response.ok) {
+//           const data = await response.json();
+//           setFavoriteCards(data);
+//         } else {
+//           console.error(
+//             "Error al obtener los detalles de las publicaciones favoritas:",
+//             response.statusText
+//           );
+//         }
+//       } catch (error) {
+//         console.error(
+//           "Error al obtener los detalles de las publicaciones favoritas:",
+//           error
+//         );
+//       }
+//     };
+
+//     if (favorites.length > 0) {
+//       fetchFavoriteCards();
+//     }
+//   }, [favorites]);
+
+//   return (
+//     <div>
+//       <Back />
+//       <h2 className={styles.favTitle}>Publicaciones en Favoritos</h2>
+//       <div className={styles.favCard}>
+//         {favoriteCards.map((card) => (
+//           <Card key={card.id} {...card} />
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+export default Favorites;

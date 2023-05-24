@@ -76,7 +76,7 @@
   
   .favoriteIcon {
     font-size: 35px;
-    color: yellow;
+    color: var(--white-dark);
     cursor: pointer;
     padding: 4px;
     margin-inline-start: auto;
@@ -87,10 +87,10 @@
   
   .favoriteIcon:hover {
     background-color: white; /* Agregado: al pasar el cursor, fondo verde */
-    color: green;
+    color: var(--orange);
   }
   
   .favoriteActive {
-    color: green; /* Modificado: color verde */
+    color: var(--white-dark); /* Modificado: color verde */
   }
   

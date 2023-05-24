@@ -40,15 +40,14 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
   return (
     <Link href={`/post/${id}`}>
       <div className={`${styles.cardContainer} bg-white rounded-md p-4`}>
-        {/* ----- favorites ----- */}
-        <Link href={`/favorite/${id}`}>
-          <FaHeart
-            className={`${styles.favoriteIcon} ${
-              isFavorite ? styles.favoriteActive : ""
-            }`}
-            onClick={handleCardFavoriteClick}
-          />
-        </Link>
+        {/* <Link href={`/favorite/${id}`}> */}
+        <FaHeart
+          className={`${styles.favoriteIcon} ${
+            isFavorite ? styles.favoriteActive : ""
+          }`}
+          onClick={handleCardFavoriteClick}
+        />
+        {/* </Link> */}
         <div className={styles.imageContainer}>
           <Image
             onError={(event) =>
