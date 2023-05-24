@@ -92,6 +92,7 @@ export default function Logout() {
     try {
       setDataMessage("Autenticando con Google...");
       const userDataProvider = await callLoginGoogle();
+      console.log(userDataProvider);
       await createNewUserOrLogIn(
         userDataProvider,
         setUserData,
