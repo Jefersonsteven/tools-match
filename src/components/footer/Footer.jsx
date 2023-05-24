@@ -4,6 +4,7 @@ import style from "./Footer.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { FaEnvelope, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
   const [termsOpen, setTermsOpen] = useState(false);
@@ -33,22 +34,11 @@ export default function Footer() {
         </div>
         <div className={style.contactInfo}>
           <Link href="mailto:toolmatchnotificaciones@gmail.com.com">
-            <Image
-              src="/images/icons/mail.png"
-              alt="mail"
-              width={30}
-              height={30}
-              className={style.contactMail}
-            />
+            <FaEnvelope size={25} className={style.contactMail} />
           </Link>
-          <Link href="https://www.twitter.com/toolsmatch/" target="blank">
-            <Image
-              src="/images/icons/twitter.png"
-              alt="mail"
-              width={30}
-              height={30}
-              className={style.contactTwitter}
-            />
+
+          <Link href="https://www.twitter.com/toolsmatch/" target="_blank">
+            <FaTwitter size={25} className={style.contactTwitter} />
           </Link>
         </div>
       </div>

@@ -16,9 +16,8 @@ export default function SearchBar({ title, onTitleChange, onTitleButton }) {
         onChange={handleTitleChange}
       />
       <div className={style.icon}>
-        <button 
-        onClick={()=>onTitleButton()}>
-        <FaSearch color="var(--white)" />
+        <button onClick={() => onTitleButton()}>
+          <FaSearch color="var(--white)" />
         </button>
       </div>
     </div>
