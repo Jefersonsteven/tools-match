@@ -26,10 +26,18 @@ function CreatePost() {
       .then((position) => {
         const { latitude, longitude } = position.coords;
         axios.post("/api/maps", { latitude, longitude })
-          .then((response) => {
-            axios.put(`/api/user/${userData.email}`, { map: response.data })
+        .then((response) => {
+          axios.put(`/api/user/${userData.email}`, { 
+            map: response.data,
           })
-      })
+          .then(() => {
+            console.log(longitude, latitude);
+            axios.put(`/api/user/${userData.email}`, { 
+              coordinates: [latitude, longitude],
+            })
+          }) 
+        })
+      }) 
       .catch((error) => {
         console.error("Error al obtener la ubicación:", error.message);
         Swal.fire({

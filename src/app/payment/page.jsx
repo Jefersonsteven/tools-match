@@ -30,15 +30,11 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userData.id) {
-      router.push("/form/login");
-    }
+    if (!userData.firstname) router.push("/form/login");
 
     const status = params.get("status");
     if (status === "approved") {
-      
-
-      //TODO:
+      TODO:
       axios.get(`/api/user/${userData.email}`)
         .then(res => {
           const paymentId = res.data.payments[res.data.payments.length - 1].id;
@@ -98,7 +94,7 @@ function Page() {
   }
 
   const body = {
-    items: cart?.items.map(({ title, content, price }) => {
+    items: cart && cart.items?.map(({ title, content, price }) => {
       return {
         title,
         content,
@@ -108,7 +104,7 @@ function Page() {
       };
     }),
     payer: {
-      name: userData.email,
+      name: userData && userData.email,
     },
   };
 
@@ -166,7 +162,7 @@ function Page() {
       <section className={styles.payment}>
         <div className={styles.cart}>
           <div className={styles.cartItems}>
-            {cart?.items.map((item) => (
+            {cart.items?.map((item) => (
               <div key={item.id} className={styles.item}>
                 <h4>{item.title}</h4>
                 <h4>${item.price}</h4>
