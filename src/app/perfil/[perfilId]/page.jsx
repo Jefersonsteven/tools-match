@@ -9,8 +9,8 @@ import { AppContext } from "@/context/AppContext";
 import Link from "next/link";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import CardsReview from "@/components/CardsReview";
-import CardsOrders from "@/components/CardsOrders";
+import CardsReview from "@/components/Reviews/CardsReview";
+import CardsOrders from "@/components/Reviews/CardsOrders";
 import axios from 'axios'
 
 import Back from "@/components/back/Back";
@@ -28,7 +28,6 @@ export default function PerfilUsuario() {
 
 
   useEffect(() => {
-    console.log(perfilId)
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
@@ -43,7 +42,7 @@ export default function PerfilUsuario() {
       }
     };
     fetchReviews();
-  }, [userId]);
+  }, [userId, perfilId]);
 
  useEffect(() => {
   const fetchAuthors = async () => {
@@ -104,9 +103,9 @@ useEffect(() => {
 
   return (
     <>
-      {user && (
-        <>
           <Back />
+      {user.firstname && (
+        <>
           <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
           <section className={styles.section}>
             <div className={styles.userContainer}>
@@ -132,10 +131,11 @@ useEffect(() => {
                     <strong>Nombre completo: </strong>
                     {`${user.firstname} ${user.lastname}`}
                   </h2>
-                  <h2>
+                  {userData.id === perfilId &&
+                    <h2>
                     <strong>Correo: </strong>
                     {user.email}
-                  </h2>
+                  </h2>}
                   <h2>
                     <strong>País de residencia: </strong>
                     {user.country ? countries[user.country] : "---"}
@@ -144,10 +144,11 @@ useEffect(() => {
                     <strong>Código postal: </strong>
                     {user.zipCode ? user.zipCode : "---"}
                   </h2>
-                  <h2>
+                  {userData.id === perfilId &&
+                    <h2>
                     <strong>Celular: </strong>
                     {user.phoneNumber ? user.phoneNumber : "---"}
-                  </h2>
+                  </h2>}
                 </div>
               </div>
               <div className={styles.buttonContainer}>

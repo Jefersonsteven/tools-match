@@ -7,6 +7,7 @@ const nextConfig = {
       "www.homedepot.com.mx",
       "encrypted-tbn0.gstatic.com",
       "maps.googleapis.com",
+      "www.kindpng.com",
     ],
   },
   env: {

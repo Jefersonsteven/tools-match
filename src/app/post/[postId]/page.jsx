@@ -8,7 +8,6 @@ import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Loader from "@/components/Loader/Loader";
 
 function PostDetail({}) {
   const { postId } = useParams();
@@ -90,7 +89,7 @@ function PostDetail({}) {
         <IoCaretBack size={50} color="var(--white)" />
       </Link>
       <main className={styles.main}>
-        {postDetail.author !== undefined ? (
+        {postDetail.author !== undefined && (
           <>
             <section className={styles.section_images}>
               <figure className={styles.figure}>
@@ -128,15 +127,8 @@ function PostDetail({}) {
               </div>
               <p>{pd.content}</p>
               <div className={styles.description_categories}>
-                <div>
-                  <h5>Categoria:</h5>
-                  <p>{pd.category}</p>
-                </div>
-                <div>
-                  <h5>Marca:</h5>
-                  <p>{pd.brand}</p>
-                </div>
-
+                <h5>Categoria:</h5>
+                <p>{pd.category}</p>
               </div>
             </section>
             <section className={styles.section_user}>
@@ -149,10 +141,10 @@ function PostDetail({}) {
                   alt={pd.author.zipCode + " " + pd.author.country}
                 />
               </figure>
-              <Link href={`/perfil/${pd.author.id}`}>
+              <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image
-                    src={pd.author.photo}
+                    src={pd.author.photo || "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"}
                     width={96}
                     height={96}
                     alt={pd.author.firstname}
@@ -176,11 +168,6 @@ function PostDetail({}) {
               )}
             </section>
           </>
-        ) : (
-          <div class="flex flex-col items-center justify-center w-screen h-screen">
-            <Loader />
-            <h2>Cargando publicación...</h2>
-          </div>
         )}
       </main>
     </div>
@@ -188,3 +175,4 @@ function PostDetail({}) {
 }
 
 export default PostDetail;
+

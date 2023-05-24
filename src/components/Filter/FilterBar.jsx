@@ -1,32 +1,35 @@
 "use client";
-import CategoryFilter from "./CategoryFilter";
 import SearchBar from "../SearchBar/SearchBar";
 import { AppContext, AppProvider } from "@/context/AppContext";
-import React, { useEffect, useState, useContext } from 'react';
-import { FaFilter, FaSort } from 'react-icons/fa';
-import { fetchCards } from './UseFetchCard';
-import style from "./FilterBar.module.css"
+import React, { useEffect, useState, useContext } from "react";
+import { FaFilter, FaSort } from "react-icons/fa";
+import { fetchCards } from "./UseFetchCard";
+import style from "./FilterBar.module.css";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected } = useContext(AppContext);
+  const { setCards, title, setTitle, selected, setSelected } =
+    useContext(AppContext);
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderFilter, setOrderFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
 
-  const handleTitleChange = async (newTitle) => {
+  const handleTitleChange =  (newTitle) => {
     setTitle(newTitle);
-    const response = await fetch(`/api/filters/title/${newTitle}`);
-    if (newTitle.length === 0) {
-      setSelected({ ...selected, title: "" });
+    if(newTitle.length==0){
+      setSelected({...selected,title: ""})
     }
+  };
+  const handleTitleButton = async () => { 
+    setSelected({...selected,title: title})
+    const response = await fetch(`/api/filters/title/${title}`)
     const data = await response.json();
     setCards(data || []);
-  };
+  }
 
   useEffect(() => {
-    fetchCards(selected, setCards);
+    fetchCards(selected, setCards, title);
   }, [selected, setCards]);
 
   const handleCategoryChange = (event) => {
@@ -47,7 +50,6 @@ export default function FilterBar() {
     setBrandFilter(brandValue);
   };
 
-
   const handleOrderChange = (type, order) => {
     setSelected({ ...selected, order: { type, order } });
     setOrderFilter(`${type}-${order}`);
@@ -57,15 +59,23 @@ export default function FilterBar() {
     <AppProvider>
       <div className="relative z-10">
         <div className="flex-1 flex flex-row items-center justify-between px-2">
+        <div className="mr-10" style={{ width: "400px" }}>
+        <SearchBar
+          title={title}
+          onTitleChange={handleTitleChange}
+          onTitleButton = {handleTitleButton}
+          style={{ width: "150px" }}
+        />
+      </div>
           <div className={`mr-2 relative ${style.button}`}>
-            <div
-              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none`}
-            >
+            <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}>
               Filtrar <FaFilter className="ml-2" />
             </div>
             <div className={style.filter}>
-              <h3>Tipo de Transacción:</h3>
+            <div className={`mr-2 relative ${style.subButton}`}>  
+              <div>Tipo de Transacción:</div>
               <div>
+              <div className={style.type}>
                 <button
                   onClick={handleTypeChange}
                   value=""
@@ -88,8 +98,12 @@ export default function FilterBar() {
                   Venta
                 </button>
               </div>
-              <h3>Categoría:</h3>
+              </div>
+              </div>
+              <div className={`mr-2 relative ${style.subButton}`}>
+              <div>Categoría:</div>
               <div>
+              <div className={style.category}>
                 <button
                   onClick={handleCategoryChange}
                   value=""
@@ -100,7 +114,9 @@ export default function FilterBar() {
                 <button
                   onClick={handleCategoryChange}
                   value="electrica"
-                  className={categoryFilter === "electrica" ? style.selected : ""}
+                  className={
+                    categoryFilter === "electrica" ? style.selected : ""
+                  }
                 >
                   Eléctrica
                 </button>
@@ -114,7 +130,9 @@ export default function FilterBar() {
                 <button
                   onClick={handleCategoryChange}
                   value="medicion"
-                  className={categoryFilter === "medicion" ? style.selected : ""}
+                  className={
+                    categoryFilter === "medicion" ? style.selected : ""
+                  }
                 >
                   Medición
                 </button>
@@ -135,7 +153,9 @@ export default function FilterBar() {
                 <button
                   onClick={handleCategoryChange}
                   value="fontaneria"
-                  className={categoryFilter === "fontaneria" ? style.selected : ""}
+                  className={
+                    categoryFilter === "fontaneria" ? style.selected : ""
+                  }
                 >
                   Fontanería
                 </button>
@@ -153,9 +173,13 @@ export default function FilterBar() {
                 >
                   Soldar
                 </button>
+                </div>
+                </div>
               </div>
-              <h3>Marca:</h3>
+              <div className={`mr-2 relative ${style.subButton}`}>
+              <div>Marca:</div>
               <div>
+              <div className={style.brand}>
                 <button
                   onClick={handleBrandChange}
                   value=""
@@ -247,11 +271,13 @@ export default function FilterBar() {
                 >
                   Truper
                 </button>
+                </div>
+                </div>
               </div>
             </div>
           </div>
           <div className={`flex relative ${style.button}`}>
-            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-none">
+            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
               Ordenar <FaSort className="ml-2" />
             </div>
             <div className={style.order}>
@@ -299,15 +325,14 @@ export default function FilterBar() {
               </button>
             </div>
           </div>
+          <div className={`ml-8 relative ${style.button}`}>
+          <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ${style.clear}`}>
+          <span>Limpiar</span>
+          <span>Filtros</span> 
+            </div>
+            </div>
         </div>
-      </div>
-      <div style={{ width: '400px' }}>
-        <SearchBar
-          title={title}
-          onTitleChange={handleTitleChange}
-          style={{ width: '150px' }}
-        />
-      </div>
+      </div>      
     </AppProvider>
   );
 }

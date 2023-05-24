@@ -7,9 +7,9 @@ export default async function handler(req, res) {
     const URL_BASE = process.env.DEPLOY_BACK || 'http://localhost:3000'
     const response = await fetch(`${URL_BASE}/api/user/${payer.name}`);
     const user = await response.json();
-
+    
     if (!user) throw new Error("No se encuentra el usuario con el que deseas realizar la compra")
-
+    
     mercadopago.configure({
       access_token: "TEST-5795718698863749-051622-c31f13a1fa61032ebb4ddcdf861a0d09-1375420066" 
       // process.env.ACCESS_TOKEN_MERCADOPAGO,
@@ -23,11 +23,12 @@ export default async function handler(req, res) {
         pending: `${URL_BASE}`,
       },
       notification_url:
-        `${URL_BASE}/api/mercadopago/pago`,
+      `${URL_BASE}/api/mercadopago/pago`,
       auto_return: "approved",
     };
     try {
       const response = await mercadopago.preferences.create(preference);
+      console.log(response.body);
       const paymentLink = response.body.sandbox_init_point;
       const linkMercadoPago = response.body.init_point;
       res.status(200).json({

@@ -78,34 +78,6 @@
   background-color: var(--green);
 }
 
-.button {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  width: 100%;
-}
-
-.button button {
-  width: 226px;
-  height: 56px;
-  border-radius: 58px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--black);
-  font-weight: bold;
-  color: var(--white);
-}
-
-.button button:nth-child(1) {
-  background-color: var(--red);
-}
-
-.button button:hover {
-  background-color: var(--white-dark);
-  color: var(--blac);
-}
-
 .loaderContainer {
   display: flex;
   flex-direction: column;
@@ -209,5 +181,5 @@
 
 .button button:hover {
   background-color: var(--white-dark);
-  color: var(--blac);
+  color: var(--black);
 }

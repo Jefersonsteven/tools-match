@@ -1,5 +1,108 @@
 .cardContainer {
   border-radius: 15px;
+  width: 275px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  }
+  
+  .imageContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .cardImage {
+    width: 225px;
+    height: 225px;
+    border-radius: 10px;
+    object-fit: contain;
+  }
+
+  .cardContent {
+    display: flex;
+    gap: 15px;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+  }
+  
+  .cardName {
+    font-size: 1.8 rem;
+    color: var(--black); 
+    font-weight:bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .cardPrice {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .saleTypeContent{      
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cardPriceValue {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .priceType {
+    display: grid !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr !important;
+    grid-template-areas: "price" !important;
+    gap: 10px;
+  }
+  .cardInfo {
+    width: 100%;
+    border-radius: 20px;
+    gap: 15px;
+  }
+  
+  /* ---------- FAVORITOS ---------- */
+  .favoriteIconWrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+  }
+  
+  .favoriteIcon {
+    font-size: 35px;
+    color: yellow;
+    cursor: pointer;
+    padding: 4px;
+    margin-inline-start: auto;
+    border-radius: 50%;
+    border: 2px solid white; /* Agregado: borde verde */
+    background-color: white; /* Agregado: fondo blanco */
+  }
+  
+  .favoriteIcon:hover {
+    background-color: white; /* Agregado: al pasar el cursor, fondo verde */
+    color: green;
+  }
+  
+  .favoriteActive {
+    color: green; /* Modificado: color verde */
+  }
+  
+  
+  
+  
+  
+  
+
+  /* funcional
+.cardContainer {
+  border-radius: 15px;
   margin-bottom: 10px;
   margin-right: 20px;
   margin-left:20px
@@ -22,6 +125,7 @@
     object-fit: cover;
     padding: 4%;
     border-radius:30px;
+    margin-top: 30px;
   }
   
   .cardContent {
@@ -65,3 +169,21 @@
     color: #666;
   }
   
+  /* ---------- FAVORITOS ---------- */
+  /* .favoriteIconWrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+  }
+  
+  .favoriteIcon {
+    font-size: 35px;
+    color: yellow;
+    cursor: pointer;
+    padding: 4px;
+  }
+  
+  .favoriteActive {
+    color: #00ff00;
+  } */

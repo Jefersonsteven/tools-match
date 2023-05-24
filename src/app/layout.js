@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
+
   return (
     <AppProvider>
       <html lang="en">
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
           <title>Tools Match</title>
         </head>
         <body className={inter.className}>
-          {pathname !== "/" && <Header />}
+          <Header />
           {children}
           <Footer />
         </body>

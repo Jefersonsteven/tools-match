@@ -19,7 +19,7 @@ function Page() {
     phoneNumber: "",
     address: "",
   });
-  const [errors, setErros] = useState({
+  const [errors, setErrors] = useState({
     fullname: "",
     email: "",
     phoneNumber: "",
@@ -37,7 +37,20 @@ function Page() {
     const status = params.get("status");
     if (status === "approved") {
       
-      // axios.post('/api/order')
+
+      //TODO:
+      axios.get(`/api/user/${userData.email}`)
+        .then(res => {
+          const paymentId = res.data.payments[res.data.payments.length - 1].id;
+
+          return axios.post('/api/order', {
+            status: "complete",
+            userId: userData.id,
+            postId:cart.map(item => item.id),
+            paymentId: paymentId
+          })
+        }).then(order => console.log(order.data))
+
 
       setCart({
         count: 0,
@@ -62,7 +75,7 @@ function Page() {
         router.push(`/perfil/${userData.id}`);
       });
     }
-  }, [params, router, setCart, userData]);
+  }, [params, router, setCart, userData, cart]);
 
   useEffect(() => {
     if (!form.fullname) {
@@ -73,7 +86,7 @@ function Page() {
         address: "",
       };
       setForm(FORM);
-      validateForm(FORM, errors, setErros);
+      validateForm(FORM, errors, setErrors);
     }
   }, [userData, form, errors]);
 
@@ -81,7 +94,7 @@ function Page() {
     const name = event.target.name;
     const value = event.target.value;
     setForm({ ...form, [name]: value });
-    validateForm({ ...form, [name]: value }, errors, setErros, setDisabled);
+    validateForm({ ...form, [name]: value }, errors, setErrors, setDisabled);
   }
 
   const body = {
