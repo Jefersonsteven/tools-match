@@ -43,7 +43,7 @@ function Page() {
           axios.post('/api/order', {
             status: "complete",
             userId: userData.id,
-            postId:cart.map(item => item.id),
+            postId: cart.items.map(item => item.id),
             paymentId: paymentId
           })
           .then(order => console.log(order.data))
