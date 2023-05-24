@@ -16,7 +16,7 @@ export default function SearchBar({ title, onTitleChange, onTitleButton }) {
         onChange={handleTitleChange}
       />
       <div className={style.icon}>
-      <button className={style.searchButton} onClick={()=>onTitleButton}>
+      <button className={style.searchButton} onClick={onTitleButton}>
   <IoSearchOutline />
 </button>
       </div>
