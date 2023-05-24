@@ -24,6 +24,8 @@ model User {
   zipCode     String?
   map         String?
   reports     String[]
+  favorites   String[]
+  favoritesId String[]
   orders      Order[]   @relation("userOrders")
   payments    Payment[] @relation("userPayments")
   posts       Post[]    @relation("userPosts")
@@ -38,6 +40,7 @@ model Post {
   photo     String[]
   category  String
   brand     String?
+  status    String?
   price     Float
   type      Type     @default(SALE)
   hidden    Boolean  @default(false)

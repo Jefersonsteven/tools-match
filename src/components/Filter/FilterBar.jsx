@@ -14,18 +14,22 @@ export default function FilterBar() {
   const [orderFilter, setOrderFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
-  const handleTitleChange = async (newTitle) => {
+
+  const handleTitleChange =  (newTitle) => {
     setTitle(newTitle);
-    const response = await fetch(`/api/filters/title/${newTitle}`);
-    if (newTitle.length === 0) {
-      setSelected({ ...selected, title: "" });
+    if(newTitle.length==0){
+      setSelected({...selected,title: ""})
     }
+  };
+  const handleTitleButton = async () => { 
+    setSelected({...selected,title: title})
+    const response = await fetch(`/api/filters/title/${title}`)
     const data = await response.json();
     setCards(data || []);
-  };
+  }
 
   useEffect(() => {
-    fetchCards(selected, setCards);
+    fetchCards(selected, setCards, title);
   }, [selected, setCards]);
 
   const handleCategoryChange = (event) => {
@@ -59,6 +63,7 @@ export default function FilterBar() {
         <SearchBar
           title={title}
           onTitleChange={handleTitleChange}
+          onTitleButton = {handleTitleButton}
           style={{ width: "150px" }}
         />
       </div>
@@ -327,8 +332,7 @@ export default function FilterBar() {
             </div>
             </div>
         </div>
-      </div>
-      
+      </div>      
     </AppProvider>
   );
 }

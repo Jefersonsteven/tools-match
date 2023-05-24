@@ -1,60 +1,47 @@
 .cardContainer {
   border-radius: 15px;
-  margin-bottom: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  }
-
-.card {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 275px;
+  height: 450px;
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
-  border-radius: 40px;
-  overflow: hidden;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  padding: 20px;
+  gap: 20px;
   }
   
-  .cardImage {
+  .imageContainer {
     width: 100%;
-    height: 300px;
-    border-radius: 30px;
-    margin-top: 30px;
-  }
-  .cardContent {
-    padding: 5%;
     display: flex;
+    justify-content: center;
+  }
+
+  .cardImage {
+    width: 225px;
+    height: 225px;
+    border-radius: 10px;
+    object-fit: contain;
+  }
+
+  .cardContent {
+    display: flex;
+    gap: 15px;
     flex-direction: column-reverse;
     justify-content: space-between;
   }
   
   .cardName {
-    margin: 0 0 8px 0;
     font-size: 1.8 rem;
-    color: black; 
-    font-weight:bold;   
-    padding-top: 20px;
+    color: var(--black); 
+    font-weight:bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .cardPrice {
     font-size: 3rem;
     font-weight: bold;
-    margin-bottom: 0;
-  }
-  
-  .cardDescription {
-    margin: 0;
   }
 
-  .saleTypeContent{       
-    padding: 4%;
+  .saleTypeContent{      
     display: flex;
     justify-content: space-between;
   }
@@ -71,15 +58,12 @@
     grid-template-columns: 1fr !important;
     grid-template-rows: 1fr !important;
     grid-template-areas: "price" !important;
-    margin-left: 0.5rem;
-    margin-top: 20px;
+    gap: 10px;
   }
   .cardInfo {
     width: 100%;
-    height: 250px;
-    margin-top: 70px;
-    box-shadow: 60px 10px 60px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
+    gap: 15px;
   }
   
   /* ---------- FAVORITOS ---------- */

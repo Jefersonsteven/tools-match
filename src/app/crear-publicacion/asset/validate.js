@@ -2,7 +2,7 @@ export function validatePost(form, errors, setErrors) {
     const newErrors = { ...errors };
 
     //? Validate Title
-    if (!/^[a-zA-Z0-9/ ]{8,}$/.test(form.title)) newErrors.title = "Debe tener minimo 8 caracteres y sin simbolos";
+    if (!/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9/ ]{8,}$/.test(form.title)) newErrors.title = "Debe tener minimo 8 caracteres y sin simbolos";
     else newErrors.title = ""
     if (form.title === "") newErrors.title = "Llenar este espacio"
 

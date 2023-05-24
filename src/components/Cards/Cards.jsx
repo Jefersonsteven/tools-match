@@ -9,6 +9,7 @@ import Loader from "../Loader/Loader";
 const Cards = () => {
   const { cards, setCards, setFilteredCards, currentPage, setCurrentPage } =
     useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   /*----------PAGINATED----------*/
 
@@ -16,9 +17,11 @@ const Cards = () => {
   /*-------------------------------*/
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get(`/api/admin/post`).then((res) => {
       setCards(res.data);
       setFilteredCards(res.data);
+      setIsLoading(false);
     });
   }, [setCards, setFilteredCards]);
 
@@ -59,9 +62,12 @@ const Cards = () => {
           ))}
 
           {/* ----------- PAGINATED ---------- */}
-          {isPageEmpty && <Loader />}
         </div>
-        {cards.length !== 0 && (
+        {isLoading ? (
+          <Loader />
+        ) : isPageEmpty ? (
+          <p>No hay herramientas disponibles</p>
+        ) : (
           <Paginated
             url={paginatedUrl}
             currentPage={currentPage}

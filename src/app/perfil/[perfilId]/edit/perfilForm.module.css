@@ -110,6 +110,11 @@
   background-color: var(--black-light);
 }
 
+.inputContainer p {
+  color: var(--red);
+  height: 24px;
+}
+
 .inputContainer label,
 .selectContainer label {
   font-style: normal;

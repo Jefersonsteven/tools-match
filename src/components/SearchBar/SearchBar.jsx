@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import style from "./SearchBar.module.css";
 import { IoSearchOutline } from 'react-icons/io5';
 
-export default function SearchBar({ title, onTitleChange }) {
+export default function SearchBar({ title, onTitleChange, onTitleButton }) {
   const handleTitleChange = (event) => {
     onTitleChange(event.target.value);
   };
@@ -17,7 +17,7 @@ export default function SearchBar({ title, onTitleChange }) {
         onChange={handleTitleChange}
       />
       <div className={style.icon}>
-      <button className={style.searchButton} onClick={onTitleChange}>
+      <button className={style.searchButton} onClick={()=>onTitleButton}>
   <IoSearchOutline />
 </button>
       </div>

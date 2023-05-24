@@ -6,9 +6,8 @@ import { useContext, useEffect } from "react";
 import styles from "./post.module.css";
 import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
-function PostDetail({}) {
+function PostDetail() {
   const { postId } = useParams();
   const { postDetail, setPostDetail, userId } = useContext(AppContext);
   const pd = postDetail;
@@ -20,13 +19,7 @@ function PostDetail({}) {
   const pd2 = {
     author: {
       rating: 1.0,
-      image_perfil:
-        "https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg",
     },
-    images: [
-      "https://us.123rf.com/450wm/godruma/godruma1802/godruma180200012/95380266-taladro-manual-o-m%C3%A1quina-de-perforaci%C3%B3n-equipada-con-un-accesorio-de-herramienta-de-corte-o-de.jpg",
-      "https://us.123rf.com/450wm/vivacityimages/vivacityimages2004/vivacityimages200400051/144863343-vista-lateral-del-taladro-manual-a-bater%C3%ADa.jpg",
-    ],
   };
 
   useEffect(() => {
@@ -83,15 +76,21 @@ function PostDetail({}) {
               </div>
               <p>{pd.content}</p>
               <div className={styles.description_categories}>
+                <div>
                 <h5>Categoria:</h5>
                 <p>{pd.category}</p>
+                </div>
+                <div>
+                <h5>Marca:</h5>
+                <p>{pd.brand}</p>
+                </div>
               </div>
             </section>
             <section className={styles.section_user}>
               <figure className={styles.figure}>
                 <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
                 <Image
-                  src={pd.author.map}
+                  src={pd?.author?.map}
                   width={600}
                   height={400}
                   alt={pd.author.zipCode + " " + pd.author.country}
@@ -100,7 +99,7 @@ function PostDetail({}) {
               <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image
-                    src={pd?.photo[0]}
+                    src={pd.author.photo || "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"}
                     width={96}
                     height={96}
                     alt={pd.author.firstname}
