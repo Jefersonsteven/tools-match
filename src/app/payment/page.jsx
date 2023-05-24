@@ -46,6 +46,8 @@ function Page() {
             postId:cart.map(item => item.id),
             paymentId: paymentId
           })
+          .then(order => console.log(order.data))
+          .catch(error => console.log(error))
         })
 
 
