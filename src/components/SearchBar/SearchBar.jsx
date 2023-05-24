@@ -1,5 +1,4 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
 import style from "./SearchBar.module.css";
 import { IoSearchOutline } from 'react-icons/io5';
 
