@@ -1,5 +1,4 @@
 "use client";
-import CategoryFilter from "./CategoryFilter";
 import SearchBar from "../SearchBar/SearchBar";
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useState, useContext } from "react";
@@ -56,15 +55,22 @@ export default function FilterBar() {
     <AppProvider>
       <div className="relative z-10">
         <div className="flex-1 flex flex-row items-center justify-between px-2">
+        <div className="mr-10" style={{ width: "400px" }}>
+        <SearchBar
+          title={title}
+          onTitleChange={handleTitleChange}
+          style={{ width: "150px" }}
+        />
+      </div>
           <div className={`mr-2 relative ${style.button}`}>
-            <div
-              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}
-            >
+            <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}>
               Filtrar <FaFilter className="ml-2" />
             </div>
             <div className={style.filter}>
-              <h3>Tipo de Transacción:</h3>
+            <div className={`mr-2 relative ${style.subButton}`}>  
+              <div>Tipo de Transacción:</div>
               <div>
+              <div className={style.type}>
                 <button
                   onClick={handleTypeChange}
                   value=""
@@ -87,8 +93,12 @@ export default function FilterBar() {
                   Venta
                 </button>
               </div>
-              <h3>Categoría:</h3>
+              </div>
+              </div>
+              <div className={`mr-2 relative ${style.subButton}`}>
+              <div>Categoría:</div>
               <div>
+              <div className={style.category}>
                 <button
                   onClick={handleCategoryChange}
                   value=""
@@ -158,9 +168,13 @@ export default function FilterBar() {
                 >
                   Soldar
                 </button>
+                </div>
+                </div>
               </div>
-              <h3>Marca:</h3>
+              <div className={`mr-2 relative ${style.subButton}`}>
+              <div>Marca:</div>
               <div>
+              <div className={style.brand}>
                 <button
                   onClick={handleBrandChange}
                   value=""
@@ -252,6 +266,8 @@ export default function FilterBar() {
                 >
                   Truper
                 </button>
+                </div>
+                </div>
               </div>
             </div>
           </div>
@@ -304,15 +320,15 @@ export default function FilterBar() {
               </button>
             </div>
           </div>
+          <div className={`ml-8 relative ${style.button}`}>
+          <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ${style.clear}`}>
+          <span>Limpiar</span>
+          <span>Filtros</span> 
+            </div>
+            </div>
         </div>
       </div>
-      <div style={{ width: "400px" }}>
-        <SearchBar
-          title={title}
-          onTitleChange={handleTitleChange}
-          style={{ width: "150px" }}
-        />
-      </div>
+      
     </AppProvider>
   );
 }
