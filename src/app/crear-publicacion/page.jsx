@@ -21,7 +21,7 @@ function CreatePost() {
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
 
-  function getCoords(){
+  useEffect(() => {
     getLocation()
       .then((position) => {
         const { latitude, longitude } = position.coords;
@@ -44,11 +44,7 @@ function CreatePost() {
           }
         });
       });
-  }
-
-  useEffect(() => {
-    getCoords()
-  }, []);
+  }, [router, userData]);
   
   useEffect(() => {
     if (!userData.firstname) router.push("/form/login");
