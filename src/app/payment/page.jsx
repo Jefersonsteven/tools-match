@@ -37,14 +37,19 @@ function Page() {
     const status = params.get("status");
     if (status === "approved") {
       
+
       //TODO:
-      // axios.post('/api/order')
-      // {
-      //   "status": "Completada",
-      //   "userId": "69ee6c13-1b6e-4523-9d71-2664637721af",
-      //    "postId":["c0a27afb-789d-4e56-9fdf-823853acc2d1"],
-      //   "paymentId": "7baec4af-53c0-45d3-88b4-69b390d83d95"
-      // }
+      axios.get(`/api/user/${userData.email}`)
+        .then(res => {
+          const paymentId = res.data.payments[res.data.payments.length - 1].id;
+
+          return axios.post('/api/order', {
+            status: "complete",
+            userId: userData.id,
+            postId:cart.map(item => item.id),
+            paymentId: paymentId
+          })
+        }).then(order => console.log(order.data))
 
 
       setCart({
