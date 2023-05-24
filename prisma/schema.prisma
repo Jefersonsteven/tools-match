@@ -22,7 +22,10 @@ model User {
   phoneNumber String?
   country     Code?
   zipCode     String?
+  city        String?
+  province    String?
   map         String?
+  coordinates String[]
   reports     String[]
   favorites   String[]
   favoritesId String[]
