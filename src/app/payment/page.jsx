@@ -19,7 +19,7 @@ function Page() {
     phoneNumber: "",
     address: "",
   });
-  const [errors, setErros] = useState({
+  const [errors, setErrors] = useState({
     fullname: "",
     email: "",
     phoneNumber: "",
@@ -37,7 +37,15 @@ function Page() {
     const status = params.get("status");
     if (status === "approved") {
       
+      //TODO:
       // axios.post('/api/order')
+      // {
+      //   "status": "Completada",
+      //   "userId": "69ee6c13-1b6e-4523-9d71-2664637721af",
+      //    "postId":["c0a27afb-789d-4e56-9fdf-823853acc2d1"],
+      //   "paymentId": "7baec4af-53c0-45d3-88b4-69b390d83d95"
+      // }
+
 
       setCart({
         count: 0,
@@ -73,7 +81,7 @@ function Page() {
         address: "",
       };
       setForm(FORM);
-      validateForm(FORM, errors, setErros);
+      validateForm(FORM, errors, setErrors);
     }
   }, [userData, form, errors]);
 
@@ -81,7 +89,7 @@ function Page() {
     const name = event.target.name;
     const value = event.target.value;
     setForm({ ...form, [name]: value });
-    validateForm({ ...form, [name]: value }, errors, setErros, setDisabled);
+    validateForm({ ...form, [name]: value }, errors, setErrors, setDisabled);
   }
 
   const body = {
