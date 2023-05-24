@@ -17,7 +17,7 @@ const nextConfig = {
     MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
     MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN,
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
-    URL_API: process.env.URL_API
+    DEPLOY_BACK: process.env.DEPLOY_BACK
   },
 };
 
