@@ -43,8 +43,6 @@ export const submitLogInFormData = async (
     saveInLocalStorage("loginTime", loginTime);
     setUserData(dbUserData);
     setUserId(dbUserData.id);
-
-    setUserId(dbUserData.id);
     setForm({ ...form, authorId: dbUserData.id });
 
     customAlert(
