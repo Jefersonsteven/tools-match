@@ -28,7 +28,6 @@ export default function PerfilUsuario() {
 
 
   useEffect(() => {
-    console.log(perfilId)
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
@@ -43,7 +42,7 @@ export default function PerfilUsuario() {
       }
     };
     fetchReviews();
-  }, [userId]);
+  }, [userId, perfilId]);
 
  useEffect(() => {
   const fetchAuthors = async () => {
@@ -104,9 +103,9 @@ useEffect(() => {
 
   return (
     <>
-      {user && (
-        <>
           <Back />
+      {user.firstname && (
+        <>
           <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
           <section className={styles.section}>
             <div className={styles.userContainer}>
