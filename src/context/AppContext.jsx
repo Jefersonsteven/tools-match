@@ -57,7 +57,7 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
-
+ 
   const [selected, setSelected] = useState({
     category: "",
     type: "",
