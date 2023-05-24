@@ -107,6 +107,8 @@ function UsersBan() {
 // Funcion de eliminar usuario ----------------------------------------
 
   const handleDeleteClick = (firstname, id) => {
+    const userId = [id]
+    console.log(userId)
     Swal.fire({
       title: `¿Estás por sacar el veto a ${firstname}?`,
       icon: "warning",
@@ -117,9 +119,8 @@ function UsersBan() {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        const userIds = selectedUsers.map((userId) => records[parseInt(userId.substring(4))].id);
         axios.put("/api/admin/hidden/user", {
-          data: { userIds: userIds },
+            userIds: userId 
         })
           .then((response) => {
             // Actualizar la lista de usuarios en el estado local

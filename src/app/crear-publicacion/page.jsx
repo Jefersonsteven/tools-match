@@ -97,10 +97,22 @@ function CreatePost() {
         const data = await post.json();
 
         if (data.id) {
-          Swal.fire({
-            title: "¡Publicación creada!",
-            text: "Tu publicación se ha creado correctamente.",
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+              toast.style.fontSize = "16px";
+            },
+          });
+
+          Toast.fire({
             icon: "success",
+            title: "Publicación creada con éxito",
           }).then(() => {
             router.push("/home");
           });
