@@ -108,7 +108,7 @@ function CreatePost() {
           // ...
         } else {
           Swal.fire({
-            title: "Error",
+            title: "Error ",
             text: "Hubo un problema al crear la publicación.",
             icon: "error",
           });
