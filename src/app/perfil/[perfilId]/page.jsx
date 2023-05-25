@@ -97,7 +97,7 @@ useEffect(() => {
   
 
   useEffect(() => {
-    !userData && push("/");
+    !userData && push("/form/login");
   }, [userData, push]);
 
 

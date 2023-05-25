@@ -30,8 +30,10 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userData.firstname) router.push("/form/login");
+    if (!userData?.firstname) router.push("/form/login");
+  }, [router, userData]);
 
+  useEffect(() => {
     const status = params.get("status");
 
     if (status === "approved") {
@@ -77,11 +79,11 @@ function Page() {
   }, [params, router, setCart, userData, cart]);
 
   useEffect(() => {
-    if (!form.fullname) {
+    if (!form.fullname && userData) {
       const FORM = {
-        fullname: `${userData.firstname} ${userData.lastname}`,
-        email: userData.email,
-        phoneNumber: userData.phoneNumber,
+        fullname: `${userData?.firstname} ${userData?.lastname}`,
+        email: userData?.email,
+        phoneNumber: userData?.phoneNumber,
         address: "",
       };
       setForm(FORM);
