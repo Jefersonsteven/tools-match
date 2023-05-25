@@ -6,10 +6,10 @@ export default async function deletePost(req, res) {
   if (method == "POST") {
     const { email, date, buyer, items, amount } = req.body;
     try {
-    //   const user = await findUser(email);
-    //   if (!user) {
-    //     throw new Error("El usuario no existe");
-    //   }
+      const user = await findUser(email);
+      if (!user) {
+        throw new Error("El usuario no existe");
+      }
       const productsList = items.map((item) => `
         <li>
             <p>
