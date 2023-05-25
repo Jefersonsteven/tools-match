@@ -282,6 +282,85 @@ export default function FilterBar() {
               </div>
             </div>
           </div>
+          <div className={`mr-2 relative ${style.button}`}>
+            <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}>
+              Indicar Zona <FaFilter className="ml-2" />
+            </div>
+            <div className={style.filter}>
+            <div className={`mr-2 relative ${style.subButton}`}>  
+              <div>Pais:</div>
+              <div>
+              <div className={style.type}>
+                <button
+                  onClick={handleType}
+                  value=""
+                  className={typeFilter === "" ? style.selected : ""}
+                >
+                  Todos
+                </button>
+                <button
+                  onClick={handleType}
+                  value="RENTAL"
+                  className={typeFilter === "RENTAL" ? style.selected : ""}
+                >
+                  Colombia
+                </button>
+                <button
+                  onClick={handleType}
+                  value="SALE"
+                  className={typeFilter === "SALE" ? style.selected : ""}
+                >
+                  Argentina
+                </button>
+                <button
+                  onClick={handleType}
+                  value="SALE"
+                  className={typeFilter === "SALE" ? style.selected : ""}
+                >
+                  Venezuela
+                </button>
+                <button
+                  onClick={handleType}
+                  value="SALE"
+                  className={typeFilter === "SALE" ? style.selected : ""}
+                >
+                  Mexico
+                </button>
+              </div>
+              </div>
+              </div>
+              <div className={`mr-2 relative ${style.subButton}`}>
+              <div>Departamento:</div>
+              <div>
+              <div className={style.category}>
+                <button
+                  onClick={handleCategory}
+                  value=""
+                  className={categoryFilter === "" ? style.selected : ""}
+                >
+                  Todas
+                </button>
+                <button
+                  onClick={handleCategory}
+                  value="electrica"
+                  className={
+                    categoryFilter === "electrica" ? style.selected : ""
+                  }
+                >
+                  En Construccion
+                </button>
+                <button
+                  onClick={handleCategory}
+                  value="manual"
+                  className={categoryFilter === "manual" ? style.selected : ""}
+                >
+                  En Construccion
+                </button>               
+                </div>
+                </div>
+              </div>
+              </div>
+              </div>
           <div className={`flex relative ${style.button}`}>
             <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
               Ordenar <FaSort className="ml-2" />
@@ -330,17 +409,11 @@ export default function FilterBar() {
                 Rating (Des)
               </button>
             </div>
+          </div>          
+          <button className={`mr-2 relative ${style.button}py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl `} onClick={handleCleanFilters}> Limpiar Filtros        
+          </button>          
           </div>
-          <div className={`ml-8 relative ${style.button}`}>
-          <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ${style.clear}`}>
-          <button  onClick={handleCleanFilters}>
-        {/*   <span>Limpiar</span>
-          <span>Filtros</span>  */}/* se comenta debido a que genera conflictos con la funcionalidad del buton auxiliar falata corregir el estilo del boton
-          </button>
-          </div>
-          </div>
-        </div>
-      </div>      
+        </div>           
     </AppProvider>
   );
 }
