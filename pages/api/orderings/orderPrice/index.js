@@ -1,10 +1,14 @@
 import { PrismaClient, SortOrder } from '@prisma/client';
+import { calcularDistancia } from '../../filters/distance/assets/calculateDistance';
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  const { type, category, order, brand, title } = req.query;
+  const { type, category, order, brand, title, coorde1, coorde2, km } = req.query;
+  const intcoorde1 = parseFloat(coorde1);
+  const intcoorde2 = parseFloat(coorde2);
+  const intKm = parseFloat(km);
 
   if (method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -21,6 +25,28 @@ export default async function handler(req, res) {
     if (category) where.category = category;
     if (brand) where.brand = brand;
     if (title) where.title = { contains: title, mode: 'insensitive' };
+
+    if (coorde1 && coorde2 && km) {
+      const posts = await prisma.post.findMany({
+        where,
+        include: {
+          author: true
+        }
+      });
+
+      const filteredPosts = posts.filter((post) => {
+        if (post.author && post.author.coordinates) {
+          const [postCoorde1, postCoorde2] = post.author.coordinates;
+          const distance = calcularDistancia(intcoorde1, intcoorde2, postCoorde1, postCoorde2);
+          return distance < intKm;
+        }
+        return false;
+      });
+
+      filteredPosts.sort((a, b) => (order === 'desc' ? b.price - a.price : a.price - b.price));
+
+      return res.status(200).json(filteredPosts);
+    }
 
     const orderBy = {
       price: order === 'desc' ? SortOrder.desc : SortOrder.asc
