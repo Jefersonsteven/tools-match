@@ -12,6 +12,7 @@ export const newPetition = async (method, url, dataToSend) => {
     }
 
     let response = await fetch(url, config);
+    console.log(response);
     let data = await response.json();
     return data;
   } catch (error) {

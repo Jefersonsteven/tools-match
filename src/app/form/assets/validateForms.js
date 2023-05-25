@@ -62,7 +62,7 @@ export function validateSignIn(inputs) {
   !inputs.email && (errors.email = "");
 
   if (!passwordRegex.test(inputs.password)) {
-    errors.password = "Debe tener un número al menos 6 caracteres ";
+    errors.password = "Debe tener un número y al menos 6 caracteres ";
     errors.flag = true;
   }
 
@@ -85,3 +85,13 @@ export function validateSignIn(inputs) {
 
   return errors;
 }
+
+export const validateEmailOnly = (email) => {
+  let error = "";
+
+  if (!emailRegex.test(email) && email.length > 0) {
+    error = "Email inválido";
+  }
+
+  return error;
+};

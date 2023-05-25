@@ -1,33 +1,36 @@
 "use client";
 import Link from "next/link";
 import styles from "../form.module.css";
-import { useState } from "react";
-import { validateLogIn } from "../assets/validateForms";
+import { useEffect, useState } from "react";
+import { validateEmailOnly } from "../assets/validateForms";
+
+import customAlert from "../assets/customAlert";
+import { newPetition } from "../assets/petition";
 
 export default function Login() {
-  const [viewPwd, setViewPwd] = useState(false);
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
-  const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
-  });
+  useEffect(() => {
+    setError(validateEmailOnly(email));
+  }, [email]);
 
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-    flag: true,
-  });
-
-  const handleChange = (event) => {
-    const value = event.target.value;
-    const name = event.target.name;
-
-    setLoginData({ ...loginData, [name]: value });
-    setErrors(validateLogIn(loginData));
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const response = newPetition("POST", "api/sendEmail/resetPassword", {
+        email,
+      });
+    } catch (error) {
+      console.error(error);
+      customAlert(
+        5000,
+        "bottom-end",
+        "error",
+        "",
+        "Error al enviar mail de recuperación"
+      );
+    }
   };
 
   return (
@@ -38,15 +41,19 @@ export default function Login() {
         <input
           type="text"
           name="email"
-          onChange={handleChange}
+          onChange={(event) => setEmail(event.target.value)}
           autoComplete="off"
         />
+        <p>{error && error}</p>
       </div>
       <div className={styles.recover__submitContainer}>
         <Link href="/form/login" className={styles.recover__buttonCancel}>
           Cancelar
         </Link>
-        <button className={styles.recover__buttonSubmit}>
+        <button
+          disabled={!email ? true : error ? true : false}
+          className={styles.recover__buttonSubmit}
+        >
           Recuperar contraseña
         </button>
       </div>

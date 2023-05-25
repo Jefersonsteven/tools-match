@@ -26,18 +26,18 @@ export default function FilterBar() {
   useEffect(() => {
     fetchCards(selected, setCards, title);
   }, [selected, setCards]);
-  
+
   const handleTitle = (newTitle) => {
-    handleTitleChange(newTitle, setTitle, setSelected,selected);
+    handleTitleChange(newTitle, setTitle, setSelected, selected);
   };
 
   const handleTitleButton = () => {
-    handleTitleButtonChange(title, setCards,setSelected,selected);
+    handleTitleButtonChange(title, setCards, setSelected, selected);
   };
 
   const handleCategory = (event) => {
-    handleCategoryChange(event,setSelected, setCategoryFilter)
-  }
+    handleCategoryChange(event, setSelected, setCategoryFilter);
+  };
   const handleType = (event) => {
     handleTypeChange(event, setSelected, setTypeFilter);
   };
@@ -47,7 +47,7 @@ export default function FilterBar() {
   };
 
   const handleOrder = (type, order) => {
-    handleOrderChange(type, order,setSelected, setOrderFilter);
+    handleOrderChange(type, order, setSelected, setOrderFilter);
   };
 
   const handleCleanFilters = () => {
@@ -60,224 +60,245 @@ export default function FilterBar() {
     );
   };
 
-
   return (
     <AppProvider>
       <div className="relative z-10">
         <div className="flex-1 flex flex-row items-center justify-between px-2">
-        <div className="mr-10" style={{ width: "400px" }}>
-        <SearchBar
-          title={title}
-          onTitleChange={handleTitle}
-          onTitleButton = {handleTitleButton}
-          style={{ width: "150px" }}
-        />
-      </div>
+          <div className="mr-10" style={{ width: "400px" }}>
+            <SearchBar
+              title={title}
+              onTitleChange={handleTitle}
+              onTitleButton={handleTitleButton}
+              style={{ width: "150px" }}
+            />
+          </div>
           <div className={`mr-2 relative ${style.button}`}>
-            <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}>
+            <div
+              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}
+            >
               Filtrar <FaFilter className="ml-2" />
             </div>
             <div className={style.filter}>
-            <div className={`mr-2 relative ${style.subButton}`}>  
-              <div>Tipo de Transacción:</div>
-              <div>
-              <div className={style.type}>
-                <button
-                  onClick={handleType}
-                  value=""
-                  className={typeFilter === "" ? style.selected : ""}
-                >
-                  Todos
-                </button>
-                <button
-                  onClick={handleType}
-                  value="RENTAL"
-                  className={typeFilter === "RENTAL" ? style.selected : ""}
-                >
-                  Arriendo
-                </button>
-                <button
-                  onClick={handleType}
-                  value="SALE"
-                  className={typeFilter === "SALE" ? style.selected : ""}
-                >
-                  Venta
-                </button>
-              </div>
-              </div>
-              </div>
               <div className={`mr-2 relative ${style.subButton}`}>
-              <div>Categoría:</div>
-              <div>
-              <div className={style.category}>
-                <button
-                  onClick={handleCategory}
-                  value=""
-                  className={categoryFilter === "" ? style.selected : ""}
-                >
-                  Todas
-                </button>
-                <button
-                  onClick={handleCategory}
-                  value="electrica"
-                  className={
-                    categoryFilter === "electrica" ? style.selected : ""
-                  }
-                >
-                  Eléctrica
-                </button>
-                <button
-                  onClick={handleCategory}
-                  value="manual"
-                  className={categoryFilter === "manual" ? style.selected : ""}
-                >
-                  Manual
-                </button>
-                <button
-                  onClick={handleCategory}
-                  value="medicion"
-                  className={
-                    categoryFilter === "medicion" ? style.selected : ""
-                  }
-                >
-                  Medición
-                </button>
-                <button
-                  onClick={handleCategory}
-                  value="corte"
-                  className={categoryFilter === "corte" ? style.selected : ""}
-                >
-                  Corte
-                </button>
-                <button
-                  onClick={handleCategory}
-                  value="jardin"
-                  className={categoryFilter === "jardin" ? style.selected : ""}
-                >
-                  Jardín
-                </button>
-                <button
-                  onClick={handleCategory}
-                  value="fontaneria"
-                  className={
-                    categoryFilter === "fontaneria" ? style.selected : ""
-                  }
-                >
-                  Fontanería
-                </button>
-                <button
-                  onClick={handleCategory}
-                  value="pintar"
-                  className={categoryFilter === "pintar" ? style.selected : ""}
-                >
-                  Pintar
-                </button>
-                <button
-                  onClick={handleCategory}
-                  value="soldar"
-                  className={categoryFilter === "soldar" ? style.selected : ""}
-                >
-                  Soldar
-                </button>
-                </div>
+                <div>Tipo de Transacción:</div>
+                <div>
+                  <div className={style.type}>
+                    <button
+                      onClick={handleType}
+                      value=""
+                      className={typeFilter === "" ? style.selected : ""}
+                    >
+                      Todos
+                    </button>
+                    <button
+                      onClick={handleType}
+                      value="RENTAL"
+                      className={typeFilter === "RENTAL" ? style.selected : ""}
+                    >
+                      Arriendo
+                    </button>
+                    <button
+                      onClick={handleType}
+                      value="SALE"
+                      className={typeFilter === "SALE" ? style.selected : ""}
+                    >
+                      Venta
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className={`mr-2 relative ${style.subButton}`}>
-              <div>Marca:</div>
-              <div>
-              <div className={style.brand}>
-                <button
-                  onClick={handleBrand}
-                  value=""
-                  className={brandFilter === "" ? style.selected : ""}
-                >
-                  Todas
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="philips"
-                  className={brandFilter === "Phillips" ? style.selected : ""}
-                >
-                  Phillips
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="Stanley"
-                  className={brandFilter === "Stanley" ? style.selected : ""}
-                >
-                  Stanley
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="Bosch"
-                  className={brandFilter === "Bosch" ? style.selected : ""}
-                >
-                  Bosch
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="dewalt"
-                  className={brandFilter === "Dewalt" ? style.selected : ""}
-                >
-                  Dewalt
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="skil"
-                  className={brandFilter === "Skil" ? style.selected : ""}
-                >
-                  Skil
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="castellari"
-                  className={brandFilter === "castellari" ? style.selected : ""}
-                >
-                  Castellari
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="dremel"
-                  className={brandFilter === "dremel" ? style.selected : ""}
-                >
-                  Dremel
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="fischer"
-                  className={brandFilter === "fischer" ? style.selected : ""}
-                >
-                  Fischer
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="karcher"
-                  className={brandFilter === "karcher" ? style.selected : ""}
-                >
-                  Karcher
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="libus"
-                  className={brandFilter === "libus" ? style.selected : ""}
-                >
-                  Libus
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="makita"
-                  className={brandFilter === "makita" ? style.selected : ""}
-                >
-                  Makita
-                </button>
-                <button
-                  onClick={handleBrand}
-                  value="truper"
-                  className={brandFilter === "truper" ? style.selected : ""}
-                >
-                  Truper
-                </button>
+                <div>Categoría:</div>
+                <div>
+                  <div className={style.category}>
+                    <button
+                      onClick={handleCategory}
+                      value=""
+                      className={categoryFilter === "" ? style.selected : ""}
+                    >
+                      Todas
+                    </button>
+                    <button
+                      onClick={handleCategory}
+                      value="electrica"
+                      className={
+                        categoryFilter === "electrica" ? style.selected : ""
+                      }
+                    >
+                      Eléctrica
+                    </button>
+                    <button
+                      onClick={handleCategory}
+                      value="manual"
+                      className={
+                        categoryFilter === "manual" ? style.selected : ""
+                      }
+                    >
+                      Manual
+                    </button>
+                    <button
+                      onClick={handleCategory}
+                      value="medicion"
+                      className={
+                        categoryFilter === "medicion" ? style.selected : ""
+                      }
+                    >
+                      Medición
+                    </button>
+                    <button
+                      onClick={handleCategory}
+                      value="corte"
+                      className={
+                        categoryFilter === "corte" ? style.selected : ""
+                      }
+                    >
+                      Corte
+                    </button>
+                    <button
+                      onClick={handleCategory}
+                      value="jardin"
+                      className={
+                        categoryFilter === "jardin" ? style.selected : ""
+                      }
+                    >
+                      Jardín
+                    </button>
+                    <button
+                      onClick={handleCategory}
+                      value="fontaneria"
+                      className={
+                        categoryFilter === "fontaneria" ? style.selected : ""
+                      }
+                    >
+                      Fontanería
+                    </button>
+                    <button
+                      onClick={handleCategory}
+                      value="pintar"
+                      className={
+                        categoryFilter === "pintar" ? style.selected : ""
+                      }
+                    >
+                      Pintar
+                    </button>
+                    <button
+                      onClick={handleCategory}
+                      value="soldar"
+                      className={
+                        categoryFilter === "soldar" ? style.selected : ""
+                      }
+                    >
+                      Soldar
+                    </button>
+                  </div>
                 </div>
+              </div>
+              <div className={`mr-2 relative ${style.subButton}`}>
+                <div>Marca:</div>
+                <div>
+                  <div className={style.brand}>
+                    <button
+                      onClick={handleBrand}
+                      value=""
+                      className={brandFilter === "" ? style.selected : ""}
+                    >
+                      Todas
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="philips"
+                      className={
+                        brandFilter === "Phillips" ? style.selected : ""
+                      }
+                    >
+                      Phillips
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="Stanley"
+                      className={
+                        brandFilter === "Stanley" ? style.selected : ""
+                      }
+                    >
+                      Stanley
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="Bosch"
+                      className={brandFilter === "Bosch" ? style.selected : ""}
+                    >
+                      Bosch
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="dewalt"
+                      className={brandFilter === "Dewalt" ? style.selected : ""}
+                    >
+                      Dewalt
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="skil"
+                      className={brandFilter === "Skil" ? style.selected : ""}
+                    >
+                      Skil
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="castellari"
+                      className={
+                        brandFilter === "castellari" ? style.selected : ""
+                      }
+                    >
+                      Castellari
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="dremel"
+                      className={brandFilter === "dremel" ? style.selected : ""}
+                    >
+                      Dremel
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="fischer"
+                      className={
+                        brandFilter === "fischer" ? style.selected : ""
+                      }
+                    >
+                      Fischer
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="karcher"
+                      className={
+                        brandFilter === "karcher" ? style.selected : ""
+                      }
+                    >
+                      Karcher
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="libus"
+                      className={brandFilter === "libus" ? style.selected : ""}
+                    >
+                      Libus
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="makita"
+                      className={brandFilter === "makita" ? style.selected : ""}
+                    >
+                      Makita
+                    </button>
+                    <button
+                      onClick={handleBrand}
+                      value="truper"
+                      className={brandFilter === "truper" ? style.selected : ""}
+                    >
+                      Truper
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -332,15 +353,20 @@ export default function FilterBar() {
             </div>
           </div>
           <div className={`ml-8 relative ${style.button}`}>
-          <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ${style.clear}`}>
-          <button  onClick={handleCleanFilters}>
-        {/*   <span>Limpiar</span>
-          <span>Filtros</span>  */}/* se comenta debido a que genera conflictos con la funcionalidad del buton auxiliar falata corregir el estilo del boton
-          </button>
-          </div>
+            <div
+              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ${style.clear}`}
+            >
+              {/*               <button onClick={handleCleanFilters}>
+                <span>Limpiar</span>
+                <span>Filtros</span>
+               se comenta debido a que genera conflictos con la
+                funcionalidad del buton auxiliar falata corregir el estilo del
+                boton
+              </button> */}
+            </div>
           </div>
         </div>
-      </div>      
+      </div>
     </AppProvider>
   );
 }

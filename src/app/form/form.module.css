@@ -263,6 +263,17 @@
   color: var(--white);
 }
 
+.recover__buttonSubmit:disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+.recover__buttonSubmit:disabled:hover {
+  background-color: #131713;
+  color: var(--white);
+  border: none;
+}
+
 .recover__buttonCancel {
   padding: 15px 30px;
   gap: 10px;

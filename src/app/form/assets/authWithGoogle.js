@@ -116,7 +116,7 @@ export const createNewUserOrLogIn = async (
     );
   }
 
-  if (!dbUserData) {
+  if (!dbUserData || dbUserData.error) {
     throw new Error("Error al crear cuenta");
   }
 
