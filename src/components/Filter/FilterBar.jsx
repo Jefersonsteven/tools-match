@@ -5,6 +5,15 @@ import React, { useEffect, useState, useContext } from "react";
 import { FaFilter, FaSort } from "react-icons/fa";
 import { fetchCards } from "./UseFetchCard";
 import style from "./FilterBar.module.css";
+import {
+  handleTitleChange,
+  handleTitleButtonChange,
+  handleCategoryChange,
+  handleTypeChange,
+  handleBrandChange,
+  handleOrderChange,
+  handleClearFilters,
+} from "./handlers";
 
 export default function FilterBar() {
   const { setCards, title, setTitle, selected, setSelected } =
@@ -14,46 +23,43 @@ export default function FilterBar() {
   const [orderFilter, setOrderFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
-
-  const handleTitleChange =  (newTitle) => {
-    setTitle(newTitle);
-    if(newTitle.length==0){
-      setSelected({...selected,title: ""})
-    }
-  };
-  const handleTitleButton = async () => { 
-    setSelected({...selected,title: title})
-    const response = await fetch(`/api/filters/title/${title}`)
-    const data = await response.json();
-    setCards(data || []);
-  }
-
   useEffect(() => {
     fetchCards(selected, setCards, title);
   }, [selected, setCards]);
-
-  const handleCategoryChange = (event) => {
-    const categoryValue = event.target.value;
-    setSelected({ ...selected, category: categoryValue });
-    setCategoryFilter(categoryValue);
+  
+  const handleTitle = (newTitle) => {
+    handleTitleChange(newTitle, setTitle, setSelected,selected);
   };
 
-  const handleTypeChange = (event) => {
-    const typeValue = event.target.value;
-    setSelected({ ...selected, type: typeValue });
-    setTypeFilter(typeValue);
+  const handleTitleButton = () => {
+    handleTitleButtonChange(title, setCards,setSelected,selected);
   };
 
-  const handleBrandChange = (event) => {
-    const brandValue = event.target.value;
-    setSelected({ ...selected, brand: brandValue });
-    setBrandFilter(brandValue);
+  const handleCategory = (event) => {
+    handleCategoryChange(event,setSelected, setCategoryFilter)
+  }
+  const handleType = (event) => {
+    handleTypeChange(event, setSelected, setTypeFilter);
   };
 
-  const handleOrderChange = (type, order) => {
-    setSelected({ ...selected, order: { type, order } });
-    setOrderFilter(`${type}-${order}`);
+  const handleBrand = (event) => {
+    handleBrandChange(event, setSelected, setBrandFilter);
   };
+
+  const handleOrder = (type, order) => {
+    handleOrderChange(type, order,setSelected, setOrderFilter);
+  };
+
+  const handleCleanFilters = () => {
+    handleClearFilters(
+      setSelected,
+      setCategoryFilter,
+      setTypeFilter,
+      setBrandFilter,
+      setOrderFilter
+    );
+  };
+
 
   return (
     <AppProvider>
@@ -62,7 +68,7 @@ export default function FilterBar() {
         <div className="mr-10" style={{ width: "400px" }}>
         <SearchBar
           title={title}
-          onTitleChange={handleTitleChange}
+          onTitleChange={handleTitle}
           onTitleButton = {handleTitleButton}
           style={{ width: "150px" }}
         />
@@ -77,21 +83,21 @@ export default function FilterBar() {
               <div>
               <div className={style.type}>
                 <button
-                  onClick={handleTypeChange}
+                  onClick={handleType}
                   value=""
                   className={typeFilter === "" ? style.selected : ""}
                 >
                   Todos
                 </button>
                 <button
-                  onClick={handleTypeChange}
+                  onClick={handleType}
                   value="RENTAL"
                   className={typeFilter === "RENTAL" ? style.selected : ""}
                 >
                   Arriendo
                 </button>
                 <button
-                  onClick={handleTypeChange}
+                  onClick={handleType}
                   value="SALE"
                   className={typeFilter === "SALE" ? style.selected : ""}
                 >
@@ -105,14 +111,14 @@ export default function FilterBar() {
               <div>
               <div className={style.category}>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value=""
                   className={categoryFilter === "" ? style.selected : ""}
                 >
                   Todas
                 </button>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value="electrica"
                   className={
                     categoryFilter === "electrica" ? style.selected : ""
@@ -121,14 +127,14 @@ export default function FilterBar() {
                   Eléctrica
                 </button>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value="manual"
                   className={categoryFilter === "manual" ? style.selected : ""}
                 >
                   Manual
                 </button>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value="medicion"
                   className={
                     categoryFilter === "medicion" ? style.selected : ""
@@ -137,21 +143,21 @@ export default function FilterBar() {
                   Medición
                 </button>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value="corte"
                   className={categoryFilter === "corte" ? style.selected : ""}
                 >
                   Corte
                 </button>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value="jardin"
                   className={categoryFilter === "jardin" ? style.selected : ""}
                 >
                   Jardín
                 </button>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value="fontaneria"
                   className={
                     categoryFilter === "fontaneria" ? style.selected : ""
@@ -160,14 +166,14 @@ export default function FilterBar() {
                   Fontanería
                 </button>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value="pintar"
                   className={categoryFilter === "pintar" ? style.selected : ""}
                 >
                   Pintar
                 </button>
                 <button
-                  onClick={handleCategoryChange}
+                  onClick={handleCategory}
                   value="soldar"
                   className={categoryFilter === "soldar" ? style.selected : ""}
                 >
@@ -181,91 +187,91 @@ export default function FilterBar() {
               <div>
               <div className={style.brand}>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value=""
                   className={brandFilter === "" ? style.selected : ""}
                 >
                   Todas
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="philips"
                   className={brandFilter === "Phillips" ? style.selected : ""}
                 >
                   Phillips
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="Stanley"
                   className={brandFilter === "Stanley" ? style.selected : ""}
                 >
                   Stanley
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="Bosch"
                   className={brandFilter === "Bosch" ? style.selected : ""}
                 >
                   Bosch
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="dewalt"
                   className={brandFilter === "Dewalt" ? style.selected : ""}
                 >
                   Dewalt
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="skil"
                   className={brandFilter === "Skil" ? style.selected : ""}
                 >
                   Skil
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="castellari"
                   className={brandFilter === "castellari" ? style.selected : ""}
                 >
                   Castellari
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="dremel"
                   className={brandFilter === "dremel" ? style.selected : ""}
                 >
                   Dremel
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="fischer"
                   className={brandFilter === "fischer" ? style.selected : ""}
                 >
                   Fischer
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="karcher"
                   className={brandFilter === "karcher" ? style.selected : ""}
                 >
                   Karcher
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="libus"
                   className={brandFilter === "libus" ? style.selected : ""}
                 >
                   Libus
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="makita"
                   className={brandFilter === "makita" ? style.selected : ""}
                 >
                   Makita
                 </button>
                 <button
-                  onClick={handleBrandChange}
+                  onClick={handleBrand}
                   value="truper"
                   className={brandFilter === "truper" ? style.selected : ""}
                 >
@@ -282,43 +288,43 @@ export default function FilterBar() {
             </div>
             <div className={style.order}>
               <button
-                onClick={() => handleOrderChange("", "")}
+                onClick={() => handleOrder("", "")}
                 className={orderFilter === "" ? style.selected : ""}
               >
                 Default
               </button>
               <button
-                onClick={() => handleOrderChange("alpha", "A-Z")}
+                onClick={() => handleOrder("alpha", "A-Z")}
                 className={orderFilter === "alpha-asc" ? style.selected : ""}
               >
                 Nombre (A-Z)
               </button>
               <button
-                onClick={() => handleOrderChange("alpha", "Z-A")}
+                onClick={() => handleOrder("alpha", "Z-A")}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Nombre (Z-A)
               </button>
               <button
-                onClick={() => handleOrderChange("price", "asc")}
+                onClick={() => handleOrder("price", "asc")}
                 className={orderFilter === "price-asc" ? style.selected : ""}
               >
                 Precio (Asc)
               </button>
               <button
-                onClick={() => handleOrderChange("price", "desc")}
+                onClick={() => handleOrder("price", "desc")}
                 className={orderFilter === "price-desc" ? style.selected : ""}
               >
                 Precio (Des)
               </button>
               <button
-                onClick={() => handleOrderChange("rating", "asc")}
+                onClick={() => handleOrder("rating", "asc")}
                 className={orderFilter === "rating-asc" ? style.selected : ""}
               >
                 Rating (Asc)
               </button>
               <button
-                onClick={() => handleOrderChange("rating", "desc")}
+                onClick={() => handleOrder("rating", "desc")}
                 className={orderFilter === "rating-desc" ? style.selected : ""}
               >
                 Rating (Des)
@@ -327,10 +333,12 @@ export default function FilterBar() {
           </div>
           <div className={`ml-8 relative ${style.button}`}>
           <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ${style.clear}`}>
-          <span>Limpiar</span>
-          <span>Filtros</span> 
-            </div>
-            </div>
+          <button  onClick={handleCleanFilters}>
+        {/*   <span>Limpiar</span>
+          <span>Filtros</span>  */}/* se comenta debido a que genera conflictos con la funcionalidad del buton auxiliar falata corregir el estilo del boton
+          </button>
+          </div>
+          </div>
         </div>
       </div>      
     </AppProvider>
