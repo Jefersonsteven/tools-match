@@ -15,12 +15,11 @@ const Card = ({
   type,
   perDay,
   id,
-  isFavorite,
-  // onRemoveFromFavorite,
 }) => {
+
   const { favorites, setFavorites, favorite, setFavorite, userData } =
     useContext(AppContext);
-  // let favoriteArray = [];
+    const [isFavorite, setIsFavorite] = useState(false);
   const handleFavoriteClick = async (id) => {
     const user = await axios.get(`api/user/${userData.email}`);
     if (userData && userData.email) {
@@ -28,8 +27,10 @@ const Card = ({
       if (favoriteArray.includes(id) === true) {
         let newFav = favoriteArray.filter((e) => e !== id);
         favoriteArray = newFav;
+        setIsFavorite(false);
       } else {
         favoriteArray.push(id);
+        setIsFavorite(true);
       }
       try {
         // Update the favorites array in the API
@@ -46,31 +47,12 @@ const Card = ({
     }
   };
 
-  // const user = axios.get(`api/user/${userData.email}`);
-  // let favoriteArray = user.data.favoritesId;
-  // const handleFavoriteHeart = (id) => {
-  //   console.log("handleFavoriteHeart");
-  //   console.log(id);
-
-  //   if (userData && userData.email) {
-  //     console.log(favoriteArray.length);
-  //     if (favoriteArray.includes(id) === true) {
-  //       console.log(id);
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } else {
-  //     //TODO: agregar alerrta o algo parecido donde diga que para agregar favoritos debe iniciar sesion
-  //     console.error("userData or email is null or undefined");
-  //   }
-  // };
   return (
     <div className={`${styles.cardContainer} bg-white rounded-md p-4`}>
       <div className={styles.favoriteContainer}>
         <FaHeart
           className={
-            isFavorite ? styles.favoriteIconActive : styles.favoriteIcon
+            isFavorite ? styles.favoriteActive : styles.favoriteIcon
           }
           onClick={() => handleFavoriteClick(`${id}`)}
         />
