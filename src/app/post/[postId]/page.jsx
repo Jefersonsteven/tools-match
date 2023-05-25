@@ -38,10 +38,32 @@ function PostDetail({}) {
           })
         );
 
+        Swal.fire({
+          title: "¡Agregado al carrito!",
+          text: "El artículo se ha agregado al carrito correctamente.",
+          icon: "success",
+          showCancelButton: true,
+          confirmButtonText: "Ir al carrito",
+          cancelButtonText: "Seguir comprando",
+        }).then((result) => {
+          if (result.isConfirmed) {
+          router.push("/cart");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            router.push("/home");
+          }
+        });
+    } else {
       Swal.fire({
-        title: "¡Agregado al carrito!",
-        text: "El artículo se ha agregado al carrito correctamente.",
-        icon: "success",
+        title: "¡Producto ya agregado!",
+        text: "Este artículo ya se encuentra en tu carrito.",
+        icon: "warning",
+        showCancelButton: false,
+        timer: 2000,
+        didOpen: () => {
+          setTimeout(() => {
+            Swal.close();
+          }, 2000);
+        },
       });
     }
   }
@@ -127,12 +149,16 @@ function PostDetail({}) {
               </div>
               <p>{pd.content}</p>
               <div className={styles.description_categories}>
+                <div>
                 <h5>Categoria:</h5>
                 <p>{pd.category}</p>
+                </div>
+                <div>
+                <h5>Marca:</h5>
+                <p>{pd.brand}</p>
+                </div>
               </div>
-            </section>
-            <section className={styles.section_user}>
-              <figure className={styles.figure}>
+              <figure className={styles.map}>
                 <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
                 <Image
                   src={pd.author.map}
@@ -141,6 +167,8 @@ function PostDetail({}) {
                   alt={pd.author.zipCode + " " + pd.author.country}
                 />
               </figure>
+            </section>
+            <section className={styles.section_user}>
               <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image

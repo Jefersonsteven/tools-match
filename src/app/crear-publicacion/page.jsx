@@ -5,6 +5,7 @@ import * as style from "./CreatePost.module.css";
 import { validatePost } from "./asset/validate";
 import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
+import Back from "@/components/back/Back";
 import Loader from "@/components/Loader/Loader";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -21,15 +22,18 @@ function CreatePost() {
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
 
+  async function coords(lat, long){
+    const mapImage = await axios.post("/api/maps", { lat, long });
+    const addMap = await axios.put(`/api/user/${userData.email}`, { map: mapImage.data});
+    const coordinates = await axios.put(`/api/user/${userData.email}`, {coordinates: [lat.toString(), long.toString()]});
+  }
+
   useEffect(() => {
     getLocation()
       .then((position) => {
         const { latitude, longitude } = position.coords;
-        axios.post("/api/maps", { latitude, longitude })
-          .then((response) => {
-            axios.put(`/api/user/${userData.email}`, { map: response.data })
-          })
-      })
+        coords(latitude, longitude)
+      }) 
       .catch((error) => {
         console.error("Error al obtener la ubicación:", error.message);
         Swal.fire({
@@ -143,6 +147,9 @@ function CreatePost() {
 
   return (
     <main className={style.main}>
+      <div className={style.back} >
+        <Back/>
+      </div>
       <section className={style.buttons}>
         <button
           className={form.type === "RENTAL" ? style.active : style.desactived}
@@ -233,6 +240,7 @@ function CreatePost() {
             <span>{errors.category}</span>
           </div>
           <div className={style.button}>
+            <button onClick={()=>router.back()}>Cancelar</button>
             <button onClick={handleSubmit}>Publicar</button>
             <Link href="/home">Cancelar</Link>
           </div>
