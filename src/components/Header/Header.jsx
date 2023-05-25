@@ -7,7 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { AppContext } from "@/context/AppContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Swal from "sweetalert2";
@@ -55,7 +55,11 @@ function Header() {
     }
   };
 
-  const href = userData ? "/crear-publicacion" : "/form/login";
+  const [href, setHref] = useState("");
+
+  useEffect(() => {
+    setHref(userData ? "/crear-publicacion" : "/form/login");
+  }, [userData]);
 
   return (
     <header className={styles.header}>
@@ -64,7 +68,7 @@ function Header() {
           <Link href="/">
             Tools Match
             {/* <Image
-              src="/../public/images/logo/toolsMatch.jpg"
+              src="/assets/images/logo/toolsMatch.jpg"
               alt="logo"
               width={70}
               height={70}

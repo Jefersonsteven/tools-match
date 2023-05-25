@@ -91,7 +91,7 @@ export default function PerfilUsuario() {
   }, [userId]);
 
   useEffect(() => {
-    !userData && push("/");
+    !userData && push("/form/login");
   }, [userData, push]);
 
   return (
