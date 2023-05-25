@@ -69,14 +69,17 @@ export default function PerfilUsuario() {
         const orders = userData.orders || [];
 
         const orderDetailsPromises = orders.map(async (order) => {
-          const postId = order.postId;
-          const postResponse = await axios.get(`/api/post/${postId}`);
-          const postDetails = postResponse.data;
+          const qItems = order.postId.length;
+          const date = order.createdAt;
+          const paymentId = order.paymentId;
+          const paymentResponse = await axios.get(`/api/payment/${paymentId}`);
+          const paymentDetails = paymentResponse.data;
           return {
             ...order,
-            title: postDetails.title,
-            type: postDetails.type,
-            price: postDetails.price,
+            qItems: qItems,
+            amount: paymentDetails.payment.amount,
+            currency: paymentDetails.payment.currency,
+            date: date,
           };
         });
 
@@ -96,180 +99,116 @@ export default function PerfilUsuario() {
 
   return (
     <>
-      <section>
-        <Back />
-        {user.firstname && (
-          <>
-            <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
-            <section className={styles.section}>
-              <div className={styles.imageContainer}>
-                <Image
-                  src={user.photo ? user.photo : "/assets/userPhotoDefault.png"}
-                  width={254}
-                  height={254}
-                  alt="Uploaded"
-                />
-              </div>
-              <h3 className={styles.dataTitle}>Datos de la cuenta</h3>
-              <div className={styles.profileCard}>
-                <div className={styles.profileCard__Date}>
-                  <p>Usuario:</p>
-                  <p>{`@${user.firstname}`}</p>
+      <Back />
+      {user.firstname && (
+        <>
+          <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
+          <section className={styles.section}>
+            <div className={styles.userContainer}>
+              <div className={styles.userDataContainer}>
+                <div className={styles.imageContainer}>
+                  <Image
+                    src={
+                      user.photo ? user.photo : "/assets/userPhotoDefault.png"
+                    }
+                    width={254}
+                    height={254}
+                    alt="Uploaded"
+                  />
                 </div>
-                <div className={styles.profileCard__Date}>
-                  <p>Email de tu cuenta Toolmatch:</p>
-                  <p>{`${user.email}`}</p>
-                </div>
-              </div>
-              <h3 className={styles.dataTitle}>Datos personales</h3>
-              <div className={styles.profileCard}>
-                <div className={styles.profileCard__Date}>
-                  <p>Nombre completo:</p>
-                  <p>{`${user.firstname} ${user.lastname}`}</p>
-                </div>
-                <div className={styles.profileCard__Date}>
-                  <p>País de residencia:</p>
-                  <p> {user.country ? countries[user.country] : "---"}</p>
-                </div>
-                <div className={styles.profileCard__Date}>
-                  <p>Provincia:</p>
-                  <p> {user.province ? user.province : "---"}</p>
-                </div>
-                <div className={styles.profileCard__Date}>
-                  <p>Ciudad:</p>
-                  <p> {user.city ? user.city : "---"}</p>
-                </div>
-                <div className={styles.profileCard__Date}>
-                  <p>Código postal:</p>
-                  <p> {user.zipCode ? user.zipCode : "---"}</p>
-                </div>
-                <div className={styles.profileCard__Date}>
-                  <p>Número de teléfono:</p>
-                  <p> {user.phoneNumber ? user.phoneNumber : "---"}</p>
+                <div>
+                  <h2>
+                    <strong>Usuario: </strong>
+                    {`@${user.firstname}`}
+                  </h2>
+                  <h2>
+                    <strong>Nombre completo: </strong>
+                    {`${user.firstname} ${user.lastname}`}
+                  </h2>
+                  {userData.id === perfilId && (
+                    <h2>
+                      <strong>Correo: </strong>
+                      {user.email}
+                    </h2>
+                  )}
+                  <h2>
+                    <strong>País de residencia: </strong>
+                    {user.country ? countries[user.country] : "---"}
+                  </h2>
+                  <h2>
+                    <strong>Código postal: </strong>
+                    {user.zipCode ? user.zipCode : "---"}
+                  </h2>
+                  {userData.id === perfilId && (
+                    <h2>
+                      <strong>Celular: </strong>
+                      {user.phoneNumber ? user.phoneNumber : "---"}
+                    </h2>
+                  )}
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <Link
-                  href={`perfil/${userId}/edit`}
-                  className={styles.editButton}
-                >
-                  Editar perfil
-                </Link>
+                {user.id == userData.id ? (
+                  <Link
+                    href={`perfil/${userId}/edit`}
+                    className={styles.editButton}
+                  >
+                    Editar datos
+                  </Link>
+                ) : (
+                  <button>Reportar</button>
+                )}
               </div>
-
-              {/*   {
-              <div className={styles.userContainer}>
-                <div className={styles.userDataContainer}>
-                  <div className={styles.imageContainer}>
-                    <Image
-                      src={
-                        user.photo ? user.photo : "/assets/userPhotoDefault.png"
-                      }
-                      width={254}
-                      height={254}
-                      alt="Uploaded"
-                    />
+            </div>
+          </section>
+          <div className={styles.sectionsContainer}>
+            <section>
+              <h3 className={styles.sectionTitleH3}>Herramientas Publicadas</h3>
+              <div className="grid grid-cols-4 gap-9">
+                {user.posts ? (
+                  user.posts.map((post) => {
+                    return (
+                      <Card
+                        key={post.id}
+                        photo={post.photo[0]}
+                        title={post.title}
+                        price={post.price}
+                        type={`${
+                          post.type === "RENTAL" ? "Arriendo" : "Venta"
+                        }`}
+                        perDay={post.perDay}
+                        id={post.id}
+                      />
+                    );
+                  })
+                ) : (
+                  <div class="flex items-center justify-center ">
+                    <p className="text-2xl text-center">
+                      No tienes herramientas publicadas
+                    </p>
                   </div>
-                  <div>
-                    <h2>
-                      <strong>Usuario: </strong>
-                      {`@${user.firstname}`}
-                    </h2>
-                    <h2>
-                      <strong>Nombre completo: </strong>
-                      {`${user.firstname} ${user.lastname}`}
-                    </h2>
-                    {userData.id === perfilId && (
-                      <h2>
-                        <strong>Correo: </strong>
-                        {user.email}
-                      </h2>
-                    )}
-                    <h2>
-                      <strong>País de residencia: </strong>
-                      {user.country ? countries[user.country] : "---"}
-                    </h2>
-                    <h2>
-                      <strong>Código postal: </strong>
-                      {user.zipCode ? user.zipCode : "---"}
-                    </h2>
-                    {userData.id === perfilId && (
-                      <h2>
-                        <strong>Celular: </strong>
-                        {user.phoneNumber ? user.phoneNumber : "---"}
-                      </h2>
-                    )}
-                  </div>
-                </div>
-                <div className={styles.buttonContainer}>
-                  {user.id == userData.id ? (
-                    <Link
-                      href={`perfil/${userId}/edit`}
-                      className={styles.editButton}
-                    >
-                      Editar datos
-                    </Link>
-                  ) : (
-                    <button>Reportar</button>
-                  )}
-                </div>
+                )}
               </div>
-            } */}
             </section>
-            <div className={styles.sectionsContainer}>
+            {user.id == userData.id && (
               <section>
-                <h3 className={styles.sectionTitleH3}>
-                  Herramientas Publicadas
-                </h3>
-                <div className="grid grid-cols-4 gap-9">
-                  {user.posts ? (
-                    user.posts.map((post) => {
-                      return (
-                        <Card
-                          key={post.id}
-                          photo={post.photo[0]}
-                          title={post.title}
-                          price={post.price}
-                          type={`${
-                            post.type === "RENTAL" ? "Arriendo" : "Venta"
-                          }`}
-                          perDay={post.perDay}
-                          id={post.id}
-                        />
-                      );
-                    })
-                  ) : (
-                    <div class="flex items-center justify-center ">
-                      <p className="text-2xl text-center">
-                        No tienes herramientas publicadas
-                      </p>
-                    </div>
-                  )}
+                <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
+                <div className="w-full items-center ">
+                  <CardsOrders userOrders={userOrders} />
                 </div>
               </section>
-              {user.id == userData?.id && (
-                <section>
-                  <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
-                  <div className="w-full items-center ">
-                    <CardsOrders userOrders={userOrders} />
-                  </div>
-                </section>
-              )}
+            )}
+          </div>
+          <div className="flex gap-4">
+            <div className={styles.reviewContainer}>
+              <h3 className={styles.sectionTitleH3}>
+                Reseñas de tus herramientas
+              </h3>
+              <CardsReview reviews={reviews} authors={Object.values(authors)} />
             </div>
-            <div className="flex gap-4">
-              <div className={styles.reviewContainer}>
-                <h3 className={styles.sectionTitleH3}>
-                  Reseñas de tus herramientas
-                </h3>
-                <CardsReview
-                  reviews={reviews}
-                  authors={Object.values(authors)}
-                />
-              </div>
-            </div>
-          </>
-        )}
-      </section>
+          </div>
+        </>
+      )}
     </>
   );
 }
