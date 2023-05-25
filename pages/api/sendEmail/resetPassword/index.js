@@ -10,17 +10,21 @@ export default async function resetPassword(req, res) {
       if (!user) {
         throw new Error("El usuario no existe");
       }
-        await transporter.verify();
-        const mail = {
-          from: process.env.USER_APLICATION,
-          to: email,
-          subject: "Reestablecer contraseña",
-          html: `
+      await transporter.verify();
+      const mail = {
+        from: process.env.USER_APLICATION,
+        to: email,
+        subject: "Restablecer contraseña",
+        html: `
         <p style="color: black">
-          Estimado usuario, useted solicito recuperar su contraseña, para realizar el cambio presiona el boton. 
+          Estimado usuario, usted solicito recuperar su contraseña, para realizar el cambio presiona el botón. 
         </p>
         <button style="border: 5px, black, solid; border-radius: 20px; background: white; color: black">
-          <a href=${process.env.DEPLOY_BACK}/form/recover/${email} style="text-decoration: none; color: black">
+          <a href=${
+            process.env.DEPLOY_BACK
+          }/form/resetPassword/${encodeURIComponent(
+          email
+        )} style="text-decoration: none; color: black">
             Recuperar contraseña
           </a>   
         </button>
@@ -28,11 +32,11 @@ export default async function resetPassword(req, res) {
           Atentamente, el equipo de ToolMatch
         </h4>
         `,
-        };
-        await transporter.sendMail(mail);
-        res.status(200).json({
-          Message: `Se ha enviado un coorreo electrónico a ${email} para reestablecer su contraseña`,
-        });
+      };
+      await transporter.sendMail(mail);
+      res.status(200).json({
+        Message: `Se ha enviado un correo electrónico a ${email} para restablecer su contraseña`,
+      });
     } catch (error) {
       res.status(400).json({ Error: error.message });
     }

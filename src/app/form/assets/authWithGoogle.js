@@ -106,6 +106,7 @@ export const createNewUserOrLogIn = async (
   console.log(dbUserData);
 
   if (!dbUserData || dbUserData.error) {
+    /* Crear nuevo usuario con google */
     setDataMessage("Creando cuenta en toolmatch...");
 
     await newPetition("POST", "/api/user", body);
@@ -114,9 +115,14 @@ export const createNewUserOrLogIn = async (
       `/api/user/${userDataProvider.email}`,
       false
     );
+    setDataMessage("Enviando Credencial de acceso...");
+    await newPetition("POST", "/api/sendEmail/registerGoogle", {
+      email: userDataProvider.email,
+      password,
+    });
   }
 
-  if (!dbUserData) {
+  if (!dbUserData || dbUserData.error) {
     throw new Error("Error al crear cuenta");
   }
 
