@@ -33,8 +33,9 @@ function Page() {
     if (!userData.firstname) router.push("/form/login");
 
     const status = params.get("status");
+
     if (status === "approved") {
-      TODO:
+      // Se crea la order
       axios.get(`/api/user/${userData.email}`)
         .then(res => {
           const paymentId = res.data.payments[res.data.payments.length - 1].id;
@@ -50,13 +51,12 @@ function Page() {
           .catch(error => console.log(error))
         })
 
-
-      setCart({
-        count: 0,
-        items: [],
-      });
-
+      // se setea el carrito
       if (typeof window !== "undefined") {
+        setCart({
+          count: 0,
+          items: [],
+        });
         localStorage.setItem(
           "cart",
           JSON.stringify({
