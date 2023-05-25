@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "@/context/AppContext";
 import axios from "axios";
 import Card from "@/components/Cards/Card";
 import styles from "./Favorites.module.css";
@@ -7,7 +8,8 @@ import Back from "@/components/back/Back";
 
 const Favorites = () => {
   const [favoriteArray, setFavoriteArray] = useState([]);
-
+  const { userData } =
+    useContext(AppContext);
   useEffect(() => {
     const fetchData = async () => {
       // Fetch user data
@@ -33,7 +35,7 @@ const Favorites = () => {
             key={card.id}
             id={card.id}
             title={card.title}
-            photo={card.photo}
+            photo={card.photo[0]}
             price={card.price}
             type={card.type}
             perDay={card.perDay}
