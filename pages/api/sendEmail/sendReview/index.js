@@ -1,10 +1,11 @@
+
 import transporter from "..";
 import findUser from "../findUser";
 
 export default async function registerUserEmail(req, res) {
   const { method } = req;
   if (method == "POST") {
-    const { email, password } = req.body;
+    const { email, url } = req.body;
     try {
       const user = await findUser(email)
       if (user) {
@@ -12,13 +13,14 @@ export default async function registerUserEmail(req, res) {
         const mail = {
           from: process.env.USER_APPLICATION,
           to: email,
-          subject: "Registro exitoso",
+          subject: "Deja una reseña",
           html: `
-          <p>Estimado usuario, sus credenciales de acceso a ToolMatch son las siguientes: <br>
-          Usuario: ${email} <br>
-            Contraseña: ${password} <br>
-            Atentamente, el equipo de ToolMatch
-            </p>
+          <p style="color: black"> Recientemente realizó una compra, dejale una reseña al producto </p>
+          <button style="border: 5px, black, solid; border-radius: 20px; background: white; color: black"> 
+            <a href=${url} style="text-decoration: none; color: black">
+                Producto 
+            </a>
+          </button>
             `,
         };
         await transporter.sendMail(mail);
