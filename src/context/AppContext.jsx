@@ -5,7 +5,6 @@ import saveInLocalStorage from "./assets/saveInLocalStorage";
 import removeFromLocalStorage from "./assets/removeFromLocalStorage";
 import endSession from "./assets/endSession";
 import { newPetition } from "./assets/customFetch";
-import checkSessionExpiration from "./assets/checkSessionExpiration";
 
 const AppContext = createContext();
 
@@ -57,7 +56,7 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
- 
+
   const [selected, setSelected] = useState({
     category: "",
     type: "",
@@ -66,7 +65,6 @@ function AppProvider({ children }) {
       order: "",
     },
     title: "",
-    brand: "",
   }); //lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 
@@ -118,9 +116,6 @@ function AppProvider({ children }) {
     typeof window !== "undefined" && JSON.parse(localStorage.getItem("cart")) //agregado por Adriana y Jefferson
   );
 
-  useEffect(() => {
-    checkSessionExpiration();
-  }, []);
   // * Favorites *//
   const [favorites, setFavorites] = useState(
     typeof window !== "undefined" &&

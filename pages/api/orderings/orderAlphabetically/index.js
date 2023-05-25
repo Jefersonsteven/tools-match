@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { order, type, category, brand, title } = req.query;
+  const { order, type, category, brand } = req.query;
 
   if (!order) {
     return res.status(400).json({ message: 'The order parameter must exist' });
@@ -21,12 +21,28 @@ export default async function handler(req, res) {
     if (type) where.type = type;
     if (category) where.category = category;
     if (brand) where.brand = brand;
-    if (title) where.title = {
-      contains: title,
-      mode: 'insensitive',
-    };
 
-    const datos = await prisma.post.findMany({ where });
+    let datos;
+
+    if (type && category && brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (!type && category && brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (type && !category && brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (category && !type && !brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (type && !brand && !category) {
+      datos = await prisma.post.findMany({ where });
+    } else if (type && !brand && category) {
+      datos = await prisma.post.findMany({ where });
+    } else if (!type && !category && brand) {
+      datos = await prisma.post.findMany({ where });
+    } else if (!type && !category && !brand) {
+      datos = await prisma.post.findMany({ where });
+    } else {
+      return res.status(400).json({ message: 'Invalid query parameters' });
+    }
 
     datos.sort((a, b) => a.title.localeCompare(b.title, 'es', { sensitivity: 'base' }));
 

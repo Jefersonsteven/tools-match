@@ -6,6 +6,7 @@ export const submitLogInFormData = async (
   loginData,
   setUserData,
   setUserId,
+  rememberSession,
   router,
   saveInLocalStorage,
   form,
@@ -36,15 +37,16 @@ export const submitLogInFormData = async (
     throw new Error(responseOfValidation.error);
   }
   if (dbUserData.logged) {
-    const loginTime = new Date().getTime();
-
-    saveInLocalStorage("token", dbUserData);
-    saveInLocalStorage("id", dbUserData.id);
-    saveInLocalStorage("loginTime", loginTime);
     setUserData(dbUserData);
-    setUserId(dbUserData.id);
-    setForm({ ...form, authorId: dbUserData.id });
 
+    if (rememberSession) {
+      saveInLocalStorage("token", dbUserData);
+      saveInLocalStorage("id", dbUserData.id);
+      setUserId(dbUserData.id);
+    } else {
+      setUserId(dbUserData.id);
+      setForm({ ...form, authorId: dbUserData.id });
+    }
     customAlert(
       5000,
       "bottom-end",

@@ -19,7 +19,7 @@ function Page() {
     phoneNumber: "",
     address: "",
   });
-  const [errors, setErrors] = useState({
+  const [errors, setErros] = useState({
     fullname: "",
     email: "",
     phoneNumber: "",
@@ -30,33 +30,21 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userData?.firstname) router.push("/form/login");
-  }, [router, userData]);
+    if (!userData.id) {
+      router.push("/form/login");
+    }
 
-  useEffect(() => {
     const status = params.get("status");
-
     if (status === "approved") {
-      // Se crea la order
-      axios.get(`/api/user/${userData.email}`)
-        .then(res => {
-          const paymentId = res.data.payments[res.data.payments.length - 1].id;
+      
+      // axios.post('/api/order')
 
-          axios.post('/api/order', {
-            status: "complete",
-            userId: userData.id,
-            postId: cart.items.map(item => item.id),
-            paymentId: paymentId
-          })
-          .catch(error => console.log(error))
-        })
+      setCart({
+        count: 0,
+        items: [],
+      });
 
-      // se setea el carrito
       if (typeof window !== "undefined") {
-        setCart({
-          count: 0,
-          items: [],
-        });
         localStorage.setItem(
           "cart",
           JSON.stringify({
@@ -74,18 +62,18 @@ function Page() {
         router.push(`/perfil/${userData.id}`);
       });
     }
-  }, [params, router, setCart, userData, cart]);
+  }, [params, router, setCart, userData]);
 
   useEffect(() => {
-    if (!form.fullname && userData) {
+    if (!form.fullname) {
       const FORM = {
-        fullname: `${userData?.firstname} ${userData?.lastname}`,
-        email: userData?.email,
-        phoneNumber: userData?.phoneNumber,
+        fullname: `${userData.firstname} ${userData.lastname}`,
+        email: userData.email,
+        phoneNumber: userData.phoneNumber,
         address: "",
       };
       setForm(FORM);
-      validateForm(FORM, errors, setErrors);
+      validateForm(FORM, errors, setErros);
     }
   }, [userData, form, errors]);
 
@@ -93,11 +81,11 @@ function Page() {
     const name = event.target.name;
     const value = event.target.value;
     setForm({ ...form, [name]: value });
-    validateForm({ ...form, [name]: value }, errors, setErrors, setDisabled);
+    validateForm({ ...form, [name]: value }, errors, setErros, setDisabled);
   }
 
   const body = {
-    items: cart && cart.items?.map(({ title, content, price }) => {
+    items: cart?.items.map(({ title, content, price }) => {
       return {
         title,
         content,
@@ -107,7 +95,7 @@ function Page() {
       };
     }),
     payer: {
-      name: userData && userData.email,
+      name: userData.email,
     },
   };
 
@@ -165,7 +153,7 @@ function Page() {
       <section className={styles.payment}>
         <div className={styles.cart}>
           <div className={styles.cartItems}>
-            {cart.items?.map((item) => (
+            {cart?.items.map((item) => (
               <div key={item.id} className={styles.item}>
                 <h4>{item.title}</h4>
                 <h4>${item.price}</h4>

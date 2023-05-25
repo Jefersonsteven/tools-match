@@ -7,7 +7,6 @@ const nextConfig = {
       "www.homedepot.com.mx",
       "encrypted-tbn0.gstatic.com",
       "maps.googleapis.com",
-      "www.kindpng.com",
     ],
   },
   env: {
@@ -18,7 +17,7 @@ const nextConfig = {
     MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
     MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN,
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
-    DEPLOY_BACK: process.env.DEPLOY_BACK
+    URL_API: process.env.URL_API
   },
 };
 

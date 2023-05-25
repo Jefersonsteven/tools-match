@@ -220,7 +220,7 @@ function Users() {
     const userIdsString = userIds.join(', ');
       Swal.fire({
         title: `Eliminar ${selectedUserCount} usuarios`,
-        text: `¿Estás seguro de eliminar a los ${selectedUserCount} usuarios?`,
+        text: `¿Estás seguro de eliminar los usuarios con los siguientes IDs: ${userIdsString}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -254,11 +254,6 @@ function Users() {
                 (user) => !userIds.includes(user.id)
               );
               setRecords(updatedUsers);
-
-              setSelectedUserCount(0);
-
-
-              
 
               Swal.fire({
                 title: "¡Usuarios eliminados correctamente!",

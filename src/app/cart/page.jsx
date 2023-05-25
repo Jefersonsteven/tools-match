@@ -6,6 +6,7 @@ import style from "./Cart.module.css";
 import Image from "next/image";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Link from "next/link";
+import { useRouter } from "next/router"; // Importa desde next/router en lugar de next/navigation
 import Back from "@/components/back/Back";
 
 export default function Page() {
@@ -18,7 +19,11 @@ export default function Page() {
         items: [],
       });
     }
-  }, [setCart, cart]);
+
+    if (userData?.firstName) {
+      router.push("/form/login");
+    }
+  }, [userData, setCart, cart]);
 
   function deleteItem(id) {
     setCart((prevCart) => {
@@ -37,7 +42,7 @@ export default function Page() {
     <main className={style.container}>
       <Back />
       <section className={style.cartContainer}>
-        <h2>Carrito de Compras</h2>
+        {typeof window !== "undefined" && <h2>Carrito de Compras</h2>}
         <div className={style.cart}>
           <div className={style.cartCards}>
             <div className={style.cartAmount}>

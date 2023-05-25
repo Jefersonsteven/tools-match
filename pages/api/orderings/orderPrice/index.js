@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  const { type, category, order, brand, title } = req.query;
+  const { type, category, order, brand } = req.query;
 
   if (method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -15,25 +15,45 @@ export default async function handler(req, res) {
   }
 
   try {
-    const where = { hidden: false };
+    let where = { hidden: false };
 
-    if (type) where.type = type;
-    if (category) where.category = category;
-    if (brand) where.brand = brand;
-    if (title) where.title = { contains: title, mode: 'insensitive' };
+    if (type && category && brand) { // si existen todas
+      where = { ...where, type, category, brand };
+    } else if (!type && category && brand) {// si existe category y brand 
+      where = { ...where, category, brand };
+    } else if (type && !category && brand) {// si existe type y brand 
+      where = { ...where, type, brand };
+    } else if (category && !type && !brand) {// si solo existe category
+      where = { ...where, category };
+    } else if (type && !brand && !category) {// si solo existe type
+      where = { ...where, type };
+    } else if (!type && !category && brand) {// si solo existe brand
+      where = { ...where, brand };
+    } else if (category && type && !brand) {// si no existe brand
+      where = { ...where, category, type };
+    }
 
     const orderBy = {
       price: order === 'desc' ? SortOrder.desc : SortOrder.asc
     };
 
-    const posts = await prisma.post.findMany({
-      where,
-      orderBy
-    });
+    let posts;
+    if (Object.keys(where).length === 1) {
+      posts = await prisma.post.findMany({
+        where: {
+          hidden: false
+        },
+        orderBy
+      });
+    } else {
+      posts = await prisma.post.findMany({
+        where,
+        orderBy
+      });
+    }
 
     return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).json({ message: 'Error getting data' });
   }
 }
-
