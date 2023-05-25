@@ -22,22 +22,19 @@ function CreatePost() {
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
 
+  async function coords(lat, long){
+    const mapImage = await axios.post("/api/maps", { lat, long });
+    const addMap = await axios.put(`/api/user/${userData.email}`, { map: mapImage.data});
+    const coordinates = await axios.put(`/api/user/${userData.email}`, {coordinates: [lat.toString(), long.toString()]});
+
+    console.log(mapImage.data, addMap.data);
+  }
+
   useEffect(() => {
     getLocation()
       .then((position) => {
         const { latitude, longitude } = position.coords;
-        axios.post("/api/maps", { latitude, longitude })
-        .then((response) => {
-          axios.put(`/api/user/${userData.email}`, { 
-            map: response.data,
-          })
-          .then(() => {
-            console.log(longitude, latitude);
-            axios.put(`/api/user/${userData.email}`, { 
-              coordinates: [latitude, longitude],
-            })
-          }) 
-        })
+        coords(latitude, longitude)
       }) 
       .catch((error) => {
         console.error("Error al obtener la ubicación:", error.message);
@@ -152,6 +149,9 @@ function CreatePost() {
 
   return (
     <main className={style.main}>
+      <div className={style.back} >
+        <Back/>
+      </div>
       <section className={style.buttons}>
         <button
           className={form.type === "RENTAL" ? style.active : style.desactived}

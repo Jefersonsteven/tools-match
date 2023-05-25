@@ -41,7 +41,6 @@ function Page() {
       axios.get(`/api/user/${userData.email}`)
         .then(res => {
           const paymentId = res.data.payments[res.data.payments.length - 1].id;
-          console.log(paymentId);
 
           axios.post('/api/order', {
             status: "complete",
@@ -49,7 +48,6 @@ function Page() {
             postId: cart.items.map(item => item.id),
             paymentId: paymentId
           })
-          .then(order => console.log(order.data))
           .catch(error => console.log(error))
         })
 
