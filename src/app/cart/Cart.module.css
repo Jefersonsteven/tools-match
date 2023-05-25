@@ -1,117 +1,104 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5rem;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+  padding: 50px;
 }
-.cartContainer{
-    display: flex; 
-    justify-content: space-between;
-    width: 100%;
+.cartContainer {
+  align-items: center;
+  gap: 5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
-.backContainer{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    gap: 1rem;
-    cursor: pointer;
-    
+.cartContainer h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--black-light);
 }
-.backContainer h3{
-    display: flex;
-    justify-content: center;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--black-light);
-    align-items: center;
-    gap: 1rem;
+.cart {
+  align-items: center;
+  gap: 5rem;
 }
-.back{
-    width: 70px;
-    height: 70px;
-    padding: 10px;
-    background-color: var(--orange);
-    border-radius: 20px;
+.cartCards {
+  background-color: var(--black-light);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 3rem;
+  width: 635px;
+  border-radius: 20px;
 }
-.cartContainer h2{
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--black-light);
+.cartItem {
+  height: 124px;
+  display: flex;
+  gap: 2.5rem;
+  width: 100%;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
 }
-.container{
-    min-height: 100vh;
-    padding: 50px;
+.cartItemImg {
+  border-radius: 10px;
+  border: 3px solid var(--black-light);
 }
-.cart{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5rem;
+.cartDetailContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
-.cartCards{
-    background-color: var(--black-light);
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    padding: 3rem;
-    width: 635px;
-    border-radius: 20px;
+.cartItemDetail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
 }
-.cartItem{
-    height: 124px;
-    display: flex;
-    gap: 2.5rem;
-    width: 100%;
-    justify-content: space-between;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 15px;
+.cartItemTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-transform: capitalize;
 }
-.cartItemImg{
-    border-radius: 10px;
+.cartItemPrice {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--black-light);
 }
-.cartDetailContainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+.cartAmount {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+  font-weight: 800;
+  font-size: 2.4rem;
+  color: var(--white);
 }
-.cartItemDetail{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 100%;
+.cartButton {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-around;
+  width: 100%;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-top: 20px;
 }
-.cartItemTitle{
-    font-size: 2.4rem;
-    font-weight: 700;
+.cartButton button {
+  width: 208px;
 }
-.cartItemPrice{
-    font-size: 2rem;
-    font-weight: 500;
-    color: var(--black-light);
+.cartButton button:nth-child(1):hover {
+  width: 208px;
 }
-.cartAmount{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: space-between;
-    width: 100%;
-    font-weight: 800;
-    font-size: 2.4rem;
-    color: var(--white);
-}
-.cartButton{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: space-around;
-    width: 100%;
-    color: #fff;
-}
-.cartButton button{
-    width: 208px;
-}
-.cartButton button:nth-child(1):hover{
-    width: 208px;
+
+.backcontainer {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 100px;
+  left: 25px;
 }
