@@ -74,14 +74,17 @@ useEffect(() => {
       const orders = userData.orders || [];
       
       const orderDetailsPromises = orders.map(async (order) => {
-        const postId = order.postId;
-        const postResponse = await axios.get(`/api/post/${postId}`);
-        const postDetails = postResponse.data;
+        const qItems = (order.postId).length;
+        const date = order.createdAt
+        const paymentId = order.paymentId;
+        const paymentResponse = await axios.get(`/api/payment/${paymentId}`);
+        const paymentDetails = paymentResponse.data;
         return {
           ...order,
-          title: postDetails.title,
-          type: postDetails.type,
-          price: postDetails.price,
+          qItems: qItems,
+          amount: paymentDetails.payment.amount,
+          currency: paymentDetails.payment.currency,
+          date: date,
         };
       });
       
