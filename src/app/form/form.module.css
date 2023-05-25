@@ -124,7 +124,6 @@
 .inputContainer > p {
   margin-top: 11px;
   margin-bottom: 30px;
-
   height: 20px;
 }
 
@@ -229,7 +228,7 @@
 /* Recover Styles */
 
 .recover__message {
-  margin-bottom: 32px;
+  margin-bottom: 48px;
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -261,6 +260,17 @@
   line-height: 19px;
   letter-spacing: 0.1em;
   color: var(--white);
+}
+
+.recover__buttonSubmit:disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+.recover__buttonSubmit:disabled:hover {
+  background-color: #131713;
+  color: var(--white);
+  border: none;
 }
 
 .recover__buttonCancel {
@@ -333,4 +343,8 @@
   align-items: center;
   margin-top: 32px;
   gap: 16px;
+}
+
+.errorRecover {
+  color: var(--red);
 }
