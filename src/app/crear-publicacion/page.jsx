@@ -22,18 +22,22 @@ function CreatePost() {
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function coords(lat, long){
+  async function coords(lat, long) {
     const mapImage = await axios.post("/api/maps", { lat, long });
-    const addMap = await axios.put(`/api/user/${userData.email}`, { map: mapImage.data});
-    const coordinates = await axios.put(`/api/user/${userData.email}`, {coordinates: [lat.toString(), long.toString()]});
+    const addMap = await axios.put(`/api/user/${userData.email}`, {
+      map: mapImage.data,
+    });
+    const coordinates = await axios.put(`/api/user/${userData.email}`, {
+      coordinates: [lat.toString(), long.toString()],
+    });
   }
 
   useEffect(() => {
     getLocation()
       .then((position) => {
         const { latitude, longitude } = position.coords;
-        coords(latitude, longitude)
-      }) 
+        coords(latitude, longitude);
+      })
       .catch((error) => {
         console.error("Error al obtener la ubicación:", error.message);
         Swal.fire({
@@ -41,7 +45,7 @@ function CreatePost() {
           text: "No has agregado tu ubicación, la necesitamos para ubicar el producto a publicar",
           icon: "warning",
           showConfirmButton: false,
-          timer: 4000
+          timer: 4000,
         }).then((result) => {
           if (result.dismiss === Swal.DismissReason.timer) {
             router.push(`/home`);
@@ -49,7 +53,7 @@ function CreatePost() {
         });
       });
   }, [router, userData]);
-  
+
   useEffect(() => {
     if (!userData.firstname) router.push("/form/login");
   }, [userData, router]);
@@ -78,66 +82,80 @@ function CreatePost() {
 
     const map = await axios.get(`/api/user/${userData.email}`);
 
-    if (map.data.map && !error && !post) {
-      if (form.photo.length > 0) {
-        setMessage("Subiendo imagenes al servidor...");
-        const urls = await uploadImages(form.photo, setUrlsImages);
-        setMessage("Creando publicación...");
-        const newPost = { ...form };
-        newPost.photo = urls;
-        newPost.price = Math.floor(newPost.price);
+    if (!error && !post) {
+      if (map.data.map) {
+        if (form.photo.length > 0) {
+          setMessage("Subiendo imagenes al servidor...");
+          const urls = await uploadImages(form.photo, setUrlsImages);
+          setMessage("Creando publicación...");
+          const newPost = { ...form };
+          newPost.photo = urls;
+          newPost.price = Math.floor(newPost.price);
 
-        const post = await fetch("/api/post", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newPost),
-        });
-        const data = await post.json();
-
-        if (data.id) {
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "bottom-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-              toast.style.fontSize = "16px";
+          const post = await fetch("/api/post", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
             },
+            body: JSON.stringify(newPost),
           });
 
-          Toast.fire({
-            icon: "success",
-            title: "Publicación creada con éxito",
-          }).then(() => {
-            router.push("/home");
-          });
+          const data = await post.json();
 
-          // ...
-        } else {
-          Swal.fire({
-            title: "Error ",
-            text: "Hubo un problema al crear la publicación.",
-            icon: "error",
+          if (data.id) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "bottom-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+                toast.style.fontSize = "16px";
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Publicación creada con éxito",
+            }).then(() => {
+              router.push("/home");
+            });
+
+            // ...
+          } else {
+            Swal.fire({
+              title: "Error ",
+              text: "Hubo un problema al crear la publicación.",
+              icon: "error",
+            });
+          }
+
+          setForm({
+            title: "",
+            content: "",
+            brand: "",
+            photo: [],
+            category: "",
+            price: "",
+            type: "",
+            authorId: userId,
           });
+          setImagesPrint([]);
+          setUrlsImages([]);
         }
-
-        setForm({
-          title: "",
-          content: "",
-          brand: "",
-          photo: [],
-          category: "",
-          price: "",
-          type: "",
-          authorId: userId,
+      } else {
+        Swal.fire({
+          title: "Recuerda compartir tu ubicación",
+          text: "Para hacer una publicación, debes compartir tu ubicación.",
+          icon: "warning",
+          confirmButtonText: "Aceptar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            router.push("/home");
+          }
         });
-        setImagesPrint([]);
-        setUrlsImages([]);
       }
     }
 
@@ -147,8 +165,8 @@ function CreatePost() {
 
   return (
     <main className={style.main}>
-      <div className={style.back} >
-        <Back/>
+      <div className={style.back}>
+        <Back />
       </div>
       <section className={style.buttons}>
         <button
@@ -240,7 +258,6 @@ function CreatePost() {
             <span>{errors.category}</span>
           </div>
           <div className={style.button}>
-            <button onClick={()=>router.back()}>Cancelar</button>
             <button onClick={handleSubmit}>Publicar</button>
             <Link href="/home">Cancelar</Link>
           </div>
