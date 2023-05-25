@@ -13,6 +13,7 @@ import {
   handleBrandChange,
   handleOrderChange,
   handleClearFilters,
+  handleKmChange,
 } from "./handlers";
 import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 
@@ -23,9 +24,11 @@ export default function FilterBar() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderFilter, setOrderFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
+  const [distanceFilter, setDistanceFilter] = useState("");
 
   useEffect(() => {
     fetchCards(selected, setCards, title);
+    console.log("filtro");
   }, [selected, setCards]);
 
   const handleTitle = (newTitle) => {
@@ -51,6 +54,11 @@ export default function FilterBar() {
     handleOrderChange(type, order, setSelected, setOrderFilter);
   };
 
+  // handleKm - Jeffer
+  const handleKm = (km, coorde1, coorde2) => {
+    handleKmChange(setSelected, km, coorde1, coorde2);
+  };
+
   const handleCleanFilters = () => {
     handleClearFilters(
       setSelected,
@@ -66,7 +74,8 @@ export default function FilterBar() {
       <div className="relative z-10">
         <div className="flex-1 flex flex-row items-center justify-between px-2">
           <div className="mr-10" style={{ width: "400px" }}>
-            <FilterRangeDistance />
+            {/* // filter per distance - Jeffer */}
+            <FilterRangeDistance handleKm={handleKm} />
             <SearchBar
               title={title}
               onTitleChange={handleTitle}

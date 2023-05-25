@@ -57,7 +57,7 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
- 
+
   const [selected, setSelected] = useState({
     category: "",
     type: "",
@@ -67,6 +67,9 @@ function AppProvider({ children }) {
     },
     title: "",
     brand: "",
+    coorde1: "",
+    coorde2: "",
+    km: "",
   }); //lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 

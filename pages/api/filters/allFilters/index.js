@@ -18,6 +18,7 @@ export default async function handler(req, res) {
       let where = { hidden: false };
 
       if (category) {
+        console.log(category);
         where.category = category;
       }
 
@@ -37,6 +38,7 @@ export default async function handler(req, res) {
       }
 
       if (coorde1 && coorde2 && km) {
+        console.log(coorde1, coorde2);
         const posts = await prisma.post.findMany({where, include: {
           author: true
         }
