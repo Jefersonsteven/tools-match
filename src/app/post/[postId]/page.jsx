@@ -38,11 +38,20 @@ function PostDetail({}) {
           })
         );
 
-      Swal.fire({
-        title: "¡Agregado al carrito!",
-        text: "El artículo se ha agregado al carrito correctamente.",
-        icon: "success",
-      });
+        Swal.fire({
+          title: "¡Agregado al carrito!",
+          text: "El artículo se ha agregado al carrito correctamente.",
+          icon: "success",
+          showCancelButton: true,
+          confirmButtonText: "Ir al carrito",
+          cancelButtonText: "Seguir comprando",
+        }).then((result) => {
+          if (result.isConfirmed) {
+          router.push("/cart");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            router.push("/home");
+          }
+        });
     }
   }
 
