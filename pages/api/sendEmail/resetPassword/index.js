@@ -20,7 +20,7 @@ export default async function resetPassword(req, res) {
           Estimado usuario, useted solicito recuperar su contraseña, para realizar el cambio presiona el boton. 
         </p>
         <button style="border: 5px, black, solid; border-radius: 20px; background: white; color: black">
-          <a href=${process.env.DEPLOY_BACK}/form/recover/${email} style="text-decoration: none; color: black">
+          <a href=${process.env.DEPLOY_BACK}/form/resetPassword/${email} style="text-decoration: none; color: black">
             Recuperar contraseña
           </a>   
         </button>
