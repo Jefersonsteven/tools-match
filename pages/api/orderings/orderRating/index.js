@@ -1,8 +1,11 @@
-import prisma from "../../../../prisma/client";
+import { PrismaClient, SortOrder } from '@prisma/client';
+import { calcularDistancia } from '../../filters/distance/assets/calculateDistance';
+
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  const { order, type, category, brand, title } = req.query;
+  const { order, type, category, brand, title, coorde1, coorde2, km } = req.query;
 
   if (method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -25,13 +28,22 @@ export default async function handler(req, res) {
     };
 
     let posts;
-    if (Object.keys(where).length === 1) {
+    if (coorde1 && coorde2 && km) {
       posts = await prisma.post.findMany({
-        where: {
-          hidden: false
-        },
+        where: { hidden: false },
         include
       });
+
+      const filteredPosts = posts.filter((post) => {
+        if (post.author && post.author.coordinates) {
+          const [postCoorde1, postCoorde2] = post.author.coordinates;
+          const distance = calcularDistancia(parseFloat(coorde1), parseFloat(coorde2), postCoorde1, postCoorde2);
+          return distance < parseFloat(km);
+        }
+        return false;
+      });
+
+      posts = filteredPosts;
     } else {
       posts = await prisma.post.findMany({
         where,
@@ -44,17 +56,8 @@ export default async function handler(req, res) {
       avgRating: post.reviews.length > 0
         ? post.reviews.reduce((total, review) => total + review.rating, 0) / post.reviews.length
         : 0
-    })).sort((a, b) => {
-      if (a.reviews.length === 0 && b.reviews.length === 0) {
-        return 0;
-      } else if (a.reviews.length === 0) {
-        return order === 'asc' ? -1 : 1;
-      } else if (b.reviews.length === 0) {
-        return order === 'asc' ? 1 : -1;
-      } else {
-        return order === 'asc' ? a.avgRating - b.avgRating : b.avgRating - a.avgRating;
-      }
-    });
+    })).filter((post) => post.reviews.length > 0)
+      .sort((a, b) => (order === 'desc' ? b.avgRating - a.avgRating : a.avgRating - b.avgRating));
 
     return res.status(200).json(sortedPosts);
   } catch (error) {
