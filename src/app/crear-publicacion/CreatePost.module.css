@@ -1,10 +1,16 @@
 .main {
-  padding-top: 50px;
   width: 100%;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 120px 1fr;
   margin-bottom: 50px;
+  row-gap: 50px;
+}
+
+.back {
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
 }
 
 .main span {

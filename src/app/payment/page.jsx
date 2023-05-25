@@ -30,8 +30,10 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userData.firstname) router.push("/form/login");
+    if (!userData?.firstname) router.push("/form/login");
+  }, [router, userData]);
 
+  useEffect(() => {
     const status = params.get("status");
 
     if (status === "approved") {
@@ -39,7 +41,6 @@ function Page() {
       axios.get(`/api/user/${userData.email}`)
         .then(res => {
           const paymentId = res.data.payments[res.data.payments.length - 1].id;
-          console.log(paymentId);
 
           axios.post('/api/order', {
             status: "complete",
@@ -47,7 +48,6 @@ function Page() {
             postId: cart.items.map(item => item.id),
             paymentId: paymentId
           })
-          .then(order => console.log(order.data))
           .catch(error => console.log(error))
         })
 
@@ -77,11 +77,11 @@ function Page() {
   }, [params, router, setCart, userData, cart]);
 
   useEffect(() => {
-    if (!form.fullname) {
+    if (!form.fullname && userData) {
       const FORM = {
-        fullname: `${userData.firstname} ${userData.lastname}`,
-        email: userData.email,
-        phoneNumber: userData.phoneNumber,
+        fullname: `${userData?.firstname} ${userData?.lastname}`,
+        email: userData?.email,
+        phoneNumber: userData?.phoneNumber,
         address: "",
       };
       setForm(FORM);

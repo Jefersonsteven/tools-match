@@ -7,7 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { AppContext } from "@/context/AppContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Swal from "sweetalert2";
@@ -55,7 +55,11 @@ function Header() {
     }
   };
 
-  const href = userData ? "/crear-publicacion" : "/form/login";
+  const [href, setHref] = useState("")
+
+  useEffect(() => {
+    setHref(userData ? "/crear-publicacion" : "/form/login")
+  }, [userData]);
 
   return (
         <header className={styles.header}>
@@ -64,7 +68,7 @@ function Header() {
               <Link href="/">
                 Tools Match
                 {/* <Image
-              src="/../public/images/logo/toolsMatch.jpg"
+              src="/assets/images/logo/toolsMatch.jpg"
               alt="logo"
               width={70}
               height={70}
@@ -97,7 +101,7 @@ function Header() {
                 <li>
                   {pathname !== "/" && (
                     <Link
-                      href={userData ? href : '/home'}
+                      href={href}
                     >
                       Crear Publicaciones
                     </Link>
@@ -137,7 +141,7 @@ function Header() {
                     >
                       {userData && (
                         <li>
-                          <Link href={`/perfil/${userId}`}>ver Perfil</Link>
+                          <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
                         </li>
                       )}
                       {userData && (
@@ -157,9 +161,7 @@ function Header() {
 
                   <Link href="/cart" className={styles.cart}>
                     <FaShoppingCart size="25" color="white" />
-                    {cart?.count > 0 && (
-                      <span className={styles.cartCount}>{cart.count}</span>
-                    )}
+                    {cart?.count > 0 && <span className={styles.cartCount}>{cart.count}</span>}
                     <span className={styles.cartText}>Carrito de compras</span>
                   </Link>
                 </div>
