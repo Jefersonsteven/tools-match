@@ -6,10 +6,7 @@ export default async function resetPassword(req, res) {
   if (method == "POST") {
     const { email } = req.body;
     try {
-      const user = await findUser(email);
-      if (!user) {
-        throw new Error("El usuario no existe");
-      }
+      await findUser(email);
       await transporter.verify();
       const mail = {
         from: process.env.USER_APLICATION,
@@ -25,7 +22,6 @@ export default async function resetPassword(req, res) {
           }/form/resetPassword/${encodeURIComponent(
           email
         )} style="text-decoration: none; color: black">
-          <a href=${process.env.DEPLOY_BACK}/form/resetPassword/${email} style="text-decoration: none; color: black">
             Recuperar contraseña
           </a>   
         </button>

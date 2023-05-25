@@ -6,10 +6,7 @@ export default async function confirm(req, res) {
   if (method == "POST") {
     const { email, id } = req.body;
     try {
-      const user = await findUser(email);
-      if (!user) {
-        throw new Error("El usuario no existe");
-      }
+      await findUser(email);
       await transporter.verify();
       const mail = {
         from: process.env.USER_APPLICATION,
