@@ -34,9 +34,11 @@ export default function Page() {
   }
 
   return (
-    <main className={style.container}>
-      <Back />
-      <section className={style.cartContainer}>
+    <div className={style.container}>
+      <div className={style.backcontainer}>
+        <Back />
+      </div>
+      <div className={style.cartContainer}>
         <h2>Carrito de Compras</h2>
         <div className={style.cart}>
           <div className={style.cartCards}>
@@ -86,7 +88,7 @@ export default function Page() {
             </Link>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }

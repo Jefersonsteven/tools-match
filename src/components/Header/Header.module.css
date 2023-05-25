@@ -75,7 +75,7 @@
 .perfil ul li a {
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   padding: 3px 5px;
 }
 
