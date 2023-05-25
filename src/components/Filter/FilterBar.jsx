@@ -24,7 +24,6 @@ export default function FilterBar() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderFilter, setOrderFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
-  const [distanceFilter, setDistanceFilter] = useState("");
 
   useEffect(() => {
     fetchCards(selected, setCards, title);
