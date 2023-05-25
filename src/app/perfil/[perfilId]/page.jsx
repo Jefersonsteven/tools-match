@@ -11,31 +11,28 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import CardsReview from "@/components/Reviews/CardsReview";
 import CardsOrders from "@/components/Reviews/CardsOrders";
-import axios from 'axios'
+import axios from "axios";
 
 import Back from "@/components/back/Back";
 
 export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
   const { push } = useRouter();
-  const { perfilId } = useParams()
+  const { perfilId } = useParams();
 
   const { userId, userData, countries } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const [authors, setAuthors] = useState({});
   const [userOrders, setUserOrders] = useState([]);
-
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(
-          `/api/admin/user/${perfilId}`
-        );
+        const response = await axios.get(`/api/admin/user/${perfilId}`);
 
         const receivedReviews = response.data.received;
-        setUser(response.data)
+        setUser(response.data);
         setReviews(receivedReviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -44,66 +41,62 @@ export default function PerfilUsuario() {
     fetchReviews();
   }, [userId, perfilId]);
 
- useEffect(() => {
-  const fetchAuthors = async () => {
-    try {
-      const authorIds = [
-        ...new Set(reviews.map((review) => review.authorId)),
-      ];
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      try {
+        const authorIds = [
+          ...new Set(reviews.map((review) => review.authorId)),
+        ];
 
-      const fetchedAuthors = await Promise.all(
-        authorIds.map((authorId) =>
-          axios.get(`/api/admin/user/${authorId}`)
-        )
-      );
+        const fetchedAuthors = await Promise.all(
+          authorIds.map((authorId) => axios.get(`/api/admin/user/${authorId}`))
+        );
 
-      setAuthors(fetchedAuthors.map(response => response.data)); // Convertir la respuesta en un array de datos
-    } catch (error) {
-      console.error("Error fetching authors:", error);
-    }
-  };
+        setAuthors(fetchedAuthors.map((response) => response.data)); // Convertir la respuesta en un array de datos
+      } catch (error) {
+        console.error("Error fetching authors:", error);
+      }
+    };
 
-  fetchAuthors();
-}, [reviews]);
+    fetchAuthors();
+  }, [reviews]);
 
-useEffect(() => {
-  const fetchUserOrders = async () => {
-    try {
-      const response = await axios.get(`/api/admin/user/${userId}`);
-      const userData = response.data;
-      const orders = userData.orders || [];
-      
-      const orderDetailsPromises = orders.map(async (order) => {
-        const postId = order.postId;
-        const postResponse = await axios.get(`/api/post/${postId}`);
-        const postDetails = postResponse.data;
-        return {
-          ...order,
-          title: postDetails.title,
-          type: postDetails.type,
-          price: postDetails.price,
-        };
-      });
-      
-      const orderDetails = await Promise.all(orderDetailsPromises);
-      setUserOrders(orderDetails);
-    } catch (error) {
-      console.error("Error fetching user orders:", error);
-    }
-  };
+  useEffect(() => {
+    const fetchUserOrders = async () => {
+      try {
+        const response = await axios.get(`/api/admin/user/${userId}`);
+        const userData = response.data;
+        const orders = userData.orders || [];
 
-  fetchUserOrders();
-}, [userId]);
-  
+        const orderDetailsPromises = orders.map(async (order) => {
+          const postId = order.postId;
+          const postResponse = await axios.get(`/api/post/${postId}`);
+          const postDetails = postResponse.data;
+          return {
+            ...order,
+            title: postDetails.title,
+            type: postDetails.type,
+            price: postDetails.price,
+          };
+        });
+
+        const orderDetails = await Promise.all(orderDetailsPromises);
+        setUserOrders(orderDetails);
+      } catch (error) {
+        console.error("Error fetching user orders:", error);
+      }
+    };
+
+    fetchUserOrders();
+  }, [userId]);
 
   useEffect(() => {
     !userData && push("/");
   }, [userData, push]);
 
-
   return (
     <>
-          <Back />
+      <Back />
       {user.firstname && (
         <>
           <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
@@ -113,9 +106,7 @@ useEffect(() => {
                 <div className={styles.imageContainer}>
                   <Image
                     src={
-                      user.photo
-                        ? user.photo
-                        : "/assets/userPhotoDefault.png"
+                      user.photo ? user.photo : "/assets/userPhotoDefault.png"
                     }
                     width={254}
                     height={254}
@@ -131,11 +122,12 @@ useEffect(() => {
                     <strong>Nombre completo: </strong>
                     {`${user.firstname} ${user.lastname}`}
                   </h2>
-                  {userData.id === perfilId &&
+                  {userData.id === perfilId && (
                     <h2>
-                    <strong>Correo: </strong>
-                    {user.email}
-                  </h2>}
+                      <strong>Correo: </strong>
+                      {user.email}
+                    </h2>
+                  )}
                   <h2>
                     <strong>País de residencia: </strong>
                     {user.country ? countries[user.country] : "---"}
@@ -144,27 +136,25 @@ useEffect(() => {
                     <strong>Código postal: </strong>
                     {user.zipCode ? user.zipCode : "---"}
                   </h2>
-                  {userData.id === perfilId &&
+                  {userData.id === perfilId && (
                     <h2>
-                    <strong>Celular: </strong>
-                    {user.phoneNumber ? user.phoneNumber : "---"}
-                  </h2>}
+                      <strong>Celular: </strong>
+                      {user.phoneNumber ? user.phoneNumber : "---"}
+                    </h2>
+                  )}
                 </div>
               </div>
               <div className={styles.buttonContainer}>
                 {user.id == userData.id ? (
                   <Link
-                  href={`perfil/${userId}/edit`}
-                  className={styles.editButton}
-                >
-                  Editar datos
-                </Link>
-                )
-                :
-                <button>
-                  Reportar
-                </button>
-                }
+                    href={`perfil/${userId}/edit`}
+                    className={styles.editButton}
+                  >
+                    Editar datos
+                  </Link>
+                ) : (
+                  <button>Reportar</button>
+                )}
               </div>
             </div>
           </section>
@@ -197,21 +187,21 @@ useEffect(() => {
                 )}
               </div>
             </section>
-            { user.id == userData.id &&
-                <section>
-                  <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
-                  <div className="w-full items-center ">
+            {user.id == userData.id && (
+              <section>
+                <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
+                <div className="w-full items-center ">
                   <CardsOrders userOrders={userOrders} />
-                  </div>
-                </section>
-            }
+                </div>
+              </section>
+            )}
           </div>
           <div className="flex gap-4">
-            <div className={styles.reviewContainer}>              
+            <div className={styles.reviewContainer}>
               <h3 className={styles.sectionTitleH3}>
                 Reseñas de tus herramientas
               </h3>
-              <CardsReview reviews={reviews} authors={Object.values(authors)} />             
+              <CardsReview reviews={reviews} authors={Object.values(authors)} />
             </div>
           </div>
         </>
