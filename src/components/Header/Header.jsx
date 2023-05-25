@@ -97,7 +97,7 @@ function Header() {
                 <li>
                   {pathname !== "/" && (
                     <Link
-                      href={userData && href}
+                      href={userData ? href : "/home"}
                     >
                       Crear Publicaciones
                     </Link>
