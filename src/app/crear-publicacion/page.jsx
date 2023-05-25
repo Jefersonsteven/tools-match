@@ -26,8 +26,6 @@ function CreatePost() {
     const mapImage = await axios.post("/api/maps", { lat, long });
     const addMap = await axios.put(`/api/user/${userData.email}`, { map: mapImage.data});
     const coordinates = await axios.put(`/api/user/${userData.email}`, {coordinates: [lat.toString(), long.toString()]});
-
-    console.log(mapImage.data, addMap.data);
   }
 
   useEffect(() => {
