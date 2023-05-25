@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "@/context/AppContext";
 import { FaHeart } from "react-icons/fa";
 import styles from "./Card.module.css";
@@ -17,9 +17,31 @@ const Card = ({
   id,
 }) => {
 
-  const { favorites, setFavorites, favorite, setFavorite, userData } =
-    useContext(AppContext);
-    const [isFavorite, setIsFavorite] = useState(false);
+  const { favorites, setFavorites, favorite, setFavorite, userData } = useContext(AppContext);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`api/user/${userData.email}`);
+        const user = response.data;
+        let favoriteArray = user.favoritesId;
+  
+        if (favoriteArray.includes(id)) {
+          setIsFavorite(true);
+        } else {
+          setIsFavorite(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    if (userData && userData.email) {
+      fetchData();
+    }
+  }, [favorites, id, userData]);
+
   const handleFavoriteClick = async (id) => {
     const user = await axios.get(`api/user/${userData.email}`);
     if (userData && userData.email) {
@@ -52,7 +74,7 @@ const Card = ({
       <div className={styles.favoriteContainer}>
         <FaHeart
           className={
-            isFavorite ? styles.favoriteActive : styles.favoriteIcon
+            isFavorite ? styles.favoriteIconActive : styles.favoriteIcon
           }
           onClick={() => handleFavoriteClick(`${id}`)}
         />

@@ -90,7 +90,7 @@
     color: var(--orange);
   }
   
-  .favoriteActive {
+  .favoriteIconActive {
     font-size: 35px;
     color: var(--white-dark);
     cursor: pointer;
