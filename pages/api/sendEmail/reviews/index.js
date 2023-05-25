@@ -1,19 +1,29 @@
 import transporter from "..";
+import findUser from "../findUser";
 
-export default async function resetPassword(req, res) {
+export default async function reviews(req, res) {
   const { method } = req;
   if (method == "POST") {
-    const { email } = req.body;
+    const { email, url } = req.body;
     try {
+      const user = await findUser(email);
+      if (!user) {
+        throw new Error("El usuario no existe");
+      }
       await transporter.verify();
       const mail = {
         from: process.env.USER_APLICATION,
         to: email,
-        subject: 'Nuevas reseñas',
+        subject: "Nuevas reseñas",
         html: `
           <p style="color: black">
-            Se han publicado nuevas reseñas de tus productos de interés, haz click sobre el botón para ver las más recientes. 
+            Ha recibido una reseña de su producto, héchale un vistazo. 
           </p>
+          <button style="border: 5px, black, solid; border-radius: 20px; background: white; color: black">
+            <a href=${url} style="text-decoration: none; color: black">
+              Producto 
+            </a>
+          </button>
           <h4 style="color: black">
             Atentamente, el equipo de ToolMatch
           </h4>
@@ -21,10 +31,10 @@ export default async function resetPassword(req, res) {
       };
       await transporter.sendMail(mail);
       res.status(200).json({
-        Alert: `Se ha enviado un coorreo electrónico a ${email} sobre reseñas en los productos de interés`,
+        Message: `Se ha enviado un coorreo electrónico a ${email} sobre reseñas en su producto`,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(400).json({ Error: error });
     }
   }

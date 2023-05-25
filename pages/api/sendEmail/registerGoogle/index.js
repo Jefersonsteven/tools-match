@@ -3,7 +3,7 @@ import transporter from "..";
 export default async function register(req, res) {
   const { method } = req;
   if (method == "POST") {
-    const { email } = req.body;
+    const { email, password } = req.body;
     try {
       await transporter.verify();
       const mail = {
@@ -12,8 +12,9 @@ export default async function register(req, res) {
         subject: "Registro exitoso",
         html: `
           <p style="color: black">
-            Estimado usuario, su registro en ToolMatch ha sido exitosa, su correo para iniciar sesión es: <br>
+            Estimado usuario, su registro en ToolMatch ha sido exitosa, sus credenciales para iniciar sesión son: <br>
             <b> Correo: </b> ${email} <br>
+            <b> Contraseña temporal: </b> ${password}
           </p>
           <h4 style="color: black">
             Atentamente, el equipo de ToolMatch

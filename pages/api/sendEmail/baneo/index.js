@@ -1,10 +1,10 @@
 import transporter from "..";
 import findUser from "../findUser";
 
-export default async function terminosCondiciones(req, res) {
+export default async function baneo(req, res) {
   const { method } = req;
   if (method == "POST") {
-    const { email } = req.body;
+    const { email, motivo } = req.body;
     try {
       const user = await findUser(email);
       if (!user) {
@@ -14,16 +14,21 @@ export default async function terminosCondiciones(req, res) {
       const mail = {
         from: process.env.USER_APPLICATION,
         to: email,
-        subject: "Terminos y condiciones",
+        subject: "Baneo",
         html: `
           <p style="color: black"> 
-            Usted ha aceptado los terminos y condiciones de tooltMatch y por ende los términos y condiciones de Mercadopago 
+            Estimado usuario, has sido baneado de la aplicacion por incumplimiento de los terminos y condiciones. <br>
+            Se le notidicará vía mail cuando sea desbaneado y puedas utilizar la aplicación nuevamente. <br>
+            <b> Motivo: </b> ${motivo}
           </p>
+          <h4 style="color: black">
+            Atentamente, el equipo de ToolMatch
+          </h4>
             `,
       };
       await transporter.sendMail(mail);
       res.status(200).json({
-        Alert: `Se ha enviado un correo electrónico a ${email} `,
+        Message: `Se ha enviado un correo electrónico a ${email} `,
       });
     } catch (error) {
       res.status(400).json({ error: error.message });
