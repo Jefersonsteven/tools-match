@@ -1,20 +1,24 @@
 .section {
-  width: 100%;
-
-  padding-left: 32px;
-  padding-top: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
   padding-bottom: 108px;
 }
 
 .sectionTitle {
-  margin-left: 32px;
   font-style: normal;
   font-weight: 500;
-  font-size: 36px;
+  font-size: xx-large;
   line-height: 44px;
-  margin-top: 52px;
-  margin-bottom: 52px;
+  margin-top: 24px;
+  margin-bottom: 8px;
   letter-spacing: 0.045em;
+  color: #2e2e2e;
+  -webkit-text-fill-color: #232323;
+  -webkit-text-stroke: 1px #000;
+  text-align: center;
 }
 
 .sectionTitleH3 {
@@ -27,6 +31,19 @@
   line-height: 29px;
 
   letter-spacing: 0.045em;
+}
+
+.dataTitle {
+  font-style: normal;
+  font-weight: 500;
+  font-size: x-large;
+  line-height: 44px;
+  margin-top: 32px;
+  margin-bottom: 8px;
+  letter-spacing: 0.045em;
+  color: #2e2e2e;
+  -webkit-text-fill-color: #232323;
+  text-align: center;
 }
 
 .sectionsContainer {
@@ -65,6 +82,7 @@
   width: 254px;
   height: 254px;
   border-radius: 50%;
+  border: 2px solid var(--green);
   overflow: hidden;
 }
 
@@ -85,7 +103,8 @@
 }
 
 .buttonContainer {
-  padding: 21px 83px;
+  margin-top: 32px;
+  margin-bottom: 8px;
 }
 
 .editButton {
@@ -109,4 +128,29 @@
 .editButton:hover {
   background-color: var(--green);
   border-color: var(--green);
+}
+
+.profileCard {
+  width: 70%;
+  background-color: var(--white-dark);
+  border-radius: 6px;
+  box-shadow: inset 0px -10px 10px -10px rgba(0, 0, 0, 0.5);
+}
+
+.profileCard .profileCard__Date {
+  display: flex;
+  padding: 13px 18px;
+}
+
+.profileCard .profileCard__Date:not(:last-child) {
+  border-bottom: 1px solid var(--black);
+}
+
+.profileCard__Date p:first-child {
+  flex-basis: 50%;
+  flex-grow: 0;
+}
+
+.profileCard__Date p:last-child {
+  flex-grow: 1;
 }

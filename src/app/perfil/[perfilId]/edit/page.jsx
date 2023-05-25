@@ -29,11 +29,15 @@ const EditUser = () => {
     country: userData?.country,
     zipCode: userData?.zipCode,
     photo: userData?.photo,
+    city: userData?.city || "",
+    province: userData?.province || "",
   });
   const [errors, setErrors] = useState({
     firstname: "",
     lastname: "",
     phoneNumber: "",
+    city: "",
+    province: "",
     flag: false,
   });
 
@@ -53,6 +57,7 @@ const EditUser = () => {
       lastname: "",
       email: "",
       phoneNumber: "",
+
       flag: false,
     };
 
@@ -258,6 +263,7 @@ const EditUser = () => {
                         );
                       })}
                     </select>
+                    <p></p>
                   </div>
                   <div className={styles.inputContainer}>
                     <label htmlFor="zipCode">Código postal</label>
@@ -268,9 +274,31 @@ const EditUser = () => {
                       value={form.zipCode && form.zipCode}
                       onChange={handleChange}
                     />
+                    <p></p>
                   </div>
                 </div>
-
+                <div className={styles.inputsContainer}>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="province">Provincia:</label>
+                    <input
+                      type="text"
+                      name="province"
+                      value={form.province && form.province}
+                      onChange={handleChange}
+                    />
+                    <p></p>
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="city">Ciudad:</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={form.city && form.city}
+                      onChange={handleChange}
+                    />
+                    <p>{errors.city && errors.city} </p>
+                  </div>
+                </div>
                 <div className={styles.buttonsContainer}>
                   <button
                     className={styles.buttonCancel}
@@ -282,9 +310,9 @@ const EditUser = () => {
                   <button
                     className={styles.buttonSubmit}
                     type="submit"
-                    disabled={isActive}
+                    disabled={isActive || errors.flag}
                   >
-                    Aplicar cambios
+                    Guardar cambios
                   </button>
                 </div>
                 <div className={styles.loaderContainer}>
