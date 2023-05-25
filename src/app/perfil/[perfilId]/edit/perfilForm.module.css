@@ -54,36 +54,42 @@
 
 .buttonSubmit,
 .buttonCancel {
-  width: 253px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #131713;
+  border-radius: 58px;
+  width: 254px;
   height: 66px;
+  color: var(--white);
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.1em;
-  color: var(--white);
-  background: #131713;
-  border-radius: 58px;
   transition: all 0.3s ease-in-out;
 }
 
 .buttonSubmit:disabled,
 .buttonCancel:disabled {
-  background-color: var(--black-light);
-  color: var(--white);
+  opacity: 0.5;
+  cursor: default;
 }
 
 .buttonCancel:disabled:hover,
 .buttonSubmit:disabled:hover {
-  background-color: var(--black-light);
-  border-color: var(--black-light);
+  background-color: var(--black);
+
+  border: none;
 }
 
 .buttonSubmit:hover,
 .buttonCancel:hover,
 .changePwdButton:hover {
   background-color: var(--green);
-  border-color: var(--green);
+
+  border: none;
+  color: var(--white);
 }
 
 .inputsContainer {
@@ -97,7 +103,7 @@
   flex-direction: column;
   gap: 16px;
   width: 534px;
-  margin-bottom: 49px;
+  margin-bottom: 24px;
 }
 
 .inputContainer input {
