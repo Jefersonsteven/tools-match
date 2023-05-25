@@ -1,3 +1,5 @@
+
+
 .filter, .order {
     position:absolute;
     left:0;
@@ -16,20 +18,46 @@
     text-transform: capitalize;  
 }
 
-.filter h3 {
-    background: var(--black-light);
-    padding: 5px;
-}
-
 .button:hover .filter, 
 .button:hover .order {
     display: flex;
     flex-direction: column;
 }
 
+.type,
+.category,
+.brand {
+    display: none;
+}
+
+.subButton:hover .type,
+.subButton:hover .category,
+.subButton:hover .brand {
+    display: flex;
+    flex-direction: column;    
+}
+
 button.selected {
-    background-color: rgba(245, 245, 245, 0.886);
+    background-color: var(--white);
     color: black;
+  }
+
+  .clear {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .clear span {
+    margin-right: 2px;
+    margin-left: 2px;
+  
+  }
+  
+  .clear span {
+    margin-right: 4px;
+    white-space: nowrap;
   }
 
 

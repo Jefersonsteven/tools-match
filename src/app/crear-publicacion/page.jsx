@@ -5,9 +5,13 @@ import * as style from "./CreatePost.module.css";
 import { validatePost } from "./asset/validate";
 import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
+import Back from "@/components/back/Back";
 import Loader from "@/components/Loader/Loader";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { getLocation } from "./asset/getLocation";
+import axios from "axios";
+import Link from "next/link";
 
 function CreatePost() {
   const { form, setForm, errors, setErrors, userId, userData } =
@@ -17,6 +21,34 @@ function CreatePost() {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
+
+  async function coords(lat, long){
+    const mapImage = await axios.post("/api/maps", { lat, long });
+    const addMap = await axios.put(`/api/user/${userData.email}`, { map: mapImage.data});
+    const coordinates = await axios.put(`/api/user/${userData.email}`, {coordinates: [lat.toString(), long.toString()]});
+  }
+
+  useEffect(() => {
+    getLocation()
+      .then((position) => {
+        const { latitude, longitude } = position.coords;
+        coords(latitude, longitude)
+      }) 
+      .catch((error) => {
+        console.error("Error al obtener la ubicación:", error.message);
+        Swal.fire({
+          title: "Compartenos tu ubicación",
+          text: "No has agregado tu ubicación, la necesitamos para ubicar el producto a publicar",
+          icon: "warning",
+          showConfirmButton: false,
+          timer: 4000
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+            router.push(`/home`);
+          }
+        });
+      });
+  }, [router, userData]);
   
   useEffect(() => {
     if (!userData.firstname) router.push("/form/login");
@@ -41,28 +73,12 @@ function CreatePost() {
     event.preventDefault();
     setFetching(true);
 
-    // if (!userData.zipCode || !userData.country) {
-      Swal.fire({
-        title: "Vamos a Editar perfil?",
-        text: "No has agregado el pais de residencia o el codigo postal",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sí, Vamos!!",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          router.push(`/perfil/${userData.id}/edit`);
-        } else if (result.isDenied) {
-          router.push(`/home`);
-        }
-      });
-    //   return;
-    // }  //TODO: arreglar la condicional. hacer peticion para obtener la data del usuario y preguntarme si tiene algo en la propiedad map
-
     const error = Object.values(errors).some((e) => e.length > 0);
     const post = Object.values(form).some((e) => e.length === 0);
 
-    if (!error && !post) {
+    const map = await axios.get(`/api/user/${userData.email}`);
+
+    if (map.data.map && !error && !post) {
       if (form.photo.length > 0) {
         setMessage("Subiendo imagenes al servidor...");
         const urls = await uploadImages(form.photo, setUrlsImages);
@@ -81,10 +97,22 @@ function CreatePost() {
         const data = await post.json();
 
         if (data.id) {
-          Swal.fire({
-            title: "¡Publicación creada!",
-            text: "Tu publicación se ha creado correctamente.",
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+              toast.style.fontSize = "16px";
+            },
+          });
+
+          Toast.fire({
             icon: "success",
+            title: "Publicación creada con éxito",
           }).then(() => {
             router.push("/home");
           });
@@ -92,7 +120,7 @@ function CreatePost() {
           // ...
         } else {
           Swal.fire({
-            title: "Error",
+            title: "Error ",
             text: "Hubo un problema al crear la publicación.",
             icon: "error",
           });
@@ -119,6 +147,9 @@ function CreatePost() {
 
   return (
     <main className={style.main}>
+      <div className={style.back} >
+        <Back/>
+      </div>
       <section className={style.buttons}>
         <button
           className={form.type === "RENTAL" ? style.active : style.desactived}
@@ -209,7 +240,9 @@ function CreatePost() {
             <span>{errors.category}</span>
           </div>
           <div className={style.button}>
+            <button onClick={()=>router.back()}>Cancelar</button>
             <button onClick={handleSubmit}>Publicar</button>
+            <Link href="/home">Cancelar</Link>
           </div>
           <div className={style.loaderContainer}>
             {fetching && (

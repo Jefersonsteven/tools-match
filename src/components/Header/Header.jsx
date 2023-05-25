@@ -7,7 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { AppContext } from "@/context/AppContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Swal from "sweetalert2";
@@ -55,16 +55,20 @@ function Header() {
     }
   };
 
+  const [href, setHref] = useState("")
+
+  useEffect(() => {
+    setHref(userData ? "/crear-publicacion" : "/form/login")
+  }, [userData]);
+
   return (
-    <div>
-      {typeof window !== "undefined" && (
         <header className={styles.header}>
           <ul className={styles.logo}>
             <li>
               <Link href="/">
                 Tools Match
                 {/* <Image
-              src="/../public/images/logo/toolsMatch.jpg"
+              src="/assets/images/logo/toolsMatch.jpg"
               alt="logo"
               width={70}
               height={70}
@@ -97,13 +101,13 @@ function Header() {
                 <li>
                   {pathname !== "/" && (
                     <Link
-                      href={userData ? "/crear-publicacion" : "/form/login"}
+                      href={href}
                     >
                       Crear Publicaciones
                     </Link>
                   )}
                 </li>
-                {pathname !== "/favorite" && (
+                {pathname !== "/favorite" || pathname !== "/" && (
                   <li>
                     <Link href="/favorite">Favoritos</Link>
                   </li>
@@ -113,34 +117,51 @@ function Header() {
               {pathname !== "/" && (
                 <div className={styles.nav}>
                   <div className={styles.perfil}>
-                    <FaUserCircle
-                      size={25}
-                      onClick={() => setSubmenu((state) => !state)}
-                      color="white"
-                    />
+                    {userData && userData.photo ? (
+                      <Image
+                        className={styles.userImg}
+                        width={25}
+                        height={25}
+                        src={userData.photo}
+                        alt="user"
+                        onClick={() => setSubmenu((state) => !state)}
+                      />
+                    ) : (
+                      <FaUserCircle
+                        size={25}
+                        onClick={() => setSubmenu((state) => !state)}
+                        color="white"
+                      />
+                    )}
+
                     <ul
                       className={
                         submenu ? styles.openSubmenu : styles.closeSubmenu
                       }
                     >
+                      {userData && (
+                        <li>
+                          <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
+                        </li>
+                      )}
+                      {userData && (
+                        <li>
+                          <Link href={`/perfil/${userId}/changePassword`}>
+                            Cambiar contraseña
+                          </Link>
+                        </li>
+                      )}
                       <li onClick={handleCloseSession}>
                         <Link href={userData ? "/" : "/form/login"}>
                           {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
                         </Link>
                       </li>
-                      {userData && (
-                        <li>
-                          <Link href={`/perfil/${userId}`}>Perfil</Link>
-                        </li>
-                      )}
                     </ul>
                   </div>
 
                   <Link href="/cart" className={styles.cart}>
                     <FaShoppingCart size="25" color="white" />
-                    {cart?.count > 0 && (
-                      <span className={styles.cartCount}>{cart.count}</span>
-                    )}
+                    {cart?.count > 0 && <span className={styles.cartCount}>{cart.count}</span>}
                     <span className={styles.cartText}>Carrito de compras</span>
                   </Link>
                 </div>
@@ -148,8 +169,6 @@ function Header() {
             </>
           </nav>
         </header>
-      )}
-    </div>
   );
 }
 

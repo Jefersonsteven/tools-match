@@ -1,27 +1,99 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import styles from "./post.module.css";
 import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 function PostDetail({}) {
   const { postId } = useParams();
-  const { postDetail, setPostDetail, userId } = useContext(AppContext);
+  const { postDetail, setPostDetail, userId, cart, setCart } =
+    useContext(AppContext);
   const pd = postDetail;
-
-  function addCart() {
-    return true;
-  }
+  const router = useRouter();
 
   const pd2 = {
     author: {
       rating: 1.0,
     },
   };
+
+  function addCart() {
+    if (!cart.items.some((item) => item.id === postDetail.id)) {
+      setCart({
+        count: cart.count + 1,
+        items: [...cart.items, postDetail],
+      });
+
+      if (typeof window !== "undefined")
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            count: cart.count + 1,
+            items: [...cart.items, postDetail],
+          })
+        );
+
+        Swal.fire({
+          title: "¡Agregado al carrito!",
+          text: "El artículo se ha agregado al carrito correctamente.",
+          icon: "success",
+          showCancelButton: true,
+          confirmButtonText: "Ir al carrito",
+          cancelButtonText: "Seguir comprando",
+        }).then((result) => {
+          if (result.isConfirmed) {
+          router.push("/cart");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            router.push("/home");
+          }
+        });
+    } else {
+      Swal.fire({
+        title: "¡Producto ya agregado!",
+        text: "Este artículo ya se encuentra en tu carrito.",
+        icon: "warning",
+        showCancelButton: false,
+        timer: 2000,
+        didOpen: () => {
+          setTimeout(() => {
+            Swal.close();
+          }, 2000);
+        },
+      });
+    }
+  }
+
+  async function handleDeletePost() {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará el post. ¿Deseas continuar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const postDeleted = await axios.delete(
+          `/api/admin/post/${postDetail.id}`
+        );
+        await Swal.fire(
+          "¡Eliminado!",
+          "El post ha sido eliminado correctamente.",
+          "success"
+        );
+        router.push("/home");
+      } catch (error) {
+        Swal.fire("Error", "Hubo un problema al eliminar el post.", "error");
+      }
+    }
+  }
 
   useEffect(() => {
     fetch(`/api/admin/post/${postId}`)
@@ -86,9 +158,7 @@ function PostDetail({}) {
                 <p>{pd.brand}</p>
                 </div>
               </div>
-            </section>
-            <section className={styles.section_user}>
-              <figure className={styles.figure}>
+              <figure className={styles.map}>
                 <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
                 <Image
                   src={pd.author.map}
@@ -97,10 +167,12 @@ function PostDetail({}) {
                   alt={pd.author.zipCode + " " + pd.author.country}
                 />
               </figure>
+            </section>
+            <section className={styles.section_user}>
               <Link href={`/perfil/${pd.authorId}`}>
                 <figure>
                   <Image
-                    src={pd?.author.photo}
+                    src={pd.author.photo || "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"}
                     width={96}
                     height={96}
                     alt={pd.author.firstname}
@@ -116,14 +188,11 @@ function PostDetail({}) {
               </Link>
             </section>
             <section className={styles.section_button}>
-              {userId === pd.author.id && <button>Eliminar</button>}
-              {userId !== pd.author.id && pd.type === "SALE" && (
-                <Link href={addCart() && "/cart"}>
-                  <button>Comprar</button>
-                </Link>
+              {userId === pd.author.id && (
+                <button onClick={handleDeletePost}>Eliminar</button>
               )}
-              {userId !== pd.author.id && pd.type === "RENTAL" && (
-                <button>Arrendar</button>
+              {userId !== pd.author.id && (
+                <button onClick={addCart}>Agregar al carrito</button>
               )}
             </section>
           </>
@@ -134,3 +203,4 @@ function PostDetail({}) {
 }
 
 export default PostDetail;
+

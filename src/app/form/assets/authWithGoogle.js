@@ -32,10 +32,7 @@ export const callLoginGoogle = () => {
         });
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(error);
         reject(error);
       });
   });
@@ -55,7 +52,7 @@ export const getDataFromDB = async (
     false
   );
 
-  if (!dbUserData) {
+  if (!dbUserData || dbUserData.error) {
     Swal.fire({
       position: "center",
       title: `Parece que tu cuenta no esta en toolmatch registrate con Google o completa el formulario`,
@@ -66,8 +63,11 @@ export const getDataFromDB = async (
       router.push("/form/logout");
     }, 3000);
   } else {
+    const loginTime = new Date().getTime();
+
     saveInLocalStorage("token", dbUserData);
     saveInLocalStorage("id", dbUserData.id);
+    saveInLocalStorage("loginTime", loginTime);
     setUserData(dbUserData);
     setUserId(dbUserData.id);
 
@@ -91,7 +91,6 @@ export const createNewUserOrLogIn = async (
   let dbUserData = null;
   let password = generatePassword();
 
-  console.log(setDataMessage);
   setDataMessage("Iniciando sesión...");
 
   const body = {
@@ -104,17 +103,27 @@ export const createNewUserOrLogIn = async (
     false
   );
 
-  if (!dbUserData) {
+  console.log(dbUserData);
+
+  if (!dbUserData || dbUserData.error) {
     setDataMessage("Creando cuenta en toolmatch...");
-    await newPetition("POST", "http://localhost:3000/api/user", body);
+
+    await newPetition("POST", "/api/user", body);
     dbUserData = await newPetition(
       "GET",
       `/api/user/${userDataProvider.email}`,
       false
     );
   }
+
+  if (!dbUserData) {
+    throw new Error("Error al crear cuenta");
+  }
+
+  const loginTime = new Date().getTime();
   saveInLocalStorage("token", dbUserData);
   saveInLocalStorage("id", dbUserData.id);
+  saveInLocalStorage("loginTime", loginTime);
   setUserData(dbUserData);
   setUserId(dbUserData.id);
 

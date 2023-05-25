@@ -18,8 +18,13 @@ CREATE TABLE "User" (
     "phoneNumber" TEXT,
     "country" "Code",
     "zipCode" TEXT,
+    "city" TEXT,
+    "province" TEXT,
     "map" TEXT,
+    "coordinates" TEXT[],
     "reports" TEXT[],
+    "favorites" TEXT[],
+    "favoritesId" TEXT[],
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -32,6 +37,7 @@ CREATE TABLE "Post" (
     "photo" TEXT[],
     "category" TEXT NOT NULL,
     "brand" TEXT,
+    "status" TEXT,
     "price" DOUBLE PRECISION NOT NULL,
     "type" "Type" NOT NULL DEFAULT 'SALE',
     "hidden" BOOLEAN NOT NULL DEFAULT false,
