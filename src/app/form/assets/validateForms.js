@@ -95,3 +95,27 @@ export const validateEmailOnly = (email) => {
 
   return error;
 };
+
+export const validatePasswords = (form) => {
+  let errors = { flag: false };
+
+  if (!form.newPassword) {
+    errors.newPassword = "La nueva contraseña es requerida";
+    errors.flag = true;
+  }
+  if (!form.confirmNewPassword) {
+    errors.confirmNewPassword = "La confirmación es requerida";
+    errors.flag = true;
+  }
+  if (form.newPassword !== form.confirmNewPassword) {
+    errors.confirmNewPassword = "Las contraseñas no coinciden";
+    errors.flag = true;
+  }
+  if (!passwordRegex.test(form.newPassword)) {
+    errors.newPassword =
+      "La contraseña debe tener al menos 6 caracteres y al menos un número";
+    errors.flag = true;
+  }
+
+  return errors;
+};

@@ -3,7 +3,6 @@ import Link from "next/link";
 import styles from "../form.module.css";
 import { useEffect, useState } from "react";
 import { validateEmailOnly } from "../assets/validateForms";
-
 import customAlert from "../assets/customAlert";
 import { newPetition } from "../assets/petition";
 
@@ -18,16 +17,27 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = newPetition("POST", "api/sendEmail/resetPassword", {
-        email,
-      });
+      const response = await newPetition(
+        "POST",
+        "/api/sendEmail/resetPassword",
+        {
+          email,
+        }
+      );
+
+      if (!response) throw new Error("Error al enviar mail de recuperación");
+      customAlert(
+        8000,
+        "bottom-end",
+        "success",
+        `Se te ha enviado un mail de recuperación al correo ${email}`
+      );
     } catch (error) {
       console.error(error);
       customAlert(
         5000,
         "bottom-end",
         "error",
-        "",
         "Error al enviar mail de recuperación"
       );
     }
@@ -44,7 +54,7 @@ export default function Login() {
           onChange={(event) => setEmail(event.target.value)}
           autoComplete="off"
         />
-        <p>{error && error}</p>
+        <p className={styles.errorRecover}>{error && error}</p>
       </div>
       <div className={styles.recover__submitContainer}>
         <Link href="/form/login" className={styles.recover__buttonCancel}>

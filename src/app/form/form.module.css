@@ -124,7 +124,6 @@
 .inputContainer > p {
   margin-top: 11px;
   margin-bottom: 30px;
-
   height: 20px;
 }
 
@@ -229,7 +228,7 @@
 /* Recover Styles */
 
 .recover__message {
-  margin-bottom: 32px;
+  margin-bottom: 48px;
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -344,4 +343,8 @@
   align-items: center;
   margin-top: 32px;
   gap: 16px;
+}
+
+.errorRecover {
+  color: var(--red);
 }
