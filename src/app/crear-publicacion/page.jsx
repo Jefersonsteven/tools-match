@@ -5,6 +5,7 @@ import * as style from "./CreatePost.module.css";
 import { validatePost } from "./asset/validate";
 import { AppContext } from "@/context/AppContext";
 import { uploadImage } from "@/components/Cloudinary/upload";
+import Back from "@/components/back/Back";
 import Loader from "@/components/Loader/Loader";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -26,10 +27,18 @@ function CreatePost() {
       .then((position) => {
         const { latitude, longitude } = position.coords;
         axios.post("/api/maps", { latitude, longitude })
-          .then((response) => {
-            axios.put(`/api/user/${userData.email}`, { map: response.data })
+        .then((response) => {
+          axios.put(`/api/user/${userData.email}`, { 
+            map: response.data,
           })
-      })
+          .then(() => {
+            console.log(longitude, latitude);
+            axios.put(`/api/user/${userData.email}`, { 
+              coordinates: [latitude, longitude],
+            })
+          }) 
+        })
+      }) 
       .catch((error) => {
         console.error("Error al obtener la ubicación:", error.message);
         Swal.fire({
@@ -233,6 +242,7 @@ function CreatePost() {
             <span>{errors.category}</span>
           </div>
           <div className={style.button}>
+            <button onClick={()=>router.back()}>Cancelar</button>
             <button onClick={handleSubmit}>Publicar</button>
             <Link href="/home">Cancelar</Link>
           </div>
