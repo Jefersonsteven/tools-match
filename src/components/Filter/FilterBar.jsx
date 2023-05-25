@@ -335,7 +335,7 @@ export default function FilterBar() {
           <div className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ${style.clear}`}>
           <button  onClick={handleCleanFilters}>
         {/*   <span>Limpiar</span>
-          <span>Filtros</span>  */}/* se comenta debido a que genera conflictos con la funcionalidad del buton auxiliar falata corregir el estilo del boton
+          <span>Filtros</span>  */} 
           </button>
           </div>
           </div>
