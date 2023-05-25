@@ -14,6 +14,7 @@ import {
   handleOrderChange,
   handleClearFilters,
 } from "./handlers";
+import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 
 export default function FilterBar() {
   const { setCards, title, setTitle, selected, setSelected } =
@@ -66,6 +67,7 @@ export default function FilterBar() {
       <div className="relative z-10">
         <div className="flex-1 flex flex-row items-center justify-between px-2">
         <div className="mr-10" style={{ width: "400px" }}>
+          <FilterRangeDistance/>
         <SearchBar
           title={title}
           onTitleChange={handleTitle}
