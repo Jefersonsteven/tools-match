@@ -11,9 +11,7 @@ export default function Back() {
 
   return (
     <div onClick={handleBack} className={style.backContainer}>
-      <div className={style.back}>
-        <IoCaretBack size={50} color="var(--white)" />
-      </div>
+      <IoCaretBack size={50} color="var(--black)" className={style.icon} />
       <h3>Volver</h3>
     </div>
   );
