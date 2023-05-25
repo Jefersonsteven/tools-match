@@ -8,6 +8,7 @@ import Back from "@/components/back/Back";
 
 const Favorites = () => {
   const [favoriteArray, setFavoriteArray] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const { userData } =
     useContext(AppContext);
   useEffect(() => {
@@ -17,13 +18,15 @@ const Favorites = () => {
 
       // Update favoriteArray with the data from the response
       if (userData && userData.email) {
-        console.log(user.data.favorites.length);
+        // console.log(user.data.favorites.length);
         setFavoriteArray(user.data.favorites);
+        setRefresh(!refresh);
       }
     };
-
+    
     fetchData();
-  }, []); // Empty dependency array to run the effect only once on component mount
+    
+  }, [refresh]); // Empty dependency array to run the effect only once on component mount
 
   return (
     <div>
