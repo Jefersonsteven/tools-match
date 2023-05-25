@@ -1,4 +1,4 @@
-function calcularDistancia(latitud1, longitud1, latitud2, longitud2) {
+export function calcularDistancia(latitud1, longitud1, latitud2, longitud2) {
   const radioTierra = 6371; // Radio de la Tierra en kilómetros
 
   // Convertir las coordenadas a radianes
@@ -24,6 +24,7 @@ function calcularDistancia(latitud1, longitud1, latitud2, longitud2) {
   const distanciaRedondeada = Math.round(distancia * 100) / 100;
 
   return distanciaRedondeada;
+  console.log(distanciaRedondeada)
 }
 
 function toRadian(grados) {
@@ -31,11 +32,11 @@ function toRadian(grados) {
 }
 
 // Ejemplo de uso
-const latitud1 = 4.6517845;
+/* const latitud1 = 4.6517845;
 const longitud1 = -74.1417302;
 
-const latitud2 = 19.4248704;
-const longitud2 = -99.0445568;
+const latitud2 = 4.6517845;
+const longitud2 = -74.1417302;
 
 const distancia = calcularDistancia(latitud1, longitud1, latitud2, longitud2);
-console.log('La distancia entre las ubicaciones es: ' + distancia + ' km');
+console.log('La distancia entre las ubicaciones es: ' + distancia + ' km'); */
