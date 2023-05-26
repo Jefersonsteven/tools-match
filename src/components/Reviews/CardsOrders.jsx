@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { AiFillCheckCircle } from "react-icons/ai";
+import Modal from "react-modal";
+import CardsPurchasedItems from "./CardsPurchasedItems";
 
 const CardsOrders = ({ userOrders }) => {
   const formatDate = (dateString) => {
@@ -9,17 +11,38 @@ const CardsOrders = ({ userOrders }) => {
     return date.toLocaleDateString(undefined, options);
   };
 
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderPosts, setOrderPosts] = useState([]);
+
+  useEffect(() => {
+    if (selectedOrder) {
+      setOrderPosts(selectedOrder.postId);
+    }
+  }, [selectedOrder]);
+
+  const handleCardClick = (order) => {
+    setSelectedOrder(order);
+  };
+
+  const closeModal = () => {
+    setSelectedOrder(null);
+  };
+
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-xl">
         {userOrders.map((order) => (
-          <div key={order.id} className="p-4 my-2 bg-white rounded-md shadow-md">
+          <div
+            key={order.id}
+            className="p-4 my-2 bg-white rounded-md shadow-md cursor-pointer"
+            onClick={() => handleCardClick(order)}
+          >
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <AiFillCheckCircle className="text-green-500 mr-2 ml-6 text-4xl" />
                 <FaShoppingCart className="text-black text-4xl" />
               </div>
-              <div className="flex flex-col ">
+              <div className="flex flex-col">
                 <h3 className="text-black font-bold text-3xl">$ {order.amount}</h3>
                 <h4 className="text-gray-400 text-lg">{formatDate(order.date)}</h4>
               </div>
@@ -27,11 +50,17 @@ const CardsOrders = ({ userOrders }) => {
           </div>
         ))}
       </div>
+      <Modal isOpen={selectedOrder !== null} onRequestClose={closeModal}>
+        {selectedOrder && (
+          <CardsPurchasedItems orderPosts={orderPosts} />
+        )}
+      </Modal>
     </div>
   );
 };
 
 export default CardsOrders;
+
 
 // import React from "react";
 // import FormReview from "./FormReview";
