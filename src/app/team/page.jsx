@@ -45,16 +45,18 @@ export default function Team() {
 
   return (
     <div>
-      <Back />
-      <section className={style.teamContainer}>
+      <div className={style.backcontainer}>
+        <Back />
+      </div>
+      <div className={style.teamContainer}>
         <div className={style.infoTeam}>
           <p className={style.teamSubTitle}>
-            Somos un equipo de colaboradores detrás de ToolsMatch demostrando un
-            alto nivel de compromiso, pasión y profesionalismo en nuestro
-            trabajo. Es inspirador ver cómo trabajamos juntos para lograr los
-            objetivos y ofrecer un servicio excepcional a nuestros clientes.{" "}
+            Somos un equipo de colaboradores detrás de{" "}
+            <span className={style.brand}>ToolsMatch</span> demostrando un alto
+            nivel de compromiso, pasión y profesionalismo en nuestro trabajo. Es
+            inspirador ver cómo trabajamos juntos para lograr los objetivos y
+            ofrecer un servicio excepcional a nuestros clientes.
           </p>
-          <p className={style.teamTitle}>EQUIPO</p>
         </div>
         <div className={style.teamContact}>
           {team.map((person) => (
@@ -90,7 +92,7 @@ export default function Team() {
             </div>
           ))}
         </div>
-      </section>
+      </div>
     </div>
   );
 }

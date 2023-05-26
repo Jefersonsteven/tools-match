@@ -1,38 +1,11 @@
-
-.backContainer{
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  gap: 1rem;
-  cursor: pointer;
-  margin-top: 50px;
-  margin: 50px 0 0 50px;
-  
-}
-.backContainer h3{
-  display: flex;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--black-light);
-  align-items: center;
-  gap: 1rem;
-}
-.back{
-  width: 70px;
-  height: 70px;
-  padding: 10px;
-  background-color: var(--orange);
-  border-radius: 20px;
-}
 .teamContainer {
-  background-color: #DCF1D9;
+  background-color: #dcf1d9;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 .infoTeam {
@@ -41,16 +14,11 @@
   text-align: center;
 }
 
-.teamTitle {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #131713;
-  padding-top: 50px;
-}
-
 .teamSubTitle {
   padding-top: 2rem;
   color: #131713;
+  font-size: 3rem;
+  font-weight: 700;
 }
 
 .mainMembers {
@@ -59,41 +27,40 @@
 }
 
 .teamContact {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem 5rem;
   border-radius: 50%;
-  max-width: 1000px;
   margin: 1rem;
   text-align: center;
 }
 
 .teamContactInfo {
-  background-color: #BDCFBA;
+  background-color: #bdcfba;
   justify-content: space-evenly;
   margin: 1rem;
-  padding: 1rem;
+  padding: 3rem;
   border-radius: 10px;
   max-width: 1000px;
   margin: 1rem;
   text-align: center;
   position: relative;
   transition: transform 0.3s, box-shadow 0.3s;
+  font-weight: 600;
 }
 
 .teamContactInfo:hover {
   transform: scale(1.05);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0);
+  z-index: 5;
 }
 
 .teamImage {
-  background-color: #DCF1D9;
+  background-color: #dcf1d9;
   display: inline-table;
   opacity: 1;
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   margin-top: 20px;
 }
@@ -108,7 +75,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0;
 }
 
 .teamLinks a {
@@ -116,21 +83,33 @@
   color: black;
   margin: 0 10px;
   position: relative;
-  color: #0d4491;
 }
 
-.teamLinks a:hover::after {
-  content: "";
-  position: absolute;
+.teamLinks a:hover {
   left: 0;
   right: 0;
   bottom: -2px;
   height: 2px;
-  background-color: #0d4491
+  transform: scale(1.1);
 }
-  .github{
-    width: 45px;
-  }
-  .linkedin{
-    height: 45px;
-  }
+.github {
+  width: 45px;
+}
+.linkedin {
+  height: 45px;
+}
+
+.backcontainer {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 100px;
+  left: 0;
+}
+
+.brand {
+  color: orange;
+  font-weight: 900;
+}
