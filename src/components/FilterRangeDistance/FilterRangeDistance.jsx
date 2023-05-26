@@ -6,7 +6,7 @@ import { getLocation } from "@/app/crear-publicacion/asset/getLocation";
 
 function FilterRangeDistance({ handleKm }) {
   const { userData } = useContext(AppContext);
-  const [range, setRange] = useState(4000);
+  const [range, setRange] = useState(6000);
 
   async function coords(lat, long) {
     try {
