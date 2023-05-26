@@ -9,6 +9,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Back from "@/components/back/Back";
 
 function Page() {
   const [disabled, setDisabled] = useState(true);
@@ -119,86 +120,89 @@ function Page() {
   }
 
   return (
-    <main className={styles.container}>
-      <section className={styles.form_container}>
-        <form className={styles.form}>
-          <div>
-            <label htmlFor="">Nombre Completo:</label>
-            <input
-              onChange={handleForm}
-              type="text"
-              value={form.fullname}
-              name="fullname"
-            />
-            <span>{errors.fullname}</span>
-          </div>
-          <div>
-            <label htmlFor="">Correo:</label>
-            <input
-              onChange={handleForm}
-              type="email"
-              value={form.email}
-              name="email"
-            />
-            <span>{errors.email}</span>
-          </div>
-          <div>
-            <label htmlFor="">Celular:</label>
-            <input
-              onChange={handleForm}
-              type="number"
-              value={form.phoneNumber}
-              name="phone"
-            />
-            <span>{errors.phoneNumber}</span>
-          </div>
-          <div>
-            <label htmlFor="">Direccion:</label>
-            <input
-              onChange={handleForm}
-              type="text"
-              value={form.address}
-              name="address"
-            />
-            <span>{errors.address}</span>
-          </div>
-        </form>
-      </section>
-      <section className={styles.payment}>
-        <div className={styles.cart}>
-          <div className={styles.cartItems}>
-            {cart.items?.map((item) => (
-              <div key={item.id} className={styles.item}>
-                <h4>{item.title}</h4>
-                <h4>${item.price}</h4>
-              </div>
-            ))}
-          </div>
-          <div className={styles.total}>
-            <h3>TOTAL:</h3>
-            <h3>${cart?.items.reduce((acc, item) => acc + item.price, 0)}</h3>
-          </div>
-        </div>
-        <div className={styles.gateway}>
-          <button onClick={() => setGateway(true)} disabled={disabled}>
-            Opciones de Pago
-          </button>
-          {gateway && (
+    <div>
+      <Back />
+      <main className={styles.container}>
+        <section className={styles.form_container}>
+          <form className={styles.form}>
             <div>
-              <button>Contra Entrega</button>
-              <button>Tarjeta de credito</button>
-              <button
-                className={styles.mercadopago}
-                onClick={handleMercadoPago}
-              >
-                <SiMercadopago size={35} color="#fff" />
-                <p>Mercado Pago</p>
-              </button>
+              <label htmlFor="">Nombre Completo:</label>
+              <input
+                onChange={handleForm}
+                type="text"
+                value={form.fullname}
+                name="fullname"
+              />
+              <span>{errors.fullname}</span>
             </div>
-          )}
-        </div>
-      </section>
-    </main>
+            <div>
+              <label htmlFor="">Correo:</label>
+              <input
+                onChange={handleForm}
+                type="email"
+                value={form.email}
+                name="email"
+              />
+              <span>{errors.email}</span>
+            </div>
+            <div>
+              <label htmlFor="">Celular:</label>
+              <input
+                onChange={handleForm}
+                type="number"
+                value={form.phoneNumber}
+                name="phone"
+              />
+              <span>{errors.phoneNumber}</span>
+            </div>
+            <div>
+              <label htmlFor="">Direccion:</label>
+              <input
+                onChange={handleForm}
+                type="text"
+                value={form.address}
+                name="address"
+              />
+              <span>{errors.address}</span>
+            </div>
+          </form>
+        </section>
+        <section className={styles.payment}>
+          <div className={styles.cart}>
+            <div className={styles.cartItems}>
+              {cart.items?.map((item) => (
+                <div key={item.id} className={styles.item}>
+                  <h4>{item.title}</h4>
+                  <h4>${item.price}</h4>
+                </div>
+              ))}
+            </div>
+            <div className={styles.total}>
+              <h3>TOTAL:</h3>
+              <h3>${cart?.items.reduce((acc, item) => acc + item.price, 0)}</h3>
+            </div>
+          </div>
+          <div className={styles.gateway}>
+            <button onClick={() => setGateway(true)} disabled={disabled}>
+              Opciones de Pago
+            </button>
+            {gateway && (
+              <div>
+                <button>Contra Entrega</button>
+                <button>Tarjeta de credito</button>
+                <button
+                  className={styles.mercadopago}
+                  onClick={handleMercadoPago}
+                >
+                  <SiMercadopago size={35} color="#fff" />
+                  <p>Mercado Pago</p>
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
 
