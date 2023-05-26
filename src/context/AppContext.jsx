@@ -67,6 +67,9 @@ function AppProvider({ children }) {
     },
     title: "",
     brand: "",
+    coorde1: "",
+    coorde2: "",
+    km: "",
   }); //lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 

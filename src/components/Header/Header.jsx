@@ -89,23 +89,28 @@ function Header() {
         <>
           <ul className={styles.nav}>
             {pathname !== "/team" && (
-              <li>
+              <li className={styles.navLi}>
                 <Link href="/team">Nosotros</Link>
               </li>
             )}
-            <li>
+            <li className={styles.navLi}>
               <Link href="/home">
                 {pathname === "/" ? "Home" : "Publicaciones"}
               </Link>
             </li>
-            <li>
-              {pathname !== "/" && <Link href={href}>Crear Publicaciones</Link>}
+            <li className={styles.navLi}>
+              {pathname !== "/" && (
+                <Link href={userData ? href : "/home"}>
+                  Crear Publicaciones
+                </Link>
+              )}
             </li>
-            {pathname !== "/favorite" && (
-              <li>
-                <Link href="/favorite">Favoritos</Link>
-              </li>
-            )}
+            {pathname !== "/favorite" ||
+              (pathname !== "/" && (
+                <li className={styles.navLi}>
+                  <Link href="/favorite">Favoritos</Link>
+                </li>
+              ))}
           </ul>
 
           {pathname !== "/" && (
@@ -133,7 +138,7 @@ function Header() {
                 >
                   {userData && (
                     <li>
-                      <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
+                      <Link href={`/perfil/${userId}`}>ver Perfil</Link>
                     </li>
                   )}
                   {userData && (

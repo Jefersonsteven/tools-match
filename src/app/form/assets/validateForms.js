@@ -62,7 +62,7 @@ export function validateSignIn(inputs) {
   !inputs.email && (errors.email = "");
 
   if (!passwordRegex.test(inputs.password)) {
-    errors.password = "Debe tener un número al menos 6 caracteres ";
+    errors.password = "Debe tener un número y al menos 6 caracteres ";
     errors.flag = true;
   }
 
@@ -85,3 +85,37 @@ export function validateSignIn(inputs) {
 
   return errors;
 }
+
+export const validateEmailOnly = (email) => {
+  let error = "";
+
+  if (!emailRegex.test(email) && email.length > 0) {
+    error = "Email inválido";
+  }
+
+  return error;
+};
+
+export const validatePasswords = (form) => {
+  let errors = { flag: false };
+
+  if (!form.newPassword) {
+    errors.newPassword = "La nueva contraseña es requerida";
+    errors.flag = true;
+  }
+  if (!form.confirmNewPassword) {
+    errors.confirmNewPassword = "La confirmación es requerida";
+    errors.flag = true;
+  }
+  if (form.newPassword !== form.confirmNewPassword) {
+    errors.confirmNewPassword = "Las contraseñas no coinciden";
+    errors.flag = true;
+  }
+  if (!passwordRegex.test(form.newPassword)) {
+    errors.newPassword =
+      "La contraseña debe tener al menos 6 caracteres y al menos un número";
+    errors.flag = true;
+  }
+
+  return errors;
+};
