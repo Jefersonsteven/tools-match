@@ -33,13 +33,15 @@
     display: flex;
     padding: 0 1rem;
 }
-.contactMail{
-    width: 35px;
-}
 .contactTwitter{
-    width: 45px;
     margin-left: 10px;
 }
 .contactMail, .contactTwitter{
     height: 35px;
+    width: 30px;
+    color: var(--white-dark);
+}
+.contactMail:hover, .contactTwitter:hover{
+    color: var(--orange);
+    cursor: pointer;
 }

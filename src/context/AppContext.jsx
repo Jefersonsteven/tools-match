@@ -124,11 +124,9 @@ function AppProvider({ children }) {
   useEffect(() => {
     checkSessionExpiration();
   }, []);
-  // * Favorites *//
-  const [favorites, setFavorites] = useState(
-    typeof window !== "undefined" &&
-      JSON.parse(localStorage.getItem("favorites")) //agregado por Adriana
-  );
+
+  // * Favorite *//
+  const [favorite, setFavorite, isFavorite, setIsFavorite] = useState([]);
 
   // *---------------------------------------* //
 
@@ -183,8 +181,10 @@ function AppProvider({ children }) {
         setuserPosts,
         cart,
         setCart,
-        favorites,
-        setFavorites,
+        favorite,
+        setFavorite,
+        isFavorite,
+        setIsFavorite,
       }}
     >
       {children}

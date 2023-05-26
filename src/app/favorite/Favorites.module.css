@@ -1,0 +1,29 @@
+.favTitle{
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 2rem 2rem;
+  text-align: center;
+
+}
+.favContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.favCards {
+  flex: 1 1 250px;
+  max-width: 250px;
+  margin: 20px;
+}
+
+@media (max-width: 80%) {
+  .favContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+}
