@@ -57,7 +57,7 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
- 
+
   const [selected, setSelected] = useState({
     category: "",
     type: "",
@@ -122,9 +122,8 @@ function AppProvider({ children }) {
     checkSessionExpiration();
   }, []);
 
-  // * Favorites *//
-  const [favorites, setFavorites] = useState([]);
-  const [favorite, setFavorite] = useState();
+  // * Favorite *//
+  const [favorite, setFavorite, isFavorite, setIsFavorite] = useState([]);
 
   // *---------------------------------------* //
 
@@ -179,10 +178,10 @@ function AppProvider({ children }) {
         setuserPosts,
         cart,
         setCart,
-        favorites,
-        setFavorites,
         favorite,
         setFavorite,
+        isFavorite,
+        setIsFavorite,
       }}
     >
       {children}

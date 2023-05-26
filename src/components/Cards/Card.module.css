@@ -90,7 +90,12 @@
     color: var(--orange);
   }
   
-  .favoriteActive {
-    color: var(--white-dark); /* Modificado: color verde */
+  .favoriteIconActive {
+    font-size: 35px;
+    color: var(--white-dark);
+    cursor: pointer;
+    padding: 4px;
+    margin-inline-start: auto;
+    border-radius: 50%;
+    color:var(--orange); /* Modificado: color verde */
   }
-  

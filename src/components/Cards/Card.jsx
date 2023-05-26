@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "@/context/AppContext";
 import { FaHeart } from "react-icons/fa";
 import styles from "./Card.module.css";
@@ -8,19 +8,33 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 
-const Card = ({
-  title,
-  photo,
-  price,
-  type,
-  perDay,
-  id,
-  isFavorite,
-  // onRemoveFromFavorite,
-}) => {
+const Card = ({ title, photo, price, type, perDay, id }) => {
   const { favorites, setFavorites, favorite, setFavorite, userData } =
     useContext(AppContext);
-  // let favoriteArray = [];
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`api/user/${userData.email}`);
+        const user = response.data;
+        let favoriteArray = user.favoritesId;
+
+        if (favoriteArray.includes(id)) {
+          setIsFavorite(true);
+        } else {
+          setIsFavorite(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (userData && userData.email) {
+      fetchData();
+    }
+  }, [favorites, id, userData, refresh]);
+
   const handleFavoriteClick = async (id) => {
     const user = await axios.get(`api/user/${userData.email}`);
     if (userData && userData.email) {
@@ -28,8 +42,10 @@ const Card = ({
       if (favoriteArray.includes(id) === true) {
         let newFav = favoriteArray.filter((e) => e !== id);
         favoriteArray = newFav;
+        setIsFavorite(false);
       } else {
         favoriteArray.push(id);
+        setIsFavorite(true);
       }
       try {
         // Update the favorites array in the API
@@ -44,27 +60,9 @@ const Card = ({
       //TODO: agregar alerrta o algo parecido donde diga que para agregar favoritos debe iniciar sesion
       console.error("userData or email is null or undefined");
     }
+    setRefresh(!refresh);
   };
 
-  // const user = axios.get(`api/user/${userData.email}`);
-  // let favoriteArray = user.data.favoritesId;
-  // const handleFavoriteHeart = (id) => {
-  //   console.log("handleFavoriteHeart");
-  //   console.log(id);
-
-  //   if (userData && userData.email) {
-  //     console.log(favoriteArray.length);
-  //     if (favoriteArray.includes(id) === true) {
-  //       console.log(id);
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } else {
-  //     //TODO: agregar alerrta o algo parecido donde diga que para agregar favoritos debe iniciar sesion
-  //     console.error("userData or email is null or undefined");
-  //   }
-  // };
   return (
     <div className={`${styles.cardContainer} bg-white rounded-md p-4`}>
       <div className={styles.favoriteContainer}>

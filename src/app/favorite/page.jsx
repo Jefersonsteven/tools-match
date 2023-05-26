@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "@/context/AppContext";
 import axios from "axios";
 import Card from "@/components/Cards/Card";
 import styles from "./Favorites.module.css";
@@ -7,7 +8,8 @@ import Back from "@/components/back/Back";
 
 const Favorites = () => {
   const [favoriteArray, setFavoriteArray] = useState([]);
-
+  const [refresh, setRefresh] = useState(false);
+  const { userData } = useContext(AppContext);
   useEffect(() => {
     const fetchData = async () => {
       // Fetch user data
@@ -15,13 +17,14 @@ const Favorites = () => {
 
       // Update favoriteArray with the data from the response
       if (userData && userData.email) {
-        console.log(user.data.favorites.length);
+        // console.log(user.data.favorites.length);
         setFavoriteArray(user.data.favorites);
+        setRefresh(!refresh);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array to run the effect only once on component mount
+  }, [refresh]); // Empty dependency array to run the effect only once on component mount
 
   return (
     <div>
@@ -33,7 +36,7 @@ const Favorites = () => {
             key={card.id}
             id={card.id}
             title={card.title}
-            photo={card.photo}
+            photo={card.photo[0]}
             price={card.price}
             type={card.type}
             perDay={card.perDay}

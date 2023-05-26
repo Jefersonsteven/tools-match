@@ -55,120 +55,114 @@ function Header() {
     }
   };
 
-  const [href, setHref] = useState("")
+  const [href, setHref] = useState("");
 
   useEffect(() => {
-    setHref(userData ? "/crear-publicacion" : "/form/login")
+    setHref(userData ? "/crear-publicacion" : "/form/login");
   }, [userData]);
 
   return (
-        <header className={styles.header}>
-          <ul className={styles.logo}>
-            <li>
-              <Link href="/">
-                Tools Match
-                {/* <Image
+    <header className={styles.header}>
+      <ul className={styles.logo}>
+        <li>
+          <Link href="/">
+            Tools Match
+            {/* <Image
               src="/assets/images/logo/toolsMatch.jpg"
               alt="logo"
               width={70}
               height={70}
             /> */}
+          </Link>
+        </li>
+        {userId &&
+          userData.admin &&
+          !(pathname.split("/")[1] === "dashboard") && (
+            <li>
+              <Link href="/dashboard/users">
+                <button>Dashboard</button>
               </Link>
             </li>
-            {userId &&
-              userData.admin &&
-              !(pathname.split("/")[1] === "dashboard") && (
-                <li>
-                  <Link href="/dashboard/users">
-                    <button>Dashboard</button>
-                  </Link>
-                </li>
-              )}
+          )}
+      </ul>
+      <nav className={styles.nav}>
+        <>
+          <ul className={styles.nav}>
+            {pathname !== "/team" && (
+              <li>
+                <Link href="/team">Nosotros</Link>
+              </li>
+            )}
+            <li>
+              <Link href="/home">
+                {pathname === "/" ? "Home" : "Publicaciones"}
+              </Link>
+            </li>
+            <li>
+              {pathname !== "/" && <Link href={href}>Crear Publicaciones</Link>}
+            </li>
+            {pathname !== "/favorite" && (
+              <li>
+                <Link href="/favorite">Favoritos</Link>
+              </li>
+            )}
           </ul>
-          <nav className={styles.nav}>
-            <>
-              <ul className={styles.nav}>
-                {pathname !== "/team" && (
-                  <li>
-                    <Link href="/team">Nosotros</Link>
-                  </li>
+
+          {pathname !== "/" && (
+            <div className={styles.nav}>
+              <div className={styles.perfil}>
+                {userData && userData.photo ? (
+                  <Image
+                    className={styles.userImg}
+                    width={25}
+                    height={25}
+                    src={userData.photo}
+                    alt="user"
+                    onClick={() => setSubmenu((state) => !state)}
+                  />
+                ) : (
+                  <FaUserCircle
+                    size={25}
+                    onClick={() => setSubmenu((state) => !state)}
+                    color="white"
+                  />
                 )}
-                <li>
-                  <Link href="/home">
-                    {pathname === "/" ? "Home" : "Publicaciones"}
-                  </Link>
-                </li>
-                <li>
-                  {pathname !== "/" && (
-                    <Link
-                      href={href}
-                    >
-                      Crear Publicaciones
-                    </Link>
+
+                <ul
+                  className={submenu ? styles.openSubmenu : styles.closeSubmenu}
+                >
+                  {userData && (
+                    <li>
+                      <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
+                    </li>
                   )}
-                </li>
-                {pathname !== "/favorite" || pathname !== "/" && (
-                  <li>
-                    <Link href="/favorite">Favoritos</Link>
+                  {userData && (
+                    <li>
+                      <Link href={`/perfil/${userId}/changePassword`}>
+                        Cambiar contraseña
+                      </Link>
+                    </li>
+                  )}
+                  <li onClick={handleCloseSession}>
+                    <Link href={userData ? "/" : "/form/login"}>
+                      {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
+                    </Link>
                   </li>
+                </ul>
+              </div>
+
+              <Link href="/cart" className={styles.cart}>
+                <FaShoppingCart size="25" color="white" />
+                {cart?.count > 0 && (
+                  <span className={styles.cartCount}>{cart.count}</span>
                 )}
-              </ul>
-
-              {pathname !== "/" && (
-                <div className={styles.nav}>
-                  <div className={styles.perfil}>
-                    {userData && userData.photo ? (
-                      <Image
-                        className={styles.userImg}
-                        width={25}
-                        height={25}
-                        src={userData.photo}
-                        alt="user"
-                        onClick={() => setSubmenu((state) => !state)}
-                      />
-                    ) : (
-                      <FaUserCircle
-                        size={25}
-                        onClick={() => setSubmenu((state) => !state)}
-                        color="white"
-                      />
-                    )}
-
-                    <ul
-                      className={
-                        submenu ? styles.openSubmenu : styles.closeSubmenu
-                      }
-                    >
-                      {userData && (
-                        <li>
-                          <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
-                        </li>
-                      )}
-                      {userData && (
-                        <li>
-                          <Link href={`/perfil/${userId}/changePassword`}>
-                            Cambiar contraseña
-                          </Link>
-                        </li>
-                      )}
-                      <li onClick={handleCloseSession}>
-                        <Link href={userData ? "/" : "/form/login"}>
-                          {userData ? "Cerrar Sesion" : "Iniciar Sesion"}
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <Link href="/cart" className={styles.cart}>
-                    <FaShoppingCart size="25" color="white" />
-                    {cart?.count > 0 && <span className={styles.cartCount}>{cart.count}</span>}
-                    <span className={styles.cartText}>Carrito de compras</span>
-                  </Link>
-                </div>
-              )}
-            </>
-          </nav>
-        </header>
+                <span className={styles.cartText}>Carrito de compras</span>
+              </Link>
+            </div>
+          )}
+        </>
+      </nav>
+    </header>
   );
 }
 
