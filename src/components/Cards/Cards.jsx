@@ -23,6 +23,7 @@ const Cards = () => {
       setFilteredCards(res.data);
       setIsLoading(false);
     });
+
   }, [setCards, setFilteredCards]);
 
   /* ----------PAGINATED ----------- */
