@@ -27,7 +27,6 @@ export default function FilterBar() {
 
   useEffect(() => {
     fetchCards(selected, setCards, title);
-    console.log("filtro");
   }, [selected, setCards]);
 
   const handleTitle = (newTitle) => {
