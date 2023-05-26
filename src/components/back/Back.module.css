@@ -6,23 +6,25 @@
   cursor: pointer;
   margin-top: 50px;
   margin: 50px 0 0 50px;
-}
-.backContainer h3 {
-  display: flex;
-  justify-content: center;
-  font-weight: 300;
-  color: var(--black-light);
   align-items: center;
-  gap: 1rem;
 }
 .icon{
   font-size: 4.5rem;
   color: var(--black-light);
+  opacity: 0.8;
 }
 .title{
+  display: flex;
+  justify-content: center;
   font-size: 2.5rem;
-  color: var(--black-light);
+  color: black;
+  font-weight: 300;
+  align-items: center;
+  gap: 1rem;
 }
 .title:hover{
-  font-weight: 600;
+  font-weight: 700;
+}
+.icon:hover{
+  opacity: 1;
 }
