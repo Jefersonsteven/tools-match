@@ -8,9 +8,9 @@ function FilterRangeDistance({ handleKm }) {
   const { userData } = useContext(AppContext);
   const [range, setRange] = useState(6000);
 
-  async function coords(lat, long) {
+  async function coords(latitude, longitude) {
     try {
-      const mapImage = await axios.post("/api/maps", { lat, long });
+      const mapImage = await axios.post("/api/maps", { latitude, longitude });
       const addMap = await axios.put(`/api/user/${userData.email}`, {
         map: mapImage.data,
       });
@@ -40,6 +40,7 @@ function FilterRangeDistance({ handleKm }) {
     const value = e.target.value;
     setRange(value);
   }
+
   return (
     <div>
       <div className={styles.rangeContainer}>

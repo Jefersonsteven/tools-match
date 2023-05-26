@@ -22,8 +22,8 @@ function CreatePost() {
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function coords(lat, long) {
-    const mapImage = await axios.post("/api/maps", { lat, long });
+  async function coords(latitude, longitude) {
+    const mapImage = await axios.post("/api/maps", { latitude, longitude });
     const addMap = await axios.put(`/api/user/${userData.email}`, {
       map: mapImage.data,
     });
