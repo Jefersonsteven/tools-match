@@ -16,6 +16,7 @@ import {
   handleKmChange,
 } from "./handlers";
 import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
+import { AiOutlineClear } from "react-icons/ai";
 
 export default function FilterBar() {
   const { setCards, title, setTitle, selected, setSelected } =
@@ -55,7 +56,7 @@ export default function FilterBar() {
   // handleKm - Jeffer
   const handleKm = (km, coorde1, coorde2) => {
     handleKmChange(setSelected, km, coorde1, coorde2);
-    console.log(crad)
+    console.log(crad);
   };
 
   const handleCleanFilters = () => {
@@ -363,12 +364,9 @@ export default function FilterBar() {
             </div>
           </div>
           <div className={`ml-8 relative ${style.button}`}>
-            <div
-              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ${style.clear}`}
-            >
-              <button onClick={handleCleanFilters}>
-                {/*   <span>Limpiar</span>
-          <span>Filtros</span>  */}
+            <div className={style.clear}>
+              <button onClick={handleCleanFilters} className={style.clearbtn}>
+                <AiOutlineClear className="mr-2" />
               </button>
             </div>
           </div>

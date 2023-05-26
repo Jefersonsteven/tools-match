@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         createdAt: "desc",
       },
     });
-    res.status(200).json(posts);
+    return res.status(200).json(posts);
   }
   if (req.method === "PUT") {
     try {
@@ -30,11 +30,11 @@ export default async function handler(req, res) {
         },
       });
 
-      res.status(200).json(users);
+      return res.status(200).json(users);
     } catch (error) {
-      res.status(500).json({ error: "Error deleting posts." });
+      return res.status(500).json({ error: "Error deleting posts." });
     }
   } else {
-    res.status(405).json({ message: "Método HTTP no permitido" });
+    return res.status(405).json({ message: "Método HTTP no permitido" });
   }
 }
