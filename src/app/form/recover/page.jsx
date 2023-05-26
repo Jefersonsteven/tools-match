@@ -5,10 +5,13 @@ import { useEffect, useState } from "react";
 import { validateEmailOnly } from "../assets/validateForms";
 import customAlert from "../assets/customAlert";
 import { newPetition } from "../assets/petition";
+import Loader from "@/components/Loader/Loader";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [fetchingData, setFetchingData] = useState(false);
+  const [dataMessage, setDataMessage] = useState("");
 
   useEffect(() => {
     setError(validateEmailOnly(email));
@@ -16,7 +19,9 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setFetchingData(true);
     try {
+      setDataMessage("Enviando correo de recuperación...");
       const response = await newPetition(
         "POST",
         "/api/sendEmail/resetPassword",
@@ -24,13 +29,16 @@ export default function Login() {
           email,
         }
       );
-
-      if (!response) throw new Error("Error al enviar mail de recuperación");
+      console.log(response);
+      if (response.Error)
+        throw new Error(
+          response.Error || "Error al enviar mail de recuperación"
+        );
       customAlert(
         8000,
         "bottom-end",
         "success",
-        `Se te ha enviado un mail de recuperación al correo ${email}`
+        `Se ha enviado un mail de recuperación a ${email}`
       );
     } catch (error) {
       console.error(error);
@@ -38,9 +46,11 @@ export default function Login() {
         5000,
         "bottom-end",
         "error",
-        "Error al enviar mail de recuperación"
+        "Error al enviar mail de recuperación:" + error.message
       );
     }
+    setDataMessage("");
+    setFetchingData(false);
   };
 
   return (
@@ -61,11 +71,19 @@ export default function Login() {
           Cancelar
         </Link>
         <button
-          disabled={!email ? true : error ? true : false}
+          disabled={!email ? true : error ? true : fetchingData ? true : false}
           className={styles.recover__buttonSubmit}
         >
           Recuperar contraseña
         </button>
+      </div>
+      <div className={styles.loaderContainer}>
+        {fetchingData && (
+          <>
+            <Loader />
+            <p>{dataMessage && dataMessage}</p>
+          </>
+        )}
       </div>
     </form>
   );
