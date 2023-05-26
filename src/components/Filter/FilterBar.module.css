@@ -1,70 +1,80 @@
-
-
-.filter, .order {
-    position:absolute;
-    left:0;
-    top: 43px;
-    width: 100%;
-    background: var(--black);
-    color: var(--white); 
-    display: none; 
+.filter,
+.order {
+  position: absolute;
+  left: 0;
+  top: 43px;
+  width: 100%;
+  background: var(--black);
+  color: var(--white);
+  display: none;
 }
 
 .filter button,
 .order button {
-    width: 100%;
-    border-radius: 0px;
-    border-bottom: 1px solid var(--white);
-    text-transform: capitalize;  
+  width: 100%;
+  border-radius: 0px;
+  border-bottom: 1px solid var(--white);
+  text-transform: capitalize;
 }
 
-.button:hover .filter, 
+.button:hover .filter,
 .button:hover .order {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .type,
 .category,
 .brand {
-    display: none;
+  display: none;
 }
 
 .subButton:hover .type,
 .subButton:hover .category,
 .subButton:hover .brand {
-    display: flex;
-    flex-direction: column;    
+  display: flex;
+  flex-direction: column;
 }
 
 button.selected {
-    background-color: var(--white);
-    color: black;
-  }
+  background-color: var(--white);
+  color: black;
+}
 
-  .clear {
-    width: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .clear span {
-    margin-right: 2px;
-    margin-left: 2px;
-  
-  }
-  
-  .clear span {
-    margin-right: 4px;
-    white-space: nowrap;
-  }
+.clear {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.clear span {
+  margin-right: 2px;
+  margin-left: 2px;
+}
 
+.clear span {
+  margin-right: 4px;
+  white-space: nowrap;
+}
 
+.clearbtn {
+  background-color: var(--black);
+  color: white;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 45px;
+  font-size: 3rem;
+}
 
 /* /////////////////////////////////////////////////////////// */
-
 
 /* .window,
 .window2 {

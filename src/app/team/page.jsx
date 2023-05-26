@@ -4,6 +4,9 @@ import style from "./Team.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Back from "@/components/back/Back";
+import Link from "next/link";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { AiFillMail } from "react-icons/ai";
 
 export default function Team() {
   const router = useRouter();
@@ -11,34 +14,50 @@ export default function Team() {
   const team = [
     {
       name: "Axel",
+      lastname: "Valiente",
+      country: "Argentina",
       image: "Axel.png",
     },
     {
       name: "Celeste",
+      lastname: "Flores",
+      country: "Argentina",
       image: "Celeste.png",
     },
     {
       name: "Emmanuel",
+      lastname: "Burgos",
+      country: "Argentina",
       image: "Emmanuel.png",
     },
     {
       name: "Franco",
+      lastname: "Itria",
+      country: "Argentina",
       image: "Franco.png",
     },
     {
       name: "Adriana",
+      lastname: "Sanchez",
+      country: "Venezuela",
       image: "Adriana.png",
     },
     {
       name: "Jean",
+      lastname: "Palomino",
+      country: "Colombia",
       image: "Jean.png",
     },
     {
       name: "Yael",
+      lastname: "Romero",
+      country: "Mexico",
       image: "Yael.png",
     },
     {
       name: "Jefferson",
+      lastname: "Nunez",
+      country: "Colombia",
       image: "Jefferson.png",
     },
   ];
@@ -68,26 +87,25 @@ export default function Team() {
                 alt={person.name}
                 className={style.teamImage}
               />
-              <h2 className={style.teamName}>{person.name}</h2>
+              <h2 className={style.teamName}>
+                Nombre:{" "}
+                <span className={style.text}>
+                  {person.name + " " + person.lastname}
+                </span>
+              </h2>
+              <h2 className={style.teamName}>
+                Lugar: <span className={style.text}>{person.country}</span>
+              </h2>
               <div className={style.teamLinks}>
-                <a href="https://github.com" target="_blanket">
-                  <Image
-                    className={style.github}
-                    src="/images/icons/github.jpg"
-                    alt="GitHub"
-                    width={35}
-                    height={40}
-                  />
-                </a>
-                <a href="https://linkedin.com" target="_blanket">
-                  <Image
-                    className={style.linkedin}
-                    src="/images/icons/linkedin.jpg"
-                    alt="LinkedIn"
-                    width={50}
-                    height={40}
-                  />
-                </a>
+                <Link href="https://github.com" target="_blanket">
+                  <FaGithub className={style.icons} />
+                </Link>
+                <Link href="https://linkedin.com" target="_blanket">
+                  <FaLinkedin className={style.icons} />
+                </Link>
+                <Link href="https://www.gmail.com" target="_blanket">
+                  <AiFillMail className={style.icons} />
+                </Link>
               </div>
             </div>
           ))}

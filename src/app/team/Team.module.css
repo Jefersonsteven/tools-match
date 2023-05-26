@@ -63,12 +63,20 @@
   height: 200px;
   border-radius: 50%;
   margin-top: 20px;
+  object-fit: cover;
 }
 
 .teamName {
   margin-top: 20px;
   color: #131713;
+  font-size: 1.8rem;
+}
+
+.text {
   font-size: 2rem;
+  color: #131713;
+  font-weight: 600;
+  margin-top: 20px;
 }
 
 .teamLinks {
@@ -92,12 +100,6 @@
   height: 2px;
   transform: scale(1.1);
 }
-.github {
-  width: 45px;
-}
-.linkedin {
-  height: 45px;
-}
 
 .backcontainer {
   width: fit-content;
@@ -112,4 +114,13 @@
 .brand {
   color: orange;
   font-weight: 900;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 20px;
+  font-size: 4rem;
 }
