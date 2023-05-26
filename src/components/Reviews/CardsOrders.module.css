@@ -1,0 +1,25 @@
+.customModal {
+    width: 30%;
+    max-height: 90%;
+    margin: auto;
+    background-color: rgb(211, 231, 211);
+    margin-top: 25px;
+    padding-top: 10px;
+  }
+
+  .closeButton {
+    background-color: transparent;
+    border: none;
+    color: #999999;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: 28px;
+    height: 30px;
+    width: 30px;
+  }
+  
+  .closeButton:hover {
+    color: #666666;
+    border-color: transparent;
+  }
