@@ -27,20 +27,23 @@ const Favorites = () => {
   }, [refresh]); // Empty dependency array to run the effect only once on component mount
 
   return (
-    <div>
+    <div className={styles.favContainer}>
       <Back />
-      <h1 className={styles.favTitle}>Favoritos</h1>
+      <div>
+        <h1 className={styles.favTitle}>Favoritos</h1>
+      </div>
       {favoriteArray.length > 0 ? (
         favoriteArray.map((card) => (
-          <Card
-            key={card.id}
-            id={card.id}
-            title={card.title}
-            photo={card.photo[0]}
-            price={card.price}
-            type={card.type}
-            perDay={card.perDay}
-          />
+          <div className={styles.favCards} key={card.id}>
+            <Card
+              id={card.id}
+              title={card.title}
+              photo={card.photo[0]}
+              price={card.price}
+              type={card.type}
+              perDay={card.perDay}
+            />
+          </div>
         ))
       ) : (
         <h2 className={styles.favSubTitle}>No Tiene Ningún Favorito</h2>
