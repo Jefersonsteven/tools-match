@@ -3,6 +3,7 @@ import { calcularDistancia } from '../../filters/distance/assets/calculateDistan
 
 const prisma = new PrismaClient();
 
+
 export default async function handler(req, res) {
   const { method } = req;
   const { order, type, category, brand, title, coorde1, coorde2, km } = req.query;
