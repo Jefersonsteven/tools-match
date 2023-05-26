@@ -38,18 +38,18 @@ function Page() {
 
     if (status === "approved") {
       // Se crea la order
-      axios.get(`/api/user/${userData.email}`)
-        .then(res => {
-          const paymentId = res.data.payments[res.data.payments.length - 1].id;
+      axios.get(`/api/user/${userData.email}`).then((res) => {
+        const paymentId = res.data.payments[res.data.payments.length - 1].id;
 
-          axios.post('/api/order', {
+        axios
+          .post("/api/order", {
             status: "complete",
             userId: userData.id,
-            postId: cart.items.map(item => item.id),
-            paymentId: paymentId
+            postId: cart.items.map((item) => item.id),
+            paymentId: paymentId,
           })
-          .catch(error => console.log(error))
-        })
+          .catch((error) => console.log(error));
+      });
 
       // se setea el carrito
       if (typeof window !== "undefined") {
@@ -74,7 +74,7 @@ function Page() {
         router.push(`/perfil/${userData.id}`);
       });
     }
-  }, [params, router, setCart, userData, cart]);
+  }, [params, router, setCart, userData]);
 
   useEffect(() => {
     if (!form.fullname && userData) {
@@ -97,15 +97,17 @@ function Page() {
   }
 
   const body = {
-    items: cart && cart.items?.map(({ title, content, price }) => {
-      return {
-        title,
-        content,
-        quantity: 1,
-        unit_price: price,
-        currency_id: "USD",
-      };
-    }),
+    items:
+      cart &&
+      cart.items?.map(({ title, content, price }) => {
+        return {
+          title,
+          content,
+          quantity: 1,
+          unit_price: price,
+          currency_id: "USD",
+        };
+      }),
     payer: {
       name: userData && userData.email,
     },
