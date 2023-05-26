@@ -124,7 +124,6 @@
 .inputContainer > p {
   margin-top: 11px;
   margin-bottom: 30px;
-
   height: 20px;
 }
 
@@ -207,13 +206,14 @@
 .buttonSubmit:hover {
   background-color: var(--green);
   color: var(--white);
-
+  border: none;
   cursor: pointer;
 }
 
 .buttonSubmit:disabled {
   opacity: 0.3;
   cursor: auto;
+  border: none;
 }
 
 .buttonSubmit:disabled:hover {
@@ -229,7 +229,7 @@
 /* Recover Styles */
 
 .recover__message {
-  margin-bottom: 32px;
+  margin-bottom: 48px;
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -253,7 +253,7 @@
   gap: 10px;
   width: 263px;
   height: 49px;
-  background: #131713;
+  background: var(--black);
   border-radius: 30px;
   font-style: normal;
   font-weight: 500;
@@ -263,12 +263,27 @@
   color: var(--white);
 }
 
+.recover__buttonSubmit:disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+.recover__buttonSubmit:disabled:hover {
+  background-color: var(--black);
+  color: var(--white);
+}
+.recover__buttonSubmit:hover {
+  background-color: var(--green);
+  color: var(--white);
+  border: none;
+}
+
 .recover__buttonCancel {
   padding: 15px 30px;
   gap: 10px;
   width: 140px;
   height: 49px;
-  background: #f0960e;
+  background: var(--orange);
   border-radius: 30px;
   font-style: normal;
   font-weight: 500;
@@ -309,11 +324,19 @@
 .socialSignIn:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   transition: 0.2s ease;
+  border: none;
+  background: white;
 }
 
 .socialSignIn:disabled {
   opacity: 0.3;
   cursor: auto;
+  background: white;
+}
+
+.socialSignIn:disabled:hover {
+  border: none;
+  background: white;
 }
 
 .icon {
@@ -333,4 +356,8 @@
   align-items: center;
   margin-top: 32px;
   gap: 16px;
+}
+
+.errorRecover {
+  color: var(--red);
 }

@@ -3,6 +3,9 @@ export const fetchCards = async (selected, setCards, title) => {
   const getTypeParam = () => selected.type ? `type=${selected.type}` : '';
   const getBrandParam = () => selected.brand ? `brand=${selected.brand}` : '';
   const getTitleParam = () => selected.title ? `title=${selected.title}` : '';
+  const getKmParam = () => selected.km ? `km=${selected.km}` : '';
+  const getCoorde1Param = () => selected.Coorde1 ? `coorde1=${selected.Coorde1}` : '';
+  const getCoorde2Param = () => selected.Coorde2 ? `coorde2=${selected.Coorde2}` : '';
 
   const categoryParam = getCategoryParam();
   const typeParam = getTypeParam();
@@ -10,7 +13,12 @@ export const fetchCards = async (selected, setCards, title) => {
   const titleParam = getTitleParam();
   const orderParam = selected.order ? `order=${selected.order.order}&` : '';
 
-  const response = await fetch(`/api/filters/allFilters?${categoryParam}&${typeParam}&${brandParam}&${titleParam}`);
+  // filtrar por distance - Jeffer
+  const kmParam = getKmParam();
+  const coorde1Param = getCoorde1Param();
+  const coorde2Param = getCoorde2Param();
+
+  const response = await fetch(`/api/filters/allFilters?${categoryParam}&${typeParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}`);
   const data = await response.json();
   let cards = data || [];
 

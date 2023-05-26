@@ -6,8 +6,13 @@
 .searchbar input {
   border-radius: 8px 0 0 8px;
   padding-left: 20px;
-  max-width: 400px;
+  max-width: 350px;
   width: 100%;
+  
+}
+.icon button{
+  border-radius: 0 10px 10px 0;
+  height: 45px;
 }
 
 .searchbar div {

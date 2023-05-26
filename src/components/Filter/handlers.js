@@ -60,3 +60,13 @@ export const handleClearFilters = (
   handleBrandChange(event,setSelected,setBrandFilter)
   handleOrderChange("","",setSelected,setOrderFilter);
 };
+
+// filtrar por handle Km - Jeffer
+export const handleKmChange = (setSelected, km, coorde1, coorde2) => {
+  setSelected((prevSelected) => ({
+    ...prevSelected,
+    coorde1,
+    coorde2,
+    km,
+  }));
+}

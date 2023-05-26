@@ -5,14 +5,15 @@ import styles from "./perfilForm.module.css";
 import { AppContext } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { IoCaretBack } from "react-icons/io5";
+
 import Link from "next/link";
 import ImageUploader from "@/components/FileUploader/ImageUploader";
 import { uploadImage } from "@/components/Cloudinary/upload";
 import Loader from "@/components/Loader/Loader";
+import Back from "@/components/back/Back";
 
 const EditUser = () => {
-  const { push, back } = useRouter();
+  const { push } = useRouter();
   const {
     userData,
     userId,
@@ -29,11 +30,15 @@ const EditUser = () => {
     country: userData?.country,
     zipCode: userData?.zipCode,
     photo: userData?.photo,
+    city: userData?.city || "",
+    province: userData?.province || "",
   });
   const [errors, setErrors] = useState({
     firstname: "",
     lastname: "",
     phoneNumber: "",
+    city: "",
+    province: "",
     flag: false,
   });
 
@@ -53,6 +58,7 @@ const EditUser = () => {
       lastname: "",
       email: "",
       phoneNumber: "",
+
       flag: false,
     };
 
@@ -164,23 +170,11 @@ const EditUser = () => {
     push(`/perfil/${userData.id}`);
   };
 
-  const handleBack = () => {
-    back();
-  };
-
   return (
     <>
       {userData && (
         <>
-          <div>
-            <div onClick={handleBack} className={styles.backContainer}>
-              <div className={styles.back}>
-                <IoCaretBack size={50} color="var(--white)" />
-              </div>
-              <h3>Volver</h3>
-            </div>
-            <h2 className={styles.editTitle}>Editar perfil de toolmatch</h2>
-          </div>
+          <Back />
           <section className={styles.section}>
             <div className={styles.imageContainer}>
               <div className={styles.containers}>
@@ -258,6 +252,7 @@ const EditUser = () => {
                         );
                       })}
                     </select>
+                    <p></p>
                   </div>
                   <div className={styles.inputContainer}>
                     <label htmlFor="zipCode">Código postal</label>
@@ -268,9 +263,31 @@ const EditUser = () => {
                       value={form.zipCode && form.zipCode}
                       onChange={handleChange}
                     />
+                    <p></p>
                   </div>
                 </div>
-
+                <div className={styles.inputsContainer}>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="province">Provincia:</label>
+                    <input
+                      type="text"
+                      name="province"
+                      value={form.province && form.province}
+                      onChange={handleChange}
+                    />
+                    <p></p>
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="city">Ciudad:</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={form.city && form.city}
+                      onChange={handleChange}
+                    />
+                    <p>{errors.city && errors.city} </p>
+                  </div>
+                </div>
                 <div className={styles.buttonsContainer}>
                   <button
                     className={styles.buttonCancel}
@@ -282,9 +299,9 @@ const EditUser = () => {
                   <button
                     className={styles.buttonSubmit}
                     type="submit"
-                    disabled={isActive}
+                    disabled={isActive || errors.flag}
                   >
-                    Aplicar cambios
+                    Guardar cambios
                   </button>
                 </div>
                 <div className={styles.loaderContainer}>

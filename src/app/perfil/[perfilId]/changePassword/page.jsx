@@ -2,11 +2,11 @@
 
 import { useContext, useEffect, useState } from "react";
 import styles from "./changePassword.module.css";
-import { IoCaretBack } from "react-icons/io5";
-import Link from "next/link";
+
 import { AppContext } from "@/context/AppContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import Back from "@/components/back/Back";
 
 const ChangePassword = () => {
   const {
@@ -18,7 +18,7 @@ const ChangePassword = () => {
     endSession,
     removeFromLocalStorage,
   } = useContext(AppContext);
-  const { push, back } = useRouter();
+  const { push } = useRouter();
 
   const [form, setForm] = useState({
     currentPassword: "",
@@ -138,18 +138,9 @@ const ChangePassword = () => {
     }
   };
 
-  function handleBack() {
-    back();
-  }
-
   return (
     <>
-      <div onClick={handleBack} className={styles.backContainer}>
-        <div className={styles.back}>
-          <IoCaretBack size={50} color="var(--white)" />
-        </div>
-        <h3>Volver</h3>
-      </div>
+      <Back />
       <section className={styles.section}>
         <form className={styles.formChangePassword} onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>
