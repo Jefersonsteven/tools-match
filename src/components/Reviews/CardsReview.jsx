@@ -22,12 +22,16 @@ const CardsReview = ({ reviews, authors }) => {
                     src={author.photo}
                     alt={author.firstname}
                     className="w-full h-full object-cover"
+                    width={100}
+                    height={100}
                   />
                 ) : (
                   <Image
                     src="/assets/userPhotoDefault.png"
                     alt="Default User Photo"
                     className="w-full h-full object-cover"
+                    width={100}
+                    height={100}
                   />
                 )}
               </div>

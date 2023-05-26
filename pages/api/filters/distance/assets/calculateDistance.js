@@ -24,7 +24,6 @@ export function calcularDistancia(latitud1, longitud1, latitud2, longitud2) {
   const distanciaRedondeada = Math.round(distancia * 100) / 100;
 
   return distanciaRedondeada;
-  console.log(distanciaRedondeada)
 }
 
 function toRadian(grados) {

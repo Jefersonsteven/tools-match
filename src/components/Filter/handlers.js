@@ -59,6 +59,7 @@ export const handleClearFilters = (
   handleTypeChange(event, setSelected, setTypeFilter);
   handleBrandChange(event,setSelected,setBrandFilter)
   handleOrderChange("","",setSelected,setOrderFilter);
+  handleKmChange(setSelected, "", "", "");
 };
 
 // filtrar por handle Km - Jeffer
