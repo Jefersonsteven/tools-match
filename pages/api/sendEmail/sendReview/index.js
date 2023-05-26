@@ -6,10 +6,7 @@ export default async function sendReview(req, res) {
   if (method == "POST") {
     const { email, url } = req.body;
     try {
-      const user = await findUser(email);
-      if (!user) {
-        throw new Error("El usuario no existe");
-      }
+      await findUser(email);
       await transporter.verify();
       const mail = {
         from: process.env.USER_APPLICATION,

@@ -57,7 +57,7 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
- 
+
   const [selected, setSelected] = useState({
     category: "",
     type: "",
@@ -67,6 +67,9 @@ function AppProvider({ children }) {
     },
     title: "",
     brand: "",
+    coorde1: "",
+    coorde2: "",
+    km: "",
   }); //lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 
@@ -121,11 +124,9 @@ function AppProvider({ children }) {
   useEffect(() => {
     checkSessionExpiration();
   }, []);
-  // * Favorites *//
-  const [favorites, setFavorites] = useState(
-    typeof window !== "undefined" &&
-      JSON.parse(localStorage.getItem("favorites")) //agregado por Adriana
-  );
+
+  // * Favorite *//
+  const [favorite, setFavorite, isFavorite, setIsFavorite] = useState([]);
 
   // *---------------------------------------* //
 
@@ -180,8 +181,10 @@ function AppProvider({ children }) {
         setuserPosts,
         cart,
         setCart,
-        favorites,
-        setFavorites,
+        favorite,
+        setFavorite,
+        isFavorite,
+        setIsFavorite,
       }}
     >
       {children}

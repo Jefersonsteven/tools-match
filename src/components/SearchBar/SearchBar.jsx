@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./SearchBar.module.css";
-import { IoSearchOutline } from 'react-icons/io5';
+import { IoSearchOutline } from "react-icons/io5";
 
 export default function SearchBar({ title, onTitleChange, onTitleButton }) {
   const handleTitleChange = (event) => {
@@ -16,9 +16,9 @@ export default function SearchBar({ title, onTitleChange, onTitleButton }) {
         onChange={handleTitleChange}
       />
       <div className={style.icon}>
-      <button className={style.searchButton} onClick={onTitleButton}>
-  <IoSearchOutline />
-</button>
+        <button className={style.searchButton} onClick={onTitleButton}>
+          <IoSearchOutline />
+        </button>
       </div>
     </div>
   );

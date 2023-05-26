@@ -5,14 +5,15 @@ import styles from "./perfilForm.module.css";
 import { AppContext } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { IoCaretBack } from "react-icons/io5";
+
 import Link from "next/link";
 import ImageUploader from "@/components/FileUploader/ImageUploader";
 import { uploadImage } from "@/components/Cloudinary/upload";
 import Loader from "@/components/Loader/Loader";
+import Back from "@/components/back/Back";
 
 const EditUser = () => {
-  const { push, back } = useRouter();
+  const { push } = useRouter();
   const {
     userData,
     userId,
@@ -169,23 +170,11 @@ const EditUser = () => {
     push(`/perfil/${userData.id}`);
   };
 
-  const handleBack = () => {
-    back();
-  };
-
   return (
     <>
       {userData && (
         <>
-          <div>
-            <div onClick={handleBack} className={styles.backContainer}>
-              <div className={styles.back}>
-                <IoCaretBack size={50} color="var(--white)" />
-              </div>
-              <h3>Volver</h3>
-            </div>
-            <h2 className={styles.editTitle}>Editar perfil de toolmatch</h2>
-          </div>
+          <Back />
           <section className={styles.section}>
             <div className={styles.imageContainer}>
               <div className={styles.containers}>

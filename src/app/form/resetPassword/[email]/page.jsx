@@ -7,10 +7,13 @@ import { useParams, useRouter } from "next/navigation";
 
 import customAlert from "../../assets/customAlert";
 import { newPetition } from "../../assets/petition";
+import Loader from "@/components/Loader/Loader";
 
 export default function Login() {
   const { email } = useParams();
   const { push } = useRouter();
+  const [fetchingData, setFetchingData] = useState(false);
+  const [dataMessage, setDataMessage] = useState("");
   const [form, setForm] = useState({
     newPassword: "",
     confirmNewPassword: "",
@@ -33,13 +36,15 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setFetchingData(true);
     try {
+      setDataMessage("Restaurando contraseña...");
       let setPassword = await newPetition(
         "PUT",
         `/api/forgetPassword/${email}`,
         { password: form.newPassword }
       );
-      console.log(setPassword);
+
       if (!setPassword.error) {
         customAlert(
           5000,
@@ -58,6 +63,8 @@ export default function Login() {
       console.log(error);
       customAlert(5000, "bottom-end", "error", "Error al cambiar contraseña");
     }
+    setDataMessage("");
+    setFetchingData(false);
   };
 
   return (
@@ -89,9 +96,20 @@ export default function Login() {
         </p>
       </div>
       <div className={styles.recover__submitContainer}>
-        <button disabled={errors.flag} className={styles.recover__buttonSubmit}>
+        <button
+          disabled={errors.flag ? errors.flag : fetchingData ? true : false}
+          className={styles.recover__buttonSubmit}
+        >
           Restaurar contraseña
         </button>
+      </div>
+      <div className={styles.loaderContainer}>
+        {fetchingData && (
+          <>
+            <Loader />
+            <p>{dataMessage && dataMessage}</p>
+          </>
+        )}
       </div>
     </form>
   );

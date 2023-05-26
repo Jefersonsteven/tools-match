@@ -4,12 +4,9 @@ import findUser from "../findUser";
 export default async function baneo(req, res) {
   const { method } = req;
   if (method == "POST") {
-    const { email, motivo } = req.body;
+    const { email } = req.body;
     try {
-      const user = await findUser(email);
-      if (!user) {
-        throw new Error("El usuario no existe");
-      }
+      await findUser(email)
       await transporter.verify();
       const mail = {
         from: process.env.USER_APPLICATION,
@@ -19,7 +16,6 @@ export default async function baneo(req, res) {
           <p style="color: black"> 
             Estimado usuario, has sido baneado de la aplicacion por incumplimiento de los terminos y condiciones. <br>
             Se le notidicará vía mail cuando sea desbaneado y puedas utilizar la aplicación nuevamente. <br>
-            <b> Motivo: </b> ${motivo}
           </p>
           <h4 style="color: black">
             Atentamente, el equipo de ToolMatch

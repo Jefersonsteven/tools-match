@@ -20,7 +20,7 @@
   display: flex;
 
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   margin-left: 16px;
   width: 20%;
 }
@@ -28,8 +28,8 @@
 .formContainer {
   width: 50%;
   display: flex;
-  justify-content: start;
-  align-items: start;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .image {

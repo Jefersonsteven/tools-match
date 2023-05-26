@@ -206,13 +206,14 @@
 .buttonSubmit:hover {
   background-color: var(--green);
   color: var(--white);
-
+  border: none;
   cursor: pointer;
 }
 
 .buttonSubmit:disabled {
   opacity: 0.3;
   cursor: auto;
+  border: none;
 }
 
 .buttonSubmit:disabled:hover {
@@ -252,7 +253,7 @@
   gap: 10px;
   width: 263px;
   height: 49px;
-  background: #131713;
+  background: var(--black);
   border-radius: 30px;
   font-style: normal;
   font-weight: 500;
@@ -268,7 +269,11 @@
 }
 
 .recover__buttonSubmit:disabled:hover {
-  background-color: #131713;
+  background-color: var(--black);
+  color: var(--white);
+}
+.recover__buttonSubmit:hover {
+  background-color: var(--green);
   color: var(--white);
   border: none;
 }
@@ -278,7 +283,7 @@
   gap: 10px;
   width: 140px;
   height: 49px;
-  background: #f0960e;
+  background: var(--orange);
   border-radius: 30px;
   font-style: normal;
   font-weight: 500;
@@ -319,11 +324,19 @@
 .socialSignIn:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   transition: 0.2s ease;
+  border: none;
+  background: white;
 }
 
 .socialSignIn:disabled {
   opacity: 0.3;
   cursor: auto;
+  background: white;
+}
+
+.socialSignIn:disabled:hover {
+  border: none;
+  background: white;
 }
 
 .icon {

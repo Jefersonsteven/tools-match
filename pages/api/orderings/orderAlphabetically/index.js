@@ -1,42 +1,78 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from "../../../../prisma/client";
+import { calcularDistancia } from '../../filters/distance/assets/calculateDistance';
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ message: 'Method not allowed' });
-  }
+  if (req.method === "GET") {
+    try {
+      const { category, type, brand, title, coorde1, coorde2, km, order } = req.query;
+      const intcoorde1 = parseFloat(coorde1);
+      const intcoorde2 = parseFloat(coorde2);
+      const intKm = parseFloat(km);
 
-  const { order, type, category, brand, title } = req.query;
+      if (!order) {
+        return res.status(400).json({ error: "The order parameter must exist." });
+      }
 
-  if (!order) {
-    return res.status(400).json({ message: 'The order parameter must exist' });
-  }
+      let where = { hidden: false };
 
-  try {
-    const where = {
-      hidden: false
-    };
+      if (category) {
+        where.category = category;
+      }
 
-    if (type) where.type = type;
-    if (category) where.category = category;
-    if (brand) where.brand = brand;
-    if (title) where.title = {
-      contains: title,
-      mode: 'insensitive',
-    };
+      if (type) {
+        where.type = type;
+      }
 
-    const datos = await prisma.post.findMany({ where });
+      if (brand) {
+        where.brand = brand;
+      }
 
-    datos.sort((a, b) => a.title.localeCompare(b.title, 'es', { sensitivity: 'base' }));
+      if (title) {
+        where.title = {
+          contains: title,
+          mode: "insensitive",
+        };
+      }
 
-    if (order.toLowerCase() === 'z-a') {
-      datos.reverse();
+      if (coorde1 && coorde2 && km) {
+        const posts = await prisma.post.findMany({
+          where,
+          include: {
+            author: true
+          }
+        });
+
+        const filteredPosts = posts.filter((post) => {
+          if (post.author && post.author.coordinates) {
+            const [postCoorde1, postCoorde2] = post.author.coordinates;
+            const distance = calcularDistancia(intcoorde1, intcoorde2, postCoorde1, postCoorde2);
+            return distance < intKm;
+          }
+          return false;
+        });
+
+        filteredPosts.sort((a, b) => a.title.localeCompare(b.title, "es", { sensitivity: "base" }));
+
+        if (order.toLowerCase() === "z-a") {
+          filteredPosts.reverse();
+        }
+
+        return res.status(200).json(filteredPosts);
+      }
+
+      const posts = await prisma.post.findMany({ where });
+
+      posts.sort((a, b) => a.title.localeCompare(b.title, "es", { sensitivity: "base" }));
+
+      if (order.toLowerCase() === "z-a") {
+        posts.reverse();
+      }
+
+      return res.status(200).json(posts);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
-
-    return res.status(200).json(datos);
-  } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' });
+  } else {
+    return res.status(400).json({ error: "Invalid method." });
   }
 }
-
