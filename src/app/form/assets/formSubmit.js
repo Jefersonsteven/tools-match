@@ -70,6 +70,9 @@ export const submitSignUpFormData = async (registerData, router) => {
   let data = await newPetition("POST", "/api/user", body);
   console.log(data);
   if (!data.error) {
+    await newPetition("POST", "/api/sendEmail/register", {
+      email: registerData.email,
+    });
     Swal.fire({
       position: "center",
       icon: "success",
