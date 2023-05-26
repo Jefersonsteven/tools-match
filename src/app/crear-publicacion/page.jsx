@@ -25,6 +25,7 @@ function CreatePost() {
   useEffect(() => {
     if (!userData.firstname) router.push("/form/login");
   }, [userData, router]);
+  1;
 
   useEffect(() => {
     getLocation()
