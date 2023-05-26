@@ -43,13 +43,13 @@ function FilterRangeDistance({ handleKm }) {
   return (
     <div>
       <div className={styles.rangeContainer}>
-        <span style={{ left: `${range / 50}%` }}>{range}Km</span>
+        <span style={{ left: `${range / 70}%` }}>{range}Km</span>
         <input
           onInput={handleRange}
           onBlur={exitInput}
           type="range"
           min={1}
-          max={4000}
+          max={6000}
           value={range}
         />
       </div>
