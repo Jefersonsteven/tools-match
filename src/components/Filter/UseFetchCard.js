@@ -4,8 +4,8 @@ export const fetchCards = async (selected, setCards, title) => {
   const getBrandParam = () => selected.brand ? `brand=${selected.brand}` : '';
   const getTitleParam = () => selected.title ? `title=${selected.title}` : '';
   const getKmParam = () => selected.km ? `km=${selected.km}` : '';
-  const getCoorde1Param = () => selected.Coorde1 ? `coorde1=${selected.Coorde1}` : '';
-  const getCoorde2Param = () => selected.Coorde2 ? `coorde2=${selected.Coorde2}` : '';
+  const getCoorde1Param = () => selected.coorde1 ? `coorde1=${selected.coorde1}` : '';
+  const getCoorde2Param = () => selected.coorde2 ? `coorde2=${selected.coorde2}` : '';
 
   const categoryParam = getCategoryParam();
   const typeParam = getTypeParam();
@@ -38,7 +38,7 @@ export const fetchCards = async (selected, setCards, title) => {
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
-  if(selected.category=="" && selected.type=="" && selected.order.type=="" && selected.order.order==""  && selected.title == ""  && selected.brand=="" ) {
+  if(selected.category=="" && selected.type=="" && selected.order.type=="" && selected.order.order==""  && selected.title == ""  && selected.brand=="" && selected.km== "") {
     const orderResponse = await fetch(`/api/admin/post`);
     const orderData = await orderResponse.json();
     cards = orderData || [];

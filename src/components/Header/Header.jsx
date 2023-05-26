@@ -105,12 +105,11 @@ function Header() {
                 </Link>
               )}
             </li>
-            {pathname !== "/favorite" ||
-              (pathname !== "/" && (
-                <li className={styles.navLi}>
-                  <Link href="/favorite">Favoritos</Link>
-                </li>
-              ))}
+            {pathname !== "/favorite" && pathname !== "/" && userData && (
+              <li className={styles.navLi}>
+                <Link href="/favorite">Favoritos</Link>
+              </li>
+            )}
           </ul>
 
           {pathname !== "/" && (
