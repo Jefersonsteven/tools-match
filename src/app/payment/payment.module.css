@@ -28,6 +28,7 @@
     padding: 50px;
     display: flex;
     min-height: 77.1vh;
+    margin-top: 40px;
 }
 
 .form_container {

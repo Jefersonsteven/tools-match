@@ -8,6 +8,7 @@ import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Back from "@/components/back/Back";
 
 function PostDetail({}) {
   const { postId } = useParams();
@@ -38,20 +39,20 @@ function PostDetail({}) {
           })
         );
 
-        Swal.fire({
-          title: "¡Agregado al carrito!",
-          text: "El artículo se ha agregado al carrito correctamente.",
-          icon: "success",
-          showCancelButton: true,
-          confirmButtonText: "Ir al carrito",
-          cancelButtonText: "Seguir comprando",
-        }).then((result) => {
-          if (result.isConfirmed) {
+      Swal.fire({
+        title: "¡Agregado al carrito!",
+        text: "El artículo se ha agregado al carrito correctamente.",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonText: "Ir al carrito",
+        cancelButtonText: "Seguir comprando",
+      }).then((result) => {
+        if (result.isConfirmed) {
           router.push("/cart");
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            router.push("/home");
-          }
-        });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          router.push("/home");
+        }
+      });
     } else {
       Swal.fire({
         title: "¡Producto ya agregado!",
@@ -102,105 +103,110 @@ function PostDetail({}) {
   }, [setPostDetail, postId]);
 
   return (
-    <div className={styles.main_container}>
-      <Link
-        onClick={() => setPostDetail([])}
-        className={styles.back}
-        href="/home"
-      >
-        <IoCaretBack size={50} color="var(--white)" />
-      </Link>
-      <main className={styles.main}>
-        {postDetail.author !== undefined && (
-          <>
-            <section className={styles.section_images}>
-              <figure className={styles.figure}>
-                <Image
-                  className={styles.image_first}
-                  src={pd?.photo[0]}
-                  width={442}
-                  height={400}
-                  alt={pd.title}
-                  priority
-                />
-              </figure>
-              <div>
-                <figure className={styles.images}>
-                  {pd?.photo.map((img, index) => (
-                    <Image
-                      className={styles.image_others}
-                      key={index}
-                      src={img}
-                      width={92}
-                      height={81}
-                      alt={pd.title}
-                    />
-                  ))}
-                </figure>
-              </div>
-            </section>
-            <section className={styles.section_description}>
-              <div className={styles.description_title}>
-                <h2>{pd.title}</h2>
-                <div>
-                  {pd.type === "SALE" && <h3>${pd.price}</h3>}
-                  {pd.type === "LEASE" && <h3>${pd.pricePerDay}</h3>}
-                </div>
-              </div>
-              <p>{pd.content}</p>
-              <div className={styles.description_categories}>
-                <div>
-                <h5>Categoria:</h5>
-                <p>{pd.category}</p>
-                </div>
-                <div>
-                <h5>Marca:</h5>
-                <p>{pd.brand}</p>
-                </div>
-              </div>
-              <figure className={styles.map}>
-                <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
-                <Image
-                  src={pd.author.map}
-                  width={600}
-                  height={400}
-                  alt={pd.author.zipCode + " " + pd.author.country}
-                />
-              </figure>
-            </section>
-            <section className={styles.section_user}>
-              <Link href={`/perfil/${pd.authorId}`}>
-                <figure>
+    <div>
+      <Back />
+      <div className={styles.main_container}>
+        {/* <Link
+          onClick={() => setPostDetail([])}
+          className={styles.back}
+          href="/home"
+        >
+          <IoCaretBack size={50} color="var(--white)" />
+        </Link> */}
+        <main className={styles.main}>
+          {postDetail.author !== undefined && (
+            <>
+              <section className={styles.section_images}>
+                <figure className={styles.figure}>
                   <Image
-                    src={pd.author.photo || "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"}
-                    width={96}
-                    height={96}
-                    alt={pd.author.firstname}
+                    className={styles.image_first}
+                    src={pd?.photo[0]}
+                    width={442}
+                    height={400}
+                    alt={pd.title}
+                    priority
                   />
                 </figure>
-                <div className={styles.user_info}>
-                  <h5>
-                    <b>{pd.type === "SALE" ? "Vendedor: " : "Arrendador"}</b>@
-                    {pd.author.firstname}
-                  </h5>
-                  <h5>⭐{pd2.author.rating}.0</h5>
+                <div>
+                  <figure className={styles.images}>
+                    {pd?.photo.map((img, index) => (
+                      <Image
+                        className={styles.image_others}
+                        key={index}
+                        src={img}
+                        width={92}
+                        height={81}
+                        alt={pd.title}
+                      />
+                    ))}
+                  </figure>
                 </div>
-              </Link>
-            </section>
-            <section className={styles.section_button}>
-              {userId === pd.author.id && (
-                <button onClick={handleDeletePost}>Eliminar</button>
-              )}
-              {userId !== pd.author.id && (
-                <button onClick={addCart}>Agregar al carrito</button>
-              )}
-            </section>
-          </>
-        )}
-      </main>
+              </section>
+              <section className={styles.section_description}>
+                <div className={styles.description_title}>
+                  <h2>{pd.title}</h2>
+                  <div>
+                    {pd.type === "SALE" && <h3>${pd.price}</h3>}
+                    {pd.type === "LEASE" && <h3>${pd.pricePerDay}</h3>}
+                  </div>
+                </div>
+                <p>{pd.content}</p>
+                <div className={styles.description_categories}>
+                  <div>
+                    <h5>Categoria:</h5>
+                    <p>{pd.category}</p>
+                  </div>
+                  <div>
+                    <h5>Marca:</h5>
+                    <p>{pd.brand}</p>
+                  </div>
+                </div>
+                <figure className={styles.map}>
+                  <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
+                  <Image
+                    src={pd.author.map}
+                    width={600}
+                    height={400}
+                    alt={pd.author.zipCode + " " + pd.author.country}
+                  />
+                </figure>
+              </section>
+              <section className={styles.section_user}>
+                <Link href={`/perfil/${pd.authorId}`}>
+                  <figure>
+                    <Image
+                      src={
+                        pd.author.photo ||
+                        "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+                      }
+                      width={96}
+                      height={96}
+                      alt={pd.author.firstname}
+                    />
+                  </figure>
+                  <div className={styles.user_info}>
+                    <h5>
+                      <b>{pd.type === "SALE" ? "Vendedor: " : "Arrendador"}</b>@
+                      {pd.author.firstname}
+                    </h5>
+                    <h5>⭐{pd2.author.rating}.0</h5>
+                  </div>
+                </Link>
+              </section>
+              <section className={styles.section_button}>
+                {userId === pd.author.id && (
+                  <button onClick={handleDeletePost}>Eliminar</button>
+                )}
+                {userId !== pd.author.id && (
+                  <button onClick={addCart}>Agregar al carrito</button>
+                )}
+              </section>
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 }
 
 export default PostDetail;
-
