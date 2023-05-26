@@ -26,8 +26,12 @@ function FilterRangeDistance({ handleKm }) {
     if (userData) {
       const position = await getLocation();
       const { latitude, longitude } = position.coords;
-      await coords(latitude, longitude);
-
+      if (
+        latitude !== userData.coordinates[0] &&
+        longitude !== userData.coordinates[1]
+      ) {
+        await coords(latitude, longitude);
+      }
       const user = await axios.get(`/api/user/${userData.email}`);
       const { coordinates } = user.data;
       if (coordinates[0] && coordinates[1]) {

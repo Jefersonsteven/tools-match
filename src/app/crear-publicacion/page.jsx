@@ -22,21 +22,20 @@ function CreatePost() {
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function coords(latitude, longitude) {
-    const mapImage = await axios.post("/api/maps", { latitude, longitude });
-    const addMap = await axios.put(`/api/user/${userData.email}`, {
-      map: mapImage.data,
-    });
-    const coordinates = await axios.put(`/api/user/${userData.email}`, {
-      coordinates: [lat.toString(), long.toString()],
-    });
-  }
+  useEffect(() => {
+    if (!userData.firstname) router.push("/form/login");
+  }, [userData, router]);
 
   useEffect(() => {
     getLocation()
       .then((position) => {
         const { latitude, longitude } = position.coords;
-        coords(latitude, longitude);
+        if (
+          latitude !== userData.coordinates[0] &&
+          longitude !== userData.coordinates[1]
+        ) {
+          coords(latitude, longitude);
+        }
       })
       .catch((error) => {
         console.error("Error al obtener la ubicación:", error.message);
@@ -54,9 +53,15 @@ function CreatePost() {
       });
   }, [router, userData]);
 
-  useEffect(() => {
-    if (!userData.firstname) router.push("/form/login");
-  }, [userData, router]);
+  async function coords(latitude, longitude) {
+    const mapImage = await axios.post("/api/maps", { latitude, longitude });
+    const addMap = await axios.put(`/api/user/${userData.email}`, {
+      map: mapImage.data,
+    });
+    const coordinates = await axios.put(`/api/user/${userData.email}`, {
+      coordinates: [lat.toString(), long.toString()],
+    });
+  }
 
   function handleForm(event) {
     const name = event.target.name;
