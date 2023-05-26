@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { AiFillCheckCircle } from "react-icons/ai";
+import { AiFillCheckCircle, AiOutlineClose } from "react-icons/ai";
 import Modal from "react-modal";
+import styles from "./CardsOrders.module.css";
 import CardsPurchasedItems from "./CardsPurchasedItems";
 
 const CardsOrders = ({ userOrders }) => {
@@ -12,13 +14,6 @@ const CardsOrders = ({ userOrders }) => {
   };
 
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [orderPosts, setOrderPosts] = useState([]);
-
-  useEffect(() => {
-    if (selectedOrder) {
-      setOrderPosts(selectedOrder.postId);
-    }
-  }, [selectedOrder]);
 
   const handleCardClick = (order) => {
     setSelectedOrder(order);
@@ -44,15 +39,37 @@ const CardsOrders = ({ userOrders }) => {
               </div>
               <div className="flex flex-col">
                 <h3 className="text-black font-bold text-3xl">$ {order.amount}</h3>
-                <h4 className="text-gray-400 text-lg">{formatDate(order.date)}</h4>
+                <div className="flex items-center">
+                  <h4 className="text-gray-400 text-lg mr-2">{formatDate(order.date)}</h4>
+                  
+                </div>
               </div>
             </div>
           </div>
         ))}
       </div>
-      <Modal isOpen={selectedOrder !== null} onRequestClose={closeModal}>
+      <Modal
+        isOpen={selectedOrder !== null}
+        onRequestClose={closeModal}
+        className={styles.customModal}
+        overlayClassName={styles.customOverlay}
+        contentLabel="Purchased Items Modal"
+      >
         {selectedOrder && (
-          <CardsPurchasedItems orderPosts={orderPosts} />
+          <>
+            <div className={styles.modalHeader}>
+              <button className={styles.closeButton} onClick={closeModal}>
+                <AiOutlineClose />
+              </button>
+            </div>
+            <div className={styles.modalContent}>
+              <CardsPurchasedItems
+                orderPosts={selectedOrder.postId}
+                orderDate={formatDate(selectedOrder.date)}
+                multipleItems={selectedOrder.postId.length > 1}
+              />
+            </div>
+          </>
         )}
       </Modal>
     </div>
@@ -60,6 +77,8 @@ const CardsOrders = ({ userOrders }) => {
 };
 
 export default CardsOrders;
+
+
 
 
 // import React from "react";
