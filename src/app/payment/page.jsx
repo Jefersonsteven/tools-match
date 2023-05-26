@@ -75,7 +75,7 @@ function Page() {
         router.push(`/perfil/${userData.id}`);
       });
     }
-  }, [params, router, setCart, userData, cart]);
+  }, [params, router, setCart, userData]);
 
   useEffect(() => {
     if (!form.fullname && userData) {
