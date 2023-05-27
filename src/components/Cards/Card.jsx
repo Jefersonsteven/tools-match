@@ -90,7 +90,7 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
         <div className={styles.cardContent}>
           <Link href={`/post/${id}`}>
             <div className={styles.cardTitle}>
-              <h2 className={styles.cardName}>{title}</h2>
+              <p className={styles.cardName}>{title}</p>
             </div>
           </Link>
           <div className={styles.priceType}>
