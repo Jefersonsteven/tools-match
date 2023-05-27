@@ -60,7 +60,7 @@ function CreatePost() {
       map: mapImage.data,
     });
     const coordinates = await axios.put(`/api/user/${userData.email}`, {
-      coordinates: [lat.toString(), long.toString()],
+      coordinates: [latitude.toString(), longitude.toString()],
     });
   }
 

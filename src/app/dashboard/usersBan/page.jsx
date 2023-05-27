@@ -106,7 +106,7 @@ function UsersBan() {
 
 // Funcion de eliminar usuario ----------------------------------------
 
-  const handleDeleteClick = (firstname, id) => {
+  const handleDeleteClick = (firstname, id, email) => {
     const userId = [id]
     console.log(userId)
     Swal.fire({
@@ -126,6 +126,10 @@ function UsersBan() {
             // Actualizar la lista de usuarios en el estado local
             const updatedUsers = records.filter((user) => user.id !== id);
             setRecords(updatedUsers);
+
+            axios
+            .post('/api/sendEmail/desbaneo', { 
+              email: email })
             
             Swal.fire({
               title: "¡Se ha quitado el veto correctamente!",
@@ -165,16 +169,21 @@ function UsersBan() {
   const handleUnbanUsers = () => {
     if (selectedUserCount > 0) {
       const userIds = selectedUsers;
-    const userIdsString = userIds.join(', ');
+      const userEmails = records
+      .filter((user) => userIds.includes(user.id))
+      .map((user) => user.email);
       Swal.fire({
         title: `Sacar el veto a ${selectedUserCount} usuarios`,
-        text: `Sacaras el veto a los usuarios ${selectedUserCount}?`,
+        text: `Sacaras el veto a los usuarios ${userEmails}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Sí, borrar",
         cancelButtonText: "Cancelar",
+        onBeforeOpen: ()=> {
+          Swal.showLoading();
+        }
       }).then((result) => {
         if (result.isConfirmed) {
           
@@ -194,6 +203,12 @@ function UsersBan() {
             
             .then((response) => {
 
+              axios.post("/api/sendEmail/desbaneo", {
+                email: userEmails
+              })
+            
+              
+
             
               
 
@@ -202,6 +217,12 @@ function UsersBan() {
                 (user) => !userIds.includes(user.id)
               );
               setRecords(updatedUsers);
+
+              setSelectedUserCount(0);
+
+
+              Swal.close();
+
 
               Swal.fire({
                 title: "¡Los usuarios ya no estan vetados",
@@ -272,10 +293,10 @@ function UsersBan() {
                 <th>TELEFONO</th>
                 <th>RANGO</th>
                 <th>REPORTES</th>
-                <th>PUBLICACIONES</th>
+                {/* <th>PUBLICACIONES</th>
                 <th>ORDENES</th>
                 <th>RESEÑAS</th>
-                <th>RECIBOS</th>
+                <th>RECIBOS</th> */}
                 <th>PAIS</th>                
                 <th>ACCION</th>               
               </tr>
@@ -288,8 +309,8 @@ function UsersBan() {
                   <td>
                     <input
                       type="checkbox"
-                      name={`fila${d.id}`}
-                      checked={selectedUsers.includes(`fila${d.id}`)}
+                      name={d.id}
+                      checked={selectedUsers.includes(d.id)}
                       onChange={handleCheckboxChange}
                     />
                   </td>
@@ -299,10 +320,10 @@ function UsersBan() {
                   <td>{d.phoneNumber}</td>
                   <td>{d.admin ? "Admin" : "Usuario"}</td>
                   <td>{d.reports.length}</td>
-                  <td>{d.posts.length}</td>
+                  {/* <td>{d.posts.length}</td>
                   <td>{d.orders.length}</td>
                   <td>{d.reviews.length}</td>
-                  <td>{d.received.length}</td>
+                  <td>{d.received.length}</td> */}
                   <td>{d.country ? d.country : "?"}</td>
                   {/* <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td> */}
 
@@ -318,7 +339,7 @@ function UsersBan() {
                     </button> */}
                     <button
                       className={`${style.botonDelete} ${buttonClass}`}
-                      onClick={() => handleDeleteClick(d.firstname, d.id)}
+                      onClick={() => handleDeleteClick(d.firstname, d.id, d.email)}
                       disabled={selectedUserCount > 1}
                     >
                       <CiUnlock size={30}/>
