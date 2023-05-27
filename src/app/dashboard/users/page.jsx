@@ -13,6 +13,8 @@ import { icons } from "react-icons";
 import { TiDelete, TiPencil } from "react-icons/ti";
 
 import Loader from "@/components/Loader/Loader";
+import Link from "next/link";
+
 
 
 /*PARA PAGINATED*/
@@ -161,7 +163,7 @@ function Users() {
 
 // Funcion de eliminar usuario ----------------------------------------
 
-  const handleDeleteClick = (firstname, id) => {
+  const handleDeleteClick = (firstname, id, emailuser) => {
     Swal.fire({
       title: `¿Estás seguro de eliminar a ${firstname}?`,
       icon: "warning",
@@ -178,6 +180,11 @@ function Users() {
             // Actualizar la lista de usuarios en el estado local
             const updatedUsers = records.filter((user) => user.id !== id);
             setRecords(updatedUsers);
+
+            axios
+            .post('/api/sendEmail/baneo', { 
+              email: emailuser }) // Aquí obtienes el correo electrónico del usuario eliminado desde la respuesta del servidor
+            
             
             Swal.fire({
               title: "¡Usuario eliminado correctamente!",
@@ -214,9 +221,16 @@ function Users() {
   };
   
 
-  const handleDeleteUsers = () => {
+  const handleDeleteUsers = (id, email) => {
+
     if (selectedUserCount > 0) {
       const userIds = selectedUsers;
+      const userEmails = records
+      .filter((user) => userIds.includes(user.id))
+      .map((user) => user.email);
+      console.log(userEmails)
+      console.log(userIds)
+      
     const userIdsString = userIds.join(', ');
       Swal.fire({
         title: `Eliminar ${selectedUserCount} usuarios`,
@@ -227,17 +241,27 @@ function Users() {
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Sí, borrar",
         cancelButtonText: "Cancelar",
+        onBeforeOpen: ()=> {
+          Swal.showLoading();
+        }
+
       }).then((result) => {
         if (result.isConfirmed) {
           
           
-        
-
-
           axios
             .put("/api/admin/user", {
                 userIds: selectedUsers 
+            }).then(()=>{
+
+              
+              axios.post("/api/sendEmail/baneo", {
+                email: userEmails
+              })
             })
+              
+
+
 
             
             
@@ -258,7 +282,7 @@ function Users() {
               setSelectedUserCount(0);
 
 
-              
+              Swal.close();
 
               Swal.fire({
                 title: "¡Usuarios eliminados correctamente!",
@@ -363,12 +387,12 @@ function Users() {
                 <th>EMAIL</th>
                 <th>TELEFONO</th>
                 <th>RANGO</th>
-                <th>HIDDEN</th>
-                <th>REPORTES</th>
+                {/* <th>HIDDEN</th>
+                <th>REPORTES</th> */}
                 <th>PUBLICACIONES</th>
-                <th>ORDENES</th>
+                {/* <th>ORDENES</th>
                 <th>RESEÑAS</th>
-                <th>RECIBOS</th>
+                <th>RECIBOS</th> */}
                 <th>PAIS</th>                
                 <th>ACCIONES</th>               
               </tr>
@@ -382,21 +406,24 @@ function Users() {
                   <input
                           type="checkbox"
                           name={d.id}
-                          checked={selectedUsers.includes(d.id)}
+                          checked={selectedUsers.includes(d.id, d.email)}
                           onChange={handleCheckboxChange}
                         />
                   </td>
-                  <td>{d.firstname}</td>
+                  <td>
+        <Link href={`/dashboard/users/${d.id}`}>
+          {d.firstname}
+        </Link></td>
                   <td>{d.lastname}</td>
                   <td>{d.email}</td>
                   <td>{d.phoneNumber}</td>
                   <td>{d.admin ? "Admin" : "Usuario"}</td>
-                  <td>{d.hidden ? "True" : "False"}</td>
-                  <td>{d.reports.length}</td>
+                 {/* <td>{d.hidden ? "True" : "False"}</td>
+                  <td>{d.reports.length}</td> */}
                   <td>{d.posts.length}</td>
-                  <td>{d.orders.length}</td>
+                  {/* <td>{d.orders.length}</td>
                   <td>{d.reviews.length}</td>
-                  <td>{d.received.length}</td>
+                  <td>{d.received.length}</td>  */}
                   <td>{d.country ? d.country : "?"}</td>
                   {/* <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td> */}
 
@@ -412,7 +439,7 @@ function Users() {
                     </button>
                     <button
                       className={`${style.botonDelete} ${buttonClass}`}
-                      onClick={() => handleDeleteClick(d.firstname, d.id)}
+                      onClick={() => handleDeleteClick(d.firstname, d.id, d.email)}
                       disabled={selectedUserCount > 1}
                     >
                       <TiDelete size={30}/>

@@ -14,6 +14,8 @@ import { TfiPencilAlt } from "react-icons/tfi";
 import { TiDelete, TiPencil } from "react-icons/ti";
 import PublicationForm from "../components/PublicationForm";
 import Loader from "@/components/Loader/Loader";
+import Link from "next/link";
+
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -45,6 +47,7 @@ function Posts() {
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedItemCount, setSelectedItemCount] = useState(0);
+  const [selectedItemsTitles, setSelectedItemsTitles] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -134,7 +137,7 @@ function Posts() {
   //     });
   // };
 
-  const handleDeleteClick = (title, id) => {
+  const handleDeleteClick = (title, id, emailAutor) => {
     Swal.fire({
       title: `¿Estás seguro de eliminar a la publicacion ${title}?`,
       icon: "warning",
@@ -152,6 +155,14 @@ function Posts() {
             const updatedUsers = records.filter((user) => user.id !== id);
             setRecords(updatedUsers);
 
+            axios
+            .post('/api/sendEmail/deletePost', { 
+              email: emailAutor,
+              title: title
+            
+            })
+
+
             Swal.fire({
               title: "¡Publicacion Eliminada Correctamente!",
               icon: "success",
@@ -164,11 +175,18 @@ function Posts() {
     });
   };
 
+const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
+
   const handleDeletePublications = () => {
     if (selectedItems.length > 0) {
+      const userIds = selectedItems; // Aquí obtienes los IDs de las publicaciones seleccionadas
+      const userEmails = selectedItemsEmails.map((item)=>item.email);
+      const titlePost = selectedItemsTitles.map((item) => item.title);
+
+      
       Swal.fire({
         title: `Eliminar ${selectedItems.length} publicaciones`,
-        text: `¿Estás seguro de eliminar las ${selectedItems.length} publicaciones seleccionadas?`,
+        text: `¿Estás seguro de eliminar las ${userIds} publicaciones seleccionadas?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -177,19 +195,27 @@ function Posts() {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          const userIds = selectedItems; // Aquí obtienes los IDs de las publicaciones seleccionadas
 
           // Eliminar publicaciones
           axios
             .put("/api/admin/post", {
                 userIds: userIds 
+            }).then(()=> {
+
+              axios.post("/api/sendEmail/deletePost", {
+                email: userEmails,
+                title: titlePost
+              })
             })
+
+
+
             .then((response) => {
               // Actualizar la lista de publicaciones en el estado local o cualquier otra acción necesaria
-              const updatedPublications = currentPublications.filter(
-                (publication) => !userIds.includes(publication.id)
-              );
-              setCurrentPublications(updatedPublications);
+              // const updatedPublications = currentPublications.filter(
+              //   (publication) => !userIds.includes(publication.id)
+              // );
+              // setCurrentPublications(updatedPublications);
 
               Swal.fire({
                 title: "¡Publicaciones eliminadas correctamente!",
@@ -204,13 +230,21 @@ function Posts() {
     }
   };
 
+
   function handleClick(id) {
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((item) => item !== id));
       setSelectedItemCount(selectedItemCount - 1);
+      setSelectedItemsEmails(selectedItemsEmails.filter((item) => item.id !== id));
+      setSelectedItemsTitles(selectedItemsTitles.filter((item) => item.id !== id));
+
     } else {
       setSelectedItems([...selectedItems, id]);
       setSelectedItemCount(selectedItemCount + 1);
+      const selectedPublication = currentPublications.find((publication) => publication.id === id);
+      setSelectedItemsEmails([...selectedItemsEmails, { id: id, email: selectedPublication.author.email }]);
+      setSelectedItemsTitles([...selectedItemsTitles, { id: id, title: selectedPublication.title }]);
+
     }
     setIsDeleteButtonDisabled(selectedItemCount + 1 > 1);
   }
@@ -285,7 +319,7 @@ function Posts() {
                           onChange={() => handleClick(d.id)}
                         />
                       </td>
-                      <td>{d.title}</td>
+                      <td><Link href={`/post/${d.id}`}>{d.title}</Link></td>
                       <td>{d.category}</td>
                       <td>{d.price}</td>
                       <td>{d.type}</td>
@@ -306,7 +340,7 @@ function Posts() {
                           className={`${style.botonDelete} ${buttonClass} ${
                             isDeleteButtonDisabled ? style.disabledButton : ""
                           }`}
-                          onClick={() => handleDeleteClick(d.title, d.id)}
+                          onClick={() => handleDeleteClick(d.title, d.id, d.author.email)}
                           disabled={isDeleteButtonDisabled}
                         >
                           <TiDelete size={30} />
