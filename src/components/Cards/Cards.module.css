@@ -1,8 +1,7 @@
-.cards-container {
+.cards_container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 1.5rem;
-  padding: 0 2rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4rem;
   width: 100%;
 }
 .noCards {
@@ -10,4 +9,24 @@
 }
 .text-center {
   font-size: 2rem;
+}
+
+@media (max-width: 1600px) {
+  .cards_container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5rem;
+  }
+}
+
+@media (max-width: 1300px) {
+  .cards_container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1000px) {
+  .cards_container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8rem;
+    margin-top: 3rem;
+  }
 }

@@ -1,15 +1,46 @@
 
-  .container {
-    margin-top: 5%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    overflow-y: auto; /* Agrega scroll vertical */
-  }
-  
- 
-  
-  
-  
-  
+.container {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80%;
+}
+
+.scrollContainer {
+  height: 30%;
+  overflow-y: auto;
+}
+
+.card {
+  width: 100%;
+  padding: 40px;
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.button {
+  background-color: yellow;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #f6b933;
+}

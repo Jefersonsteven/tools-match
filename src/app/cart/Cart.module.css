@@ -93,6 +93,7 @@
 }
 .cartButton button:nth-child(1):hover {
   width: 208px;
+  font-weight: 900;
 }
 
 .backcontainer {

@@ -23,18 +23,18 @@ export const fetchCards = async (selected, setCards, title) => {
   let cards = data || [];
 
   if (selected.order?.type === 'price') {
-    const orderResponse = await fetch(`/api/orderings/orderPrice?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}`);
+    const orderResponse = await fetch(`/api/orderings/orderPrice?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
 
   if (selected.order?.type === 'alpha') {
-    const orderResponse = await fetch(`/api/orderings/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}`);
+    const orderResponse = await fetch(`/api/orderings/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
   if (selected.order?.type === 'rating') {
-    const orderResponse = await fetch(`/api/orderings/orderRating?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}`);
+    const orderResponse = await fetch(`/api/orderings/orderRating?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }

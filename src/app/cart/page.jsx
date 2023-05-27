@@ -82,11 +82,11 @@ export default function Page() {
             )}
           </div>
           <div className={style.cartButton}>
-            <Link href="/home">
-              <button>Seguir Comprando</button>
-            </Link>
             <Link href={cart?.count > 0 ? "/payment" : "/cart"}>
               <button>Finalizar la Compra</button>
+            </Link>
+            <Link href="/home">
+              <button>Seguir Comprando</button>
             </Link>
           </div>
         </div>

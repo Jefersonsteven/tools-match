@@ -1,101 +1,111 @@
 .cardContainer {
   border-radius: 15px;
   width: 275px;
-  height: 450px;
+  height: 440px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  }
-  
-  .imageContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+  position: relative;
+}
 
-  .cardImage {
-    width: 225px;
-    height: 225px;
-    border-radius: 10px;
-    object-fit: contain;
-  }
+.imageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-  .cardContent {
-    display: flex;
-    gap: 15px;
-    flex-direction: column-reverse;
-    justify-content: space-between;
-  }
-  
-  .cardName {
-    font-size: 1.8 rem;
-    color: var(--black); 
-    font-weight:bold;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
+.cardImage {
+  width: 225px;
+  height: 225px;
+  border-radius: 10px;
+  object-fit: contain;
+  margin-top: 15px;
+}
 
-  .cardPrice {
-    font-size: 3rem;
-    font-weight: bold;
-  }
+.cardContent {
+  display: flex;
+  gap: 15px;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+}
 
-  .saleTypeContent{      
-    display: flex;
-    justify-content: space-between;
-  }
+.cardName {
+  font-size: 2rem;
+  color: var(--black);
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
 
-  .cardPriceValue {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .priceType {
-    display: grid !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    grid-template-columns: 1fr !important;
-    grid-template-rows: 1fr !important;
-    grid-template-areas: "price" !important;
-    gap: 10px;
-  }
-  .cardInfo {
-    width: 100%;
-    border-radius: 20px;
-    gap: 15px;
-  }
-  
-  /* ---------- FAVORITOS ---------- */
-  .favoriteIconWrapper {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 2;
-  }
-  
-  .favoriteIcon {
-    font-size: 35px;
-    color: var(--white-dark);
-    cursor: pointer;
-    padding: 4px;
-    margin-inline-start: auto;
-    border-radius: 50%;
-    border: 2px solid white; /* Agregado: borde verde */
-    background-color: white; /* Agregado: fondo blanco */
-  }
-  
-  .favoriteIcon:hover {
-    background-color: white; /* Agregado: al pasar el cursor, fondo verde */
-    color: var(--orange);
-  }
-  
-  .favoriteIconActive {
-    font-size: 35px;
-    color: var(--white-dark);
-    cursor: pointer;
-    padding: 4px;
-    margin-inline-start: auto;
-    border-radius: 50%;
-    color:var(--orange); /* Modificado: color verde */
-  }
+.cardPrice {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.saleTypeContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardPriceValue {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.priceType {
+  display: grid !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: 1fr !important;
+  grid-template-areas: "price" !important;
+  gap: 10px;
+}
+.cardInfo {
+  width: 100%;
+  border-radius: 20px;
+  gap: 15px;
+}
+
+/* ---------- FAVORITOS ---------- */
+.favoriteIconWrapper {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+}
+
+.favoriteIcon {
+  font-size: 35px;
+  color: var(--white-dark);
+  cursor: pointer;
+  padding: 4px;
+  margin-inline-start: auto;
+  border-radius: 50%;
+  border: 2px solid white; /* Agregado: borde verde */
+  background-color: white; /* Agregado: fondo blanco */
+}
+
+.favoriteIcon:hover {
+  background-color: white; /* Agregado: al pasar el cursor, fondo verde */
+  color: var(--orange);
+}
+
+.favoriteIconActive {
+  font-size: 35px;
+  color: var(--white-dark);
+  cursor: pointer;
+  padding: 4px;
+  margin-inline-start: auto;
+  border-radius: 50%;
+  color: var(--orange); /* Modificado: color verde */
+}
+
+.favoriteContainer {
+  position: absolute;
+  right: 15px;
+  width: fit-content;
+  height: fit-content;
+}
