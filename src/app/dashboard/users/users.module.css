@@ -108,7 +108,7 @@
     margin-top: 0px;
     margin-right: -10px;
     border-radius: 3px;
-    padding-left: 26px;
+    padding-left: 0px;
     padding-right: 0px;
     max-height: 750px;
     display: flex;
@@ -180,6 +180,7 @@
 
 .checkbox_padre {
     display: flex;
+    justify-content: center;
 }
 
 .checkbox_padre h2 {

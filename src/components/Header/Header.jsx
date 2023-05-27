@@ -75,19 +75,17 @@ function Header() {
             /> */}
           </Link>
         </li>
-        {userId &&
-          userData.admin &&
-          !(pathname.split("/")[1] === "dashboard") && (
-            <li>
-              <Link href="/dashboard/users">
-                <button>Dashboard</button>
-              </Link>
-            </li>
-          )}
       </ul>
       <nav className={styles.nav}>
         <>
           <ul className={styles.nav}>
+            {userId &&
+              userData.admin &&
+              !(pathname.split("/")[1] === "dashboard") && (
+                <li className={styles.navLi}>
+                  <Link href="/dashboard/users">Dashboard</Link>
+                </li>
+              )}
             {pathname !== "/team" && (
               <li className={styles.navLi}>
                 <Link href="/team">Nosotros</Link>

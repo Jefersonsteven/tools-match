@@ -12,6 +12,7 @@ import { icons } from "react-icons";
 import { TfiPencilAlt } from "react-icons/tfi";
 import { TiDelete, TiPencil } from "react-icons/ti";
 import Loader from "@/components/Loader/Loader";
+import Paginated from "@/components/paginated/Paginated";
 
 
 
@@ -44,8 +45,13 @@ function Reviews() {
   const [isDeleteButtonDisabled, setIsDeleteButtonDisabled] = useState(false);
   const [selectedUserCount, setSelectedUserCount] = useState(0);
 
+  const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
+
 
   const [loading, setLoading] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const publicationsPerPage = 5;
 
 
   
@@ -112,7 +118,7 @@ function Reviews() {
 
  
 
-  const handleDeleteClick = (title, id) => {
+  const handleDeleteClick = (title, id, userEmail) => {
     Swal.fire({
       title: `¿Seguro que quieres eliminar la reseña ${title}?`,
       text: 'Esta acción no se puede deshacer',
@@ -125,6 +131,11 @@ function Reviews() {
       if (result.isConfirmed) {
         axios.delete(`/api/admin/review/${id}`)
           .then(response => {
+
+            axios.post("/api/sendEmail/deleteReviews",{
+              email: userEmail
+            })
+
             const updatedUsers = records.filter((user) => user.id !== id);
             setRecords(updatedUsers);
             Swal.fire('¡Eliminada!', 'La reseña ha sido eliminada con éxito', 'success');
@@ -153,9 +164,13 @@ function Reviews() {
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter(item => item !== id));
       setSelectedItemCount(selectedItemCount - 1);
+      setSelectedItemsEmails(selectedItemsEmails.filter((item) => item.id !== id));
+
     } else {
       setSelectedItems([...selectedItems, id]);
       setSelectedItemCount(selectedItemCount + 1);
+      const selectedUser = records.find((user) => user.id === id);
+      setSelectedItemsEmails([...selectedItemsEmails, { id: id, email: selectedUser.author.email }]);
     }
   
     setIsDeleteButtonDisabled(selectedItemCount + 1 > 1);
@@ -168,9 +183,12 @@ function Reviews() {
 
   const handleDeleteReviews = () => {
     if (selectedItems.length > 0) {
+      const userIds = selectedItems; // Aquí obtienes los IDs de las publicaciones seleccionadas
+      const userEmails = selectedItemsEmails.map((item) => item.email);
+
       Swal.fire({
         title: `Eliminar ${selectedItems.length} reseñas`,
-        text: `¿Estás seguro de eliminar las ${selectedItems.length} reseñas seleccionadas?`,
+        text: `¿Estás seguro de eliminar las ${userEmails} reseñas seleccionadas?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -179,7 +197,6 @@ function Reviews() {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          const userIds = selectedItems; // Aquí obtienes los IDs de las publicaciones seleccionadas
   
           // Eliminar publicaciones
           axios
@@ -187,9 +204,13 @@ function Reviews() {
                userIds: userIds 
             })
             .then((response) => {
+
+              axios.post("/api/sendEmail/deleteReviews",{
+                email: userEmails
+              })
               // Actualizar la lista de publicaciones en el estado local o cualquier otra acción necesaria
-              const updatedPublications = currentPublications.filter(publication => !userIds.includes(publication.id));
-              setCurrentPublications(updatedPublications);
+              const updatedReviews = records.filter((review) => !userIds.includes(review.id));
+            setRecords(updatedReviews);
   
               Swal.fire({
                 title: "¡Reseñas eliminadas correctamente!",
@@ -203,6 +224,24 @@ function Reviews() {
       });
     }
   };
+
+
+  
+  const indexOfLastPublication = currentPage * publicationsPerPage;
+  const indexOfFirstPublication = indexOfLastPublication - publicationsPerPage;
+  const currentPublications = filteredUsuarios.slice(
+    indexOfFirstPublication,
+    indexOfLastPublication
+  );
+  const isPageEmpty = currentPublications.length === 0;
+    
+    
+    const handlePageChange = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
+
+
+
 
 
 
@@ -235,7 +274,7 @@ function Reviews() {
 
 
       <div className={style.contenedorTable}>
-        {filteredUsuarios.length > 0 ? (
+        {currentPublications.length > 0 ? (
           <table className={style.table}>
             <thead>
               <tr>
@@ -244,18 +283,15 @@ function Reviews() {
                 </th>
 
                 <th>TITULO</th>
-                <th>CONTENIDO</th>
                 <th>PUNTAJE</th>
                 <th>USUARIO</th>
                 <th>CREADA</th>
-                <th>MODIFICADA</th>
-                <th>PUBLICACION</th>
                 <th>AUTOR PUBLICACION</th>
               </tr>
             </thead>
 
             <tbody className={style.bodyTabla}>
-              {filteredUsuarios.map((d, i) => (
+              {currentPublications.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
                   <td> <input
                     type="checkbox"
@@ -264,17 +300,15 @@ function Reviews() {
                   /></td>
 
                   <td>{d.title}</td>
-                  <td>{d.content}</td>
+                 
                   <td>{d.rating}</td>
                   <td>{d.author.email}</td>
                   <td>{d.createdAt.slice(0, 10)}</td>
-                  <td>{d.updatedAt.slice(0, 10)}</td>
-                  <td>{d.post.title}</td>
                   <td>{d.received.email}</td>
                   <td>
                   <button
                     className={`${style.botonDelete} ${buttonClass} ${isDeleteButtonDisabled ? style.disabledButton : ''}`}
-                    onClick={() => handleDeleteClick(d.title, d.id)}
+                    onClick={() => handleDeleteClick(d.title, d.id, d.author.email)}
                     disabled={isDeleteButtonDisabled}
                   >
                     <TiDelete size={30}/>
@@ -300,6 +334,15 @@ function Reviews() {
         )}
 
       </div >
+      {filteredUsuarios.length > publicationsPerPage && (
+            <Paginated
+            currentPage={currentPage}
+            publicationsPerPage={publicationsPerPage}
+            totalPagesProp={Math.ceil(filteredUsuarios.length / publicationsPerPage)}
+            onPageChange={handlePageChange}
+            setCurrentPage={setCurrentPage}
+          />
+          )}
       </div>)}
     </div >
   );

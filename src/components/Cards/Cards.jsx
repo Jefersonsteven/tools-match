@@ -5,6 +5,7 @@ import axios from "axios";
 import Paginated from "../paginated/Paginated";
 import { App } from "antd";
 import Loader from "../Loader/Loader";
+import styles from "./Cards.module.css";
 
 const Cards = () => {
   const { cards, setCards, setFilteredCards, currentPage, setCurrentPage } =
@@ -48,7 +49,7 @@ const Cards = () => {
   return (
     <AppProvider>
       <div className="p-4 px-2">
-        <div className="grid grid-cols-4 gap-9">
+        <div className={styles.cards_container}>
           {currentCards.map((tool) => (
             <div className="w-full" key={tool.id}>
               <Card
