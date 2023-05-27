@@ -30,8 +30,8 @@
   
 .buttonCancelar {
     margin-top: 10px;
-    padding: 5px 10px;
-    border-radius: 58px;
+    padding: 5px 17px;
+    border-radius: 5px;
     border: 1px solid #F0960E;
     font-size: 14px;
     color: #DCF1D9;
@@ -42,8 +42,8 @@
 
   .buttonCancelar:hover {
     margin-top: 10px;
-    padding: 5px 10px;
-    border-radius: 58px;
+    padding: 5px 17px;
+    border-radius: 5px;
     border: 1px solid #F0960E;
     font-size: 14px;
     color: #131713;
@@ -55,8 +55,8 @@
   
 .buttonGuardar {
     margin-top: 10px;
-    padding: 5px 10px;
-    border-radius: 58px;
+    padding: 5px 17px;
+    border-radius: 5px;
     border: 1px solid #131713;
     font-size: 14px;
     color: #DCF1D9;
@@ -67,8 +67,8 @@
 
   .buttonGuardar:hover {
     margin-top: 10px;
-    padding: 5px 10px;
-    border-radius: 58px;
+    padding: 5px 17px;
+    border-radius: 5px;
     border: 1px solid #131713;
     font-size: 14px;
     color: #131713;
@@ -76,6 +76,11 @@
     background-color: #dcf1d944;
   }
 
+  .contenedorbotones {
+    display: flex;
+    justify-content: space-between;
+
+  }
 
 
 /* .formContainer{

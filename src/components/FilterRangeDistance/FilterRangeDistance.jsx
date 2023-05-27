@@ -15,7 +15,7 @@ function FilterRangeDistance({ handleKm }) {
         map: mapImage.data,
       });
       const coordinates = await axios.put(`/api/user/${userData.email}`, {
-        coordinates: [lat.toString(), long.toString()],
+        coordinates: [latitude.toString(), longitude.toString()],
       });
     } catch (error) {
       console.log(error.message);
@@ -51,7 +51,7 @@ function FilterRangeDistance({ handleKm }) {
         <span style={{ left: `${range / 70}%` }}>{range}Km</span>
         <input
           onInput={handleRange}
-          onBlur={exitInput}
+          onMouseUp={exitInput}
           type="range"
           min={1}
           max={6000}

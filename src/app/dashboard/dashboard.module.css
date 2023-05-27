@@ -1,13 +1,13 @@
 .contenedor {
     background-color: #131713;   
     border-right: 1px solid rgb(30, 30, 30);
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding-bottom: 860px;
-    padding-top: 95px;
-    height: 100%;
+    align-items: center; */
+    padding-bottom: 20%;
+    padding-top: 85px;
+    /* height: 100%; */
 }
 
 .contenedor p {
@@ -20,7 +20,8 @@
 
 .title {
     color: rgb(255, 255, 255);
-    display: block;
+    display: flex;
+    justify-content: center;
     padding-bottom: 100px;
 }
 
