@@ -103,12 +103,17 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+    padding: 10px;
 }
 
 .gateway div {
     display: flex;
-    padding: 15px 25px;
     justify-content: space-between;
+}
+
+.gateway h4 {
+    font-weight: 700;
+
 }
 
 .gateway > button:hover {
