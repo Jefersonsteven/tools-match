@@ -53,7 +53,7 @@ function Page() {
       });
 
       // se setea el carrito
-      if (typeof window !== "undefined") {
+      if (typeof window !== "undefined" && status === "approved") {
         setCart({
           count: 0,
           items: [],
@@ -115,8 +115,16 @@ function Page() {
   };
 
   async function handleMercadoPago() {
-    const { LinkDePagoSandbox, LinkDePagoInit } = await payMercadoPago(body);
-    window.location.href = LinkDePagoSandbox;
+    if (errors.address === "" && errors.phoneNumber === "") {
+      const { LinkDePagoSandbox, LinkDePagoInit } = await payMercadoPago(body);
+      window.location.href = LinkDePagoSandbox;
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor, rellene todos los campos.",
+      });
+    }
   }
 
   return (
@@ -183,22 +191,18 @@ function Page() {
             </div>
           </div>
           <div className={styles.gateway}>
-            <button onClick={() => setGateway(true)} disabled={disabled}>
-              Opciones de Pago
-            </button>
-            {gateway && (
-              <div>
-                <button>Contra Entrega</button>
-                <button>Tarjeta de credito</button>
-                <button
-                  className={styles.mercadopago}
-                  onClick={handleMercadoPago}
-                >
-                  <SiMercadopago size={35} color="#fff" />
-                  <p>Mercado Pago</p>
-                </button>
-              </div>
-            )}
+            <h4>Opciones de Pago</h4>
+            <div>
+              <button>Contra Entrega</button>
+              <button>Tarjeta de credito</button>
+              <button
+                className={styles.mercadopago}
+                onClick={handleMercadoPago}
+              >
+                <SiMercadopago size={35} color="#fff" />
+                <p>Mercado Pago</p>
+              </button>
+            </div>
           </div>
         </section>
       </main>
