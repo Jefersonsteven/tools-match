@@ -97,6 +97,8 @@ function PostDetail({}) {
   }
 
   useEffect(() => {
+    setPostDetail({});
+
     fetch(`/api/admin/post/${postId}`)
       .then((response) => response.json())
       .then((data) => setPostDetail(data));
