@@ -25,7 +25,7 @@ export default function Team() {
       image: "Celeste.png",
     },
     {
-      name: "Emmanuel",
+      name: "Emanuel",
       lastname: "Burgos",
       country: "Argentina",
       image: "Emmanuel.png",

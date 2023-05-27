@@ -9,25 +9,19 @@
   align-items: center;
 }
 .backContainer:hover {
-  font-weight: 900;
+  font-weight: 700;
   opacity: 1;
 }
 .icon {
-  font-size: 3rem;
-  color: var(--black-light);
-  opacity: 0.8;
+  font-size: 3.5rem;
+  color: black;
+  opacity: .9;
 }
 .title {
   display: flex;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 2.3rem;
   color: black;
   align-items: center;
   gap: 1rem;
-}
-.title:hover{
-  font-weight: 600;
-}
-.icon:hover{
-  opacity: 1;
 }

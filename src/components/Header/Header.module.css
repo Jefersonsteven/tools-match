@@ -70,6 +70,7 @@
 .perfil {
   width: 16px;
   position: relative;
+  cursor: pointer;
 }
 
 .perfil ul li a {
@@ -152,5 +153,3 @@
   visibility: visible;
 }
 
-.dashboard {
-}

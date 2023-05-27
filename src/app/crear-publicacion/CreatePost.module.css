@@ -8,10 +8,10 @@
   row-gap: 50px;
 }
 
-.back {
+/* .back {
   grid-column: 1 / 4;
   grid-row: 1 / 2;
-}
+} */
 
 .main span {
   color: var(--red);

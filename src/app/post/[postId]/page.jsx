@@ -103,7 +103,7 @@ function PostDetail({}) {
   }, [setPostDetail, postId]);
 
   return (
-    <div>
+    <div className={styles.back}>
       <Back />
       <div className={styles.main_container}>
         {/* <Link
