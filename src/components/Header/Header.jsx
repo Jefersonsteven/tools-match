@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import styles from "./Header.module.css";
-import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
+import { FaUserCircle, FaShoppingCart, FaHeart } from "react-icons/fa";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -24,6 +24,7 @@ function Header() {
     removeFromLocalStorage,
     endSession,
     cart,
+    favorite,
   } = useContext(AppContext);
 
   const [submenu, setSubmenu] = useState(false);
@@ -104,9 +105,13 @@ function Header() {
               )}
             </li>
             {pathname !== "/favorite" && pathname !== "/" && userData && (
-              <li className={styles.navLi}>
-                <Link href="/favorite">Favoritos</Link>
-              </li>
+              <Link href="/favorite" className={styles.cart}>
+                <FaHeart size="25" color="white" />
+                {favorite?.count > 0 && (
+                  <span className={styles.cartCount}>{favorite.count}</span>
+                )}
+                <span className={styles.cartText}>Favoritos</span>
+              </Link>
             )}
           </ul>
 
