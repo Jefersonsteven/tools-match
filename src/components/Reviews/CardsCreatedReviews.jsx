@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RiStarFill, RiStarLine } from "react-icons/ri";
 import { TiDelete, TiPencil } from "react-icons/ti";
 import Image from "next/image";
 import styles from "./CardsCreatedReviews.module.css";
-import FormUpdateReview from "./FormUpdateReview"; // Importamos el componente del formulario
+import FormUpdateReview from "./FormUpdateReview";
 
 const CardsCreatedReviews = ({ createdReviews, author }) => {
   const [selectedReview, setSelectedReview] = useState(null);
@@ -23,6 +23,17 @@ const CardsCreatedReviews = ({ createdReviews, author }) => {
     setIsModalOpen(false);
   };
 
+  const handleFormClose = () => {
+    setSelectedReview(null);
+  };
+
+  useEffect(() => {
+    // Actualizar el renderizado después de editar la reseña
+    if (selectedReview) {
+      // Realiza la lógica necesaria para actualizar la reseña editada en el arreglo createdReviews
+    }
+  }, [selectedReview]);
+
   return (
     <>
       <div className="grid grid-cols-3 gap-4 bg-green-80">
@@ -32,7 +43,7 @@ const CardsCreatedReviews = ({ createdReviews, author }) => {
 
           return (
             <div
-              className="card rounded-md overflow-hidden shadow-md bg-white relative"
+              className={`card rounded-md overflow-hidden shadow-md bg-white relative ${styles.card}`}
               key={review.id}
             >
               <div className="user-info flex items-center p-4">

@@ -116,6 +116,28 @@ export default function PerfilUsuario() {
     !userData && push("/form/login");
   }, [userData, push]);
 
+  const handleReviewUpdate = async (updatedReview) => {
+    try {
+      const response = await axios.put(`/api/review/${updatedReview.id}`, {
+        rating: updatedReview.rating,
+        content: updatedReview.content,
+      });
+
+      if (response.status === 200) {
+        console.log("Reseña actualizada correctamente");
+        // Actualizar el estado de las revisiones
+        const updatedReviews = reviews.map((review) =>
+          review.id === updatedReview.id ? updatedReview : review
+        );
+        setReviews(updatedReviews);
+      } else {
+        console.error("Error al actualizar la reseña");
+      }
+    } catch (error) {
+      console.error("Error al actualizar la reseña:", error);
+    }
+  };
+
   return (
     <>
       <section>
