@@ -5,6 +5,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { FaFilter, FaSort } from "react-icons/fa";
 import { fetchCards } from "./UseFetchCard";
 import style from "./FilterBar.module.css";
+import { FaGlobeAmericas } from 'react-icons/fa'
 import {
   handleTitleChange,
   handleTitleButtonChange,
@@ -76,16 +77,50 @@ export default function FilterBar() {
   return (
     <AppProvider>
       <div className="relative z-10">
+      <div className="mr-10 ml-2" style={{ width: "400px" }}>
+      <FilterRangeDistance handleKm={handleKm}  />
+      </div>
         <div className="flex-1 flex flex-row items-center justify-between px-2">
           <div className="mr-10" style={{ width: "400px" }}>
             {/* // filter per distance - Jeffer */}
-            <FilterRangeDistance handleKm={handleKm} />
+            
             <SearchBar
               title={title}
               onTitleChange={handleTitle}
               onTitleButton={handleTitleButton}
               style={{ width: "150px" }}
             />
+          </div>
+          <div className={`flex relative mr-2 ${style.button}`}>
+            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ">
+              Pais <FaGlobeAmericas className="ml-2" />
+            </div>
+            <div className={style.order}>
+              <button
+                onClick={()=>{}}
+                className={orderFilter === "" ? style.selected : ""}
+              >
+                Todos
+              </button>
+              <button
+                onClick={()=>{}}
+                className={orderFilter === "alpha-asc" ? style.selected : ""}
+              >
+                Colombia
+              </button>
+              <button
+                onClick={()=>{}}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
+              >
+                Mexico
+              </button>
+              <button
+                onClick={()=>{}}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
+              >
+                Argentina
+              </button>                     
+            </div>
           </div>
           <div className={`mr-2 relative ${style.button}`}>
             <div
@@ -320,41 +355,6 @@ export default function FilterBar() {
           </div>
           <div className={`flex relative ${style.button}`}>
             <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
-              Paises <FaSort className="ml-2" />
-            </div>
-            <div className={style.order}>
-              <button
-                value=""
-                onClick={handleCountry}
-                className={orderFilter === "" ? style.selected : ""}
-              >
-                Default
-              </button>
-              <button
-              value="AR"
-                onClick={handleCountry}
-                className={orderFilter === "alpha-asc" ? style.selected : ""}
-              >
-                Argentina
-              </button>
-              <button
-              value="CO"
-                onClick={handleCountry}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
-              >
-                Colombia
-              </button>
-              <button
-              value="MEX"
-                onClick={handleCountry}
-                className={orderFilter === "price-asc" ? style.selected : ""}
-              >
-                Mexico
-              </button>
-            </div>
-          </div>
-          <div className={`flex relative ${style.button}`}>
-            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
               Ordenar <FaSort className="ml-2" />
             </div>
             <div className={style.order}>
@@ -402,12 +402,12 @@ export default function FilterBar() {
               </button>
             </div>
           </div>
-          <div className={`ml-8 relative ${style.button}`}>
-            <div className={style.clear}>
-              <button onClick={handleCleanFilters} className={style.clearbtn}>
-                <AiOutlineClear className="mr-2" />
+          <div className={` flex relative ${style.clearBbutton}`}>
+            {/* <div className={style.clear}> */}
+              <button onClick={handleCleanFilters}className="bg-black text-white hover:bg-gray-800 flex items-center rounded-xl" style={{ height: '46px', padding: '0 40px' }}>
+                <AiOutlineClear className="mr-2 text-4xl" />
               </button>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>

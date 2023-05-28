@@ -14,17 +14,25 @@
   gap: 20px;
 }
 
-.logo button {
-  background-color: var(--white);
-  color: var(--black);
-  border-radius: 5px;
-  padding: 0 15px;
+.logo svg {
+  width: 40px;
+  height: 40px;
 }
 
-.logo button:hover {
-  background-color: var(--black);
-  color: var(--white);
+.logo svg path {
+  fill: var(--orange);
 }
+
+.logo svg:hover path {
+  fill: var(--white);
+}
+
+.logo h2 {
+  font-weight: 800;
+  width: max-content;
+  letter-spacing: 0.35rem;
+}
+
 .nav {
   display: flex;
   gap: 30px;
@@ -80,30 +88,26 @@
 }
 
 .openSubmenu {
-  display: flex;
+  display: none;
   position: absolute;
-  width: 200px;
+  width: 202px;
   padding: 15px;
   flex-direction: column;
   border-right: 3px solid var(--orange);
   box-sizing: border-box;
   gap: 2px;
   right: 17px;
-  top: 30px;
+  top: 25px;
   z-index: 1;
   background-color: var(--black);
 }
 
-.closeSubmenu {
-  display: none;
-  position: absolute;
-  width: 150px;
-  padding: 15px;
-  flex-direction: column;
-  gap: 2px;
-  right: 0;
-  z-index: 1;
-  background-color: var(--black);
+.perfil:hover .openSubmenu {
+  display: flex;
+}
+
+.perfil:hover .userImg {
+  border: 2px solid var(--orange);
 }
 
 .userImg {

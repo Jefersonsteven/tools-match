@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Back from "@/components/back/Back";
+import confirmPurchase from "./assets/alertConfirmPurchase";
 
 function Page() {
   const [disabled, setDisabled] = useState(true);
@@ -31,7 +32,8 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userData?.firstname) router.push("/form/login");
+    if (!userData) router.push("/form/login");
+    if (cart.count === 0) router.push("/home");
   }, [router, userData]);
 
   useEffect(() => {
@@ -52,8 +54,14 @@ function Page() {
           .catch((error) => console.log(error));
       });
 
+      // se notifica al comprador
+      axios.post(`/api/sendEmail/confirm`, {
+        email: userData.email,
+        id: userData.id,
+      });
+
       // se setea el carrito
-      if (typeof window !== "undefined") {
+      if (typeof window !== "undefined" && status === "approved") {
         setCart({
           count: 0,
           items: [],
@@ -115,8 +123,28 @@ function Page() {
   };
 
   async function handleMercadoPago() {
-    const { LinkDePagoSandbox, LinkDePagoInit } = await payMercadoPago(body);
-    window.location.href = LinkDePagoSandbox;
+    if (errors.address === "" && errors.phoneNumber === "") {
+      const { LinkDePagoSandbox, LinkDePagoInit } = await payMercadoPago(body);
+      window.location.href = LinkDePagoSandbox;
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor, rellene todos los campos.",
+      });
+    }
+  }
+
+  async function handlerOnDelivery() {
+    if (errors.address === "" && errors.phoneNumber === "") {
+      confirmPurchase(userData, cart, setCart);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor, rellene todos los campos.",
+      });
+    }
   }
 
   return (
@@ -130,7 +158,7 @@ function Page() {
               <input
                 onChange={handleForm}
                 type="text"
-                value={form.fullname}
+                defaultValue={form.fullname}
                 name="fullname"
               />
               <span>{errors.fullname}</span>
@@ -140,7 +168,7 @@ function Page() {
               <input
                 onChange={handleForm}
                 type="email"
-                value={form.email}
+                defaultValue={form.email}
                 name="email"
               />
               <span>{errors.email}</span>
@@ -150,7 +178,7 @@ function Page() {
               <input
                 onChange={handleForm}
                 type="number"
-                value={form.phoneNumber}
+                defaultValue={form.phoneNumber}
                 name="phone"
               />
               <span>{errors.phoneNumber}</span>
@@ -160,7 +188,7 @@ function Page() {
               <input
                 onChange={handleForm}
                 type="text"
-                value={form.address}
+                defaultValue={form.address}
                 name="address"
               />
               <span>{errors.address}</span>
@@ -183,22 +211,18 @@ function Page() {
             </div>
           </div>
           <div className={styles.gateway}>
-            <button onClick={() => setGateway(true)} disabled={disabled}>
-              Opciones de Pago
-            </button>
-            {gateway && (
-              <div>
-                <button>Contra Entrega</button>
-                <button>Tarjeta de credito</button>
-                <button
-                  className={styles.mercadopago}
-                  onClick={handleMercadoPago}
-                >
-                  <SiMercadopago size={35} color="#fff" />
-                  <p>Mercado Pago</p>
-                </button>
-              </div>
-            )}
+            <h4>Opciones de Pago</h4>
+            <div>
+              <button onClick={handlerOnDelivery}>Contra Entrega</button>
+              <button>Tarjeta de credito</button>
+              <button
+                className={styles.mercadopago}
+                onClick={handleMercadoPago}
+              >
+                <SiMercadopago size={35} color="#fff" />
+                <p>Mercado Pago</p>
+              </button>
+            </div>
           </div>
         </section>
       </main>

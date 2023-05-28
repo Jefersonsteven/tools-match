@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Swal from "sweetalert2";
+import Logo from "../Logo/Logo";
 
 function Header() {
   const pathname = usePathname();
@@ -25,8 +26,6 @@ function Header() {
     endSession,
     cart,
   } = useContext(AppContext);
-
-  const [submenu, setSubmenu] = useState(false);
 
   const handleCloseSession = async () => {
     if (userData) {
@@ -63,19 +62,12 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <ul className={styles.logo}>
-        <li>
-          <Link href="/">
-            Tools Match
-            {/* <Image
-              src="/assets/images/logo/toolsMatch.jpg"
-              alt="logo"
-              width={70}
-              height={70}
-            /> */}
-          </Link>
-        </li>
-      </ul>
+      <div className={styles.logo}>
+        <Link href="/">
+          <Logo />
+        </Link>
+        <h2>Tools Match</h2>
+      </div>
       <nav className={styles.nav}>
         <>
           <ul className={styles.nav}>
@@ -97,11 +89,7 @@ function Header() {
               </Link>
             </li>
             <li className={styles.navLi}>
-              {pathname !== "/" && (
-                <Link href={userData ? href : "/home"}>
-                  Crear Publicaciones
-                </Link>
-              )}
+              {pathname !== "/" && <Link href={href}>Crear Publicaciones</Link>}
             </li>
             {pathname !== "/favorite" && pathname !== "/" && userData && (
               <li className={styles.navLi}>
@@ -130,18 +118,16 @@ function Header() {
                   />
                 )}
 
-                <ul
-                  className={submenu ? styles.openSubmenu : styles.closeSubmenu}
-                >
+                <ul className={styles.openSubmenu}>
                   {userData && (
                     <li>
-                      <Link href={`/perfil/${userId}`}>ver Perfil</Link>
+                      <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
                     </li>
                   )}
                   {userData && (
                     <li>
                       <Link href={`/perfil/${userId}/changePassword`}>
-                        Cambiar contraseña
+                        Cambiar Contraseña
                       </Link>
                     </li>
                   )}

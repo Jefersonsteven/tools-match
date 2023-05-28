@@ -17,14 +17,16 @@ export default async function handler(req, res) {
           received: true,
         },
       });
-      const favPosts = await prisma.post.findMany({
-        where: {
-          id: {
-            in: user.favoritesId,
+      if (user.favoritesId.length > 0) {
+        const favPosts = await prisma.post.findMany({
+          where: {
+            id: {
+              in: user.favoritesId,
+            },
           },
-        },
-      });
-      user.favorites = favPosts;
+        });
+        user.favorites = favPosts;
+      }
       res.status(200).json(user);
     } catch (error) {
       res.status(500).json({ error: "Error retrieving user." });
