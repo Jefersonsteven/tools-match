@@ -210,3 +210,10 @@
     height: 100vh; /* Ajusta la altura según tus necesidades */
   }
   
+.nombrePerfil {
+    color: #1d954e;
+}
+
+.nombrePerfil:hover {
+    color: #f0960e;
+}

@@ -411,7 +411,7 @@ function Users() {
                         />
                   </td>
                   <td>
-        <Link href={`/dashboard/users/${d.id}`}>
+        <Link className={style.nombrePerfil} href={`/dashboard/users/${d.id}`}>
           {d.firstname}
         </Link></td>
                   <td>{d.lastname}</td>
