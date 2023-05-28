@@ -29,6 +29,14 @@ export const handleTypeChange = (event, setSelected, setTypeFilter) => {
   setTypeFilter(typeValue);
 };
 
+export const handleCountryChange = (event, setSelected) => {
+  const typeValue = event.target.value;
+  setSelected((prevSelected) => ({
+    ...prevSelected,
+    country: typeValue,
+  }));
+};
+
 export const handleBrandChange = (event, setSelected, setBrandFilter) => {
   const brandValue = event.target.value;
   setSelected((prevSelected) => ({

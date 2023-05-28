@@ -1,15 +1,16 @@
+import { auth } from "@/firebase/firebase.config";
 import prisma from "../../../../prisma/client";
 import { calcularDistancia } from "../distance/assets/calculateDistance";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const { category, type, brand, title, coorde1, coorde2, km } = req.query;
+      const { category, type, brand, title, coorde1, coorde2, km, id ,country} = req.query;
       const intcoorde1 = parseFloat(coorde1);
       const intcoorde2 = parseFloat(coorde2);
       const intKm = parseFloat(km);
 
-      if (!category && !type && !brand && !title && !coorde1 && !coorde2 && !km) {
+      if (!category && !type && !brand && !title && !coorde1 && !coorde2 && !km && !country && !id && !country) {
         return res.status(400).json({
           error: "Invalid query parameters. Please provide at least one valid parameter (category, type, brand, or name).",
         });
@@ -17,8 +18,28 @@ export default async function handler(req, res) {
 
       let where = { hidden: false };
 
+      if(id && !country) {
+        const postCountry = await prisma.user.findUnique({
+          where: {
+            id: id,
+            },
+            select:{
+              country: true
+            }
+        });
+        const {country} = postCountry
+        where.author = {
+          country: country
+        }
+      }
+
+      if (country) {
+        where.author = {
+          country: country,
+        };
+      }
+
       if (category) {
-        console.log(category);
         where.category = category;
       }
 

@@ -6,6 +6,7 @@ export const fetchCards = async (selected, setCards, title) => {
   const getKmParam = () => selected.km ? `km=${selected.km}` : '';
   const getCoorde1Param = () => selected.coorde1 ? `coorde1=${selected.coorde1}` : '';
   const getCoorde2Param = () => selected.coorde2 ? `coorde2=${selected.coorde2}` : '';
+  const getCountryParam = () => selected.country ? `country=${selected.country}` : '';
 
   const categoryParam = getCategoryParam();
   const typeParam = getTypeParam();
@@ -18,31 +19,34 @@ export const fetchCards = async (selected, setCards, title) => {
   const coorde1Param = getCoorde1Param();
   const coorde2Param = getCoorde2Param();
 
-  const response = await fetch(`/api/filters/allFilters?${categoryParam}&${typeParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}`);
+  //filtrar por pais
+  const countryParam = getCountryParam();
+
+  const response = await fetch(`/api/filters/allFilters?${categoryParam}&${typeParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}&${countryParam}`);
   const data = await response.json();
   let cards = data || [];
 
   if (selected.order?.type === 'price') {
-    const orderResponse = await fetch(`/api/orderings/orderPrice?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}`);
+    const orderResponse = await fetch(`/api/orderings/orderPrice?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}&${countryParam}`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
 
   if (selected.order?.type === 'alpha') {
-    const orderResponse = await fetch(`/api/orderings/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}`);
+    const orderResponse = await fetch(`/api/orderings/orderAlphabetically?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}&${countryParam}`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
   if (selected.order?.type === 'rating') {
-    const orderResponse = await fetch(`/api/orderings/orderRating?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}`);
+    const orderResponse = await fetch(`/api/orderings/orderRating?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}&${countryParam}`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
-  if(selected.category=="" && selected.type=="" && selected.order.type=="" && selected.order.order==""  && selected.title == ""  && selected.brand=="" && selected.km== "") {
+   if(selected.category=="" && selected.type=="" && selected.order.type=="" && selected.order.order==""  && selected.title == ""  && selected.brand=="" && selected.km== "" && selected.country== "") {
     const orderResponse = await fetch(`/api/admin/post`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
-  }
+  } 
   
 
   setCards(cards);

@@ -14,12 +14,13 @@ import {
   handleOrderChange,
   handleClearFilters,
   handleKmChange,
+  handleCountryChange
 } from "./handlers";
 import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 import { AiOutlineClear } from "react-icons/ai";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected } =
+  const { setCards, title, setTitle, selected, setSelected,userId } =
     useContext(AppContext);
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
@@ -56,7 +57,10 @@ export default function FilterBar() {
   // handleKm - Jeffer
   const handleKm = (km, coorde1, coorde2) => {
     handleKmChange(setSelected, km, coorde1, coorde2);
-    console.log(crad);
+  };
+
+  const handleCountry = (event) => {
+    handleCountryChange(event,setSelected);
   };
 
   const handleCleanFilters = () => {
@@ -312,6 +316,41 @@ export default function FilterBar() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className={`flex relative ${style.button}`}>
+            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
+              Paises <FaSort className="ml-2" />
+            </div>
+            <div className={style.order}>
+              <button
+                value=""
+                onClick={handleCountry}
+                className={orderFilter === "" ? style.selected : ""}
+              >
+                Default
+              </button>
+              <button
+              value="AR"
+                onClick={handleCountry}
+                className={orderFilter === "alpha-asc" ? style.selected : ""}
+              >
+                Argentina
+              </button>
+              <button
+              value="CO"
+                onClick={handleCountry}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
+              >
+                Colombia
+              </button>
+              <button
+              value="MEX"
+                onClick={handleCountry}
+                className={orderFilter === "price-asc" ? style.selected : ""}
+              >
+                Mexico
+              </button>
             </div>
           </div>
           <div className={`flex relative ${style.button}`}>
