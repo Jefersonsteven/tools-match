@@ -1,38 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { RiStarFill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-const FormReview = ({ selectedPost, onCloseModal }) => {
+const FormUpdateReview = ({ selectedPost, onCloseModal }) => {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(true);
-  const currentDate = new Date().toISOString().split("T")[0];
-  const [receivedId, setReceivedId] = useState("");
-  const [title, setTitle] = useState(""); 
+  const currentDate = new Date().toISOString().split("T")[0];  
   const { perfilId } = useParams();
 
-  useEffect(() => {
-    const fetchReceivedId = async () => {
-      try {
-        const response = await fetch(`/api/admin/post/${selectedPost.id}`);
-        const postData = await response.json();
-        setReceivedId(postData.authorId);
-        setTitle(postData.title);
-      } catch (error) {
-        console.error("Error al obtener receivedId", error);
-      }
-    };
-
-    fetchReceivedId();
-  }, [selectedPost]);
-
+      
   useEffect(() => {
     const fetchReview = async () => {
       try {
         const response = await fetch(`/api/admin/review/${selectedPost.id}`);
         const reviewData = await response.json();
-        setRating(reviewData.rating);
+        setRating(reviewData.rating); 
         setContent(reviewData.content);
       } catch (error) {
         console.error("Error al obtener la reseña", error);
@@ -58,12 +42,11 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
       content,
       authorId: perfilId,
       postId: selectedPost.id,
-      receivedId,
-      title,
+      perfilId,
     };
 
     try {
-      const response = await fetch(`/api/admin/review/${selectedPost.id}`, {
+      const response = await fetch(`/api/review/${selectedPost.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +85,7 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
             <AiOutlineClose className="text-black" />
           </button>
         </div>
-        <h2 className="text-2xl font-bold mb-4">Editar Reseña</h2>
+        <h2 className="text-xl font-bold mb-4">Editar Reseña</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium">
@@ -151,17 +134,9 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
             </button>
           </div>
         </form>
-        <div className="absolute top-0 right-0 mt-2 mr-2">
-          <button
-            className="bg-yellow-500 rounded-full p-2"
-            onClick={handleClose}
-          >
-            <AiOutlineClose className="text-black" />
-          </button>
-        </div>
       </div>
     </div>
   );
 };
 
-export default FormReview;
+export default FormUpdateReview;
