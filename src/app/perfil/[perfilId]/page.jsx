@@ -15,6 +15,7 @@ import CardsOrders from "@/components/Reviews/CardsOrders";
 import axios from "axios";
 
 import Back from "@/components/back/Back";
+import LoaderRadial from "@/components/Loader/LoaderRadial";
 
 export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
@@ -87,7 +88,7 @@ export default function PerfilUsuario() {
 
         const orderDetailsPromises = orders.map(async (order) => {
           const qItems = order.postId.length;
-          const postId= order.postId;
+          const postId = order.postId;
           const date = order.createdAt;
           const paymentId = order.paymentId;
           const paymentResponse = await axios.get(`/api/payment/${paymentId}`);
@@ -98,7 +99,7 @@ export default function PerfilUsuario() {
             amount: paymentDetails.payment.amount,
             currency: paymentDetails.payment.currency,
             date: date,
-            postId: postId
+            postId: postId,
           };
         });
 
@@ -120,6 +121,11 @@ export default function PerfilUsuario() {
     <>
       <section>
         <Back />
+        {!user.firstname && (
+          <div className="grid justify-center items-center fixed w-screen h-3/6">
+            <LoaderRadial />
+          </div>
+        )}
         {user.firstname && (
           <>
             <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
@@ -230,9 +236,7 @@ export default function PerfilUsuario() {
                 />
               </div>
               <div className={styles.reviewContainer}>
-                <h3 className={styles.sectionTitleH3}>
-                  Reseñas Enviadas
-                </h3>
+                <h3 className={styles.sectionTitleH3}>Reseñas Enviadas</h3>
                 <CardsCreatedReviews
                   createdReviews={createdReviews}
                   author={user}
