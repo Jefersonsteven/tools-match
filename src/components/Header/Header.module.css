@@ -80,30 +80,26 @@
 }
 
 .openSubmenu {
-  display: flex;
+  display: none;
   position: absolute;
-  width: 200px;
+  width: 202px;
   padding: 15px;
   flex-direction: column;
   border-right: 3px solid var(--orange);
   box-sizing: border-box;
   gap: 2px;
   right: 17px;
-  top: 30px;
+  top: 25px;
   z-index: 1;
   background-color: var(--black);
 }
 
-.closeSubmenu {
-  display: none;
-  position: absolute;
-  width: 150px;
-  padding: 15px;
-  flex-direction: column;
-  gap: 2px;
-  right: 0;
-  z-index: 1;
-  background-color: var(--black);
+.perfil:hover .openSubmenu {
+  display: flex;
+}
+
+.perfil:hover .userImg {
+  border: 2px solid var(--orange);
 }
 
 .userImg {
