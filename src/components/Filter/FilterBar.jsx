@@ -57,7 +57,6 @@ export default function FilterBar() {
   // handleKm - Jeffer
   const handleKm = (km, coorde1, coorde2) => {
     handleKmChange(setSelected, km, coorde1, coorde2);
-    console.log(crad);
   };
 
   const handleCleanFilters = () => {
