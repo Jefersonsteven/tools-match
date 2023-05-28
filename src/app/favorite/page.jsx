@@ -14,12 +14,6 @@ const Favorites = ({ title, price, type }) => {
   const { userData, favorite, setFavorite } = useContext(AppContext);
 
   useEffect(() => {
-    if (!favorite) {
-      setFavorite({
-        count: 0,
-        items: [],
-      });
-    }
     const fetchData = async () => {
       // Fetch user data
       const user = await axios.get(`api/user/${userData.email}`);
@@ -37,6 +31,11 @@ const Favorites = ({ title, price, type }) => {
     };
 
     fetchData();
+    if (!favorite) {
+      setFavorite({
+        count: 0,
+      });
+    }
   }, [favorite, setFavorite, refresh]); // Empty dependency array to run the effect only once on component mount
 
   return (
@@ -83,22 +82,33 @@ export default Favorites;
 //   const router = useRouter();
 //   const [favoriteArray, setFavoriteArray] = useState([]);
 //   const [refresh, setRefresh] = useState(false);
-//   const { userData } = useContext(AppContext);
+//   const { userData, favorite, setFavorite } = useContext(AppContext);
+
+//   const fetchData = async () => {
+//     // Fetch user data
+//     const user = await axios.get(`api/user/${userData.email}`);
+
+//     // Update favoriteArray with the data from the response
+//     if (userData && userData.email) {
+//       // console.log(user.data.favorites.length);
+//       setFavoriteArray(user.data.favorites);
+//       setRefresh(!refresh);
+//       setFavorite((prevFavorite) => ({
+//         ...prevFavorite,
+//         count: user.data.favorites.length,
+//       }));
+//     }
+//   };
+
+//   fetchData();
+
 //   useEffect(() => {
-//     const fetchData = async () => {
-//       // Fetch user data
-//       const user = await axios.get(`api/user/${userData.email}`);
-
-//       // Update favoriteArray with the data from the response
-//       if (userData && userData.email) {
-//         // console.log(user.data.favorites.length);
-//         setFavoriteArray(user.data.favorites);
-//         setRefresh(!refresh);
-//       }
-//     };
-
-//     fetchData();
-//   }, [refresh]); // Empty dependency array to run the effect only once on component mount
+//     if (!favorite) {
+//       setFavorite({
+//         count: 0,
+//       });
+//     }
+//   }, [favorite, setFavorite, refresh]); // Empty dependency array to run the effect only once on component mount
 
 //   return (
 //     <div>
