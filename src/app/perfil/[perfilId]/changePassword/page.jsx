@@ -7,6 +7,7 @@ import { AppContext } from "@/context/AppContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import Back from "@/components/back/Back";
+import Loader from "@/components/Loader/Loader";
 
 const ChangePassword = () => {
   const {
@@ -32,6 +33,9 @@ const ChangePassword = () => {
     confirmNewPassword: "",
     flag: true,
   });
+
+  const [fetching, setFetching] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     setErrors(validateChangePassword(form));
@@ -74,27 +78,28 @@ const ChangePassword = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setFetching(true);
     const body = {
       email: userData.email,
       password: form.currentPassword,
     };
 
     try {
+      setMessage("Validando contraseña actual...");
       let validatePassword = await newPetition(
         "PUT",
         "/api/loginValidate",
         body
       );
-      console.log(validatePassword);
 
       if (!validatePassword.error) {
+        setMessage("Actualizando contraseña...");
         let setPassword = await newPetition(
           "PUT",
           `/api/forgetPassword/${userData.email}`,
           { password: form.newPassword }
         );
-        console.log(setPassword);
+
         if (!setPassword.error) {
           const Toast = Swal.mixin({
             toast: true,
@@ -120,7 +125,7 @@ const ChangePassword = () => {
             endSession(userData.email);
             setUserData(null);
             setUserId(null);
-          }, 5000);
+          }, 3000);
         } else {
           throw new Error(setPassword.error);
         }
@@ -136,6 +141,8 @@ const ChangePassword = () => {
         footer: "Intenta nuevamente",
       });
     }
+    setMessage("");
+    setFetching(false);
   };
 
   return (
@@ -184,6 +191,12 @@ const ChangePassword = () => {
               Resetear contraseña
             </button>
           </div>
+          {fetching && (
+            <div className="mt-12 mb-12 flex justify-center flex-col items-center">
+              <Loader />
+              <p>{message}</p>
+            </div>
+          )}
         </form>
       </section>
     </>

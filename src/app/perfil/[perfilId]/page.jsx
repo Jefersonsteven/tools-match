@@ -14,6 +14,7 @@ import CardsOrders from "@/components/Reviews/CardsOrders";
 import axios from "axios";
 
 import Back from "@/components/back/Back";
+import Loader from "@/components/Loader/Loader";
 
 export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
@@ -101,7 +102,7 @@ export default function PerfilUsuario() {
     <>
       <section>
         <Back />
-        {user.firstname && (
+        {user.firstname ? (
           <>
             <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
             <section className={styles.section}>
@@ -160,11 +161,12 @@ export default function PerfilUsuario() {
                 </Link>
               </div>
             </section>
+            <div className={styles.titlesSections}>
+              <h3 className={styles.sectionTitleH3}>Herramientas Publicadas</h3>
+              <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
+            </div>
             <div className={styles.sectionsContainer}>
               <section>
-                <h3 className={styles.sectionTitleH3}>
-                  Herramientas Publicadas
-                </h3>
                 <div className="grid grid-cols-4 gap-9">
                   {user.posts ? (
                     user.posts.map((post) => {
@@ -193,23 +195,31 @@ export default function PerfilUsuario() {
               </section>
               {user.id == userData?.id && (
                 <section>
-                  <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
                   <div className="w-full items-center ">
                     <CardsOrders userOrders={userOrders} />
                   </div>
                 </section>
               )}
             </div>
+            <div className={styles.titleReviewContainer}>
+              <h3 className={styles.sectionTitleH3}>
+                Reseñas de tus herramientas
+              </h3>
+            </div>
             <div className="flex gap-4">
               <div className={styles.reviewContainer}>
-                <h3 className={styles.sectionTitleH3}>
-                  Reseñas de tus herramientas
-                </h3>
                 <CardsReview
                   reviews={reviews}
                   authors={Object.values(authors)}
                 />
               </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="w-full min-h-screen flex flex-col justify-center items-center">
+              <Loader />
+              <p>Cargando Perfil...</p>
             </div>
           </>
         )}

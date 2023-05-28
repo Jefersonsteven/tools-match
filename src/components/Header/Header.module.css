@@ -50,13 +50,12 @@
 }
 
 .nav ul li {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .nav ul li:hover {
-  background-color: var(--white);
-  color: var(--black);
-  border-radius: 5px;
+  color: yellow;
+  text-decoration: underline;
   cursor: pointer;
 }
 
