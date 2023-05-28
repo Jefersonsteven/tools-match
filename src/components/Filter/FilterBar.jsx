@@ -73,10 +73,13 @@ export default function FilterBar() {
   return (
     <AppProvider>
       <div className="relative z-10">
+      <div className="mr-10 ml-2" style={{ width: "400px" }}>
+      <FilterRangeDistance handleKm={handleKm}  />
+      </div>
         <div className="flex-1 flex flex-row items-center justify-between px-2">
           <div className="mr-10" style={{ width: "400px" }}>
             {/* // filter per distance - Jeffer */}
-            <FilterRangeDistance handleKm={handleKm} />
+            
             <SearchBar
               title={title}
               onTitleChange={handleTitle}
@@ -395,10 +398,10 @@ export default function FilterBar() {
               </button>
             </div>
           </div>
-          <div className={` flex relative ${style.button}`}>
+          <div className={` flex relative ${style.clearBbutton}`}>
             {/* <div className={style.clear}> */}
-              <button onClick={handleCleanFilters}className="py-18 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
-                <AiOutlineClear className="mr-2" />
+              <button onClick={handleCleanFilters}className="bg-black text-white hover:bg-gray-800 flex items-center rounded-xl" style={{ height: '46px', padding: '0 40px' }}>
+                <AiOutlineClear className="mr-2 text-4xl" />
               </button>
             {/* </div> */}
           </div>
