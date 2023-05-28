@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { RiStarFill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 const FormReview = ({ selectedPost, onCloseModal }) => {
   const [rating, setRating] = useState(0);
@@ -11,7 +11,6 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
   const [receivedId, setReceivedId] = useState("");
   const [title, setTitle] = useState(""); 
   const { perfilId } = useParams();
-  
 
   useEffect(() => {
     const fetchReceivedId = async () => {
@@ -19,14 +18,28 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
         const response = await fetch(`/api/admin/post/${selectedPost.id}`);
         const postData = await response.json();
         setReceivedId(postData.authorId);
-        console.log(receivedId)
-        setTitle(postData.title)
+        setTitle(postData.title);
       } catch (error) {
         console.error("Error al obtener receivedId", error);
       }
     };
 
     fetchReceivedId();
+  }, [selectedPost]);
+
+  useEffect(() => {
+    const fetchReview = async () => {
+      try {
+        const response = await fetch(`/api/admin/review/${selectedPost.id}`);
+        const reviewData = await response.json();
+        setRating(reviewData.rating);
+        setContent(reviewData.content);
+      } catch (error) {
+        console.error("Error al obtener la reseña", error);
+      }
+    };
+
+    fetchReview();
   }, [selectedPost]);
 
   const handleRatingClick = (value) => {
@@ -50,8 +63,8 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
     };
 
     try {
-      const response = await fetch("/api/review", {
-        method: "POST",
+      const response = await fetch(`/api/admin/review/${selectedPost.id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -59,17 +72,17 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
       });
 
       if (response.ok) {
-        console.log("Reseña enviada correctamente");
+        console.log("Reseña actualizada correctamente");
         onCloseModal();
       } else {
-        console.error("Error al enviar la reseña");
-        console.log(reviewData)
+        console.error("Error al actualizar la reseña");
+        console.log(reviewData);
       }
 
       setRating(0);
       setContent("");
     } catch (error) {
-      console.error("Error al enviar la reseña", error);
+      console.error("Error al actualizar la reseña", error);
     }
   };
 
@@ -89,7 +102,7 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
             <AiOutlineClose className="text-black" />
           </button>
         </div>
-        <h2 className="text-2xl font-bold mb-4">Opinar y Calificar</h2>
+        <h2 className="text-2xl font-bold mb-4">Editar Reseña</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium">
@@ -134,7 +147,7 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
               className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full text-sm"
               style={{ maxWidth: "200px" }}
             >
-              Publicar Reseña
+              Actualizar Reseña
             </button>
           </div>
         </form>
