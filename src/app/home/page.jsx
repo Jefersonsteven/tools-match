@@ -34,14 +34,14 @@ function Home({ cards, currentPage, setCards, setCurrentPage }) {
       <h2 className={styles.info}>
         Renta o Compra Herramientas en Tu Comunidad
       </h2>
-      <div className="container mx-auto px-4">
-        <div className="  w-full bg-green-80 flex justify-center py-4 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto w-full">
+        <div className="  w-full bg-green-80">
           <FilterBar />
         </div>
-        <div className="flex-grow">
+        {/* <div className="flex-grow"> */}
           <div className="  w-full flex justify-center flex-wrap my-4 mx-0">
             <Cards className="mb-1" />
-          </div>
+          {/* </div> */}
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+"use client"
 import Card from "./Card";
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useContext, useState } from "react";

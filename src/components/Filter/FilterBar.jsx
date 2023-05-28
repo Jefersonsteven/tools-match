@@ -72,11 +72,11 @@ export default function FilterBar() {
 
   return (
     <AppProvider>
-      <div className="relative z-10">
-      <div className="mr-10 ml-2" style={{ width: "400px" }}>
+      <div className="w-full">
+      <div className="mr-10 ml-2 w-full" style={{ width: "400px" }}>
       <FilterRangeDistance handleKm={handleKm}  />
       </div>
-        <div className="flex-1 flex flex-row items-center justify-between px-2">
+        <div className="w-full flex-1 flex flex-row items-center justify-between px-2">
           <div className="mr-10" style={{ width: "400px" }}>
             {/* // filter per distance - Jeffer */}
             
