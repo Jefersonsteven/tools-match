@@ -1,3 +1,11 @@
+
+.container {
+display: flex;
+flex-direction: column;
+gap: 30px;
+width: 100%;
+}
+
 .customModal {
     width: 30%;
     height: 90%;
