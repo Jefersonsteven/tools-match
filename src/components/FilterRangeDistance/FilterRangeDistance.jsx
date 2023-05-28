@@ -51,7 +51,7 @@ function FilterRangeDistance({ handleKm }) {
         <span style={{ left: `${range / 70}%` }}>{range}Km</span>
         <input
           onInput={handleRange}
-          onBlur={exitInput}
+          onMouseUp={exitInput}
           type="range"
           min={1}
           max={6000}

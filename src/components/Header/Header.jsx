@@ -135,18 +135,16 @@ function Header() {
                   />
                 )}
 
-                <ul
-                  className={submenu ? styles.openSubmenu : styles.closeSubmenu}
-                >
+                <ul className={styles.openSubmenu}>
                   {userData && (
                     <li>
-                      <Link href={`/perfil/${userId}`}>ver Perfil</Link>
+                      <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
                     </li>
                   )}
                   {userData && (
                     <li>
                       <Link href={`/perfil/${userId}/changePassword`}>
-                        Cambiar contraseña
+                        Cambiar Contraseña
                       </Link>
                     </li>
                   )}
