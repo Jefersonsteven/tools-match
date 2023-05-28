@@ -84,25 +84,24 @@ export default Favorites;
 //   const [refresh, setRefresh] = useState(false);
 //   const { userData, favorite, setFavorite } = useContext(AppContext);
 
-//   const fetchData = async () => {
-//     // Fetch user data
-//     const user = await axios.get(`api/user/${userData.email}`);
-
-//     // Update favoriteArray with the data from the response
-//     if (userData && userData.email) {
-//       // console.log(user.data.favorites.length);
-//       setFavoriteArray(user.data.favorites);
-//       setRefresh(!refresh);
-//       setFavorite((prevFavorite) => ({
-//         ...prevFavorite,
-//         count: user.data.favorites.length,
-//       }));
-//     }
-//   };
-
-//   fetchData();
-
 //   useEffect(() => {
+//     const fetchData = async () => {
+//       // Fetch user data
+//       const user = await axios.get(`api/user/${userData.email}`);
+
+//       // Update favoriteArray with the data from the response
+//       if (userData && userData.email) {
+//         // console.log(user.data.favorites.length);
+//         setFavoriteArray(user.data.favorites);
+//         setRefresh(!refresh);
+//         setFavorite((prevFavorite) => ({
+//           ...prevFavorite,
+//           count: user.data.favorites.length,
+//         }));
+//       }
+//     };
+
+//     fetchData();
 //     if (!favorite) {
 //       setFavorite({
 //         count: 0,
