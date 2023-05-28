@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { RiStarFill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
-const FormUpdateReview = ({ selectedPost, onCloseModal }) => {
+const FormUpdateReview = ({ selectedPost, onClose }) => {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(true);
-  const currentDate = new Date().toISOString().split("T")[0];  
+  const currentDate = new Date().toISOString().split("T")[0];
   const { perfilId } = useParams();
 
-      
   useEffect(() => {
     const fetchReview = async () => {
       try {
         const response = await fetch(`/api/admin/review/${selectedPost.id}`);
         const reviewData = await response.json();
-        setRating(reviewData.rating); 
+        setRating(reviewData.rating);
         setContent(reviewData.content);
       } catch (error) {
         console.error("Error al obtener la reseña", error);
@@ -56,7 +55,7 @@ const FormUpdateReview = ({ selectedPost, onCloseModal }) => {
 
       if (response.ok) {
         console.log("Reseña actualizada correctamente");
-        onCloseModal();
+        onClose();
       } else {
         console.error("Error al actualizar la reseña");
         console.log(reviewData);
@@ -71,11 +70,15 @@ const FormUpdateReview = ({ selectedPost, onCloseModal }) => {
 
   const handleClose = () => {
     setIsOpen(false);
-    onCloseModal();
+    onClose();
   };
 
   return (
-    <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 ${isOpen ? "" : "hidden"}`}>
+    <div
+      className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 ${
+        isOpen ? "" : "hidden"
+      }`}
+    >
       <div className="bg-white p-8 rounded-lg shadow-lg w-1/4 relative">
         <div className="absolute top-0 right-0 mt-2 mr-2">
           <button
@@ -102,7 +105,10 @@ const FormUpdateReview = ({ selectedPost, onCloseModal }) => {
             </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="content" className="block mb-1 text-sm font-medium">
+            <label
+              htmlFor="content"
+              className="block mb-1 text-sm font-medium"
+            >
               Reseña:
             </label>
             <textarea
