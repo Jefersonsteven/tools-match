@@ -25,6 +25,10 @@
   
 }
 
+.button div {
+  width: 265px;
+}
+
 .button:hover .filter,
 .button:hover .order {
   display: flex;

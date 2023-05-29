@@ -5,7 +5,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { FaFilter, FaSort } from "react-icons/fa";
 import { fetchCards } from "./UseFetchCard";
 import style from "./FilterBar.module.css";
-import { FaGlobeAmericas } from 'react-icons/fa'
+import { FaGlobeAmericas } from "react-icons/fa";
 import {
   handleTitleChange,
   handleTitleButtonChange,
@@ -77,14 +77,14 @@ export default function FilterBar() {
 
   return (
     <AppProvider>
-      <div className="relative z-10">
-      <div className="mr-10 ml-2" style={{ width: "400px" }}>
-      <FilterRangeDistance handleKm={handleKm}  />
-      </div>
-        <div className="flex-1 flex flex-row items-center justify-between px-2">
+      <div className="w-full mb-10">
+        <div className="mr-10 ml-2 w-full" style={{ width: "400px" }}>
+          <FilterRangeDistance handleKm={handleKm} />
+        </div>
+        <div className="w-full flex-1 flex flex-row items-center justify-between px-2">
           <div className="mr-10" style={{ width: "400px" }}>
             {/* // filter per distance - Jeffer */}
-            
+
             <SearchBar
               title={title}
               onTitleChange={handleTitle}
@@ -124,7 +124,7 @@ export default function FilterBar() {
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Argentina
-              </button>                     
+              </button>
             </div>
           </div>
           <div className={`mr-2 relative ${style.button}`}>
@@ -358,7 +358,7 @@ export default function FilterBar() {
               </div>
             </div>
           </div>
-          <div className={`flex relative ${style.button}`}>
+          <div className={`flex relative  mr-2 ${style.button}`}>
             <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
               Ordenar <FaSort className="ml-2" />
             </div>
@@ -409,9 +409,13 @@ export default function FilterBar() {
           </div>
           <div className={` flex relative ${style.clearBbutton}`}>
             {/* <div className={style.clear}> */}
-              <button onClick={handleCleanFilters}className="bg-black text-white hover:bg-gray-800 flex items-center rounded-xl" style={{ height: '46px', padding: '0 40px' }}>
-                <AiOutlineClear className="mr-2 text-4xl" />
-              </button>
+            <button
+              onClick={handleCleanFilters}
+              className="bg-black text-white hover:bg-gray-800 flex items-center rounded-xl"
+              style={{ height: "46px", padding: "0 40px" }}
+            >
+              <AiOutlineClear className="mr-2 text-4xl" />
+            </button>
             {/* </div> */}
           </div>
         </div>

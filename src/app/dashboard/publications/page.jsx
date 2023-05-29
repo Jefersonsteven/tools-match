@@ -319,7 +319,7 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
                           onChange={() => handleClick(d.id)}
                         />
                       </td>
-                      <td><Link href={`/post/${d.id}`}>{d.title}</Link></td>
+                      <td><Link className={style.nombrePerfil} href={`/post/${d.id}`}>{d.title}</Link></td>
                       <td>{d.category}</td>
                       <td>{d.price}</td>
                       <td>{d.type}</td>
@@ -352,8 +352,8 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
               </table>
             ) : (
               <div className={style.noUsuarios}>
-                <p>No hay Publicaciones🚩</p>
-              </div>
+            <p>No hay publicaciones. . . . . 🚀</p>
+          </div>
             )}
             {editingUser && (
               <Modal show={showModal} onClose={() => setShowModal(false)}>

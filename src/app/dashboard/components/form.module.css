@@ -1,5 +1,6 @@
 .contenedorPadre {
   display: flex;
+  height: auto;
 }
 
 .form {

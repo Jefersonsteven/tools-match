@@ -41,30 +41,7 @@ function UserForm({editingUser, handleSubmit, setEditingUser, admin, setAdmin}) 
     }
   }
 
-  function validarEmail(evento) {
-    const valor = evento.target.value;
-    const campo = evento.target;
-  
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) {
-      campo.classList.add('input-invalido');
-    } else {
-      campo.classList.remove('input-invalido');
-    }
-  }
-
-
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
-
-    // Verificar que no haya errores de validación antes de enviar el formulario
-    if (error) {
-      return;
-    }
-    console.log("Valores enviados:", editingUser);
-
-    handleSubmit(e);
-  };
-
+ 
 
 
 
@@ -155,18 +132,6 @@ function UserForm({editingUser, handleSubmit, setEditingUser, admin, setAdmin}) 
 
 
 
-
-{/* <label className={style.checkboxLabel}>
-  Usuario:
-  <input
-    className={style.checkbox}
-    type="radio" // Cambiado a radio
-    name="admin"
-    value={ false } // Cambiado a "false"
-    checked={!editingUser.admin}
-    onChange={handleAdminChange}
-  />
-</label> */}
 
 
 

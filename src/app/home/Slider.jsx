@@ -2,7 +2,6 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Image from "next/image";
 import styles from "./Slider.module.css";
-import { useEffect, useRef } from "react";
 
 const SliderComponent = () => {
   const sponsors = [

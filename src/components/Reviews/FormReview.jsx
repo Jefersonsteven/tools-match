@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { RiStarFill } from "react-icons/ri";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { useParams, useRouter } from "next/navigation";
+import styles from './FormReview.module.css'
 
 const FormReview = ({ selectedPost, onCloseModal }) => {
   const [rating, setRating] = useState(0);
@@ -79,45 +80,40 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
   };
 
   return (
-    <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 ${isOpen ? "" : "hidden"}`}>
-      <div className="bg-white p-8 rounded-lg shadow-lg w-1/4 relative">
-        <div className="absolute top-0 right-0 mt-2 mr-2">
-          <button
-            className="bg-yellow-500 rounded-full p-2"
-            onClick={handleClose}
-          >
-            <AiOutlineClose className="text-black" />
-          </button>
+    <div className={`${styles.container} ${isOpen ? "" : styles.hidden}`}>
+      <div className={styles.subContainer}>
+        <div className={styles.headerContainer} >
+          <h2 className={styles.tilte}>Opinar y Calificar</h2>
+          <AiFillCloseCircle color="var(--red)" size={25} className={styles.buttonClose} onClick={handleClose}/>
         </div>
-        <h2 className="text-2xl font-bold mb-4">Opinar y Calificar</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="date" className="block text-sm font-medium">
+            <label htmlFor="date" className={styles.label}>
               Fecha:
             </label>
-            <div className="w-full border bg-white border-gray-300 rounded p-2 text-sm">
+            <div className={styles.fecha}>
               <input
                 type="text"
                 id="date"
                 value={currentDate}
                 readOnly
-                className="w-full bg-white cursor-text"
+                className={styles.input}
               />
             </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="content" className="block mb-1 text-sm font-medium">
+          <div style={{marginBottom: '1rem'}}>
+            <label htmlFor="content" className={styles.label}>
               Reseña:
             </label>
             <textarea
               id="content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full border border-gray-300 rounded p-2 text-sm h-40"
+              className={styles.inputReview}
               maxLength={500}
             ></textarea>
           </div>
-          <div className="mb-4 flex justify-center">
+          <div style={{marginBottom: '1rem', display: 'flex', justifyContent: 'center'}}>
             {[1, 2, 3, 4, 5].map((value) => (
               <RiStarFill
                 key={value}
@@ -128,24 +124,16 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
               />
             ))}
           </div>
-          <div className="flex justify-center">
+          <div style={{display: 'flex', justifyContent: 'center'}}>
             <button
               type="submit"
-              className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full text-sm"
+              className={styles.public}
               style={{ maxWidth: "200px" }}
             >
               Publicar Reseña
             </button>
           </div>
         </form>
-        <div className="absolute top-0 right-0 mt-2 mr-2">
-          <button
-            className="bg-yellow-500 rounded-full p-2"
-            onClick={handleClose}
-          >
-            <AiOutlineClose className="text-black" />
-          </button>
-        </div>
       </div>
     </div>
   );

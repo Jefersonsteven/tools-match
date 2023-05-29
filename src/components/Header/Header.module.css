@@ -58,13 +58,11 @@
 }
 
 .nav ul li {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .nav ul li:hover {
-  background-color: var(--white);
-  color: var(--black);
-  border-radius: 5px;
+  border-bottom: 1px solid var(--orange);
   cursor: pointer;
 }
 
@@ -78,6 +76,7 @@
 .perfil {
   width: 16px;
   position: relative;
+  cursor: pointer;
 }
 
 .perfil ul li a {
@@ -154,7 +153,4 @@
 .cart:hover .cartText {
   opacity: 1;
   visibility: visible;
-}
-
-.dashboard {
 }
