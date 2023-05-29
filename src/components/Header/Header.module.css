@@ -54,9 +54,8 @@
 }
 
 .nav ul li:hover {
-  background-color: var(--white);
-  color: var(--black);
-  border-radius: 5px;
+  color: yellow;
+  border-bottom: 1px solid var(--orange);
   cursor: pointer;
 }
 
