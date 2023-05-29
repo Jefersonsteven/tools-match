@@ -29,15 +29,16 @@ export default function FilterBar() {
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
   useEffect(() => {
-    fetchCards(selected, setCards, title);
-  }, [selected, setCards]);
+    fetchCards(selected, setCards, title,userId);
+  }, [selected]);
+
 
   const handleTitle = (newTitle) => {
     handleTitleChange(newTitle, setTitle, setSelected, selected);
   };
 
   const handleTitleButton = () => {
-    handleTitleButtonChange(title, setCards, setSelected, selected);
+    handleTitleButtonChange(title, setCards, setSelected, selected,userId);
   };
 
   const handleCategory = (event) => {
@@ -97,25 +98,29 @@ export default function FilterBar() {
             </div>
             <div className={style.order}>
               <button
-                onClick={()=>{}}
+                value=""
+                onClick={handleCountry}
                 className={orderFilter === "" ? style.selected : ""}
               >
                 Todos
               </button>
               <button
-                onClick={()=>{}}
+                value="CO"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-asc" ? style.selected : ""}
               >
                 Colombia
               </button>
               <button
-                onClick={()=>{}}
+                value="MEX"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Mexico
               </button>
               <button
-                onClick={()=>{}}
+               value="AR"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Argentina

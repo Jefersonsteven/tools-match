@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  const { order, type, category, brand, title, coorde1, coorde2, km ,email,country} = req.query;
+  const { order, type, category, brand, title, coorde1, coorde2, km ,id,country} = req.query;
 
   if (method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -19,19 +19,21 @@ export default async function handler(req, res) {
   try {
     let where = { hidden: false };
 
-    if(email && !country) {
+    if(id && !country) {
       const postCountry = await prisma.user.findUnique({
         where: {
-          email: email,
+          id: id,
           },
           select:{
             country: true
           }
       });
       const {country} = postCountry
-      where.author = {
-        country: country,
-      };
+        if(country){
+          where.author = {
+            country: country,
+          };
+        }
     }
     if (country) {
       where.author = {

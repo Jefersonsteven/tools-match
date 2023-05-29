@@ -13,21 +13,35 @@ export default async function handler(req,res) {
         },
       });
       const  {country} = postCountry
-      const post = await prisma.post.findMany({
-        where: {
-          author :{
-            country: country
-          }
-        },
-      });
-      if(post.length===0){
-        return res.status(404).json({message:"No posts found"});
+      if(country) {
+        const posts = await prisma.post.findMany({
+          where: {
+            author :{
+              country: country
+            }
+          },
+        });
+        res.status(200).json(posts);
       }
-      res.status(200).json(post);
+      else{
+        const posts = await prisma.post.findMany({
+          where: {
+            hidden: false,
+          },
+          include: {
+            author: true,
+            reviews: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+        res.status(200).json(posts);
+      }
     }catch (error) {
-      res.status(500).json({message:error.message});
+      res.status(500).json({message:"error internal server"});
     }
   }else{
-    
+    res.status(400).json({message:"method not allowed"});
   }
 }

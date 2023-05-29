@@ -70,7 +70,7 @@ function AppProvider({ children }) {
     coorde1: "",
     coorde2: "",
     km: "",
-    country: ""
+    country: "",
   }); //lo agrego JeanHey para filtros de cards en el back
   // * Data de países *//
 

@@ -5,9 +5,9 @@ export const handleTitleChange = (newTitle, setTitle, setSelected,selected) => {
   }
 };
 
-export const handleTitleButtonChange = async (title, setCards,setSelected,selected) => {
+export const handleTitleButtonChange = async (title, setCards,setSelected,selected,userId) => {
   setSelected({ ...selected, title: title });
-  const response = await fetch(`/api/filters/title/${title}`);
+  const response = await fetch(`/api/filters/title?${userId}&${title}`);
   const data = await response.json();
   setCards(data || []);
 };
@@ -60,7 +60,7 @@ export const handleClearFilters = (
   setCategoryFilter,
   setTypeFilter,
   setBrandFilter,
-  setOrderFilter
+  setOrderFilter,
 ) => {
   const event = { target: { value: "" } };
   handleCategoryChange(event, setSelected, setCategoryFilter);
@@ -68,6 +68,7 @@ export const handleClearFilters = (
   handleBrandChange(event,setSelected,setBrandFilter)
   handleOrderChange("","",setSelected,setOrderFilter);
   handleKmChange(setSelected, "", "", "");
+  handleCountryChange(event,setSelected);
 };
 
 // filtrar por handle Km - Jeffer

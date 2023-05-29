@@ -28,8 +28,10 @@ export default async function handler(req, res) {
             }
         });
         const {country} = postCountry
-        where.author = {
-          country: country
+        if(country){
+          where.author = {
+            country: country
+          }
         }
       }
 
