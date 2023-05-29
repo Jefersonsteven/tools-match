@@ -10,8 +10,8 @@ export default async function handler(req, res) {
           email: id,
         },
         include: {
-          posts: true,
-          reviews: true,
+          posts: { where: { hidden: false } },
+          reviews: { where: { hidden: false } },
           orders: true,
           payments: true,
           received: true,

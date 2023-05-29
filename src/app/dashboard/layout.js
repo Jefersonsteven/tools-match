@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }) {
   
   // Verificar si el usuario no es administrador y redireccionar al home
   useEffect(() => {
-    if (!userData.admin) {
+    if (userData === null || !userData.admin) {
       router.push("/home");
     }
   },);

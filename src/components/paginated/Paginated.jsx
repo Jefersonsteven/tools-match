@@ -2,6 +2,7 @@
 
 import style from "./Paginated.module.css";
 import { useEffect, useState } from "react";
+import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 
 export default function Paginated({
   url,
@@ -58,7 +59,7 @@ export default function Paginated({
           }}
           onMouseUp={() => setIsLeftArrowClicked(false)}
         >
-          {"<-"}
+          { <BiLeftArrowAlt/> }
         </button>
 
         {/* Cuadritos de paginación */}
@@ -92,7 +93,7 @@ export default function Paginated({
           }}
           onMouseUp={() => setIsRightArrowClicked(false)}
         >
-          {"->"}
+          { <BiRightArrowAlt/> }
         </button>
       </div>
     </div>
