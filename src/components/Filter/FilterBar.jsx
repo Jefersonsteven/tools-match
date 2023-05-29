@@ -15,12 +15,13 @@ import {
   handleOrderChange,
   handleClearFilters,
   handleKmChange,
+  handleCountryChange
 } from "./handlers";
 import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 import { AiOutlineClear } from "react-icons/ai";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected } =
+  const { setCards, title, setTitle, selected, setSelected,userId,setIsLoading } =
     useContext(AppContext);
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
@@ -28,15 +29,19 @@ export default function FilterBar() {
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
   useEffect(() => {
-    fetchCards(selected, setCards, title);
-  }, [selected, setCards]);
+    fetchCards(selected, setCards, title,userId,setIsLoading);
+    return ()=> {
+      setCards([]);
+    };
+  }, [selected]);
+
 
   const handleTitle = (newTitle) => {
     handleTitleChange(newTitle, setTitle, setSelected, selected);
   };
 
   const handleTitleButton = () => {
-    handleTitleButtonChange(title, setCards, setSelected, selected);
+    handleTitleButtonChange(title, setCards, setSelected, selected,userId);
   };
 
   const handleCategory = (event) => {
@@ -59,13 +64,17 @@ export default function FilterBar() {
     handleKmChange(setSelected, km, coorde1, coorde2);
   };
 
+  const handleCountry = (event) => {
+    handleCountryChange(event,setSelected);
+  };
+
   const handleCleanFilters = () => {
     handleClearFilters(
       setSelected,
       setCategoryFilter,
       setTypeFilter,
       setBrandFilter,
-      setOrderFilter
+      setOrderFilter,
     );
   };
 
@@ -92,28 +101,39 @@ export default function FilterBar() {
             </div>
             <div className={style.order}>
               <button
-                onClick={() => {}}
+                value=""
+                onClick={handleCountry}
                 className={orderFilter === "" ? style.selected : ""}
               >
-                Todos
+                {userId ? "Default" : "Todos"}
               </button>
               <button
-                onClick={() => {}}
+                value="CO"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-asc" ? style.selected : ""}
               >
                 Colombia
               </button>
               <button
-                onClick={() => {}}
+                value="MX"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Mexico
               </button>
               <button
-                onClick={() => {}}
+               value="AR"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
-                Argentina
+                Argentina 
+              </button>
+              <button
+               value="VE"
+                onClick={handleCountry}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
+              >
+                Venezuela 
               </button>
             </div>
           </div>

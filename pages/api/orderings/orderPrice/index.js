@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  const { type, category, order, brand, title, coorde1, coorde2, km } = req.query;
+  const { type, category, order, brand, title, coorde1, coorde2, km ,id, country} = req.query;
   const intcoorde1 = parseFloat(coorde1);
   const intcoorde2 = parseFloat(coorde2);
   const intKm = parseFloat(km);
@@ -20,6 +20,28 @@ export default async function handler(req, res) {
 
   try {
     const where = { hidden: false };
+
+    if(id && !country) {
+      const postCountry = await prisma.user.findUnique({
+        where: {
+          id: id,
+          },
+          select:{
+            country: true
+          }
+      });
+      const {country} = postCountry
+        if(country){
+          where.author = {
+            country: country,
+          };
+        }
+    }
+    if (country) {
+      where.author = {
+        country: country,
+      };
+    }
 
     if (type) where.type = type;
     if (category) where.category = category;

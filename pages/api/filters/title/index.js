@@ -1,14 +1,26 @@
 import prisma from "../../../../prisma/client";
 
 export default async function handler(req, res) {
-  const { id } = req.query;
+  const { name ,id} = req.query;
   if (req.method === "GET") {
     try {
+      const postCountry = await prisma.user.findUnique({
+        where: {
+          id: id,
+          },
+          select:{
+            country: true
+          }
+      });
+      const {country} = postCountry
       const posts = await prisma.post.findMany({
         where: {
+          author : {
+            country: country
+          },
           hidden:false,
           title: {
-            contains: id.toLowerCase(), 
+            contains: name.toLowerCase(), 
             mode: "insensitive", 
           },
         },
