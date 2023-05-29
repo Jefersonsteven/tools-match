@@ -58,11 +58,10 @@
 }
 
 .nav ul li {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .nav ul li:hover {
-  color: yellow;
   border-bottom: 1px solid var(--orange);
   cursor: pointer;
 }
@@ -155,4 +154,3 @@
   opacity: 1;
   visibility: visible;
 }
-

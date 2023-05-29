@@ -36,7 +36,7 @@ const CardsCreatedReviews = ({ createdReviews, author }) => {
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 bg-green-80">
+      <div className="grid grid-cols-3 gap-4 bg-green-80 h-full">
         {createdReviews.map((review) => {
           const starCount = 5;
           const rating = review.rating;

@@ -117,6 +117,7 @@ function Header() {
                   />
                 ) : (
                   <FaUserCircle
+                    className={styles.userImg}
                     size={25}
                     onClick={() => setSubmenu((state) => !state)}
                     color="white"
