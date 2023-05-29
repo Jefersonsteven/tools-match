@@ -30,3 +30,12 @@
     margin-top: 3rem;
   }
 }
+
+/*adri*/
+@media (max-width: 390px) {
+  .cards_container {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+  }
+}
