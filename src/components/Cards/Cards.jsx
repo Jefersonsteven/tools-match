@@ -1,3 +1,4 @@
+"use client"
 import Card from "./Card";
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useContext, useState } from "react";
@@ -6,6 +7,7 @@ import Paginated from "../paginated/Paginated";
 import { App } from "antd";
 import Loader from "../Loader/Loader";
 import styles from "./Cards.module.css";
+import LoaderRadial from "../Loader/LoaderRadial";
 
 const Cards = () => {
   const { cards, setCards, setFilteredCards, currentPage, setCurrentPage } =
@@ -48,8 +50,9 @@ const Cards = () => {
 
   return (
     <AppProvider>
-      <div className="p-4 px-2">
+      <div className="p-4 px-2 grid justify-items-center">
         <div className={styles.cards_container}>
+          {/* {currentCards.length === 0 && <LoaderRadial />} */}
           {currentCards.map((tool) => (
             <div className="w-full" key={tool.id}>
               <Card
@@ -65,7 +68,7 @@ const Cards = () => {
           {/* ----------- PAGINATED ---------- */}
         </div>
         {isLoading ? (
-          <Loader />
+          <LoaderRadial />
         ) : isPageEmpty ? (
           <p>No hay herramientas disponibles</p>
         ) : (
