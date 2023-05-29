@@ -19,6 +19,11 @@
   justify-content: flex-end;
 }
 
+.card-container {
+  position: relative;
+  z-index: 1;
+}
+
 .image {
   width: 100%;
   object-fit: cover;
