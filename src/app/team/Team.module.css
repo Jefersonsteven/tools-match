@@ -115,9 +115,10 @@
 }
 
 @media (max-width: 700px) {
-  /*dispositivos moviles todo alineado al centro con dos integrantes por row*/
   .teamContainer {
-    margin: 0 1rem;
+    margin: 0;
+    max-width: fit-content;
+    left: 0;
   }
   .teamSubTitle {
     padding-top: 2rem;
@@ -128,8 +129,7 @@
   }
   .teamContact {
     grid-template-columns: repeat(2, 1fr);
-    margin: 1rem;
-    gap: 3rem;
+    gap: 1rem;
   }
   .teamContactInfo {
     padding: 1rem;
@@ -175,5 +175,8 @@
   }
   .teamLinks {
     margin: 0;
+  }
+  .teamLinks a {
+    margin: 0 5px;
   }
 }
