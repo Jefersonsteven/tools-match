@@ -56,9 +56,10 @@
 .images {
     width: 100%;
     display: flex;
+    overflow-x: scroll;
     gap: 13px;
     background-color: var(--white-dark);
-    padding: 15px;
+    padding: 10px;
     border-radius: 20px;
 }
 
@@ -144,6 +145,7 @@
     border-radius: 20px 0 0 20px ;
 }
 
+
 .user_info{
     display: flex;
     flex-direction: column;
@@ -161,6 +163,31 @@
 
 .user_info h5:nth-child(2) {
     text-align: end;
+}
+
+.reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--black-light);
+    width: 100%;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.reviews > div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.reviews h3 {
+    font-weight: bold;
+    color: var(--white);
+}
+
+.reviews h4 {
+    color: var(--white);
 }
 
 .section_button {
