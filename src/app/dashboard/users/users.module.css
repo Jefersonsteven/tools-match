@@ -142,7 +142,12 @@
     color: black;
     display: flex;
     justify-content: center;
-    text-decoration: underline;
+    border: 4px solid #ffe852;
+    background-color: #f0960e;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: larger;
+    font-weight: bold;
 }
 
 .contenedorTable table {
@@ -210,3 +215,16 @@
     height: 100vh; /* Ajusta la altura según tus necesidades */
   }
   
+.nombrePerfil {
+    color: #1d954e;
+}
+
+.nombrePerfil:hover {
+    color: #f0960e;
+}
+
+.contenedor_delLoader {
+    display: flex;
+    justify-content: center;
+
+}

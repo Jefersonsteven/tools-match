@@ -84,6 +84,15 @@
     gap: 20px;
 }
 
+.subTitles{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
 .cartItems {
     display: flex;
     flex-direction: column;
