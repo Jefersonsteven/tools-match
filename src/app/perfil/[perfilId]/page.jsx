@@ -251,6 +251,7 @@ export default function PerfilUsuario() {
               <h3 className={styles.sectionTitleH3}>
                 Reseñas de tus herramientas
               </h3>
+              <h3 className={styles.sectionTitleH3}>Reseñas Enviadas</h3>
             </div>
             <div className="flex gap-4">
               <div className={styles.reviewContainer}>
@@ -260,7 +261,6 @@ export default function PerfilUsuario() {
                 />
               </div>
               <div className={styles.reviewContainer}>
-                <h3 className={styles.sectionTitleH3}>Reseñas Enviadas</h3>
                 <CardsCreatedReviews
                   createdReviews={createdReviews}
                   author={user}

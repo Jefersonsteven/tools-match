@@ -62,8 +62,6 @@
 }
 
 .nav ul li:hover {
-  color: yellow;
-  text-decoration: underline;
   border-bottom: 1px solid var(--orange);
   cursor: pointer;
 }

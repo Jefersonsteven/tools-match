@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       const encoder = new TextEncoder();
       const data = encoder.encode(password);
       password = crypto.createHash("sha256").update(data).digest("hex");
-      const URL_BASE = process.env.DEPLOY_BACK || 'http://localhost:3000'
+      const URL_BASE = process.env.DEPLOY_BACK || "http://localhost:3000";
       const response = await fetch(`${URL_BASE}/api/user/${email}`);
       const user = await response.json();
       if (user) {
