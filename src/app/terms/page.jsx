@@ -12,7 +12,7 @@ function Terms() {
 
   return (
     <div className={style.termsContainer}>
-      <div className={style.backcontainer}>
+      <div className={style.backContainer}>
         <Back />
       </div>
       <div id="terms-and-conditions" className={style.terms}>
@@ -129,7 +129,7 @@ function Terms() {
               en nuestra plataforma.
             </p>
           </div>
-          <div>
+          <div className={style.term10}>
             <strong>10- Jurisdicción y Ley Aplicable</strong>
             <p>
               Estos términos y condiciones se rigen por la ley vigente en tu

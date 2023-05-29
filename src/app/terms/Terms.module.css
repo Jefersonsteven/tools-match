@@ -1,3 +1,6 @@
+.backContainer {
+  margin-top: 25px;
+}
 .termsContainer {
   min-height: 100vh;
   padding: 100px;
@@ -59,3 +62,43 @@
   font-weight: 900;
   color: orange;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media screen and (max-width: 768px) {
+  .termsContainer {
+    padding: 50px;
+  }
+  .termsTitle {
+    font-size: 2.5rem;
+  }
+  .termsSubHeader {
+    font-size: 1.5rem;
+    padding: 1rem;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .termsSubHeader > div:last-child {
+    grid-column: span 1;
+  }
+  .logoContainer {
+    width: 50px;
+    height: 50px;
+  }
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+  .termsContainer h3 {
+    font-size: 2rem;
+    
+  }
+  .term10{
+    text-align-last: start;
+    padding: 0;
+    margin: 0;
+  }
+}
+  
+
+
+
+/* -------------------------------- */
