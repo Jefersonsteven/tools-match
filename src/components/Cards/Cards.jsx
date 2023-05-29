@@ -10,23 +10,33 @@ import styles from "./Cards.module.css";
 import LoaderRadial from "../Loader/LoaderRadial";
 
 const Cards = () => {
-  const { cards, setCards, setFilteredCards, currentPage, setCurrentPage } =
-    useContext(AppContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const { cards, setCards, setFilteredCards, currentPage, setCurrentPage,userId,isLoading,setIsLoading} =
+    useContext(AppContext);//userId agregado por jean 
+  /* const [isLoading, setIsLoading] = useState(false); */
 
   /*----------PAGINATED----------*/
 
   const cardsPerPage = 12;
   /*-------------------------------*/
-
+  // modificado por jean heyller para que cuando inicie sesion cargue las publicaciones que estan en su pais
   useEffect(() => {
-    setIsLoading(true);
-    axios.get(`/api/admin/post`).then((res) => {
-      setCards(res.data);
-      setFilteredCards(res.data);
-      setIsLoading(false);
-    });
-  }, [setCards, setFilteredCards]);
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = userId
+          ? await axios.get(`/api/admin/postByCountry/${userId}`)
+          : await axios.get(`/api/admin/post`);
+        
+        setCards(response.data);
+        setFilteredCards(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [userId, setCards, setFilteredCards]);
 
   /* ----------PAGINATED ----------- */
 
