@@ -11,6 +11,7 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
     useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,9 +32,11 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
     if (userData && userData.email) {
       fetchData();
     }
-  }, [favorites, id, userData, refresh]);
+  }, [id, userData, refresh]);
 
   const handleFavoriteClick = async (id) => {
+    setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+
     const user = await axios.get(`api/user/${userData.email}`);
     if (userData && userData.email) {
       let favoriteArray = await user.data.favoritesId;
@@ -58,6 +61,7 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
       //TODO: agregar alerrta o algo parecido donde diga que para agregar favoritos debe iniciar sesion
       console.error("userData or email is null or undefined");
     }
+
     setRefresh(!refresh);
   };
 
@@ -90,7 +94,7 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
         <div className={styles.cardContent}>
           <Link href={`/post/${id}`}>
             <div className={styles.cardTitle}>
-              <p className={styles.cardName}>{title}</p>
+              <h2 className={styles.cardName}>{title}</h2>
             </div>
           </Link>
           <div className={styles.priceType}>

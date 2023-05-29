@@ -1,25 +1,48 @@
 .favTitle{
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 2rem 2rem;
+  font-size: 3.5rem;
+  font-weight: 600;
+  margin-top: 5rem;
   text-align: center;
-
 }
 .favContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 1.5rem;
+  gap: 3rem;
   padding: 0 2rem;
   width: 100%;
+  margin-top: 6rem;
+  margin-bottom: 50px;
 }
-
-.favCards {
+.favInfo{
   flex: 1 1 250px;
   max-width: 250px;
   margin: 20px;
 }
+.favSubTitle{
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 5rem;
+  text-align: center;
+}
+.custom-button {
+  width: 100px;
+  text-align: center;
+}
+.typeClass{
+  width: 100%;
+  text-align: center;
+}
+/* .favSeeMore {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 2rem;
+  cursor: pointer;
+  margin: 15px 15px;
+  width: 30%;
+} */
 
 @media (max-width: 80%) {
   .favContainer {
@@ -27,3 +50,4 @@
     align-items: center;
   }
 }
+

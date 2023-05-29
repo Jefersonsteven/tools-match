@@ -6,9 +6,11 @@ import style from "./Cart.module.css";
 import Image from "next/image";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Back from "@/components/back/Back";
 
 export default function Page() {
+  const router = useRouter();
   const { cart, setCart, userData } = useContext(AppContext);
 
   useEffect(() => {
