@@ -48,8 +48,8 @@ export default function PerfilUsuario() {
     const fetchCreatedReviews = async () => {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
-
-        const createdReviews = response.data.reviews;
+  
+        const createdReviews = response.data.reviews.filter(review => review.hidden === false);
         setUser(response.data);
         setCreatedReviews(createdReviews);
       } catch (error) {
@@ -142,7 +142,7 @@ export default function PerfilUsuario() {
   const handleDeleteReview = async (reviewId) => {
     try {
       // Realiza la lógica necesaria para eliminar la reseña del estado createdReviews
-      const response = await axios.delete(`/api/review/${reviewId}`);
+      const response = await axios.delete(`/api/admin/review/${reviewId}`);
 
       if (response.status === 200) {
         console.log("Reseña eliminada correctamente");
