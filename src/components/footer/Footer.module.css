@@ -60,19 +60,30 @@
    }
 @media screen and (max-width: 1200px){
  .footerInfo, .contact{
-     font-size: 2rem;
+     font-size: 1.5rem;
 }
     .footerInfo{
         display: flex;
+        
     }
-    .footerRights, .footerTerms, .footerLogo{
-        margin-left: 20px;
+    .footerRights, .footerTerms{
+        margin-left: 40px;
+    }
+    .footerLogo{
+        margin-left: 80px;
+    }
+    .contact{
+        margin-right: 70px;
     }
 }
 @media screen and (max-width: 900px){
- 
+
     .footerInfo{
         display: flex;
+        font-size: 1.5rem;
+    }
+    .contactTitle{
+        font-size: 1.5rem;
     }
     .footerRights, .footerTerms, .footerLogo{
         margin-left: 20px;
