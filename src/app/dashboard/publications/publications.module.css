@@ -143,7 +143,12 @@
     color: black;
     display: flex;
     justify-content: center;
-    text-decoration: underline;
+    border: 4px solid #ffe852;
+    background-color: #f0960e;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: larger;
+    font-weight: bold;
 }
 
 .contenedorTable table {
@@ -155,6 +160,7 @@
 
 .td_button {
     display: flex;
+    justify-content: center;
 }
 
 .disabledButton {
@@ -203,4 +209,12 @@
     border: 2px solid rgba(255, 67, 67, 0.802);
     background-color: rgba(255, 0, 0, 0.685);
     color: white
+}
+
+.nombrePerfil {
+    color: #1d954e;
+}
+
+.nombrePerfil:hover {
+    color: #f0960e;
 }

@@ -354,7 +354,7 @@ function UsersBan() {
           </table>
         ) : (
           <div className={style.noUsuarios}>
-            <p>No hay Usuarios vetados🚩</p>
+            <p>No hay usuarios vetados. . . . . ✔</p>
           </div>
         )}
         {editingUser && (
