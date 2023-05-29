@@ -56,7 +56,6 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
       } catch (error) {
         console.error(error);
       }
-      console.log(favoriteArray);
     } else {
       //TODO: agregar alerrta o algo parecido donde diga que para agregar favoritos debe iniciar sesion
       console.error("userData or email is null or undefined");

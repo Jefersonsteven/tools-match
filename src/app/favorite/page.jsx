@@ -20,7 +20,6 @@ const Favorites = ({ title, price, type }) => {
 
       // Update favoriteArray with the data from the response
       if (userData && userData.email) {
-        // console.log(user.data.favorites.length);
         setFavoriteArray(user.data.favorites);
         setRefresh(!refresh);
         setFavorite((prevFavorite) => ({
