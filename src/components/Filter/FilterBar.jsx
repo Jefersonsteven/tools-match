@@ -102,7 +102,7 @@ export default function FilterBar() {
                 onClick={handleCountry}
                 className={orderFilter === "" ? style.selected : ""}
               >
-                Todos
+                {userId ? "Default" : "Todos"}
               </button>
               <button
                 value="CO"
