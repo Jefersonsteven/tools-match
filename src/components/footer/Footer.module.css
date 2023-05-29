@@ -47,15 +47,40 @@
 }
 
 /* ----------- RESPONSIVE ---------- */
-@media screen and (max-width: 1600px){
+@media screen and (max-width: 3000px){
     .footerInfo, .contact{
-        font-size: 2.5rem;
+        font-size: 2rem;
    }
        .footerInfo{
            display: flex;
+           
        }
-       .footerRights, .footerTerms, .footerLogo{
-           margin-left: 20px;
+       .footerRights, .footerTerms{
+           margin-left: 40px;
+       }
+       .footerLogo{
+           margin-left: 80px;
+       }
+       .contact{
+           margin-right: 70px;
+       }
+   }
+@media screen and (max-width: 1600px){
+    .footerInfo, .contact{
+        font-size: 2rem;
+   }
+       .footerInfo{
+           display: flex;
+           
+       }
+       .footerRights, .footerTerms{
+           margin-left: 40px;
+       }
+       .footerLogo{
+           margin-left: 80px;
+       }
+       .contact{
+           margin-right: 70px;
        }
    }
 @media screen and (max-width: 1200px){

@@ -32,6 +32,7 @@
 }
 
 /* ---------- RESPONSIVE ----------*/
+
 @media (max-width: 390px) {
   .cards_container {
     display: block;
@@ -40,7 +41,8 @@
   }
 }
 
-@media (max-width: 700px) {
+
+/* @media (max-width: 700px) {
   .cards_container {
     display: flex;
     flex-direction: column;
@@ -48,4 +50,4 @@
   .text-center {
     font-size: 1.5rem;
   }
-}
+} */
