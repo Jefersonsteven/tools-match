@@ -9,7 +9,7 @@
 }
 
 .infoTeam {
-  font-size: 2.5rem;
+  font-size: 3rem;
   padding: 30px 20px;
   text-align: center;
 }
@@ -17,7 +17,6 @@
 .teamSubTitle {
   padding-top: 2rem;
   color: #131713;
-  font-size: 3rem;
   font-weight: 700;
 }
 
@@ -76,14 +75,14 @@
   font-size: 2rem;
   color: #131713;
   font-weight: 600;
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .teamLinks {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 20px 0;
+  margin: 0;
 }
 
 .teamLinks a {
@@ -113,4 +112,71 @@
   gap: 1rem;
   margin-top: 20px;
   font-size: 4rem;
+}
+
+@media (max-width: 700px) {
+  .teamContainer {
+    margin: 0;
+    max-width: fit-content;
+    left: 0;
+  }
+  .teamSubTitle {
+    padding-top: 2rem;
+    color: #131713;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+  }
+  .teamContact {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .teamContactInfo {
+    padding: 1rem;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .icons {
+    font-size: 2rem;
+    margin-top: 10px;
+  }
+
+  .teamLinks a:hover {
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    height: 0px;
+    transform: none;
+  }
+  .teamContactInfo:hover {
+    transform: none;
+    box-shadow: none;
+    z-index: 0;
+  }
+  .text {
+    font-size: 1.3rem;
+  }
+  .infoTeam {
+    font-size: 2rem;
+  }
+  .teamImage {
+    margin-top: 0;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+  }
+  .teamName {
+    margin-top: 10px;
+    font-size: 1.5rem;
+  }
+  .teamLinks {
+    margin: 0;
+  }
+  .teamLinks a {
+    margin: 0 5px;
+  }
 }

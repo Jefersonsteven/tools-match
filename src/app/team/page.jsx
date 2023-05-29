@@ -112,13 +112,12 @@ export default function Team() {
                 className={style.teamImage}
               />
               <h2 className={style.teamName}>
-                Nombre:{" "}
                 <span className={style.text}>
                   {person.name + " " + person.lastname}
                 </span>
               </h2>
               <h2 className={style.teamName}>
-                Lugar: <span className={style.text}>{person.country}</span>
+                <span className={style.text}>{person.country}</span>
               </h2>
               <div className={style.teamLinks}>
                 <Link href={person.github} target="_blanket">

@@ -5,8 +5,8 @@ import axios from "axios";
 import { getLocation } from "@/app/crear-publicacion/asset/getLocation";
 
 function FilterRangeDistance({ handleKm }) {
-  const { userData } = useContext(AppContext);
-  const [range, setRange] = useState(6000);
+  const { userData,range,setRange } = useContext(AppContext);
+  /* const [range, setRange] = useState(6000); */
 
   async function coords(latitude, longitude) {
     try {

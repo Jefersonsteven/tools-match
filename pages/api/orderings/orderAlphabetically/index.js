@@ -4,7 +4,7 @@ import { calcularDistancia } from '../../filters/distance/assets/calculateDistan
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const { category, type, brand, title, coorde1, coorde2, km, order } = req.query;
+      const { category, type, brand, title, coorde1, coorde2, km, order ,id, country} = req.query;
       const intcoorde1 = parseFloat(coorde1);
       const intcoorde2 = parseFloat(coorde2);
       const intKm = parseFloat(km);
@@ -14,6 +14,28 @@ export default async function handler(req, res) {
       }
 
       let where = { hidden: false };
+
+      if(id && !country) {
+        const postCountry = await prisma.user.findUnique({
+          where: {
+            id: id,
+            },
+            select:{
+              country: true
+            }
+        });
+        const {country} = postCountry
+        if(country){
+          where.author = {
+            country: country,
+          };
+        }
+      }
+      if (country) {
+        where.author = {
+          country: country,
+        };
+      }
 
       if (category) {
         where.category = category;
