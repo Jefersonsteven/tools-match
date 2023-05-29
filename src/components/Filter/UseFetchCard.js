@@ -1,4 +1,6 @@
-export const fetchCards = async (selected, setCards, title,userId) => {
+export const fetchCards = async (selected, setCards, title, userId, setIsLoading) => {
+  setIsLoading(true); // Establecer isLoading en true
+
   const getCategoryParam = () => selected.category ? `category=${selected.category}` : '';
   const getTypeParam = () => selected.type ? `type=${selected.type}` : '';
   const getBrandParam = () => selected.brand ? `brand=${selected.brand}` : '';
@@ -7,7 +9,7 @@ export const fetchCards = async (selected, setCards, title,userId) => {
   const getCoorde1Param = () => selected.coorde1 ? `coorde1=${selected.coorde1}` : '';
   const getCoorde2Param = () => selected.coorde2 ? `coorde2=${selected.coorde2}` : '';
   const getCountryParam = () => selected.country ? `country=${selected.country}` : '';
-  const getUserIdParam = () => userId? `id=${userId}`:'';
+  const getUserIdParam = () => userId ? `id=${userId}` : '';
 
   const categoryParam = getCategoryParam();
   const typeParam = getTypeParam();
@@ -16,13 +18,15 @@ export const fetchCards = async (selected, setCards, title,userId) => {
   const orderParam = selected.order ? `order=${selected.order.order}&` : '';
   const IdParam = getUserIdParam();
 
-  // filtrar por distance - Jeffer
+  // Filtrar por distancia - Jeffer
   const kmParam = getKmParam();
   const coorde1Param = getCoorde1Param();
   const coorde2Param = getCoorde2Param();
 
-  //filtrar por pais
+  // Filtrar por país
   const countryParam = getCountryParam();
+
+  setCards([]); // Limpiar el estado cards
 
   const response = await fetch(`/api/filters/allFilters?${categoryParam}&${typeParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}&${countryParam}&${IdParam}`);
   const data = await response.json();
@@ -39,17 +43,28 @@ export const fetchCards = async (selected, setCards, title,userId) => {
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
+
   if (selected.order?.type === 'rating') {
     const orderResponse = await fetch(`/api/orderings/orderRating?${orderParam}${typeParam}&${categoryParam}&${brandParam}&${titleParam}&${kmParam}&${coorde1Param}&${coorde2Param}&${countryParam}&${IdParam}`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
   }
-   if(selected.category=="" && selected.type=="" && selected.order.type=="" && selected.order.order==""  && selected.title == ""  && selected.brand=="" && selected.km== "" && selected.country== "") {
-    const orderResponse = userId? await fetch(`/api/admin/postByCountry/${userId}`) : await fetch(`/api/admin/post`)
+
+  if (
+    selected.category === "" &&
+    selected.type === "" &&
+    selected.order.type === "" &&
+    selected.order.order === "" &&
+    selected.title === "" &&
+    selected.brand === "" &&
+    selected.km === "" &&
+    selected.country === ""
+  ) {
+    const orderResponse = userId ? await fetch(`/api/admin/postByCountry/${userId}`) : await fetch(`/api/admin/post`);
     const orderData = await orderResponse.json();
     cards = orderData || [];
-  } 
-  
+  }
 
+  setIsLoading(false); // Establecer isLoading en false
   setCards(cards);
 };

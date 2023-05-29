@@ -54,6 +54,15 @@ export const handleOrderChange = (type, order, setSelected, setOrderFilter) => {
   setOrderFilter(`${type}-${order}`);
 };
 
+// filtrar por handle Km - Jeffer
+export const handleKmChange = (setSelected, km, coorde1, coorde2) => {
+  setSelected((prevSelected) => ({
+    ...prevSelected,
+    coorde1,
+    coorde2,
+    km,
+  }));
+}
 
 export const handleClearFilters = (
   setSelected,
@@ -71,12 +80,3 @@ export const handleClearFilters = (
   handleCountryChange(event,setSelected);
 };
 
-// filtrar por handle Km - Jeffer
-export const handleKmChange = (setSelected, km, coorde1, coorde2) => {
-  setSelected((prevSelected) => ({
-    ...prevSelected,
-    coorde1,
-    coorde2,
-    km,
-  }));
-}

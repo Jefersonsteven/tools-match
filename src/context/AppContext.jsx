@@ -57,6 +57,9 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
+  const [isLoading, setIsLoading] = useState(false);//agregado por jean heyller
+  const [range, setRange] = useState(6000) // agregado por jean 
+  
 
   const [selected, setSelected] = useState({
     category: "",
@@ -186,6 +189,11 @@ function AppProvider({ children }) {
         setFavorite,
         isFavorite,
         setIsFavorite,
+        isLoading,
+        setIsLoading,
+        range,
+        setRange
+
       }}
     >
       {children}

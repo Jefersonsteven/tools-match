@@ -10,9 +10,9 @@ import styles from "./Cards.module.css";
 import LoaderRadial from "../Loader/LoaderRadial";
 
 const Cards = () => {
-  const { cards, setCards, setFilteredCards, currentPage, setCurrentPage,userId} =
+  const { cards, setCards, setFilteredCards, currentPage, setCurrentPage,userId,isLoading,setIsLoading} =
     useContext(AppContext);//userId agregado por jean 
-  const [isLoading, setIsLoading] = useState(false);
+  /* const [isLoading, setIsLoading] = useState(false); */
 
   /*----------PAGINATED----------*/
 

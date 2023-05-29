@@ -21,7 +21,7 @@ import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 import { AiOutlineClear } from "react-icons/ai";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected,userId } =
+  const { setCards, title, setTitle, selected, setSelected,userId,setIsLoading } =
     useContext(AppContext);
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
@@ -29,7 +29,10 @@ export default function FilterBar() {
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
   useEffect(() => {
-    fetchCards(selected, setCards, title,userId);
+    fetchCards(selected, setCards, title,userId,setIsLoading);
+    return ()=> {
+      setCards([]);
+    };
   }, [selected]);
 
 
@@ -71,7 +74,7 @@ export default function FilterBar() {
       setCategoryFilter,
       setTypeFilter,
       setBrandFilter,
-      setOrderFilter
+      setOrderFilter,
     );
   };
 
@@ -112,7 +115,7 @@ export default function FilterBar() {
                 Colombia
               </button>
               <button
-                value="MEX"
+                value="MX"
                 onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
@@ -123,7 +126,14 @@ export default function FilterBar() {
                 onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
-                Argentina
+                Argentina 
+              </button>
+              <button
+               value="VE"
+                onClick={handleCountry}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
+              >
+                Venezuela 
               </button>
             </div>
           </div>
