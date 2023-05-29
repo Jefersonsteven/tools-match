@@ -5,9 +5,9 @@ export const handleTitleChange = (newTitle, setTitle, setSelected,selected) => {
   }
 };
 
-export const handleTitleButtonChange = async (title, setCards,setSelected,selected) => {
+export const handleTitleButtonChange = async (title, setCards,setSelected,selected,userId) => {
   setSelected({ ...selected, title: title });
-  const response = await fetch(`/api/filters/title/${title}`);
+  const response = await fetch(`/api/filters/title?${userId}&${title}`);
   const data = await response.json();
   setCards(data || []);
 };
@@ -29,6 +29,14 @@ export const handleTypeChange = (event, setSelected, setTypeFilter) => {
   setTypeFilter(typeValue);
 };
 
+export const handleCountryChange = (event, setSelected) => {
+  const typeValue = event.target.value;
+  setSelected((prevSelected) => ({
+    ...prevSelected,
+    country: typeValue,
+  }));
+};
+
 export const handleBrandChange = (event, setSelected, setBrandFilter) => {
   const brandValue = event.target.value;
   setSelected((prevSelected) => ({
@@ -46,22 +54,6 @@ export const handleOrderChange = (type, order, setSelected, setOrderFilter) => {
   setOrderFilter(`${type}-${order}`);
 };
 
-
-export const handleClearFilters = (
-  setSelected,
-  setCategoryFilter,
-  setTypeFilter,
-  setBrandFilter,
-  setOrderFilter
-) => {
-  const event = { target: { value: "" } };
-  handleCategoryChange(event, setSelected, setCategoryFilter);
-  handleTypeChange(event, setSelected, setTypeFilter);
-  handleBrandChange(event,setSelected,setBrandFilter)
-  handleOrderChange("","",setSelected,setOrderFilter);
-  handleKmChange(setSelected, "", "", "");
-};
-
 // filtrar por handle Km - Jeffer
 export const handleKmChange = (setSelected, km, coorde1, coorde2) => {
   setSelected((prevSelected) => ({
@@ -71,3 +63,20 @@ export const handleKmChange = (setSelected, km, coorde1, coorde2) => {
     km,
   }));
 }
+
+export const handleClearFilters = (
+  setSelected,
+  setCategoryFilter,
+  setTypeFilter,
+  setBrandFilter,
+  setOrderFilter,
+) => {
+  const event = { target: { value: "" } };
+  handleCategoryChange(event, setSelected, setCategoryFilter);
+  handleTypeChange(event, setSelected, setTypeFilter);
+  handleBrandChange(event,setSelected,setBrandFilter)
+  handleOrderChange("","",setSelected,setOrderFilter);
+  handleKmChange(setSelected, "", "", "");
+  handleCountryChange(event,setSelected);
+};
+

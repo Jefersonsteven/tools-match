@@ -5,7 +5,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { FaFilter, FaSort } from "react-icons/fa";
 import { fetchCards } from "./UseFetchCard";
 import style from "./FilterBar.module.css";
-import { FaGlobeAmericas } from 'react-icons/fa'
+import { FaGlobeAmericas } from "react-icons/fa";
 import {
   handleTitleChange,
   handleTitleButtonChange,
@@ -15,12 +15,13 @@ import {
   handleOrderChange,
   handleClearFilters,
   handleKmChange,
+  handleCountryChange
 } from "./handlers";
 import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 import { AiOutlineClear } from "react-icons/ai";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected } =
+  const { setCards, title, setTitle, selected, setSelected,userId,setIsLoading } =
     useContext(AppContext);
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
@@ -28,15 +29,19 @@ export default function FilterBar() {
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
   useEffect(() => {
-    fetchCards(selected, setCards, title);
-  }, [selected, setCards]);
+    fetchCards(selected, setCards, title,userId,setIsLoading);
+    return ()=> {
+      setCards([]);
+    };
+  }, [selected]);
+
 
   const handleTitle = (newTitle) => {
     handleTitleChange(newTitle, setTitle, setSelected, selected);
   };
 
   const handleTitleButton = () => {
-    handleTitleButtonChange(title, setCards, setSelected, selected);
+    handleTitleButtonChange(title, setCards, setSelected, selected,userId);
   };
 
   const handleCategory = (event) => {
@@ -59,26 +64,30 @@ export default function FilterBar() {
     handleKmChange(setSelected, km, coorde1, coorde2);
   };
 
+  const handleCountry = (event) => {
+    handleCountryChange(event,setSelected);
+  };
+
   const handleCleanFilters = () => {
     handleClearFilters(
       setSelected,
       setCategoryFilter,
       setTypeFilter,
       setBrandFilter,
-      setOrderFilter
+      setOrderFilter,
     );
   };
 
   return (
     <AppProvider>
-      <div className="w-full">
-      <div className="mr-10 ml-2 w-full" style={{ width: "400px" }}>
-      <FilterRangeDistance handleKm={handleKm}  />
-      </div>
+      <div className="w-full mb-10">
+        <div className="mr-10 ml-2 w-full" style={{ width: "400px" }}>
+          <FilterRangeDistance handleKm={handleKm} />
+        </div>
         <div className="w-full flex-1 flex flex-row items-center justify-between px-2">
           <div className="mr-10" style={{ width: "400px" }}>
             {/* // filter per distance - Jeffer */}
-            
+
             <SearchBar
               title={title}
               onTitleChange={handleTitle}
@@ -92,29 +101,40 @@ export default function FilterBar() {
             </div>
             <div className={style.order}>
               <button
-                onClick={()=>{}}
+                value=""
+                onClick={handleCountry}
                 className={orderFilter === "" ? style.selected : ""}
               >
-                Todos
+                {userId ? "Default" : "Todos"}
               </button>
               <button
-                onClick={()=>{}}
+                value="CO"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-asc" ? style.selected : ""}
               >
                 Colombia
               </button>
               <button
-                onClick={()=>{}}
+                value="MX"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
                 Mexico
               </button>
               <button
-                onClick={()=>{}}
+               value="AR"
+                onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
-                Argentina
-              </button>                     
+                Argentina 
+              </button>
+              <button
+               value="VE"
+                onClick={handleCountry}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
+              >
+                Venezuela 
+              </button>
             </div>
           </div>
           <div className={`mr-2 relative ${style.button}`}>
@@ -347,7 +367,7 @@ export default function FilterBar() {
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
           <div className={`flex relative  mr-2 ${style.button}`}>
             <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
               Ordenar <FaSort className="ml-2" />
@@ -399,9 +419,13 @@ export default function FilterBar() {
           </div>
           <div className={` flex relative ${style.clearBbutton}`}>
             {/* <div className={style.clear}> */}
-              <button onClick={handleCleanFilters}className="bg-black text-white hover:bg-gray-800 flex items-center rounded-xl" style={{ height: '46px', padding: '0 40px' }}>
-                <AiOutlineClear className="mr-2 text-4xl" />
-              </button>
+            <button
+              onClick={handleCleanFilters}
+              className="bg-black text-white hover:bg-gray-800 flex items-center rounded-xl"
+              style={{ height: "46px", padding: "0 40px" }}
+            >
+              <AiOutlineClear className="mr-2 text-4xl" />
+            </button>
             {/* </div> */}
           </div>
         </div>

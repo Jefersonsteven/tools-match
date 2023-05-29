@@ -2,7 +2,7 @@ import style from "./LoaderRadial.module.css";
 
 function LoaderRadial() {
   return (
-    <div class={style.loader}>
+    <div className={style.loader}>
       <span></span>
     </div>
   );

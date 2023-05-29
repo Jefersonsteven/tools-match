@@ -76,13 +76,8 @@ const CardsOrders = ({ userOrders }) => {
       >
         {selectedOrder && (
           <>
-            <div className={styles.modalHeader}>
-              <button className={styles.closeButton} onClick={closeModal}>
-                <AiOutlineClose />
-              </button>
-            </div>
             <div className={styles.modalContent}>
-              <CardsPurchasedItems orderPosts={selectedOrder.postId} types={selectedOrder.types} />
+              <CardsPurchasedItems orderPosts={selectedOrder.postId} types={selectedOrder.types} onClose={closeModal}/>
             </div>
           </>
         )}
