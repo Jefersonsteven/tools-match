@@ -139,6 +139,25 @@ export default function PerfilUsuario() {
     }
   };
 
+  const handleDeleteReview = async (reviewId) => {
+    try {
+      // Realiza la lógica necesaria para eliminar la reseña del estado createdReviews
+      const response = await axios.delete(`/api/review/${reviewId}`);
+
+      if (response.status === 200) {
+        console.log("Reseña eliminada correctamente");
+        const updatedReviews = createdReviews.filter(
+          (review) => review.id !== reviewId
+        );
+        setCreatedReviews(updatedReviews);
+      } else {
+        console.error("Error al eliminar la reseña");
+      }
+    } catch (error) {
+      console.error("Error al eliminar la reseña:", error);
+    }
+  };
+
   return (
     <>
       <section>
@@ -261,7 +280,9 @@ export default function PerfilUsuario() {
                 <h3 className={styles.sectionTitleH3}>Reseñas Enviadas</h3>
                 <CardsCreatedReviews
                   createdReviews={createdReviews}
+                  setCreatedReviews={setCreatedReviews}
                   author={user}
+                  onDeleteReview={handleDeleteReview}
                 />
               </div>
             </div>
