@@ -4,11 +4,12 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import styles from "./post.module.css";
-import { IoCaretBack } from "react-icons/io5";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Back from "@/components/back/Back";
+import Review from "./Review";
+import LoaderRadial from "@/components/Loader/LoaderRadial";
 
 function PostDetail({}) {
   const { postId } = useParams();
@@ -116,6 +117,11 @@ function PostDetail({}) {
           <IoCaretBack size={50} color="var(--white)" />
         </Link> */}
         <main className={styles.main}>
+          {postDetail.author === undefined && (
+            <div className="grid justify-center items-center fixed w-screen h-3/6">
+              <LoaderRadial />
+            </div>
+          )}
           {postDetail.author !== undefined && (
             <>
               <section className={styles.section_images}>
@@ -162,6 +168,16 @@ function PostDetail({}) {
                     <h5>Marca:</h5>
                     <p>{pd.brand}</p>
                   </div>
+                  <div>
+                    <h5>Ciudad:</h5>
+                    <p>{pd.author.city}</p>
+                  </div>
+                  {pd.type === "RENTAL" && (
+                    <div>
+                      <h5>Status:</h5>
+                      <p>{pd.status}</p>
+                    </div>
+                  )}
                 </div>
                 <figure className={styles.map}>
                   <p>Mapa unicamente de referencia (Ubicacion aproximada)</p>
@@ -188,12 +204,23 @@ function PostDetail({}) {
                   </figure>
                   <div className={styles.user_info}>
                     <h5>
-                      <b>{pd.type === "SALE" ? "Vendedor: " : "Arrendador"}</b>@
-                      {pd.author.firstname}
+                      <b>
+                        {pd.type === "SALE" ? "Vendedor: " : "Arrendador: "}
+                      </b>
+                      @{pd.author.firstname}
                     </h5>
                     <h5>⭐{pd2.author.rating}.0</h5>
                   </div>
                 </Link>
+                <div className={styles.reviews}>
+                  <h3>Reseñas: </h3>
+                  {pd.reviews.length === 0 && <h4>No hay reseñas.</h4>}
+                  <div>
+                    {pd.reviews?.map((review) => (
+                      <Review key={review.id} review={review} />
+                    ))}
+                  </div>
+                </div>
               </section>
               <section className={styles.section_button}>
                 {userId === pd.author.id && (

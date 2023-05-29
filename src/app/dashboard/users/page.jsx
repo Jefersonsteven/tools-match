@@ -117,14 +117,29 @@ function Users() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const updatedUser = {
-      firstname: formData.get("firstname"),
-      lastname: formData.get("lastname"),
-      phoneNumber: formData.get("phonenumber"),
       country: formData.get("country"),
+
       admin: editingUser.admin,
     };
+  
+    
+  if (formData.get("firstname") && formData.get("firstname") !== editingUser.firstname) {
+    updatedUser.firstname = formData.get("firstname");
+  }
 
-    console.log(updatedUser);
+  if (formData.get("lastname") && formData.get("lastname") !== editingUser.lastname) {
+    updatedUser.lastname = formData.get("lastname");
+  }
+
+  if (formData.get("phonenumber") && formData.get("phonenumber") !== editingUser.phoneNumber) {
+    if (formData.get("phonenumber") !== "null") {
+      updatedUser.phoneNumber = formData.get("phonenumber");
+    } else {
+      delete updatedUser.phoneNumber;
+    }
+  }
+
+console.log(updatedUser)
 
     Swal.fire({
       title: "¿Estás seguro de los cambios?",
@@ -136,16 +151,21 @@ function Users() {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
+        setLoadingModal(true);
+        Swal.showLoading(); // Mostrar loader
+    
         axios
           .put(`/api/admin/user/${editingUser.id}`, updatedUser)
           .then((response) => {
             console.log(response.data);
-            setRecords((prevRecords)=>
-            prevRecords.map((user)=>
-            user.id === editingUser.id ? {...user, ...updatedUser}: user
-             )
+            setRecords((prevRecords) =>
+              prevRecords.map((user) =>
+                user.id === editingUser.id ? { ...user, ...updatedUser } : user
+              )
             );
             setEditingUser(null);
+            setLoadingModal(false);
+    
             Swal.fire({
               title: "¡Usuario editado correctamente!",
               icon: "success",
@@ -333,6 +353,7 @@ function Users() {
   };
 
 
+  const [loadingModal, setLoadingModal] = useState(false);
 
 
 
@@ -408,10 +429,11 @@ function Users() {
                           name={d.id}
                           checked={selectedUsers.includes(d.id, d.email)}
                           onChange={handleCheckboxChange}
-                        />
+                          className={style.checkboxInput}
+                        />       
                   </td>
                   <td>
-        <Link href={`/dashboard/users/${d.id}`}>
+        <Link className={style.nombrePerfil} href={`/dashboard/users/${d.id}`}>
           {d.firstname}
         </Link></td>
                   <td>{d.lastname}</td>
@@ -454,7 +476,7 @@ function Users() {
           </table>
         ) : (
           <div className={style.noUsuarios}>
-            <p>No hay Usuarios🚩</p>
+            <p>No hay usuarios. . . . . 🚀</p>
           </div>
         )}
         {editingUser && (
@@ -463,13 +485,38 @@ function Users() {
 
           <Modal show={showModal} onClose={() => setShowModal(false)}>
 
-            <UserForm
-              admin={admin}
-              setAdmin={setAdmin}
-              editingUser={editingUser}
-              handleSubmit={handleSubmit}
-              setEditingUser={setEditingUser}
-            />
+
+
+{loadingModal ? (
+    <div>
+      <UserForm
+        admin={admin}
+        setAdmin={setAdmin}
+        editingUser={editingUser}
+        handleSubmit={handleSubmit}
+        setEditingUser={setEditingUser}
+      />
+      <div className={style.contenedor_delLoader}>
+
+      <Loader /> {/* Renderiza el loader mientras se está cargando */}
+      </div>
+    </div>
+  ) : (
+    <div>
+    <UserForm
+      admin={admin}
+      setAdmin={setAdmin}
+      editingUser={editingUser}
+      handleSubmit={handleSubmit}
+      setEditingUser={setEditingUser}
+    />
+   
+    
+    </div>
+    
+  )}
+
+
           </Modal>
         )}
 

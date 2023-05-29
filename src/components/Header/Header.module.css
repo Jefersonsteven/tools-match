@@ -14,17 +14,25 @@
   gap: 20px;
 }
 
-.logo button {
-  background-color: var(--white);
-  color: var(--black);
-  border-radius: 5px;
-  padding: 0 15px;
+.logo svg {
+  width: 40px;
+  height: 40px;
 }
 
-.logo button:hover {
-  background-color: var(--black);
-  color: var(--white);
+.logo svg path {
+  fill: var(--orange);
 }
+
+.logo svg:hover path {
+  fill: var(--white);
+}
+
+.logo h2 {
+  font-weight: 800;
+  width: max-content;
+  letter-spacing: 0.35rem;
+}
+
 .nav {
   display: flex;
   gap: 30px;
@@ -56,6 +64,7 @@
 .nav ul li:hover {
   color: yellow;
   text-decoration: underline;
+  border-bottom: 1px solid var(--orange);
   cursor: pointer;
 }
 
@@ -69,6 +78,7 @@
 .perfil {
   width: 16px;
   position: relative;
+  cursor: pointer;
 }
 
 .perfil ul li a {
@@ -145,7 +155,4 @@
 .cart:hover .cartText {
   opacity: 1;
   visibility: visible;
-}
-
-.dashboard {
 }

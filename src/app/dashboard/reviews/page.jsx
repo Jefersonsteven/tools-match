@@ -320,7 +320,7 @@ function Reviews() {
           </table>
         ) : (
           <div className={style.noUsuarios}>
-            <p>No hay reseñas🚩</p>
+            <p>No hay reseñas. . . . . 🚀</p>
           </div>
         )}
         {editingUser && (
