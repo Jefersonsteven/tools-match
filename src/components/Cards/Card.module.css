@@ -101,6 +101,11 @@
   margin-inline-start: auto;
   border-radius: 50%;
   color: var(--orange); /* Modificado: color verde */
+  transform: scale(1);
+  transition: transform 0.2s ease-in-out;
+}
+.favoriteIconActive:hover {
+  transform: scale(1.1);
 }
 
 .favoriteContainer {

@@ -5,8 +5,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Back from "@/components/back/Back";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Terms() {
+  const router = useRouter();
+
   return (
     <div className={style.termsContainer}>
       <div className={style.backcontainer}>

@@ -55,16 +55,6 @@
   height: 100%;
 }
 
-.backcontainer {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  justify-content: flex-start;
-  position: absolute;
-  top: 100px;
-  left: 25px;
-}
-
 .brand {
   font-weight: 900;
   color: orange;

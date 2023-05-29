@@ -17,6 +17,14 @@
   text-transform: capitalize;
 }
 
+.clearButton{
+  width: 100%;
+  border-radius: 0px;
+  border-bottom: 1px solid var(--white);
+  text-transform: capitalize;
+  
+}
+
 .button:hover .filter,
 .button:hover .order {
   display: flex;
@@ -70,7 +78,7 @@ button.selected {
   align-items: center;
   justify-content: center;
   width: 200px;
-  height: 45px;
+  height: 20px;
   font-size: 3rem;
 }
 
