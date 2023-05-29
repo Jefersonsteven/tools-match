@@ -64,3 +64,17 @@
     border-radius: 5px;
     height: 100px;
 }
+
+@media (max-width: 1200px) {
+    .section {
+        width: 100%;
+    }
+    .container {
+        padding: 0;
+        width: 100%;
+    }
+
+    .images {
+        width: 100%;
+    }
+}
