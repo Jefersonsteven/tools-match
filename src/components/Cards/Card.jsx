@@ -56,7 +56,6 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
       } catch (error) {
         console.error(error);
       }
-      console.log(favoriteArray);
     } else {
       //TODO: agregar alerrta o algo parecido donde diga que para agregar favoritos debe iniciar sesion
       console.error("userData or email is null or undefined");
@@ -105,8 +104,12 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
             </div>
             <div className={styles.saleTypeContent}>
               <p
+                style={{
+                  width: type === "Arriendo" ? "40%" : "40%",
+                  textAlign: "center",
+                }}
                 className={
-                  type == "Arriendo"
+                  type === "Arriendo"
                     ? "bg-yellow-500 p-2 rounded text-white"
                     : "bg-green-500 p-2 rounded text-white"
                 }
