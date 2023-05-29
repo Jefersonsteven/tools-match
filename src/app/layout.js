@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <head>
           <title>Tools Match</title>
+          <link rel="icon" href="/fav.ico" />
         </head>
         <body className={inter.className}>
           <Header />

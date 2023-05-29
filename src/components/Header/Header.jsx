@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 
 import Swal from "sweetalert2";
 import Logo from "../Logo/Logo";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function Header() {
   const pathname = usePathname();
@@ -56,6 +57,8 @@ function Header() {
   };
 
   const [href, setHref] = useState("");
+  const [menu, setMenu] = useState("");
+  const [submenu, setSubmenu] = useState("");
 
   useEffect(() => {
     setHref(userData ? "/crear-publicacion" : "/form/login");
@@ -63,15 +66,18 @@ function Header() {
 
   return (
     <header className={styles.header}>
+      {/* // logo */}
       <div className={styles.logo}>
         <Link href="/">
           <Logo />
         </Link>
         <h2>Tools Match</h2>
       </div>
-      <nav className={styles.nav}>
+
+      {/* // navbar */}
+      <nav className={styles.navbar}>
         <>
-          <ul className={styles.nav}>
+          <ul className={styles.nav} style={{ display: menu }}>
             {userId &&
               userData.admin &&
               !(pathname.split("/")[1] === "dashboard") && (
@@ -92,20 +98,30 @@ function Header() {
             <li className={styles.navLi}>
               {pathname !== "/" && <Link href={href}>Crear Publicaciones</Link>}
             </li>
-            {pathname !== "/favorite" && pathname !== "/" && userData && (
-              <Link href="/favorite" className={styles.cart}>
-                <FaHeart size="25" color="white" />
-                {favorite?.count > 0 && (
-                  <span className={styles.cartCount}>{favorite.count}</span>
-                )}
-                <span className={styles.cartText}>Favoritos</span>
-              </Link>
-            )}
           </ul>
 
+          {pathname !== "/favorite" && pathname !== "/" && userData && (
+            <Link href="/favorite" className={styles.cart}>
+              <FaHeart size="25" color="white" />
+              {favorite?.count > 0 && (
+                <span className={styles.cartCount}>{favorite.count}</span>
+              )}
+              <span className={styles.cartText}>Favoritos</span>
+            </Link>
+          )}
+
           {pathname !== "/" && (
-            <div className={styles.nav}>
-              <div className={styles.perfil}>
+            <div className={styles.navbar}>
+              <div
+                className={styles.perfil}
+                onClick={() => {
+                  if (window.innerWidth < 900) {
+                    submenu === "none" || submenu === ""
+                      ? setSubmenu("flex")
+                      : setSubmenu("none");
+                  }
+                }}
+              >
                 {userData && userData.photo ? (
                   <Image
                     className={styles.userImg}
@@ -113,18 +129,19 @@ function Header() {
                     height={25}
                     src={userData.photo}
                     alt="user"
-                    onClick={() => setSubmenu((state) => !state)}
                   />
                 ) : (
                   <FaUserCircle
                     className={styles.userImg}
                     size={25}
-                    onClick={() => setSubmenu((state) => !state)}
                     color="white"
                   />
                 )}
 
-                <ul className={styles.openSubmenu}>
+                <ul
+                  className={styles.openSubmenu}
+                  style={{ display: window.innerWidth < 900 ? submenu : "" }}
+                >
                   {userData && (
                     <li>
                       <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
@@ -154,6 +171,15 @@ function Header() {
               </Link>
             </div>
           )}
+
+          <div
+            className={styles.menubutton}
+            onClick={() => {
+              menu === "none" ? setMenu("flex") : setMenu("none");
+            }}
+          >
+            <GiHamburgerMenu size={25} />
+          </div>
         </>
       </nav>
     </header>
