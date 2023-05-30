@@ -11,10 +11,15 @@ export default async function envio(req, res) {
       const mail = {
         from: process.env.USER_APPLICATION,
         to: email,
-        subject: "Producto en camino",
+        subject: "Su producto está en camino",
         html: `
           <p style="color: black"> 
-            El producto que ha comprado ya está despachado para ser enviado.  
+            Estimado usuario, <br>
+            Nos complace informarte que tu producto ha sido despachado y está en camino hacia la dirección de envío que proporcionaste. <br>
+            Si tienes alguna pregunta o inquietud sobre tu envío, no dudes en contactarnos. 
+            Estamos aquí para ayudarte y asegurarnos de que recibas tu producto de manera segura y a tiempo. <br>
+            Agradecemos tu paciencia y apoyo durante este proceso. 
+            Estamos comprometidos a brindarte una excelente experiencia de compra y esperamos que disfrutes tu producto una vez que lo recibas.
           </p>
           <h4 style="color: black">
             Atentamente, el equipo de ToolMatch

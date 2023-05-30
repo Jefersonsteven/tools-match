@@ -11,10 +11,13 @@ export default async function deletePost(req, res) {
       const mail = {
         from: process.env.USER_APPLICATION,
         to: email,
-        subject: "Post eliminado",
+        subject: "Publicación eliminada",
         html: `
           <p style="color: black"> 
-            Estimado usuario, se ha eliminado una publicación suya debido al incumplmiento de los terminos y condiciones. <br>
+            Estimado usuario, <br> 
+            Espero que este mensaje te encuentre bien. 
+            Lamentamos informarte que hemos tomado la decisión de eliminar una de tus publicaciones en nuestra plataforma 
+            <b>por incumplimento de los terminos y condiciones</b>.<br>
             La publicación que se ha eliminado de su perfíl es: <b> ${title} </b>
           </p>
           <h4 style="color: black">

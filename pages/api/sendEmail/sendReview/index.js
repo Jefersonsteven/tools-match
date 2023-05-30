@@ -13,10 +13,20 @@ export default async function sendReview(req, res) {
         to: email,
         subject: "Deja una reseña",
         html: `
-          <p style="color: black"> Recientemente realizó una compra, dejale una reseña al producto </p>
+          <p style="color: black"> 
+            Esperamos que estés disfrutando de tu compra/arriendo en ToolMatch. 
+            Queremos recordarte la importancia de tu opinión y te animamos a dejar una reseña sobre el producto que adquiriste. <br>
+            Las reseñas son valiosas para nosotros y para otros clientes potenciales. 
+            Compartir tu experiencia nos ayuda a mejorar nuestros productos y servicios, 
+            y permite a otros usuarios tomar decisiones informadas al realizar compras/arriendos en nuestra web. <br>
+            Si has tenido una experiencia positiva con tu compra, nos encantaría que compartas tus comentarios y nos cuentes qué te gustó del producto. 
+            Si, por el contrario, has enfrentado algún desafío o tienes alguna preocupación, 
+            también nos gustaría saberlo para poder abordar cualquier problema y garantizar tu satisfacción. <br>
+            Agradecemos tu participación y tus comentarios.
+          </p>
           <button style="border: 5px, black, solid; border-radius: 20px; background: white; color: black"> 
             <a href=${url} style="text-decoration: none; color: black">
-                Producto 
+                Perfil 
             </a>
           </button>
             `,
