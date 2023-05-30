@@ -145,7 +145,7 @@
     height: 100%;
   }
   .cardContent {
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: space-between;
   }
   .cardName {

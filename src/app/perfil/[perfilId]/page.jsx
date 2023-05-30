@@ -48,8 +48,8 @@ export default function PerfilUsuario() {
     const fetchCreatedReviews = async () => {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
-
-        const createdReviews = response.data.reviews;
+  
+        const createdReviews = response.data.reviews.filter(review => review.hidden === false);
         setUser(response.data);
         setCreatedReviews(createdReviews);
       } catch (error) {
@@ -136,6 +136,25 @@ export default function PerfilUsuario() {
       }
     } catch (error) {
       console.error("Error al actualizar la reseña:", error);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    try {
+      // Realiza la lógica necesaria para eliminar la reseña del estado createdReviews
+      const response = await axios.delete(`/api/admin/review/${reviewId}`);
+
+      if (response.status === 200) {
+        console.log("Reseña eliminada correctamente");
+        const updatedReviews = createdReviews.filter(
+          (review) => review.id !== reviewId
+        );
+        setCreatedReviews(updatedReviews);
+      } else {
+        console.error("Error al eliminar la reseña");
+      }
+    } catch (error) {
+      console.error("Error al eliminar la reseña:", error);
     }
   };
 
@@ -263,7 +282,9 @@ export default function PerfilUsuario() {
               <div className={styles.reviewContainer}>
                 <CardsCreatedReviews
                   createdReviews={createdReviews}
+                  setCreatedReviews={setCreatedReviews}
                   author={user}
+                  onDeleteReview={handleDeleteReview}
                 />
               </div>
             </div>
