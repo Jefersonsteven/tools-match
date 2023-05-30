@@ -5,12 +5,25 @@
   width: 100%;
 }
 
+.card {
+  height: 150px;
+}
+
 .customModal {
   width: 30%;
-  height: 90%;
+  max-height: calc(100% - 46rem);
   margin: auto;
   background-color: rgb(211, 231, 211);
-  margin-top: 25px;
+  margin-top: 20rem;
+  padding: 10px;
+  padding-top: 10px;
+}
+.customModalTwo {
+  width: 30%;
+  max-height: calc(100% - 56rem);
+  margin: auto;
+  background-color: rgb(211, 231, 211);
+  margin-top: 20rem;
   padding: 10px;
   padding-top: 10px;
 }
@@ -31,4 +44,19 @@
   color: #090909;
   background-color: transparent;
   border: none;
+}
+
+@media screen and (max-width: 390px) {
+  .customModal {
+    width: 70%;
+    height: calc(100% - 60rem);
+    margin-top: 30rem;
+    padding: 1rem;
+  }
+  .customModalTwo {
+    width: 70%;
+    height: calc(100% - 70rem);
+    margin-top: 30rem;
+    padding: 1rem;
+  }
 }

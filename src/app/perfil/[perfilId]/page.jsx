@@ -34,7 +34,9 @@ export default function PerfilUsuario() {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
 
-        const receivedReviews = response.data.received;
+        const receivedReviews = response.data.received.filter(
+          (review) => review.hidden === false
+        );
         setUser(response.data);
         setReviews(receivedReviews);
       } catch (error) {
