@@ -199,7 +199,7 @@ function Page() {
           <div className={styles.cart}>
             <div className={styles.subTitles}>
               <h3>Productos</h3>
-              <h3>Sub-total</h3>
+              <h3>Precio</h3>
             </div>
             <div className={styles.cartItems}>
               {cart.items?.map((item) => (
