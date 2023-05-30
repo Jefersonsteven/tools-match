@@ -3,7 +3,16 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  max-height: calc(100vh - 140px);
+  max-height: calc(100vh - 49rem);
+  overflow: auto;
+  margin: 1rem;
+}
+.containerTwo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-height: calc(100vh - 59rem);
   overflow: auto;
   margin: 1rem;
 }
@@ -20,8 +29,10 @@
   font-weight: bold;
   font-size: 1.875rem;
 }
-
-.containerProduct {
+.buttonClose:hover{
+  cursor: pointer;
+}
+.containerProduct{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,16 +58,15 @@
   font-size: 1.7rem;
   margin-top: 1rem;
 }
-
-.img {
-  width: 100%;
-  padding: 8rem;
+.img{
+  width: 48%;
 }
-
-.opinion {
-  border-radius: 0.4rem;
-  padding: 0.4rem 0.8rem;
+.opinion{
+  border-radius: 0.4rem; 
+  padding-left: 0.4rem; 
+  padding-right: 0.4rem;  
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .scrollContainer {
@@ -65,18 +75,16 @@
   color: red;
 }
 
-.reviewContainer {
-  display: flex;
-  align-items: center;
-}
-
-.reviewLabel {
-  background-color: rgb(91, 234, 91);
-  margin-bottom: 0.7rem;
-  color: white;
-  padding: 0.8rem;
-}
-
-.checkIcon {
-  margin-right: 0.5rem;
+@media (max-width: 390px){
+	.container {
+		margin: 0;
+		max-height: calc(100vh - 39rem);
+	}
+  .containerTwo{
+    margin: 0;
+		max-height: calc(100vh - 49rem);
+  }
+	.title{
+		font-size: 1.5rem	
+	}
 }
