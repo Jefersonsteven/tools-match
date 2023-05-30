@@ -13,15 +13,17 @@ import CardsReview from "@/components/Reviews/CardsReview";
 import CardsCreatedReviews from "@/components/Reviews/CardsCreatedReviews";
 import CardsOrders from "@/components/Reviews/CardsOrders";
 import axios from "axios";
-
+import Modal from "react-modal";
 import Back from "@/components/back/Back";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 export default function PerfilUsuario() {
-  const [editingUser, setEditingUser] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { push } = useRouter();
   const { perfilId } = useParams();
   const [errorsMessages, setErrorsMessages] = useState([]);
+  const [reportMessagges, setReportMessagges] = useState("");
   const { userId, userData, countries } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
   const [createdReviews, setCreatedReviews] = useState([]);
@@ -178,6 +180,14 @@ export default function PerfilUsuario() {
     }
   };
 
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
     <>
       <section>
@@ -248,12 +258,66 @@ export default function PerfilUsuario() {
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <Link
-                  href={`perfil/${userId}/edit`}
-                  className={styles.editButton}
+                {userId === perfilId ? (
+                  <Link
+                    href={`perfil/${userId}/edit`}
+                    className={styles.editButton}
+                  >
+                    Editar perfil
+                  </Link>
+                ) : (
+                  <button className={styles.editButton} onClick={openModal}>
+                    Reportar usuario
+                  </button>
+                )}
+                <Modal
+                  isOpen={modalIsOpen}
+                  onRequestClose={closeModal}
+                  className={styles.customModal}
+                  overlayClassName={styles.customOverlay}
+                  contentLabel="Purchased Items Modal"
                 >
-                  {userId === perfilId ? "Editar perfil" : "Reportar usuario"}
-                </Link>
+                  {modalIsOpen && (
+                    <>
+                      <div className={styles.modalheader}>
+                        <div className={styles.modaltitle}>
+                          <h2>Reportar usuario</h2>
+                        </div>
+                        <AiFillCloseCircle
+                          size={25}
+                          color="var(--red)"
+                          onClick={closeModal}
+                          className={styles.modalbuttonClose}
+                        />
+                      </div>
+                      <form>
+                        <div className="flex flex-col mb-8">
+                          <label htmlFor="email">Tú Email:</label>
+                          <input
+                            name="email"
+                            type="email"
+                            disabled
+                            value={userData.email}
+                          />
+                        </div>
+                        <div className="flex flex-col mb-8">
+                          <label htmlFor="rason">Motivo del reporte:</label>
+                          <textarea
+                            name="rason"
+                            type="text"
+                            value={reportMessagges}
+                            onChange={(event) =>
+                              setReportMessagges(event.target.value)
+                            }
+                          />
+                        </div>
+                        <div className="flex justify-center">
+                          <button>enviar reporte</button>
+                        </div>
+                      </form>
+                    </>
+                  )}
+                </Modal>
               </div>
             </section>
             <div className={`${styles.titlesSections} justify-center`}>
@@ -262,8 +326,8 @@ export default function PerfilUsuario() {
               </h3>
             </div>
             <div className={styles.sectionsContainer}>
-              <section>
-                <div className={`flex flex-wrap gap-4 ${styles.scrollInPosts}`}>
+              <section className={styles.scrollInPosts}>
+                <div className={`flex flex-wrap gap-4 `}>
                   {user.posts ? (
                     user.posts.map((post) => {
                       return (
@@ -308,7 +372,13 @@ export default function PerfilUsuario() {
             <div
               className={`flex flex-col justify-center items-center  md:flex-row gap-4 ${styles.itemsStart}`}
             >
-              <div className={styles.reviewContainer}>
+              <div
+                className={
+                  userId === perfilId
+                    ? styles.reviewContainer
+                    : styles.reviewContainerAutor
+                }
+              >
                 <h3 className="text-center mb-8">Recibidas</h3>
                 <div>
                   <CardsReview
@@ -317,17 +387,19 @@ export default function PerfilUsuario() {
                   />
                 </div>
               </div>
-              <div className={styles.reviewContainer}>
-                <h3 className="text-center mb-8">Enviadas</h3>
-                <div>
-                  <CardsCreatedReviews
-                    createdReviews={createdReviews}
-                    setCreatedReviews={setCreatedReviews}
-                    author={user}
-                    onDeleteReview={handleDeleteReview}
-                  />
+              {userId === perfilId && (
+                <div className={styles.reviewContainer}>
+                  <h3 className="text-center mb-8">Enviadas</h3>
+                  <div>
+                    <CardsCreatedReviews
+                      createdReviews={createdReviews}
+                      setCreatedReviews={setCreatedReviews}
+                      author={user}
+                      onDeleteReview={handleDeleteReview}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </>
         )}

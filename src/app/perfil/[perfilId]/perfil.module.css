@@ -42,7 +42,8 @@
 }
 
 .sectionsContainer section,
-.reviewContainer {
+.reviewContainer,
+.reviewContainerAutor {
   padding: 16px;
   background-color: var(--white-dark);
   border-radius: 10px;
@@ -61,7 +62,8 @@
   margin-left: 0 !important;
 }
 
-.reviewContainer {
+.reviewContainer,
+.reviewContainerAutor {
   margin: 16px 40px 50px 40px;
   width: 100%;
   display: flex;
@@ -72,29 +74,38 @@
   overflow: auto;
 }
 
+.reviewContainerAutor {
+  width: 67%;
+  height: 600px;
+}
+
 .reviewContainer::-webkit-scrollbar,
-.scrollInPosts::-webkit-scrollbar {
+.scrollInPosts::-webkit-scrollbar,
+.reviewContainerAutor::-webkit-scrollbar {
   width: 8px;
 }
 
 .reviewContainer::-webkit-scrollbar-track,
-.scrollInPosts::-webkit-scrollbar-track {
+.scrollInPosts::-webkit-scrollbar-track,
+.reviewContainerAutor::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
 
 .reviewContainer::-webkit-scrollbar-thumb,
-.scrollInPosts::-webkit-scrollbar-thumb {
+.scrollInPosts::-webkit-scrollbar-thumb,
+.reviewContainerAutor::-webkit-scrollbar-thumb {
   background-color: orange;
 }
 
 .reviewContainer::-webkit-scrollbar-thumb:hover,
-.scrollInPosts::-webkit-scrollbar-thumb:hover {
+.scrollInPosts::-webkit-scrollbar-thumb:hover,
+.reviewContainerAutor::-webkit-scrollbar-thumb:hover {
   background-color: darkorange;
 }
 
 .scrollInPosts {
   overflow: auto;
-  height: 440px;
+  height: 480px;
 }
 
 .imageContainer {
@@ -243,7 +254,8 @@
 }
 
 @media (max-width: 993px) {
-  .reviewContainer {
+  .reviewContainer,
+  .reviewContainerAutor {
     margin: 16px 0 50px 0px;
     width: 90%;
   }
@@ -271,4 +283,37 @@
   .sectionsContainer {
     margin: 16px 18px;
   }
+
+  .customModal {
+    width: 70%;
+    height: calc(100% - 60rem);
+    margin-top: 30rem;
+    padding: 1rem;
+  }
+}
+
+.customModal {
+  width: 30%;
+  max-height: calc(100% - 46rem);
+  margin: auto;
+  background-color: rgb(211, 231, 211);
+  margin-top: 20rem;
+  padding: 10px;
+  padding-top: 10px;
+}
+
+.modalheader {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.modaltitle {
+  color: black;
+  font-weight: bold;
+  font-size: 1.875rem;
+}
+.modalbuttonClose:hover {
+  cursor: pointer;
 }
