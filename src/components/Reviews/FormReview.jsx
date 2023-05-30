@@ -83,7 +83,7 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
     <div className={`${styles.container} ${isOpen ? "" : styles.hidden}`}>
       <div className={styles.subContainer}>
         <div className={styles.headerContainer} >
-          <h2 className={styles.tilte}>Opinar y Calificar</h2>
+          <h2 className={styles.title}>Opinar y Calificar</h2>
           <AiFillCloseCircle color="var(--red)" size={25} className={styles.buttonClose} onClick={handleClose}/>
         </div>
         <form onSubmit={handleSubmit}>

@@ -3,7 +3,16 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  max-height: calc(100vh - 140px);
+  max-height: calc(100vh - 49rem);
+  overflow: auto;
+  margin: 1rem;
+}
+.containerTwo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-height: calc(100vh - 59rem);
   overflow: auto;
   margin: 1rem;
 }
@@ -17,6 +26,9 @@
   color: black;
   font-weight: bold;
   font-size: 1.875rem;
+}
+.buttonClose:hover{
+  cursor: pointer;
 }
 .containerProduct{
   display: flex;
@@ -43,20 +55,32 @@
   margin-top: 1rem;
 }
 .img{
-  width: 100%;
-  padding: 8rem;
+  width: 48%;
 }
 .opinion{
   border-radius: 0.4rem; 
   padding-left: 0.4rem; 
-  padding-right: 0.4rem; 
-  padding-top: 0.2rem; 
-  padding-bottom: 0.2rem; 
+  padding-right: 0.4rem;  
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .scrollContainer {
   height: 10%;
   overflow-y: auto;
   color: red;
+}
+
+@media (max-width: 390px){
+	.container {
+		margin: 0;
+		max-height: calc(100vh - 39rem);
+	}
+  .containerTwo{
+    margin: 0;
+		max-height: calc(100vh - 49rem);
+  }
+	.title{
+		font-size: 1.5rem	
+	}
 }
