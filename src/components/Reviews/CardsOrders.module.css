@@ -6,6 +6,10 @@ gap: 30px;
 width: 100%;
 }
 
+.card {
+  height: 150px; 
+}
+
 .customModal {
     width: 30%;
     max-height: calc(100% - 46rem);
