@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import FormReview from "./FormReview";
 import { AiFillCloseCircle } from "react-icons/ai";
 import styles from "./CardsPurchasedItems.module.css";
+import { useParams } from "next/navigation";
+import { FaCheckCircle } from "react-icons/fa";
 import Image from "next/image";
 
 const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
@@ -9,6 +11,7 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const { perfilId } = useParams();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -34,6 +37,20 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
 
   const handleReviewSubmitted = () => {
     setReviewSubmitted(true);
+  };
+
+  const hasUserReviewed = (postId) => {
+    const post = posts.find((p) => p.id === postId);
+    if (post) {
+      const userReview = post.reviews.find(
+        (review) =>
+          review.authorId === perfilId &&
+          review.postId === postId &&
+          !review.hidden
+      );
+      return !!userReview;
+    }
+    return false;
   };
 
   return (
@@ -62,12 +79,42 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
               className={styles.img}
               style={{ paddingBottom: "40px" }} // Ajusta el padding inferior según tus necesidades
             />
-            <button
-              className={styles.opinion}
-              onClick={() => handleReviewModalOpen(post)}
-            >
-              {reviewSubmitted ? "Edita tu reseña" : "Opina sobre tu producto"}
-            </button>
+            <div className={styles.reviewContainer}>
+              {hasUserReviewed(post.id) ? (
+                <>
+                  <FaCheckCircle
+                    size={20}
+                    color="green"
+                    className={styles.checkIcon}
+                  />
+                  <label className={styles.reviewLabel}>
+                    Ya publicamos tu reseña
+                  </label>
+                </>
+              ) : !reviewSubmitted ? (
+                <button
+                  className={`${styles.opinion} ${
+                    isReviewModalOpen && styles.disabled
+                  }`}
+                  onClick={() => handleReviewModalOpen(post)}
+                >
+                  {isReviewModalOpen
+                    ? "Dejar Reseña"
+                    : "Opina sobre tu producto"}
+                </button>
+              ) : (
+                <>
+                  <FaCheckCircle
+                    size={20}
+                    color="green"
+                    className={styles.checkIcon}
+                  />
+                  <label className={styles.reviewLabel}>
+                    Ya publicamos tu reseña
+                  </label>
+                </>
+              )}
+            </div>
           </div>
         ))}
       </div>

@@ -14,16 +14,7 @@ const CardsOrders = ({ userOrders }) => {
   };
 
   const [selectedOrder, setSelectedOrder] = useState(null);
-
-  const type = async (postArray) => {
-    const newArray = [];
-    for (const post of postArray) {
-      const postResponse = await axios.get(`/api/admin/post/${post}`);
-      const typolin = postResponse.type;
-      newArray.push(typolin);
-    }
-    return newArray;
-  };
+  const [reviewSubmitted, setReviewSubmitted] = useState(false); // Nuevo estado
 
   const closeModal = () => {
     setSelectedOrder(null);
@@ -63,7 +54,6 @@ const CardsOrders = ({ userOrders }) => {
               </h4>
             </div>
             <div className="flex flex-col items-end">
-              {/* <h3> {type(order.postId)}</h3> */}
               <h3 className="text-black font-bold text-3xl">
                 $ {order.amount}
               </h3>
@@ -86,8 +76,9 @@ const CardsOrders = ({ userOrders }) => {
             <div className={styles.modalContent}>
               <CardsPurchasedItems
                 orderPosts={selectedOrder.postId}
-                types={selectedOrder.types}
+                orderDate={selectedOrder.date}
                 onClose={closeModal}
+                reviewSubmitted={reviewSubmitted} // Pasar la propiedad reviewSubmitted
               />
             </div>
           </>
