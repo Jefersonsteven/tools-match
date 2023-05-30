@@ -16,13 +16,15 @@
   overflow: auto;
   margin: 1rem;
 }
-.header{
+
+.header {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 1rem;
 }
-.title{
+
+.title {
   color: black;
   font-weight: bold;
   font-size: 1.875rem;
@@ -37,7 +39,8 @@
   align-items: center;
   width: 100%;
 }
-.product{
+
+.product {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +51,8 @@
   margin-bottom: 2rem;
   width: 35rem;
 }
-.product h3{
+
+.product h3 {
   color: black;
   font-weight: bold;
   font-size: 1.7rem;
