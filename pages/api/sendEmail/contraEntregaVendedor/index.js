@@ -10,10 +10,10 @@ export default async function deletePost(req, res) {
       const productsList = items.map((item) => `
         <li>
             <p>
-                <b>Título: </b>${item.title}
+                <b>Título: </b>$${item.title}
             </p>
             <p>
-                <b>Precio: </b>${item.price}
+                <b>Precio: </b>$${item.price}
             </p>
         </li>
       `).join('');
@@ -24,11 +24,18 @@ export default async function deletePost(req, res) {
         subject: "Contra entrega",
         html: `
           <p style="color: black"> 
-            Se ha realiado la compra de algún producto publicado por usted, el detalle de la compra son: <br>
+            Estimado usuario, se ha realiado la compra de algún producto publicado por usted, 
+            te enviamos los datos del comprador junto con el detalle de la compra. <br>
             <b>Fecha: </b> ${date} <br>
             <b>Comprador: </b> ${buyer.name} ${buyer.lastName}<br>
+            <b>Celular del comprador: </b> ${buyer.number}<br>
             <b>Productos: </b> <ul> ${productsList} </ul>
-            <b>Costo total: </b> ${amount}
+            <b>Costo total: </b> $${amount} <br>
+            Por favor, comunícate directamente con la contraparte para coordinar los detalles adicionales de la entrega y el pago. 
+            Recuerda que es importante mantener una comunicación clara y transparente para garantizar una transacción exitosa. <br>
+            Si tienes alguna pregunta o necesitas asistencia adicional, no dudes en comunicarte con nuestro equipo de soporte. 
+            Estamos aquí para ayudarte en lo que necesites. <br>
+            Agradecemos tu participación en nuestra plataforma y confiamos en que tendrás una experiencia satisfactoria al completar la entrega del producto.
           </p>
           <h4 style="color: black">
             Atentamente, el equipo de ToolMatch
