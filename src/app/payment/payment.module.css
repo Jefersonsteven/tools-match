@@ -136,6 +136,7 @@
     border-radius: 3px;
     display: flex;
     gap: 10px;
+    margin-left: 2rem;
 }
 
 .mercadopago:hover > svg path {
@@ -149,3 +150,44 @@
     color: var(--white);
     font-weight: 700;
 }
+
+/* -------------------RESPONSIVE--------------- */
+
+@media screen and (max-width: 690px) {
+    .container {
+      flex-direction: column;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    
+    .form_container {
+      order: 1;
+    }
+
+    .form input {
+     width: 100%
+    }
+    
+    .payment {
+      order: 2;
+    }
+
+    .gateway {
+        align-items: center;
+        padding-top: 2rem;
+    }
+    
+    .gateway div {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .mercadopago {
+        margin-left: 2.5rem;
+        padding-left: 1.5rem;
+    }
+
+    .cart {
+        margin-top: 2rem;
+    }
+};

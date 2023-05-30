@@ -30,6 +30,18 @@
     margin-top: 3rem;
   }
 }
+
+/* ---------- RESPONSIVE ----------*/
+
+@media (max-width: 390px) {
+  .cards_container {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
 @media (max-width: 700px) {
   .cards_container {
     display: flex;

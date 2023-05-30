@@ -35,7 +35,7 @@ const Favorites = ({ title, price, type }) => {
         count: 0,
       });
     }
-  }, [favorite, setFavorite, refresh]); // Empty dependency array to run the effect only once on component mount
+  }, []); // Empty dependency array to run the effect only once on component mount
 
   return (
     <div>

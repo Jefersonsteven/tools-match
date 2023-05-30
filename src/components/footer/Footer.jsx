@@ -11,22 +11,24 @@ export default function Footer() {
 
   return (
     <footer className={style.footer}>
-      <div className={style.footerLogo}>
-        <Link href="/home">
-          Tools Match
-          {/* <Image
+      <div className={style.footerInfo}>
+        <div className={style.footerLogo}>
+          <Link href="/home">
+            Tools Match
+            {/* <Image
             src="/../public/images/logo/toolsMatch.jpg"
             alt="logo"
             width={70}
             height={70}
           /> */}
-        </Link>
-      </div>
-      <div className={style.footerRights}>
-        <p>Copyright - ToolsMatch</p>
-      </div>
-      <div className={style.footerTerms}>
-        <Link href="/terms">Términos y Condiciones</Link>
+          </Link>
+        </div>
+        <div className={style.footerRights}>
+          <p>Copyright-ToolsMatch</p>
+        </div>
+        <div className={style.footerTerms}>
+          <Link href="/terms">Términos y Condiciones</Link>
+        </div>
       </div>
       <div className={style.contact}>
         <div className={style.contactTitle}>
