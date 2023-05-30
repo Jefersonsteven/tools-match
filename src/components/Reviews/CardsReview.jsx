@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const CardsReview = ({ reviews, authors }) => {
   return (
-    <div className="grid grid-cols-3 gap-4 bg-green-80">
+    <div className="flex flex-wrap justify-between gap-4 bg-green-80">
       {reviews.map((review) => {
         const author = authors.find((author) => author.id === review.authorId);
         const starCount = 5;
@@ -12,7 +12,7 @@ const CardsReview = ({ reviews, authors }) => {
 
         return (
           <div
-            className="card rounded-md overflow-hidden shadow-md bg-white"
+            className="card w-2/5 rounded-md overflow-hidden shadow-md bg-white"
             key={review.id}
           >
             <div className="user-info flex items-center p-4">

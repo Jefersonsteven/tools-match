@@ -361,3 +361,127 @@
 .errorRecover {
   color: var(--red);
 }
+
+@media (max-width: 1279px) {
+  .left {
+    width: 40%;
+  }
+
+  .right {
+    width: 60%;
+    padding-top: 15px;
+    padding-left: 52px;
+    padding-right: 52px;
+  }
+
+  .link,
+  .activeLink {
+    font-size: 1.6rem;
+  }
+
+  .inputContainer > label {
+    font-size: 1.6rem;
+    height: 38px;
+  }
+
+  .success,
+  .error {
+    font-size: 1.6rem;
+  }
+
+  .submitContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 30px;
+    gap: 30px;
+  }
+
+  .submitContainer span:nth-child(2) {
+    display: none;
+  }
+
+  .buttonSubmit {
+    margin-bottom: 0;
+    margin-top: 16px;
+    width: 243.81px;
+  }
+
+  .socialSignIn {
+    width: 243.81px;
+  }
+
+  .linkContainer {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 993px) {
+  .left {
+    display: none;
+  }
+
+  .container > div {
+    width: 90%;
+  }
+
+  .container {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .buttons {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .right {
+    width: 60%;
+    padding-top: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .inputsContainer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inputsContainer > .inputContainer {
+    width: 90%;
+  }
+
+  .inputContainer > label {
+    height: 28px;
+  }
+
+  .inputContainer > input {
+    margin-top: 16px;
+
+    width: 100%;
+    height: 38px;
+
+    padding: 16px;
+  }
+
+  .inputContainer > p {
+    margin-top: 11px;
+    margin-bottom: 30px;
+    height: 20px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .inputContainer > label {
+    height: 38px;
+  }
+}

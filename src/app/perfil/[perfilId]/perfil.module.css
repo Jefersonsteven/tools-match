@@ -60,9 +60,9 @@
 .reviewContainer {
   margin: 16px 40px 50px 40px;
   width: 100%;
-
   display: flex;
   flex-direction: column;
+  justify-content: start;
   background-color: var(--white-dark);
 }
 
@@ -193,4 +193,31 @@
   font-size: 24px;
   line-height: 29px;
   letter-spacing: 0.045em;
+}
+
+@media (max-width: 1279px) {
+  .sectionsContainer {
+    flex-direction: column;
+  }
+
+  .sectionsContainer > section:nth-child(1),
+  .sectionsContainer > section:nth-child(2) {
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  .sectionsContainer > section:nth-child(2) {
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 993px) {
+  .reviewContainer {
+    margin: 16px 0 50px 0px;
+    width: 90%;
+  }
+
+  .profileCard {
+    width: 95%;
+  }
 }

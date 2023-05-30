@@ -203,17 +203,33 @@ export default function PerfilUsuario() {
                   href={`perfil/${userId}/edit`}
                   className={styles.editButton}
                 >
-                  Editar perfil
+                  {userId === perfilId ? "Editar perfil" : "Reportar usuario"}
                 </Link>
               </div>
             </section>
-            <div className={styles.titlesSections}>
-              <h3 className={styles.sectionTitleH3}>Herramientas Publicadas</h3>
-              <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
+            <div
+              className={
+                userId === perfilId
+                  ? styles.titlesSections
+                  : `${styles.titlesSections} justify-center`
+              }
+            >
+              <h3
+                className={
+                  userId === perfilId
+                    ? styles.sectionTitleH3
+                    : `${styles.sectionTitleH3} text-center`
+                }
+              >
+                Herramientas Publicadas
+              </h3>
+              {userId === perfilId && (
+                <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
+              )}
             </div>
             <div className={styles.sectionsContainer}>
               <section>
-                <div className="grid grid-cols-4 gap-9">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-9">
                   {user.posts ? (
                     user.posts.map((post) => {
                       return (
@@ -231,7 +247,7 @@ export default function PerfilUsuario() {
                       );
                     })
                   ) : (
-                    <div class="flex items-center justify-center ">
+                    <div className="flex items-center justify-center">
                       <p className="text-2xl text-center">
                         No tienes herramientas publicadas
                       </p>
@@ -253,7 +269,7 @@ export default function PerfilUsuario() {
               </h3>
               <h3 className={styles.sectionTitleH3}>Reseñas Enviadas</h3>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-col justify-center items-center md:flex-row gap-4">
               <div className={styles.reviewContainer}>
                 <CardsReview
                   reviews={reviews}

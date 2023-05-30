@@ -220,6 +220,7 @@ const EditUser = () => {
                       disabled
                       value={form.email}
                     />
+                    <p></p>
                   </div>
                   <div className={styles.inputContainer}>
                     <label htmlFor="phoneNumber">Celular:</label>
@@ -252,7 +253,7 @@ const EditUser = () => {
                         );
                       })}
                     </select>
-                    <p></p>
+                    <p style={{ height: "24px" }}></p>
                   </div>
                   <div className={styles.inputContainer}>
                     <label htmlFor="zipCode">Código postal</label>

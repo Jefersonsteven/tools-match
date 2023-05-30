@@ -1,7 +1,7 @@
 .backContainer {
   display: flex;
   justify-content: flex-start;
-  width: 100%;
+  width: 30%;
   gap: 1rem;
   cursor: pointer;
   margin-top: 50px;
@@ -15,7 +15,7 @@
 .icon {
   font-size: 3.5rem;
   color: black;
-  opacity: .9;
+  opacity: 0.9;
 }
 .title {
   display: flex;

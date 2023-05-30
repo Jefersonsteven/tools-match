@@ -1,47 +1,51 @@
 /*----------------------FOOTER----------------------*/
-.footer{
-    margin-top: auto;
-    display: flex;
-    background: var(--black);
-    width: 100%;
-    height: 111px;
-    justify-content: space-around;
-    align-items: center;
+.footer {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  background: var(--black);
+  width: 100%;
+  height: 111px;
+  justify-content: space-around;
+  align-items: center;
 }
-.footerRights, .footerTerms{
-    color:#DCF1D9; 
+.footerRights,
+.footerTerms {
+  color: #dcf1d9;
 }
 
-.footerLogo{
-    color: var(--white);
+.footerLogo {
+  color: var(--white);
 }
 
 .footerTerms a:hover,
 .footerLogo:hover {
-    color: yellow;
-    cursor: pointer;
-    border-bottom: 1px solid var(--orange);
+  color: yellow;
+  cursor: pointer;
+  border-bottom: 1px solid var(--orange);
 }
 
-.contact{
-    display: flex;
-    color: #fff;
-    padding: auto;
-    align-items: center;
+.contact {
+  display: flex;
+  color: #fff;
+  padding: auto;
+  align-items: center;
 }
-.contactInfo{
-    display: flex;
-    padding: 0 1rem;
+.contactInfo {
+  display: flex;
+  padding: 0 1rem;
 }
-.contactTwitter{
-    margin-left: 10px;
+.contactTwitter {
+  margin-left: 10px;
 }
-.contactMail, .contactTwitter{
-    height: 35px;
-    width: 30px;
-    color: var(--white-dark);
+.contactMail,
+.contactTwitter {
+  height: 35px;
+  width: 30px;
+  color: var(--white-dark);
 }
-.contactMail:hover, .contactTwitter:hover{
-    color: var(--orange);
-    cursor: pointer;
+.contactMail:hover,
+.contactTwitter:hover {
+  color: var(--orange);
+  cursor: pointer;
 }
