@@ -4,26 +4,31 @@ import { TiDelete, TiPencil } from "react-icons/ti";
 import Image from "next/image";
 import styles from "./CardsCreatedReviews.module.css";
 import FormUpdateReview from "./FormUpdateReview";
-import axios from 'axios';
+import axios from "axios";
 
-const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDeleteReview }) => {
+const CardsCreatedReviews = ({
+  createdReviews,
+  author,
+  setCreatedReviews,
+  onDeleteReview,
+}) => {
   const [selectedReview, setSelectedReview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
 
   const handleDeleteReview = async (id) => {
     try {
       // Realiza una solicitud DELETE al servidor para eliminar la reseña con el ID proporcionado
       await axios.delete(`/api/admin/review/${id}`);
-  
+
       // Actualiza el estado de las reseñas creadas eliminando la reseña con el ID correspondiente
-      const updatedReviews = createdReviews.filter((review) => review.id !== id);
+      const updatedReviews = createdReviews.filter(
+        (review) => review.id !== id
+      );
       setCreatedReviews(updatedReviews);
     } catch (error) {
       console.error("Error al eliminar la reseña:", error);
     }
   };
-  
 
   const handleEdit = (review) => {
     setSelectedReview(review);
@@ -48,7 +53,7 @@ const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDele
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 bg-green-80">
+      <div className={`grid grid-cols-3 gap-4 bg-green-80 ${styles.flexbox}`}>
         {createdReviews.map((review) => {
           const starCount = 5;
           const rating = review.rating;

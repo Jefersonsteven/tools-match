@@ -291,3 +291,13 @@
     flex-direction: column;
   }
 }
+
+.noArrows::-webkit-inner-spin-button,
+.noArrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.noArrows {
+  cursor: text;
+}

@@ -21,7 +21,7 @@ export default function PerfilUsuario() {
   const [editingUser, setEditingUser] = useState(null);
   const { push } = useRouter();
   const { perfilId } = useParams();
-
+  const [errorsMessages, setErrorsMessages] = useState([]);
   const { userId, userData, countries } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
   const [createdReviews, setCreatedReviews] = useState([]);
@@ -33,22 +33,26 @@ export default function PerfilUsuario() {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
-  
+
         const receivedReviews = response.data.received;
         setUser(response.data);
         setReviews(receivedReviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener reviews recibidas: " + error,
+        ]);
       }
     };
     fetchReviews();
   }, [userId, perfilId, createdReviews]); // Agregar createdReviews como dependencia
-  
+
   useEffect(() => {
     const fetchCreatedReviews = async () => {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
-  
+
         const createdReviews = response.data.reviews.filter(
           (review) => review.hidden === false
         );
@@ -56,6 +60,10 @@ export default function PerfilUsuario() {
         setCreatedReviews(createdReviews);
       } catch (error) {
         console.error("Error fetching createdReviews:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener reviews creadas: " + error,
+        ]);
       }
     };
     fetchCreatedReviews();
@@ -75,6 +83,10 @@ export default function PerfilUsuario() {
         setAuthors(fetchedAuthors.map((response) => response.data)); // Convertir la respuesta en un array de datos
       } catch (error) {
         console.error("Error fetching authors:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener autores: " + error,
+        ]);
       }
     };
 
@@ -109,6 +121,10 @@ export default function PerfilUsuario() {
         setUserOrders(orderDetails);
       } catch (error) {
         console.error("Error fetching user orders:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener las ordenes: " + error,
+        ]);
       }
     };
 
@@ -164,11 +180,21 @@ export default function PerfilUsuario() {
     <>
       <section>
         <Back />
-        {!user.firstname && (
+        {errorsMessages.length > 0 ? (
           <div className="grid justify-center items-center fixed w-screen h-3/6">
-            <LoaderRadial />
+            <p>Ha courrido los siguientes errores:</p>
+            {errorsMessages.map((error, index) => {
+              return <p key={index}>{error}</p>;
+            })}
           </div>
+        ) : (
+          !user.firstname && (
+            <div className="grid justify-center items-center fixed w-screen h-3/6">
+              <LoaderRadial />
+            </div>
+          )
         )}
+
         {user.firstname && (
           <>
             <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
@@ -228,29 +254,14 @@ export default function PerfilUsuario() {
                 </Link>
               </div>
             </section>
-            <div
-              className={
-                userId === perfilId
-                  ? styles.titlesSections
-                  : `${styles.titlesSections} justify-center`
-              }
-            >
-              <h3
-                className={
-                  userId === perfilId
-                    ? styles.sectionTitleH3
-                    : `${styles.sectionTitleH3} text-center`
-                }
-              >
+            <div className={`${styles.titlesSections} justify-center`}>
+              <h3 className={`${styles.sectionTitleH3Seller} text-center`}>
                 Herramientas Publicadas
               </h3>
-              {userId === perfilId && (
-                <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
-              )}
             </div>
             <div className={styles.sectionsContainer}>
               <section>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-9">
+                <div className={`flex flex-wrap gap-4 ${styles.scrollInPosts}`}>
                   {user.posts ? (
                     user.posts.map((post) => {
                       return (
@@ -279,31 +290,41 @@ export default function PerfilUsuario() {
               {user.id == userData?.id && (
                 <section>
                   <div className="w-full items-center ">
+                    <h3 className="text-center mb-8">
+                      Tus compras y arriendos
+                    </h3>
                     <CardsOrders userOrders={userOrders} />
                   </div>
                 </section>
               )}
             </div>
             <div className={styles.titleReviewContainer}>
-              <h3 className={styles.sectionTitleH3}>
-                Reseñas de tus herramientas
+              <h3 className={`${styles.sectionTitleH3Seller} text-center`}>
+                Reseñas
               </h3>
-              <h3 className={styles.sectionTitleH3}>Reseñas Enviadas</h3>
             </div>
-            <div className="flex flex-col justify-center items-center md:flex-row gap-4">
+            <div
+              className={`flex flex-col justify-center items-center  md:flex-row gap-4 ${styles.itemsStart}`}
+            >
               <div className={styles.reviewContainer}>
-                <CardsReview
-                  reviews={reviews}
-                  authors={Object.values(authors)}
-                />
+                <h3 className="text-center mb-8">Recibidas</h3>
+                <div>
+                  <CardsReview
+                    reviews={reviews}
+                    authors={Object.values(authors)}
+                  />
+                </div>
               </div>
               <div className={styles.reviewContainer}>
-                <CardsCreatedReviews
-                  createdReviews={createdReviews}
-                  setCreatedReviews={setCreatedReviews}
-                  author={user}
-                  onDeleteReview={handleDeleteReview}
-                />
+                <h3 className="text-center mb-8">Enviadas</h3>
+                <div>
+                  <CardsCreatedReviews
+                    createdReviews={createdReviews}
+                    setCreatedReviews={setCreatedReviews}
+                    author={user}
+                    onDeleteReview={handleDeleteReview}
+                  />
+                </div>
               </div>
             </div>
           </>

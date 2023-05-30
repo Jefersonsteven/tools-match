@@ -1,10 +1,13 @@
 import React from "react";
 import { RiStarFill, RiStarLine } from "react-icons/ri";
 import Image from "next/image";
+import styles from "./CardsReviews.module.css";
 
 const CardsReview = ({ reviews, authors }) => {
   return (
-    <div className="flex flex-wrap justify-between gap-4 bg-green-80">
+    <div
+      className={`flex flex-wrap justify-between gap-4 bg-green-80 ${styles.flexbox}`}
+    >
       {reviews.map((review) => {
         const author = authors.find((author) => author.id === review.authorId);
         const starCount = 5;

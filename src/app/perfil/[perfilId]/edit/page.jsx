@@ -11,6 +11,7 @@ import ImageUploader from "@/components/FileUploader/ImageUploader";
 import { uploadImage } from "@/components/Cloudinary/upload";
 import Loader from "@/components/Loader/Loader";
 import Back from "@/components/back/Back";
+import { parse } from "postcss";
 
 const EditUser = () => {
   const { push } = useRouter();
@@ -82,11 +83,11 @@ const EditUser = () => {
       errors.flag = true;
     }
 
-    (inputs.phoneNumber.length < 8 || inputs.phoneNumber.length > 15) &&
-      (errors.phoneNumber = "Número invalido");
-
-    if (!inputs.phoneNumber) {
-      errors.phoneNumber = "";
+    if (
+      (inputs.phoneNumber.length < 8 || inputs.phoneNumber.length > 15) &&
+      inputs.phoneNumber.length !== 0
+    ) {
+      errors.phoneNumber = "Número invalido";
       errors.flag = true;
     }
 
@@ -225,8 +226,9 @@ const EditUser = () => {
                   <div className={styles.inputContainer}>
                     <label htmlFor="phoneNumber">Celular:</label>
                     <input
-                      type="text"
+                      type="number"
                       name="phoneNumber"
+                      className={styles.noArrows}
                       value={form.phoneNumber && form.phoneNumber}
                       onChange={handleChange}
                     />
