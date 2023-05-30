@@ -4,14 +4,26 @@ import { TiDelete, TiPencil } from "react-icons/ti";
 import Image from "next/image";
 import styles from "./CardsCreatedReviews.module.css";
 import FormUpdateReview from "./FormUpdateReview";
+import axios from 'axios';
 
-const CardsCreatedReviews = ({ createdReviews, author }) => {
+const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDeleteReview }) => {
   const [selectedReview, setSelectedReview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleDelete = (id) => {
-    // Lógica para eliminar la reseña
+
+  const handleDeleteReview = async (id) => {
+    try {
+      // Realiza una solicitud DELETE al servidor para eliminar la reseña con el ID proporcionado
+      await axios.delete(`/api/admin/review/${id}`);
+  
+      // Actualiza el estado de las reseñas creadas eliminando la reseña con el ID correspondiente
+      const updatedReviews = createdReviews.filter((review) => review.id !== id);
+      setCreatedReviews(updatedReviews);
+    } catch (error) {
+      console.error("Error al eliminar la reseña:", error);
+    }
   };
+  
 
   const handleEdit = (review) => {
     setSelectedReview(review);
@@ -86,19 +98,21 @@ const CardsCreatedReviews = ({ createdReviews, author }) => {
               <p className="review-content px-4 pb-4">{review.content}</p>
 
               {/* Botones de edición */}
-              <div className="absolute top-2 right-2 flex">
-                <button
-                  className={`${styles.iconButton} p-1 bg-transparent border-none`}
-                  onClick={() => handleDelete(review.id)}
-                >
-                  <TiDelete className="text-red-500 text-xl" />
-                </button>
-                <button
-                  className={`${styles.iconButton} p-1 bg-transparent border-none`}
-                  onClick={() => handleEdit(review)}
-                >
-                  <TiPencil className="text-blue-500 text-xl" />
-                </button>
+              <div>
+                <div className="absolute top-2 right-2 flex">
+                  <button
+                    className={`${styles.iconButton} p-1 bg-transparent border-none`}
+                    onClick={() => handleDeleteReview(review.id)}
+                  >
+                    <TiDelete className="text-red-500 text-xl" />
+                  </button>
+                  <button
+                    className={`${styles.iconButton} p-1 bg-transparent border-none`}
+                    onClick={() => handleEdit(review)}
+                  >
+                    <TiPencil className="text-blue-500 text-xl" />
+                  </button>
+                </div>
               </div>
             </div>
           );
