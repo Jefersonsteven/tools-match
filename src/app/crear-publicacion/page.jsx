@@ -175,6 +175,9 @@ function CreatePost() {
         <Back />
       </div>
       <section className={style.buttons}>
+        <section className={style.form2}>
+          <h2>Publica una herramienta</h2>
+        </section>
         <button
           className={form.type === "RENTAL" ? style.active : style.desactived}
           onClick={handleForm}
