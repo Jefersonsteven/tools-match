@@ -87,6 +87,7 @@
   color: #fff;
   font-size: 1.5rem;
   margin-top: 40px;
+  flex-direction: row-reverse;
 }
 .cartButton button {
   width: 208px;
@@ -113,6 +114,7 @@
   }
   .cartContainer {
     gap: 0rem;
+    margin: 2rem 0;
   }
   .cartCards {
     padding: 1.5rem;
@@ -148,7 +150,7 @@
     font-size: 2rem;
   }
   .cartButton {
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 1rem;
     margin-top: 20px;
   }

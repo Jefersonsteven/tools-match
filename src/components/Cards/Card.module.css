@@ -117,7 +117,6 @@
 
 @media (max-width: 700px) {
   .cardContainer {
-    width: 50%;
     height: 100%;
     margin: 0 auto;
   }
@@ -126,7 +125,7 @@
     height: 100%;
   }
   .cardContent {
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: space-between;
   }
   .cardName {
