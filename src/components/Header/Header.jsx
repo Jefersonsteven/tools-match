@@ -136,10 +136,7 @@ function Header() {
                   />
                 )}
 
-                <ul
-                  className={styles.openSubmenu}
-                  style={{ display: window.innerWidth < 900 ? submenu : "" }}
-                >
+                <ul className={styles.openSubmenu} style={{ display: submenu }}>
                   {userData && (
                     <li>
                       <Link href={`/perfil/${userId}`}>Ver Perfil</Link>
