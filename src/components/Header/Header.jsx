@@ -115,11 +115,9 @@ function Header() {
               <div
                 className={styles.perfil}
                 onClick={() => {
-                  if (window.innerWidth < 900) {
-                    submenu === "none" || submenu === ""
-                      ? setSubmenu("flex")
-                      : setSubmenu("none");
-                  }
+                  submenu === "none" || submenu === ""
+                    ? setSubmenu("flex")
+                    : setSubmenu("none");
                 }}
               >
                 {userData && userData.photo ? (
