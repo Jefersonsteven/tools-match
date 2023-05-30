@@ -57,12 +57,12 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={posts?.length > 1 ? styles.containerTwo : styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>
           {multipleItems ? "¿Qué te parecieron tus productos?" : "¿Qué te pareció tu producto?"}
         </div>
-        <AiFillCloseCircle size={25} color="var(--red)" onClick={onClose} />
+        <AiFillCloseCircle size={25} color="var(--red)" onClick={onClose} className={styles.buttonClose} />
       </div>
       <div className={styles.containerProduct}>
         {isLoading || posts.length === 0 ? (
