@@ -129,20 +129,10 @@ function AppProvider({ children }) {
   }, []);
 
   // * Favorite *//
-  const [favoriteArray, setFavoriteArray] = useState([]);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (!localStorage.getItem("favorite")) {
-        localStorage.setItem(
-          "favorite",
-          JSON.stringify({
-            count: 0,
-          })
-        );
-      }
-    }
-  }, []);
-
+  const [favoriteArray, setFavoriteArray] = useState({
+    count: 0,
+    favoritesId: [],
+  });
   const [favorite, setFavorite, isFavorite, setIsFavorite] = useState([]);
 
   // *---------------------------------------* //
