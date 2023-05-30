@@ -218,7 +218,6 @@ function Page() {
             <h4>Opciones de Pago</h4>
             <div>
               <button onClick={handlerOnDelivery}>Contra Entrega</button>
-              <button>Tarjeta de credito</button>
               <button
                 className={styles.mercadopago}
                 onClick={handleMercadoPago}
