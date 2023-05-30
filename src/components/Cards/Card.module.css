@@ -135,9 +135,8 @@
   }
 }
 
-/* @media (max-width: 700px) {
+@media (max-width: 700px) {
   .cardContainer {
-    width: 50%;
     height: 100%;
     margin: 0 auto;
   }
@@ -175,4 +174,4 @@
   .favoriteContainer {
     right: 5px;
   }
-} */
+}
