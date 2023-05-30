@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { RiStarFill } from "react-icons/ri";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useParams, useRouter } from "next/navigation";
-import styles from './FormReview.module.css'
+import styles from './FormReview.module.css';
 
-const FormReview = ({ selectedPost, onCloseModal }) => {
+const FormReview = ({ selectedPost, onCloseModal, onReviewSubmitted }) => {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(true);
@@ -13,15 +13,13 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
   const [title, setTitle] = useState(""); 
   const { perfilId } = useParams();
   
-
   useEffect(() => {
     const fetchReceivedId = async () => {
       try {
         const response = await fetch(`/api/admin/post/${selectedPost.id}`);
         const postData = await response.json();
         setReceivedId(postData.authorId);
-        console.log(receivedId)
-        setTitle(postData.title)
+        setTitle(postData.title);
       } catch (error) {
         console.error("Error al obtener receivedId", error);
       }
@@ -61,14 +59,14 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
 
       if (response.ok) {
         console.log("Reseña enviada correctamente");
-        onCloseModal();
+        onReviewSubmitted();
       } else {
         console.error("Error al enviar la reseña");
-        console.log(reviewData)
       }
 
       setRating(0);
       setContent("");
+      onCloseModal();
     } catch (error) {
       console.error("Error al enviar la reseña", error);
     }
@@ -82,9 +80,14 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
   return (
     <div className={`${styles.container} ${isOpen ? "" : styles.hidden}`}>
       <div className={styles.subContainer}>
-        <div className={styles.headerContainer} >
-          <h2 className={styles.tilte}>Opinar y Calificar</h2>
-          <AiFillCloseCircle color="var(--red)" size={25} className={styles.buttonClose} onClick={handleClose}/>
+        <div className={styles.headerContainer}>
+          <h2 className={styles.title}>Opinar y Calificar</h2>
+          <AiFillCloseCircle
+            color="var(--red)"
+            size={25}
+            className={styles.buttonClose}
+            onClick={handleClose}
+          />
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -101,7 +104,7 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
               />
             </div>
           </div>
-          <div style={{marginBottom: '1rem'}}>
+          <div style={{ marginBottom: "1rem" }}>
             <label htmlFor="content" className={styles.label}>
               Reseña:
             </label>
@@ -113,7 +116,7 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
               maxLength={500}
             ></textarea>
           </div>
-          <div style={{marginBottom: '1rem', display: 'flex', justifyContent: 'center'}}>
+          <div style={{ marginBottom: "1rem", display: "flex", justifyContent: "center" }}>
             {[1, 2, 3, 4, 5].map((value) => (
               <RiStarFill
                 key={value}
@@ -124,11 +127,12 @@ const FormReview = ({ selectedPost, onCloseModal }) => {
               />
             ))}
           </div>
-          <div style={{display: 'flex', justifyContent: 'center'}}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <button
               type="submit"
               className={styles.public}
               style={{ maxWidth: "200px" }}
+              disabled={rating === 0 || content === ""}
             >
               Publicar Reseña
             </button>

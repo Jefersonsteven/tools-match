@@ -7,25 +7,29 @@
   overflow: auto;
   margin: 1rem;
 }
-.header{
+
+.header {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 1rem;
 }
-.title{
+
+.title {
   color: black;
   font-weight: bold;
   font-size: 1.875rem;
 }
-.containerProduct{
+
+.containerProduct {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
-.product{
+
+.product {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,22 +40,22 @@
   margin-bottom: 2rem;
   width: 35rem;
 }
-.product h3{
+
+.product h3 {
   color: black;
   font-weight: bold;
   font-size: 1.7rem;
   margin-top: 1rem;
 }
-.img{
+
+.img {
   width: 100%;
   padding: 8rem;
 }
-.opinion{
-  border-radius: 0.4rem; 
-  padding-left: 0.4rem; 
-  padding-right: 0.4rem; 
-  padding-top: 0.2rem; 
-  padding-bottom: 0.2rem; 
+
+.opinion {
+  border-radius: 0.4rem;
+  padding: 0.4rem 0.8rem;
   margin-bottom: 1rem;
 }
 
@@ -59,4 +63,20 @@
   height: 10%;
   overflow-y: auto;
   color: red;
+}
+
+.reviewContainer {
+  display: flex;
+  align-items: center;
+}
+
+.reviewLabel {
+  background-color: rgb(91, 234, 91);
+  margin-bottom: 0.7rem;
+  color: white;
+  padding: 0.8rem;
+}
+
+.checkIcon {
+  margin-right: 0.5rem;
 }
