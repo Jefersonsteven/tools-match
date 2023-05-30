@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FormReview from "./FormReview";
 import { AiFillCloseCircle } from "react-icons/ai";
-import styles from './CardsPurchasedItems.module.css'
+import styles from "./CardsPurchasedItems.module.css";
+import Image from "next/image";
 
 const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
   const [posts, setPosts] = useState([]);
@@ -39,9 +40,11 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>
-          {multipleItems ? "¿Qué te parecieron tus productos?" : "¿Qué te pareció tu producto?"}
+          {multipleItems
+            ? "¿Qué te parecieron tus productos?"
+            : "¿Qué te pareció tu producto?"}
         </div>
-        <AiFillCloseCircle size={25} color="var(--red)" onClick={onClose}/>
+        <AiFillCloseCircle size={25} color="var(--red)" onClick={onClose} />
       </div>
       <div className={styles.containerProduct}>
         {posts.map((post) => (
@@ -50,19 +53,21 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
             className={styles.product}
             style={{ minHeight: "270px" }} // Ajusta la altura mínima según tus necesidades
           >
-              <h3>{post.title}</h3>
-              <img
-                src={post.photo[0]}
-                alt={post.title}
-                className={styles.img}
-                style={{ paddingBottom: "40px" }} // Ajusta el padding inferior según tus necesidades
-              />
-              <button
-                className={styles.opinion}
-                onClick={() => handleReviewModalOpen(post)}
-              >
-                {reviewSubmitted ? "Edita tu reseña" : "Opina sobre tu producto"}
-              </button>
+            <h3>{post.title}</h3>
+            <Image
+              width={100}
+              height={100}
+              src={post.photo[0]}
+              alt={post.title}
+              className={styles.img}
+              style={{ paddingBottom: "40px" }} // Ajusta el padding inferior según tus necesidades
+            />
+            <button
+              className={styles.opinion}
+              onClick={() => handleReviewModalOpen(post)}
+            >
+              {reviewSubmitted ? "Edita tu reseña" : "Opina sobre tu producto"}
+            </button>
           </div>
         ))}
       </div>
