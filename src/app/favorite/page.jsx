@@ -176,7 +176,7 @@ const Favorites = () => {
       </div>
       <div className={styles.favContainer}>
         {favoriteArray.length > 0 ? (
-          favoriteArray.slice(0, visibleCards).map((card) => (
+          favoriteArray.map((card) => (
             <div className={styles.favInfo} key={card.id}>
               <div className={styles.checkboxContainer}>
                 <input
