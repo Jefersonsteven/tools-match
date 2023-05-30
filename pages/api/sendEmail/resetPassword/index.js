@@ -11,10 +11,13 @@ export default async function resetPassword(req, res) {
       const mail = {
         from: process.env.USER_APLICATION,
         to: email,
-        subject: "Restablecer contraseña",
+        subject: "Recuperación de contraseña",
         html: `
         <p style="color: black">
-          Estimado usuario, usted solicito recuperar su contraseña, para realizar el cambio presiona el botón. 
+          Estimado usuario, <br>
+          Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en ToolMatch. 
+          Entendemos lo importante que es acceder a tu cuenta, por lo que estamos aquí para ayudarte a recuperar el acceso. <br>
+          Para restablecer tu contraseña, ingresa al link proporcionado por el siguiente botón:
         </p>
         <button style="border: 5px, black, solid; border-radius: 20px; background: white; color: black">
           <a href=${
@@ -25,6 +28,12 @@ export default async function resetPassword(req, res) {
             Recuperar contraseña
           </a>   
         </button>
+        <p style="color: black">
+          Si sigues experimentando problemas para acceder a tu cuenta o tienes alguna otra pregunta, no dudes en contactar a nuestro equipo de soporte. 
+          Estamos aquí para asistirte y asegurarnos de que puedas acceder a tu cuenta de manera segura. <br>
+          Agradecemos tu comprensión y cooperación en este asunto. 
+          Valoramos tu confianza y nos comprometemos a brindarte un entorno seguro y protegido.
+        </p>
         <h4 style="color: black">
           Atentamente, el equipo de ToolMatch
         </h4>

@@ -12,7 +12,17 @@ export default async function register(req, res) {
         subject: "Registro exitoso",
         html: `
           <p style="color: black">
-            Estimado usuario, su registro en ToolMatch ha sido exitosa, sus credenciales para iniciar sesión son: <br>
+          Estimado usuario, <br>
+          ¡Bienvenido/a a ToolMatch! Nos complace informarte que tu registro de cuenta ha sido exitoso y ahora eres un miembro activo de nuestra comunidad. <br>
+          Te recordamos que es responsabilidad de cada usuario mantener la privacidad y seguridad de su cuenta. 
+          Asegúrate de utilizar una contraseña segura y mantenerla confidencial. 
+          Siempre recomendamos no compartir tus credenciales de inicio de sesión con terceros y 
+          evitar acceder a tu cuenta desde dispositivos no confiables o redes Wi-Fi públicas. <br>
+          Como nuevo miembro, tendrás acceso a todas las funciones y características que ofrecemos. 
+          Explora nuestro sitio web y descubre todo lo que tenemos para ofrecerte. 
+          No dudes en contactarnos si tienes alguna pregunta o necesitas asistencia en el uso de nuestras herramientas. <br>
+          <b>¡Bienvenido nuevamente y que tengas una experiencia increíble en nuestra plataforma! </b> <br>
+          Sus credenciales de acceso a la plataforma son: <br>
             <b> Correo: </b> ${email} <br>
             <b> Contraseña temporal: </b> ${password}
           </p>

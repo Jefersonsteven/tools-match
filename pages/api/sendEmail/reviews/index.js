@@ -4,7 +4,7 @@ import findUser from "../findUser";
 export default async function reviews(req, res) {
   const { method } = req;
   if (method == "POST") {
-    const { email, url } = req.body;
+    const { email } = req.body;
     try {
       await findUser(email);
       await transporter.verify();
@@ -14,13 +14,11 @@ export default async function reviews(req, res) {
         subject: "Nuevas reseñas",
         html: `
           <p style="color: black">
-            Ha recibido una reseña de su producto, héchale un vistazo. 
+            Estimado usuario, <br>
+            Nos complace informarte que has recibido una reseña en nuestra plataforma sobre tu producto. 
+            Queremos expresarte nuestro agradecimiento por brindar un excelente servicio y por ofrecer un producto que ha generado una experiencia positiva para el cliente. <br>
+            En tu perfil podrás visualizar las reseñas recibidas.
           </p>
-          <button style="border: 5px, black, solid; border-radius: 20px; background: white; color: black">
-            <a href=${url} style="text-decoration: none; color: black">
-              Producto 
-            </a>
-          </button>
           <h4 style="color: black">
             Atentamente, el equipo de ToolMatch
           </h4>
@@ -31,7 +29,6 @@ export default async function reviews(req, res) {
         Message: `Se ha enviado un coorreo electrónico a ${email} sobre reseñas en su producto`,
       });
     } catch (error) {
-      console.log(error);
       res.status(400).json({ Error: error });
     }
   }

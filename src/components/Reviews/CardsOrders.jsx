@@ -6,6 +6,7 @@ import axios from "axios";
 import styles from "./CardsOrders.module.css";
 import CardsPurchasedItems from "./CardsPurchasedItems";
 
+
 const CardsOrders = ({ userOrders }) => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -67,7 +68,7 @@ const CardsOrders = ({ userOrders }) => {
       <Modal
         isOpen={selectedOrder !== null}
         onRequestClose={closeModal}
-        className={styles.customModal}
+        className={selectedOrder?.postId?.length > 1 ? styles.customModalTwo : styles.customModal}
         overlayClassName={styles.customOverlay}
         contentLabel="Purchased Items Modal"
       >

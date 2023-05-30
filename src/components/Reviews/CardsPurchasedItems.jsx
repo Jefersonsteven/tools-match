@@ -5,6 +5,7 @@ import styles from "./CardsPurchasedItems.module.css";
 import { useParams } from "next/navigation";
 import { FaCheckCircle } from "react-icons/fa";
 import Image from "next/image";
+import LoaderRadial from "../Loader/LoaderRadial";
 
 const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
   const [posts, setPosts] = useState([]);
@@ -12,9 +13,11 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
   const { perfilId } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setIsLoading(true);
       const fetchedPosts = await Promise.all(
         orderPosts.map(async (postId) => {
           const response = await fetch(`/api/post/${postId}`);
@@ -23,6 +26,7 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
         })
       );
       setPosts(fetchedPosts);
+      setIsLoading(false);
     };
 
     fetchPosts();
@@ -54,69 +58,78 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={posts?.length > 1 ? styles.containerTwo : styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>
           {multipleItems
             ? "¿Qué te parecieron tus productos?"
             : "¿Qué te pareció tu producto?"}
         </div>
-        <AiFillCloseCircle size={25} color="var(--red)" onClick={onClose} />
+        <AiFillCloseCircle
+          size={25}
+          color="var(--red)"
+          onClick={onClose}
+          className={styles.buttonClose}
+        />
       </div>
       <div className={styles.containerProduct}>
-        {posts.map((post) => (
-          <div
-            key={post.id}
-            className={styles.product}
-            style={{ minHeight: "270px" }} // Ajusta la altura mínima según tus necesidades
-          >
-            <h3>{post.title}</h3>
-            <Image
-              width={100}
-              height={100}
-              src={post.photo[0]}
-              alt={post.title}
-              className={styles.img}
-              style={{ paddingBottom: "40px" }} // Ajusta el padding inferior según tus necesidades
-            />
-            <div className={styles.reviewContainer}>
-              {hasUserReviewed(post.id) ? (
-                <>
-                  <FaCheckCircle
-                    size={20}
-                    color="green"
-                    className={styles.checkIcon}
-                  />
-                  <label className={styles.reviewLabel}>
-                    Ya publicamos tu reseña
-                  </label>
-                </>
-              ) : !reviewSubmitted ? (
-                <button
-                  className={`${styles.opinion} ${
-                    isReviewModalOpen && styles.disabled
-                  }`}
-                  onClick={() => handleReviewModalOpen(post)}
-                >
-                  {isReviewModalOpen
-                    ? "Dejar Reseña"
-                    : "Opina sobre tu producto"}
-                </button>
-              ) : (
-                <>
-                  <FaCheckCircle
-                    size={20}
-                    color="green"
-                    className={styles.checkIcon}
-                  />
-                  <label className={styles.reviewLabel}>
-                    Ya publicamos tu reseña
-                  </label>
-                </>
-              )}
-            </div>
+        {isLoading || posts.length === 0 ? (
+          <div className={styles.loaderContainer}>
+            <LoaderRadial />
           </div>
-        ))}
+        ) : (
+          posts.map((post) => (
+            <div
+              key={post.id}
+              className={styles.product}
+              style={{ minHeight: "270px" }}
+            >
+              <h3>{post.title}</h3>
+              <Image
+                src={post.photo[0]}
+                alt={post.title}
+                className={styles.img}
+                style={{ paddingBottom: "40px" }}
+              />
+              <div className={styles.reviewContainer}>
+                {hasUserReviewed(post.id) ? (
+                  <>
+                    <FaCheckCircle
+                      size={20}
+                      color="green"
+                      className={styles.checkIcon}
+                    />
+                    <label className={styles.reviewLabel}>
+                      Ya publicamos tu reseña
+                    </label>
+                  </>
+                ) : !reviewSubmitted ? (
+                  <button
+                    className={`${styles.opinion} ${
+                      isReviewModalOpen && styles.disabled
+                    }`}
+                    onClick={() => handleReviewModalOpen(post)}
+                  >
+                    {isReviewModalOpen
+                      ? "Dejar Reseña"
+                      : "Opina sobre tu producto"}
+                  </button>
+                ) : (
+                  <>
+                    <FaCheckCircle
+                      size={20}
+                      color="green"
+                      className={styles.checkIcon}
+                    />
+                    <label className={styles.reviewLabel}>
+                      Ya publicamos tu reseña
+                    </label>
+                  </>
+                )}
+              </div>
+            </div>
+          ))
+        )}
       </div>
       {isReviewModalOpen && (
         <FormReview
