@@ -33,7 +33,7 @@ export default function PerfilUsuario() {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
-
+  
         const receivedReviews = response.data.received;
         setUser(response.data);
         setReviews(receivedReviews);
@@ -42,14 +42,16 @@ export default function PerfilUsuario() {
       }
     };
     fetchReviews();
-  }, [userId, perfilId]);
-
+  }, [userId, perfilId, createdReviews]); // Agregar createdReviews como dependencia
+  
   useEffect(() => {
     const fetchCreatedReviews = async () => {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
   
-        const createdReviews = response.data.reviews.filter(review => review.hidden === false);
+        const createdReviews = response.data.reviews.filter(
+          (review) => review.hidden === false
+        );
         setUser(response.data);
         setCreatedReviews(createdReviews);
       } catch (error) {
@@ -57,7 +59,7 @@ export default function PerfilUsuario() {
       }
     };
     fetchCreatedReviews();
-  }, [userId, perfilId]);
+  }, [userId, perfilId, reviews]); // Agregar reviews como dependencia
 
   useEffect(() => {
     const fetchAuthors = async () => {
