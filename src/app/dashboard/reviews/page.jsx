@@ -4,18 +4,13 @@ import Modal from "../components/Modal";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
 import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
-import { TfiPencilAlt } from "react-icons/tfi";
-import { TiDelete, TiPencil } from "react-icons/ti";
-import Loader from "@/components/Loader/Loader";
+import { TiDelete } from "react-icons/ti";
 import Paginated from "@/components/paginated/Paginated";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
-
-
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
   const handleSearchTermChange = (event) => {
@@ -41,21 +36,16 @@ function Reviews() {
   const [editingUser, setEditingUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-
   const [selectedItemCount, setSelectedItemCount] = useState(0);
   const [isDeleteButtonDisabled, setIsDeleteButtonDisabled] = useState(false);
   const [selectedUserCount, setSelectedUserCount] = useState(0);
-
   const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
-
-
   const [loading, setLoading] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
+
   const publicationsPerPage = 5;
 
 
-  
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -88,8 +78,6 @@ function Reviews() {
     return usuario.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
- 
-
   const handleDeleteClick = (title, id, userEmail) => {
     Swal.fire({
       title: `¿Seguro que quieres eliminar la reseña ${title}?`,
@@ -103,15 +91,12 @@ function Reviews() {
       if (result.isConfirmed) {
         axios.delete(`/api/admin/review/${id}`)
           .then(response => {
-
             axios.post("/api/sendEmail/deleteReviews",{
               email: userEmail
             })
-
             const updatedUsers = records.filter((user) => user.id !== id);
             setRecords(updatedUsers);
             Swal.fire('¡Eliminada!', 'La reseña ha sido eliminada con éxito', 'success');
-            // Aquí puedes agregar lógica adicional, como actualizar el estado del componente o redirigir a otra página.
           })
           .catch(error => {
             Swal.fire('Error', 'Hubo un error al reseña la publicación', 'error');
@@ -121,13 +106,10 @@ function Reviews() {
     });
   };
 
- 
-
   const handleDeleteSelected = () => {
     selectedItems.forEach((itemId) => {
       handleDeleteUser(itemId);
     });
-
     setSelectedItems([]); // Limpiar los elementos seleccionados después de eliminarlos
   };
 
@@ -137,27 +119,21 @@ function Reviews() {
       setSelectedItems(selectedItems.filter(item => item !== id));
       setSelectedItemCount(selectedItemCount - 1);
       setSelectedItemsEmails(selectedItemsEmails.filter((item) => item.id !== id));
-
     } else {
       setSelectedItems([...selectedItems, id]);
       setSelectedItemCount(selectedItemCount + 1);
       const selectedUser = records.find((user) => user.id === id);
       setSelectedItemsEmails([...selectedItemsEmails, { id: id, email: selectedUser.author.email }]);
     }
-  
     setIsDeleteButtonDisabled(selectedItemCount + 1 > 1);
   }
 
-  
   const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
-
-
 
   const handleDeleteReviews = () => {
     if (selectedItems.length > 0) {
-      const userIds = selectedItems; // Aquí obtienes los IDs de las publicaciones seleccionadas
+      const userIds = selectedItems; 
       const userEmails = selectedItemsEmails.map((item) => item.email);
-
       Swal.fire({
         title: `Eliminar ${selectedItems.length} reseñas`,
         text: `¿Estás seguro de eliminar las ${userEmails} reseñas seleccionadas?`,
@@ -170,21 +146,16 @@ function Reviews() {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-  
-          // Eliminar publicaciones
           axios
             .put("/api/admin/review", {
                userIds: userIds 
             })
             .then((response) => {
-
               axios.post("/api/sendEmail/deleteReviews",{
                 email: userEmails
               })
-              // Actualizar la lista de publicaciones en el estado local o cualquier otra acción necesaria
               const updatedReviews = records.filter((review) => !userIds.includes(review.id));
             setRecords(updatedReviews);
-  
               Swal.fire({
                 title: "¡Reseñas eliminadas correctamente!",
                 icon: "success",
@@ -197,9 +168,7 @@ function Reviews() {
       });
     }
   };
-
-
-  
+ 
   const indexOfLastPublication = currentPage * publicationsPerPage;
   const indexOfFirstPublication = indexOfLastPublication - publicationsPerPage;
   const currentPublications = filteredUsuarios.slice(
@@ -208,17 +177,9 @@ function Reviews() {
   );
   const isPageEmpty = currentPublications.length === 0;
     
-    
     const handlePageChange = (pageNumber) => {
       setCurrentPage(pageNumber);
     };
-
-
-
-
-
-
-
 
   return (
     <div className={style.contenedorPadre}>
@@ -226,32 +187,17 @@ function Reviews() {
         <h2>Reseñas de los usuarios</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
-
-
       {loading ? (
-
 <div className={style.loaderContainer}>
 <LoaderRadial />
 </div>
-      
-
-
     ) : ( <div>
-
-
       {selectedItems.length > 1 && (
   <div className={style.checkbox_padre}>
     <h2>{`Cantidad de Reseñas seleccionadas: ${selectedItems.length}`}</h2>
     <button className={style.botonEliminar} onClick={handleDeleteReviews}>Eliminar Reseñas</button>
   </div>
 )}
-
-
-
-
-
-
-
       <div className={style.contenedorTable}>
         {currentPublications.length > 0 ? (
           <table className={style.table}>
@@ -260,7 +206,6 @@ function Reviews() {
                 <th>
                   <MdVerifiedUser />
                 </th>
-
                 <th>TITULO</th>
                 <th>PUNTAJE</th>
                 <th>USUARIO</th>
@@ -269,7 +214,6 @@ function Reviews() {
                 <th>ELIMINAR</th>
               </tr>
             </thead>
-
             <tbody className={style.bodyTabla}>
               {currentPublications.map((d, i) => (
                 <tr className={style.namesTable} key={i}>
@@ -278,9 +222,7 @@ function Reviews() {
                     checked={selectedItems.includes(d.id)}
                     onChange={() => handleClick(d.id)}
                   /></td>
-
                   <td>{d.title}</td>
-                 
                   <td>{d.rating}</td>
                   <td>{d.author.email}</td>
                   <td>{d.createdAt.slice(0, 10)}</td>
@@ -312,7 +254,6 @@ function Reviews() {
             />
           </Modal>
         )}
-
       </div >
       {filteredUsuarios.length > publicationsPerPage && (
             <Paginated

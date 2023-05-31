@@ -141,7 +141,6 @@ function Users() {
     }
   }
 
-console.log(updatedUser)
 
     Swal.fire({
       title: "¿Estás seguro de los cambios?",
@@ -225,16 +224,14 @@ console.log(updatedUser)
   const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
   // CheckBox   ---------------------------------------------------------
   const handleCheckboxChange = (event) => {
-    const { name , checked } = event.target;
-    
+    const { name , checked } = event.target;    
     setSelectedUsers((prevSelectedUsers) => {
       if (checked) {
         return [...prevSelectedUsers, name];
       } else {
         return prevSelectedUsers.filter((userId) => userId !== name);
       }
-    });
-    
+    });    
     setSelectedUserCount((prevCount) => {
       if (checked) {
         return prevCount + 1;
@@ -246,16 +243,11 @@ console.log(updatedUser)
   
 
   const handleDeleteUsers = (id, email) => {
-
     if (selectedUserCount > 0) {
       const userIds = selectedUsers;
       const userEmails = records
       .filter((user) => userIds.includes(user.id))
       .map((user) => user.email);
-      console.log(userEmails)
-      console.log(userIds)
-      
-    const userIdsString = userIds.join(', ');
       Swal.fire({
         title: `Eliminar ${selectedUserCount} usuarios`,
         text: `¿Estás seguro de eliminar a los ${selectedUserCount} usuarios?`,
@@ -268,46 +260,24 @@ console.log(updatedUser)
         onBeforeOpen: ()=> {
           Swal.showLoading();
         }
-
       }).then((result) => {
         if (result.isConfirmed) {
-          
-          
           axios
             .put("/api/admin/user", {
                 userIds: selectedUsers 
-            }).then(()=>{
-
-              
+            }).then(()=>{ 
               axios.post("/api/sendEmail/baneo", {
                 email: userEmails
               })
-            })
-              
-
-
-
-            
-            
-            
-            
-            
+            }) 
             .then((response) => {
-
-            
-              
-
               // Actualizar la lista de usuarios en el estado local
               const updatedUsers = records.filter(
                 (user) => !userIds.includes(user.id)
               );
               setRecords(updatedUsers);
-
               setSelectedUserCount(0);
-
-
               Swal.close();
-
               Swal.fire({
                 title: "¡Usuarios eliminados correctamente!",
                 icon: "success",
@@ -323,40 +293,6 @@ console.log(updatedUser)
 
 
 
-  // const handleAdminClick = (firstname, id) => {
-  //   Swal.fire({
-  //     title: "¿Estás seguro de asignar el rol de administrador?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#d33",
-  //     cancelButtonColor: "#3085d6",
-  //     confirmButtonText: "Sí, asignar",
-  //     cancelButtonText: "Cancelar",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axios
-  //         .put(`/api/admin/user/${id}`, { admin: true })
-  //         .then((response) => {
-  //           // Actualizar la lista de usuarios en el estado local
-  //           setRecords((prevRecords) =>
-  //             prevRecords.map((user) =>
-  //               user.id === id ? { ...user, admin: true } : user
-  //             )
-  //           );
-  
-  //           Swal.fire({
-  //             title: "¡Rol de administrador asignado correctamente!",
-  //             icon: "success",
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
-  //     }
-  //   });
-  // };
-
-
   const [loadingModal, setLoadingModal] = useState(false);
 
 
@@ -365,31 +301,16 @@ console.log(updatedUser)
      
   return (
     <div className={style.contenedorPadre}>
-
-
       <div className={style.searchbarContainer}>
         <h2>Usuarios</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      </div>
-
-    
+      </div>   
       {loading ? (
-
-
 <div className={style.loaderContainer}>
   <LoaderRadial />
-</div>
-      
+</div>     
     ) : ( 
-    
-
-
-    <div>
-
-
-   
-      
-        
+    <div>        
       {selectedUserCount > 1 && (
       <div className={style.checkbox_padre}>
       <h2>Hay {selectedUserCount} usuarios seleccionados</h2>
@@ -400,9 +321,7 @@ console.log(updatedUser)
                    Eliminar usuarios
               </button>
       </div>
-      )}
-
-    
+      )}    
       <div className={style.contenedorTable}>
         {filteredUsuarios.length > 0 ? (
           <table className={style.table}>
@@ -416,19 +335,12 @@ console.log(updatedUser)
                 <th>APELLIDO</th>
                 <th>EMAIL</th>
                 <th>TELEFONO</th>
-                <th>RANGO</th>
-                {/* <th>HIDDEN</th>
-                <th>REPORTES</th> */}
-                <th>PUBLICACIONES</th>
-                {/* <th>ORDENES</th>
-                <th>RESEÑAS</th>
-                <th>RECIBOS</th> */}
+                <th>RANGO</th>               
+                <th>PUBLICACIONES</th>               
                 <th>PAIS</th>                
                 <th>ACCIONES</th>               
               </tr>
             </thead>
-
-
             <tbody className={style.bodyTabla}>
               {displayedUsers.map((d) => (
                 <tr className={style.namesTable} key={d.id}>
@@ -449,22 +361,13 @@ console.log(updatedUser)
                   <td>{d.email}</td>
                   <td>{d.phoneNumber}</td>
                   <td>{d.admin ? "Admin" : "Usuario"}</td>
-                 {/* <td>{d.hidden ? "True" : "False"}</td>
-                  <td>{d.reports.length}</td> */}
                   <td>{d.posts.length}</td>
-                  {/* <td>{d.orders.length}</td>
-                  <td>{d.reviews.length}</td>
-                  <td>{d.received.length}</td>  */}
-                  <td>{d.country ? d.country : "?"}</td>
-                  {/* <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td> */}
-
-
+                  <td>{d.country ? d.country : "?"}</td>                  
                   <td className={style.td_button}>
                     <button
                       className={`${style.botonEditar} ${buttonClass}`}
                       onClick={() => handleClick(d.id)}
-                      disabled={selectedUserCount > 1}
-                      
+                      disabled={selectedUserCount > 1}                      
                     >
                       <TiPencil size={30}/>
                     </button>
@@ -475,10 +378,7 @@ console.log(updatedUser)
                     >
                       <TiDelete size={30}/>
                     </button>
-                  </td>  
-
-
-                
+                  </td>                  
                 </tr>
               ))}
             </tbody>
@@ -489,9 +389,6 @@ console.log(updatedUser)
           </div>
         )}
         {editingUser && (
-
-
-
           <Modal show={showModal} onClose={() => setShowModal(false)}>
 {loadingModal ? (
     <div className={style.loader_radial}>
@@ -510,10 +407,6 @@ console.log(updatedUser)
   )}
 </Modal>
         )}
-
-
-
-
       </div>
       {/*--------- PAGINATED ---------- */}
       {filteredUsuarios.length > publicationsPerPage && (
