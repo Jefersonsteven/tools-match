@@ -52,6 +52,16 @@ export const getDataFromDB = async (
     false
   );
 
+  if (dbUserData.hidden) {
+    Swal.fire({
+      position: "center",
+      title: `Su cuenta se encuentra baneada.`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+    return;
+  }
+
   if (!dbUserData || dbUserData.error) {
     Swal.fire({
       position: "center",
@@ -103,7 +113,15 @@ export const createNewUserOrLogIn = async (
     false
   );
 
-  console.log(dbUserData);
+  if (dbUserData.hidden) {
+    Swal.fire({
+      position: "center",
+      title: `Su cuenta se encuentra baneada.`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+    return;
+  }
 
   if (!dbUserData || dbUserData.error) {
     /* Crear nuevo usuario con google */

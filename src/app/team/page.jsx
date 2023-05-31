@@ -15,7 +15,7 @@ export default function Team() {
     {
       name: "Axel",
       lastname: "Valiente",
-      country: "Argentina",
+      country: "argentina.png",
       image: "Axel.png",
       linkedin: "https://www.linkedin.com/in/axel-valiente-a312021b4/",
       github: "https://github.com/Yorozuya2001",
@@ -24,7 +24,7 @@ export default function Team() {
     {
       name: "Celeste",
       lastname: "Flores",
-      country: "Argentina",
+      country: "argentina.png",
       image: "Celeste.png",
       linkedin: "https://www.linkedin.com/in/mariacelesteflores",
       github: "https://github.com/CelesFlowers",
@@ -33,7 +33,7 @@ export default function Team() {
     {
       name: "Emanuel",
       lastname: "Burgos",
-      country: "Argentina",
+      country: "argentina.png",
       image: "Emmanuel.png",
       linkedin: "https://www.linkedin.com/in/emanuel-burgos-439537195/",
       github: "https://github.com/EmaBurgos",
@@ -42,7 +42,7 @@ export default function Team() {
     {
       name: "Franco",
       lastname: "Itria",
-      country: "Argentina",
+      country: "argentina.png",
       image: "Franco2.jpg",
       linkedin: "https://www.linkedin.com/in/francoitria/",
       github: "https://github.com/fran-itria",
@@ -51,7 +51,7 @@ export default function Team() {
     {
       name: "Adriana",
       lastname: "Sanchez",
-      country: "Venezuela",
+      country: "venezuela.png",
       image: "Adriana.png",
       linkedin: "https://www.linkedin.com/in/adriana-sanchez-mejias/",
       github: "https://github.com/Adri-ESM",
@@ -60,7 +60,7 @@ export default function Team() {
     {
       name: "Jean",
       lastname: "Palomino",
-      country: "Colombia",
+      country: "colombia.png",
       image: "Jean.png",
       linkedin: "https://www.linkedin.com/in/jean-heyller-palomino-1139381a6/",
       github: "https://github.com/jean-heyller",
@@ -69,7 +69,7 @@ export default function Team() {
     {
       name: "Yael",
       lastname: "Romero",
-      country: "Mexico",
+      country: "mexico.png",
       image: "Yael.png",
       linkedin: "https://www.linkedin.com/in/yael-romero-528654148",
       github: "https://github.com/Rai5559",
@@ -78,7 +78,7 @@ export default function Team() {
     {
       name: "Jefferson",
       lastname: "Nunez",
-      country: "Colombia",
+      country: "colombia.png",
       image: "Jefferson.png",
       linkedin: "https://www.linkedin.com/in/jeffersonsteven/",
       github: "https://github.com/Jefersonsteven",
@@ -116,8 +116,14 @@ export default function Team() {
                   {person.name + " " + person.lastname}
                 </span>
               </h2>
+              <h6>{"Full Stack Developer"}</h6>
               <h2 className={style.teamName}>
-                <span className={style.text}>{person.country}</span>
+                <Image
+                  src={`/images/icons/${person.country}`}
+                  className={style.countryicon}
+                  width={30}
+                  height={30}
+                />
               </h2>
               <div className={style.teamLinks}>
                 <Link href={person.github} target="_blanket">

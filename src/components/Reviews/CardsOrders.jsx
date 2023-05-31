@@ -26,10 +26,10 @@ const CardsOrders = ({ userOrders }) => {
         {userOrders.map((order) => (
           <div
             key={order.id}
-            className="p-4 my-2 bg-white rounded-md shadow-md cursor-pointer flex items-center justify-between h-40"
+            className="p-4 my-2 bg-white rounded-md shadow-md cursor-pointer flex flex-col xl:flex-row items-center xl:justify-between justify-center xl:h-40 h-auto"
             onClick={() => setSelectedOrder(order)}
           >
-            <div className="flex items-center">
+            <div className="flex xl:flex-row flex-col items-center">
               <AiFillCheckCircle className="text-green-500 mr-2 ml-2 text-5xl" />
               <FaShoppingCart className="text-black text-5xl" />
               <h4 className="text-black text-1000 ml-14">
