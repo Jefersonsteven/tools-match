@@ -62,19 +62,25 @@
 /* ---------- add to cart icon ----------*/
 .addToCartButton {
   position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .addToCartIcon {
   background-color: var(--orange);
   border-radius: 50%;
-  width: 10%;
+  width: 12%;
+  height: auto;
   color: #000;
   font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-left: auto;
+  position: absolute;
+  top: -15px;
+  right: -10px;
 }
 
 .cartText {
