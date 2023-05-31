@@ -1,5 +1,6 @@
 .filter,
-.order {
+.order,
+.country {
   position: absolute;
   left: 0;
   top: 43px;
@@ -10,7 +11,8 @@
 }
 
 .filter button,
-.order button {
+.order button,
+.country button {
   width: 100%;
   border-radius: 0px;
   border-bottom: 1px solid var(--white);
@@ -30,15 +32,22 @@
 }
 
 .button:hover .filter,
-.button:hover .order {
+.button:hover .order,
+.button:hover .country {
   display: flex;
   flex-direction: column;
 }
 
 .type,
 .category,
-.brand {
+.brand,
+.country {
   display: none;
+}
+
+.button:hover .country {
+  display: flex;
+  flex-direction: column;
 }
 
 .subButton:hover .type,
@@ -86,7 +95,37 @@ button.selected {
   font-size: 3rem;
 }
 
+.filterContainer{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.filterDistance {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+
 /* /////////////////////////////////////////////////////////// */
+
+@media (max-width: 1400px){
+  .filterContainer {
+    padding: 0 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .filterContainer div:hover {
+    z-index: 1;
+  }
+
+  .filterDistance {
+    justify-content: center;
+  }
+}
 
 /* .window,
 .window2 {

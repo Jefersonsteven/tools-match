@@ -1,4 +1,6 @@
 .rangeContainer {
+  width: 100%;
+  max-width: 350px;
   position: relative;
 }
 
@@ -15,4 +17,10 @@
 .rangeContainer input {
   width: 100%;
   background: var(--red);
+}
+
+@media (max-width: 500px) {
+  .rangeContainer {
+    max-width: 300px;
+  }
 }

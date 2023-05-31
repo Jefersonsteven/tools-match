@@ -60,18 +60,16 @@ function FilterRangeDistance({ handleKm }) {
   }
 
   return (
-    <div>
-      <div className={styles.rangeContainer}>
-        <span style={{ left: `${range / 70}%` }}>{range}Km</span>
-        <input
-          onInput={handleRange}
-          onMouseUp={exitInput}
-          type="range"
-          min={0}
-          max={6000}
-          value={range}
-        />
-      </div>
+    <div className={styles.rangeContainer}>
+      <span style={{ left: `${range / 70}%` }}>{range}Km</span>
+      <input
+        onInput={handleRange}
+        onMouseUp={exitInput}
+        type="range"
+        min={0}
+        max={6000}
+        value={range}
+      />
     </div>
   );
 }
