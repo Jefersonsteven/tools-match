@@ -71,6 +71,7 @@ function Users() {
   /*---------- PAGINATED ----------*/
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
+  const publicationsPerPage = 5;
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -515,16 +516,17 @@ console.log(updatedUser)
 
       </div>
       {/*--------- PAGINATED ---------- */}
-      {filteredUsuarios.length > 0 && (
-        <Paginated
-          url={`/api/admin/paginatedUser?page=${currentPage}&limit=${perPage}`}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          perPage={perPage}
-          onPageChange={handlePageChange}
-          totalPagesProp={Math.ceil(perPage.length / perPage)}
-        />
-      )}
+      {filteredUsuarios.length > publicationsPerPage && (
+            <Paginated
+              currentPage={currentPage}
+              publicationsPerPage={publicationsPerPage}
+              totalPagesProp={Math.ceil(
+                filteredUsuarios.length / publicationsPerPage
+              )}
+              onPageChange={handlePageChange}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
  </div>)}
       {/*------------------------------ */}
     </div>
