@@ -5,6 +5,7 @@
   gap: 5rem;
   padding: 50px;
   margin-top: 80px;
+  min-height: 50vh;
 }
 .cartContainer {
   align-items: center;
