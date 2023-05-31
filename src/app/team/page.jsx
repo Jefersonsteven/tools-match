@@ -77,7 +77,7 @@ export default function Team() {
     },
     {
       name: "Jefferson",
-      lastname: "Nunez",
+      lastname: "Nuñez",
       country: "colombia.png",
       image: "Jefferson.png",
       linkedin: "https://www.linkedin.com/in/jeffersonsteven/",
