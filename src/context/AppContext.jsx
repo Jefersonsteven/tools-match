@@ -130,18 +130,6 @@ function AppProvider({ children }) {
 
   // * Favorite *//
   const [favoriteArray, setFavoriteArray] = useState([]);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (!localStorage.getItem("favorite")) {
-        localStorage.setItem(
-          "favorite",
-          JSON.stringify({
-            count: 0,
-          })
-        );
-      }
-    }
-  }, []);
 
   const [favorite, setFavorite, isFavorite, setIsFavorite] = useState([]);
 

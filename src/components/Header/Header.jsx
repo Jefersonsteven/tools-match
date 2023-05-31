@@ -26,7 +26,7 @@ function Header() {
     removeFromLocalStorage,
     endSession,
     cart,
-    favorite,
+    favoriteArray,
   } = useContext(AppContext);
 
   const handleCloseSession = async () => {
@@ -64,6 +64,7 @@ function Header() {
     setHref(userData ? "/crear-publicacion" : "/form/login");
   }, [userData]);
 
+  console.log(favoriteArray.count);
   return (
     <header className={styles.header}>
       {/* // logo */}
@@ -103,8 +104,8 @@ function Header() {
           {pathname !== "/favorite" && pathname !== "/" && userData && (
             <Link href="/favorite" className={styles.cart}>
               <FaHeart size="25" color="white" />
-              {favorite?.count > 0 && (
-                <span className={styles.cartCount}>{favorite.count}</span>
+              {favoriteArray.count !== 0 && (
+                <span className={styles.cartCount}>{favoriteArray.count}</span>
               )}
               <span className={styles.cartText}>Favoritos</span>
             </Link>
