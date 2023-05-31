@@ -71,11 +71,10 @@
   font-size: 1.8rem;
 }
 
-.text {
-  font-size: 2rem;
+.countryicon {
+  font-size: 3rem;
   color: #131713;
-  font-weight: 600;
-  margin-top: 0;
+  margin: 0 auto;
 }
 
 .teamLinks {
@@ -130,6 +129,7 @@
   .teamContact {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    justify-items: center;
   }
   .teamContactInfo {
     padding: 1rem;
@@ -157,8 +157,8 @@
     box-shadow: none;
     z-index: 0;
   }
-  .text {
-    font-size: 1.3rem;
+  .countryicon {
+    font-size: 2rem;
   }
   .infoTeam {
     font-size: 2rem;
