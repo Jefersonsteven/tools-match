@@ -18,10 +18,11 @@ export default async function handler(req, res) {
 
       let where = { hidden: false };
       const include = {
-        reviews: true
+        reviews: true,
+        author: true
       };
 
-      if (id && country !== "alls" || !country) {
+      if (id &&  !country) {
         const postCountry = await prisma.user.findUnique({
           where: {
             id: id,
@@ -70,7 +71,6 @@ export default async function handler(req, res) {
       }
 
       if (coorde1 && coorde2 && km) {
-        console.log(coorde1, coorde2);
         const posts = await prisma.post.findMany({
           where,
           include

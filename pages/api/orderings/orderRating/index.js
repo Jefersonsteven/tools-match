@@ -53,7 +53,8 @@ export default async function handler(req, res) {
     if (title) where.title = { contains: title, mode: 'insensitive' };
 
     const include = {
-      reviews: true
+      reviews: true,
+      author: true
     };
 
     let posts;

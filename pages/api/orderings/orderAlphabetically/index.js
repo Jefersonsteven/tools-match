@@ -15,7 +15,8 @@ export default async function handler(req, res) {
 
       let where = { hidden: false };
       const include = {
-        reviews: true
+        reviews: true,
+        author: true
       };
 
       if (id && country !== "alls" || !country) {
