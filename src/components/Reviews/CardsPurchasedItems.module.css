@@ -3,20 +3,34 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  max-height: calc(100vh - 140px);
+  max-height: calc(100vh - 49rem);
   overflow: auto;
   margin: 1rem;
 }
-.header{
+.containerTwo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-height: calc(100vh - 59rem);
+  overflow: auto;
+  margin: 1rem;
+}
+
+.header {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 1rem;
 }
-.title{
+
+.title {
   color: black;
   font-weight: bold;
   font-size: 1.875rem;
+}
+.buttonClose:hover{
+  cursor: pointer;
 }
 .containerProduct{
   display: flex;
@@ -25,7 +39,8 @@
   align-items: center;
   width: 100%;
 }
-.product{
+
+.product {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,27 +51,88 @@
   margin-bottom: 2rem;
   width: 35rem;
 }
-.product h3{
+
+.product h3 {
   color: black;
   font-weight: bold;
   font-size: 1.7rem;
   margin-top: 1rem;
 }
+
 .img{
-  width: 100%;
-  padding: 8rem;
+  width: 48%;
 }
+
 .opinion{
   border-radius: 0.4rem; 
   padding-left: 0.4rem; 
-  padding-right: 0.4rem; 
-  padding-top: 0.2rem; 
-  padding-bottom: 0.2rem; 
+  padding-right: 0.4rem;  
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .scrollContainer {
   height: 10%;
   overflow-y: auto;
   color: red;
+}
+
+.reviewContainer {
+  display: flex;
+  align-items: center;
+}
+
+.reviewLabel {
+  background-color: rgb(91, 234, 91);
+  margin-bottom: 0.7rem;
+  color: white;
+  padding: 0.8rem;
+}
+
+.checkIcon {
+  margin-right: 0.5rem;
+}
+
+.loaderContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ajusta el valor del z-index según tus necesidades */
+}
+
+.loader {
+  width: 120px; /* Ajusta el ancho del loader según tus necesidades */
+  height: 120px; /* Ajusta la altura del loader según tus necesidades */
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 390px){
+	.container {
+		margin: 0;
+		max-height: calc(100vh - 39rem);
+	}
+  .containerTwo{
+    margin: 0;
+		max-height: calc(100vh - 49rem);
+  }
+	.title{
+		font-size: 1.5rem	
+	}
 }

@@ -43,7 +43,7 @@ export default function Team() {
       name: "Franco",
       lastname: "Itria",
       country: "Argentina",
-      image: "Franco.png",
+      image: "Franco2.jpg",
       linkedin: "https://www.linkedin.com/in/francoitria/",
       github: "https://github.com/fran-itria",
       mail: "francoitria01@gmail.com",
