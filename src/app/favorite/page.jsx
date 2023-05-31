@@ -17,7 +17,6 @@ const Favorites = () => {
   const [selectAllChecked, setSelectAllChecked] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect");
     const fetchData = async () => {
       const user = await axios.get(`api/user/${userData.email}`);
       if (userData && userData.email) {
