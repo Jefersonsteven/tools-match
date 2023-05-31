@@ -21,7 +21,7 @@ import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 import { AiOutlineClear } from "react-icons/ai";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected,userId,setIsLoading } =
+  const { setCards, title, setTitle, selected, setSelected,userId,setIsLoading,setCurrentPage } =
     useContext(AppContext);
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
@@ -29,12 +29,17 @@ export default function FilterBar() {
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
 
   useEffect(() => {
-    fetchCards(selected, setCards, title,userId,setIsLoading);
+    fetchCards(selected, setCards, title,userId,setIsLoading,setCurrentPage);
     return ()=> {
       setCards([]);
     };
   }, [selected]);
 
+  const handleKeyPress = (e)=> {
+    if(e.key === "Enter") {
+      handleTitleButtonChange(title, setCards, setSelected, selected,userId);
+    }
+  }
 
   const handleTitle = (newTitle) => {
     handleTitleChange(newTitle, setTitle, setSelected, selected);
@@ -60,8 +65,8 @@ export default function FilterBar() {
   };
 
   // handleKm - Jeffer
-  const handleKm = (km, coorde1, coorde2) => {
-    handleKmChange(setSelected, km, coorde1, coorde2);
+  const handleKm = (km, coorde1, coorde2,range) => {
+    handleKmChange(setSelected, km, coorde1, coorde2,range);
   };
 
   const handleCountry = (event) => {
@@ -93,6 +98,7 @@ export default function FilterBar() {
               onTitleChange={handleTitle}
               onTitleButton={handleTitleButton}
               style={{ width: "150px" }}
+              handleKeyPress = {handleKeyPress}
             />
           </div>
           <div className={`flex relative mr-2 ${style.button}`}>
