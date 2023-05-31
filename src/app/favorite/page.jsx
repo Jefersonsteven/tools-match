@@ -10,8 +10,15 @@ import Swal from "sweetalert2";
 
 const Favorites = () => {
   const [visibleCards, setVisibleCards] = useState(4);
-  const { userData, favorite, setFavorite, cart, setCart } =
-    useContext(AppContext);
+  const {
+    userData,
+    favorite,
+    setFavorite,
+    favoriteArray,
+    setFavoriteArray,
+    cart,
+    setCart,
+  } = useContext(AppContext);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
 
@@ -115,12 +122,12 @@ const Favorites = () => {
       count: updatedFavoriteArray.length,
     }));
 
-    localStorage.setItem(
-      "favorite",
-      JSON.stringify({
-        count: updatedFavoriteArray.length,
-      })
-    );
+    // localStorage.setItem(
+    //   "favorite",
+    //   JSON.stringify({
+    //     count: updatedFavoriteArray.length,
+    //   })
+    // );
 
     selectedItems.forEach((item) => {
       if (!cart.items.some((cartItem) => cartItem.id === item.id)) {
@@ -129,15 +136,15 @@ const Favorites = () => {
           items: [...items, item],
         }));
 
-        if (typeof window !== "undefined") {
-          localStorage.setItem(
-            "cart",
-            JSON.stringify({
-              count: count + 1,
-              items: [...items, item],
-            })
-          );
-        }
+        // if (typeof window !== "undefined") {
+        //   localStorage.setItem(
+        //     "cart",
+        //     JSON.stringify({
+        //       count: count + 1,
+        //       items: [...items, item],
+        //     })
+        //   );
+        // }
       }
     });
 

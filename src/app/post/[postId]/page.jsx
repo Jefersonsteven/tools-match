@@ -2,7 +2,7 @@
 import { AppContext } from "@/context/AppContext";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import styles from "./post.module.css";
 import Link from "next/link";
 import Swal from "sweetalert2";
@@ -10,21 +10,11 @@ import axios from "axios";
 import Back from "@/components/back/Back";
 import Review from "./Review";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
-import { FaHeart } from "react-icons/fa";
 
 function PostDetail({}) {
-  const [isFavorite, setIsFavorite] = useState(false);
   const { postId } = useParams();
-  const {
-    postDetail,
-    setPostDetail,
-    userId,
-    cart,
-    setCart,
-    favoriteArray,
-    setFavoriteArray,
-    setFavorite,
-  } = useContext(AppContext);
+  const { postDetail, setPostDetail, userId, cart, setCart } =
+    useContext(AppContext);
   const pd = postDetail;
   const router = useRouter();
 
@@ -34,22 +24,11 @@ function PostDetail({}) {
     },
   };
 
-  function handleDaysRental(event) {
-    const value = event.target.value;
-    setRentalDays(value);
-  }
-
   function addCart() {
     if (!cart.items.some((item) => item.id === postDetail.id)) {
       setCart({
         count: cart.count + 1,
-        items:
-          pd.type === "SALE"
-            ? [...cart.items, postDetail]
-            : [
-                ...cart.items,
-                { ...postDetail, price: postDetail.price * rentalDays },
-              ],
+        items: [...cart.items, postDetail],
       });
 
       if (typeof window !== "undefined")
@@ -57,13 +36,7 @@ function PostDetail({}) {
           "cart",
           JSON.stringify({
             count: cart.count + 1,
-            items:
-              pd.type === "SALE"
-                ? [...cart.items, postDetail]
-                : [
-                    ...cart.items,
-                    { ...postDetail, price: postDetail.price * rentalDays },
-                  ],
+            items: [...cart.items, postDetail],
           })
         );
 
@@ -132,45 +105,9 @@ function PostDetail({}) {
       .then((data) => setPostDetail(data));
   }, [setPostDetail, postId]);
 
-  const fetchData = async () => {
-    const user = await axios.get(`api/user/${userData.email}`);
-    const response = await axios.put(`api/user/${userData.email}`, {
-      favoritesId: [...user.data.favorites],
-    });
-    if (userData && userData.email) {
-      setFavoriteArray(user.data.favorites.map((card) => ({ ...card })));
-      setFavorite((prevFavorite) => ({
-        ...prevFavorite,
-        count: user.data.favorites.length,
-      }));
-    }
-  };
-
-  const handleFavoriteClick = (postId) => {
-    if (isFavorite) {
-      const newFav = favoriteArray.favoritesId.filter((favorite) => {
-        if (favorite !== postId) return favorite;
-      });
-      setFavoriteArray([...newFav]);
-    } else {
-      setFavoriteArray([...favoriteArray, postId]);
-    }
-  };
-
   return (
     <div>
-      <div>
-        <Back />
-        <div>
-          <FaHeart
-            className={
-              isFavorite ? styles.favoriteIconActive : styles.favoriteIcon
-            }
-            onClick={() => handleFavoriteClick(`${postId}`)}
-          />
-        </div>
-      </div>
-
+      <Back />
       <div className={styles.main_container}>
         {/* <Link
           onClick={() => setPostDetail([])}
@@ -217,7 +154,8 @@ function PostDetail({}) {
                 <div className={styles.description_title}>
                   <h2>{pd.title}</h2>
                   <div>
-                    <h3>${pd.price}</h3>
+                    {pd.type === "SALE" && <h3>${pd.price}</h3>}
+                    {pd.type === "LEASE" && <h3>${pd.pricePerDay}</h3>}
                   </div>
                 </div>
                 <p>{pd.content}</p>
@@ -290,19 +228,6 @@ function PostDetail({}) {
                 )}
                 {userId !== pd.author.id && (
                   <button onClick={addCart}>Agregar al carrito</button>
-                )}
-                {pd.type === "RENTAL" && (
-                  <select
-                    name="daysRental"
-                    id=""
-                    className={styles.input}
-                    onChange={handleDaysRental}
-                  >
-                    <option value="1">Dias de Arriendo</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
                 )}
               </section>
             </>
