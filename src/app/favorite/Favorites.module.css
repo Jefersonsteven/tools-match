@@ -58,50 +58,53 @@
   margin-bottom: 30px;
 }
 
-/* ---------- CHECKBOX ----------*/
-.checkbox1 {
-  margin: 10px;
-  margin-left: 60px;
+
+/* ---------- add to cart icon ----------*/
+.addToCartButton {
+  position: relative;
 }
 
-.checkboxContainer1 {
+.addToCartIcon {
+  background-color: var(--orange);
+  border-radius: 50%;
+  width: 10%;
+  color: #000;
+  font-size: 24px;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
-  margin-left: 20px;
+  cursor: pointer;
+  margin-left: auto;
 }
 
-.checkboxLabel, .removeButton {
-  border: none;
+.cartText {
+  position: absolute;
+  bottom: -30px;
+  left: 100%;
+  transform: translateX(-50%);
+  background-color: var(--white-light);
+  padding: 5px 10px;
   border-radius: 5px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  margin: 15px 15px;
-  width: 18%;
-  margin-bottom: 30px;
-}
-.favSelectCheck{
-  padding-left: 15px;
-  font-size: 2rem;
-  font-weight: 600;
-  padding-right: 30px;
-}
-.favSelectCheck:hover{
-  font-weight: 700;
-}
-.checkbox {
-  width: 16px;
-  height: 16px;
-  outline: none;
-  cursor: pointer;
+  color: #000;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  top: 100%;
+  width: 50%;
+  text-align: center;
+  font-weight: 800;
 }
 
-.checkbox:checked {
-  background-color: black;
-  border-color: black;
+.addToCartButton:hover .cartText {
+  opacity: 1;
 }
+
+
+
+
+
+
+
 @media (max-width: 399px) {
   .favContainer {
     justify-content: center;
