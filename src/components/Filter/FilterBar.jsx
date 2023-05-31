@@ -81,6 +81,7 @@ export default function FilterBar() {
       setTypeFilter,
       setBrandFilter,
       setOrderFilter,
+      setCountryFilter,
     );
   };
 
