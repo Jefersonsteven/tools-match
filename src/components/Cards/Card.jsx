@@ -7,85 +7,61 @@ import Image from "next/image";
 import axios from "axios";
 
 const Card = ({ title, photo, price, type, perDay, id }) => {
-  const {
-    favorites,
-    setFavorites,
-    favorite,
-    setFavorite,
-    userData,
-    favoriteArray,
-    setFavoriteArray,
-  } = useContext(AppContext);
+  const { favorites, setFavorites, favorite, setFavorite, userData } =
+    useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    fetchData();
-  }, [favoriteArray]);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`api/user/${userData.email}`);
+        const user = response.data;
+        let favoriteArray = user.favoritesId;
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`api/user/${userData.email}`);
-      const user = response.data;
-      let favoriteArray = user.favoritesId;
-
-      if (favoriteArray.includes(id)) {
-        setIsFavorite(true);
-      } else {
-        setIsFavorite(false);
+        if (favoriteArray.includes(id)) {
+          setIsFavorite(true);
+        } else {
+          setIsFavorite(false);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    };
 
-  if (userData && userData.email) {
-    fetchData();
-  }
+    if (userData && userData.email) {
+      fetchData();
+    }
+  }, [id, userData, refresh]);
 
   const handleFavoriteClick = async (id) => {
     setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-    if (isFavorite) {
-      const newFav = favoriteArray.favoritesId.filter((favorite) => {
-        if (favorite !== id) return favorite;
-      });
-      setFavoriteArray({
-        count: favoriteArray.count - 1,
-        favoritesId: newFav,
-      });
+
+    const user = await axios.get(`api/user/${userData.email}`);
+    if (userData && userData.email) {
+      let favoriteArray = await user.data.favoritesId;
+      if (favoriteArray.includes(id) === true) {
+        let newFav = favoriteArray.filter((e) => e !== id);
+        favoriteArray = newFav;
+        setIsFavorite(false);
+      } else {
+        favoriteArray.push(id);
+        setIsFavorite(true);
+      }
+      try {
+        // Update the favorites array in the API
+        const response = await axios.put(`api/user/${userData.email}`, {
+          favoritesId: favoriteArray,
+        });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      setFavoriteArray({
-        count: favoriteArray.count + 1,
-        favoritesId: [...favoriteArray.favoritesId, id],
-      });
+      //TODO: agregar alerrta o algo parecido donde diga que para agregar favoritos debe iniciar sesion
+      console.error("userData or email is null or undefined");
     }
 
-    console.log(favoriteArray, isFavorite);
-    // const user = await axios.get(`api/user/${userData.email}`);
-    // if (userData && userData.email) {
-    //   let favoriteArray = await user.data.favoritesId;
-    //   if (favoriteArray.includes(id) === true) {
-    //     let newFav = favoriteArray.filter((e) => e !== id);
-    //     favoriteArray = newFav;
-    //     setIsFavorite(false);
-    //   } else {
-    //     favoriteArray.push(id);
-    //     setIsFavorite(true);
-    //   }
-    //   try {
-    //     // Update the favorites array in the API
-    //     const response = await axios.put(`api/user/${userData.email}`, {
-    //       favoritesId: favoriteArray,
-    //     });
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    //   // } else {
-    //   //   //TODO: agregar alerrta o algo parecido donde diga que para agregar favoritos debe iniciar sesion
-    //   //   console.error("userData or email is null or undefined");
-    //   // }
-
-    //   setRefresh(!refresh);
+    setRefresh(!refresh);
   };
 
   return (

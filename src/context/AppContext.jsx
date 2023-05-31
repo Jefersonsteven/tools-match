@@ -129,10 +129,8 @@ function AppProvider({ children }) {
   }, []);
 
   // * Favorite *//
-  const [favoriteArray, setFavoriteArray] = useState({
-    count: 0,
-    favoritesId: [],
-  });
+  const [favoriteArray, setFavoriteArray] = useState([]);
+
   const [favorite, setFavorite, isFavorite, setIsFavorite] = useState([]);
 
   // *---------------------------------------* //

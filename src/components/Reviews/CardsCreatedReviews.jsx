@@ -5,23 +5,39 @@ import Image from "next/image";
 import styles from "./CardsCreatedReviews.module.css";
 import FormUpdateReview from "./FormUpdateReview";
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDeleteReview }) => {
   const [selectedReview, setSelectedReview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
-  const handleDeleteReview = async (id) => {
-    try {
-      // Realiza una solicitud DELETE al servidor para eliminar la reseña con el ID proporcionado
-      await axios.delete(`/api/admin/review/${id}`);
-  
-      // Actualiza el estado de las reseñas creadas eliminando la reseña con el ID correspondiente
-      const updatedReviews = createdReviews.filter((review) => review.id !== id);
-      setCreatedReviews(updatedReviews);
-    } catch (error) {
-      console.error("Error al eliminar la reseña:", error);
-    }
+  const handleDeleteReview = (id) => {
+    Swal.fire({
+      title: "¿Seguro quieres eliminar tu reseña?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // Realiza una solicitud DELETE al servidor para eliminar la reseña con el ID proporcionado
+          await axios.delete(`/api/admin/review/${id}`);
+      
+          // Actualiza el estado de las reseñas creadas eliminando la reseña con el ID correspondiente
+          const updatedReviews = createdReviews.filter((review) => review.id !== id);
+          setCreatedReviews(updatedReviews);
+
+          Swal.fire("Eliminada", "La reseña ha sido eliminada correctamente", "success");
+        } catch (error) {
+          console.error("Error al eliminar la reseña:", error);
+          Swal.fire("Error", "No se pudo eliminar la reseña", "error");
+        }
+      }
+    });
   };
   
 
