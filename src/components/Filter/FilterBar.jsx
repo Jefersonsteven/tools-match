@@ -15,14 +15,22 @@ import {
   handleOrderChange,
   handleClearFilters,
   handleKmChange,
-  handleCountryChange
+  handleCountryChange,
 } from "./handlers";
 import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 import { AiOutlineClear } from "react-icons/ai";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected,userId,setIsLoading,setCurrentPage } =
-    useContext(AppContext);
+  const {
+    setCards,
+    title,
+    setTitle,
+    selected,
+    setSelected,
+    userId,
+    setIsLoading,
+    setCurrentPage,
+  } = useContext(AppContext);
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderFilter, setOrderFilter] = useState("");
@@ -30,24 +38,24 @@ export default function FilterBar() {
   const [countryFilter, setCountryFilter] = useState("");
 
   useEffect(() => {
-    fetchCards(selected, setCards, title,userId,setIsLoading,setCurrentPage);
-    return ()=> {
+    fetchCards(selected, setCards, title, userId, setIsLoading, setCurrentPage);
+    return () => {
       setCards([]);
     };
   }, [selected]);
 
-  const handleKeyPress = (e)=> {
-    if(e.key === "Enter") {
-      handleTitleButtonChange(title, setCards, setSelected, selected,userId);
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleTitleButtonChange(title, setCards, setSelected, selected, userId);
     }
-  }
+  };
 
   const handleTitle = (newTitle) => {
     handleTitleChange(newTitle, setTitle, setSelected, selected);
   };
 
   const handleTitleButton = () => {
-    handleTitleButtonChange(title, setCards, setSelected, selected,userId);
+    handleTitleButtonChange(title, setCards, setSelected, selected, userId);
   };
 
   const handleCategory = (event) => {
@@ -66,12 +74,12 @@ export default function FilterBar() {
   };
 
   // handleKm - Jeffer
-  const handleKm = (km, coorde1, coorde2,range) => {
-    handleKmChange(setSelected, km, coorde1, coorde2,range);
+  const handleKm = (km, coorde1, coorde2, range) => {
+    handleKmChange(setSelected, km, coorde1, coorde2, range);
   };
 
   const handleCountry = (event) => {
-    handleCountryChange(event,setSelected, setCountryFilter);
+    handleCountryChange(event, setSelected, setCountryFilter);
   };
 
   const handleCleanFilters = () => {
@@ -81,30 +89,28 @@ export default function FilterBar() {
       setTypeFilter,
       setBrandFilter,
       setOrderFilter,
-      setCountryFilter,
+      setCountryFilter
     );
   };
 
   return (
     <AppProvider>
       <div className="w-full mb-10">
-        <div className="mr-10 ml-2 w-full" style={{ width: "400px" }}>
+        <div className="mr-10 ml-2 w-full">
           <FilterRangeDistance handleKm={handleKm} />
         </div>
-        <div className="w-full flex-1 flex flex-row items-center justify-between px-2">
+        <div className={style.filterContainer}>
           <div className="mr-10" style={{ width: "400px" }}>
-            {/* // filter per distance - Jeffer */}
-
             <SearchBar
               title={title}
               onTitleChange={handleTitle}
               onTitleButton={handleTitleButton}
               style={{ width: "150px" }}
-              handleKeyPress = {handleKeyPress}
+              handleKeyPress={handleKeyPress}
             />
           </div>
           <div className={`flex relative mr-2 ${style.button}`}>
-            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ">
+            <div className="py-4 px-40 bg-black text-white flex items-center rounded-xl z-1">
               Pais <FaGlobeAmericas className="ml-2" />
             </div>
             <div className={style.country}>
@@ -114,7 +120,7 @@ export default function FilterBar() {
                 className={countryFilter === "" ? style.selected : ""}
               >
                 {userId ? "Default" : "Todos"}
-              </button>              
+              </button>
               <button
                 value="CO"
                 onClick={handleCountry}
@@ -130,31 +136,31 @@ export default function FilterBar() {
                 Mexico
               </button>
               <button
-               value="AR"
+                value="AR"
                 onClick={handleCountry}
                 className={countryFilter === "AR" ? style.selected : ""}
               >
-                Argentina 
+                Argentina
               </button>
               <button
-               value="VE"
+                value="VE"
                 onClick={handleCountry}
                 className={countryFilter === "VE" ? style.selected : ""}
               >
-                Venezuela 
+                Venezuela
               </button>
               <button
-               value="alls"
+                value="alls"
                 onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
-                Todos 
+                Todos
               </button>
             </div>
           </div>
           <div className={`mr-2 relative ${style.button}`}>
             <div
-              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}
+              className={`py-4 px-40 bg-black text-white flex items-center rounded-xl`}
             >
               Filtrar <FaFilter className="ml-2" />
             </div>
@@ -384,7 +390,7 @@ export default function FilterBar() {
             </div>
           </div>
           <div className={`flex relative  mr-2 ${style.button}`}>
-            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
+            <div className="py-4 px-40 bg-black text-white  flex items-center rounded-xl">
               Ordenar <FaSort className="ml-2" />
             </div>
             <div className={style.order}>
@@ -434,13 +440,13 @@ export default function FilterBar() {
           </div>
           <div className={` flex relative ${style.clearBbutton}`}>
             {/* <div className={style.clear}> */}
-            <button
+            <div
               onClick={handleCleanFilters}
-              className="bg-black text-white hover:bg-gray-800 flex items-center rounded-xl"
+              className="bg-black text-white flex items-center rounded-xl"
               style={{ height: "46px", padding: "0 40px" }}
             >
               <AiOutlineClear className="mr-2 text-4xl" />
-            </button>
+            </div>
             {/* </div> */}
           </div>
         </div>
