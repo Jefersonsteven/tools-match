@@ -54,7 +54,7 @@ const CardsOrders = ({ userOrders }) => {
               </h4>
             </div>
             <div className="flex flex-col items-end">
-              <h3 className="text-black font-bold text-5xl">
+              <h3 className="text-black font-bold text-5xl text-xl sm:text-3xl">
                 $ {order.amount}
               </h3>
               <h4 className="text-gray-800 text-lg mt-2">
