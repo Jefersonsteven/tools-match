@@ -20,6 +20,7 @@ export default async function confirmPurchase(userData, cart, setCart) {
           seller: {
               name: cart.items[0].author.firstname,
               lastName: cart.items[0].author.lastname,
+              number: cart.items[0].author.phoneNumber,
             },
           items: cart?.items.map(({title, price}) => {
             return {
@@ -37,7 +38,8 @@ export default async function confirmPurchase(userData, cart, setCart) {
               date: new Date().toString(),
               buyer: {
                   name: userData.firstname,
-                  lastName: userData.lastname
+                  lastName: userData.lastname,
+                  number: userData.phoneNumber
                 },
               items: [
                   {
