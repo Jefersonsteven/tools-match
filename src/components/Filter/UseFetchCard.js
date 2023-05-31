@@ -1,5 +1,6 @@
-export const fetchCards = async (selected, setCards, title, userId, setIsLoading) => {
+export const fetchCards = async (selected, setCards, title, userId, setIsLoading,setCurrentPage) => {
   setIsLoading(true); // Establecer isLoading en true
+  setCurrentPage(1);
 
   const getCategoryParam = () => selected.category ? `category=${selected.category}` : '';
   const getTypeParam = () => selected.type ? `type=${selected.type}` : '';
