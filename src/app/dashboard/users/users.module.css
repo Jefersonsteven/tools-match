@@ -208,12 +208,6 @@
     color: white
 }
 
-.loader-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Ajusta la altura según tus necesidades */
-  }
   
 .nombrePerfil {
     color: #1d954e;
@@ -228,3 +222,13 @@
     justify-content: center;
 
 }
+
+.loader_radial {
+    padding-top: 15rem;
+}
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 13rem; 
+  }

@@ -143,10 +143,10 @@ function UserForm({editingUser, handleSubmit, setEditingUser, admin, setAdmin}) 
 
 
    <div className={style.contenedorbotones}>
-  <button className={style.buttonGuardar} type="submit">Guardar</button>
   <button className={style.buttonCancelar}type="button" onClick={() => setEditingUser(null)}>
   Cancelar
   </button>
+  <button className={style.buttonGuardar} type="submit">Guardar</button>
   </div>
   </form>
   </div>

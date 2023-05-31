@@ -202,3 +202,14 @@
     background-color: rgba(255, 0, 0, 0.685);
     color: white
 }
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 13rem; 
+  }
+
+  .td_button {
+    display: flex;
+    justify-content: center;
+}
