@@ -13,15 +13,17 @@ import CardsReview from "@/components/Reviews/CardsReview";
 import CardsCreatedReviews from "@/components/Reviews/CardsCreatedReviews";
 import CardsOrders from "@/components/Reviews/CardsOrders";
 import axios from "axios";
-
+import Modal from "react-modal";
 import Back from "@/components/back/Back";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 export default function PerfilUsuario() {
-  const [editingUser, setEditingUser] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { push } = useRouter();
   const { perfilId } = useParams();
-
+  const [errorsMessages, setErrorsMessages] = useState([]);
+  const [reportMessagges, setReportMessagges] = useState("");
   const { userId, userData, countries } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
   const [createdReviews, setCreatedReviews] = useState([]);
@@ -33,7 +35,7 @@ export default function PerfilUsuario() {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
-  
+
         const receivedReviews = response.data.received.filter(
           (review) => review.hidden === false
         );
@@ -41,16 +43,20 @@ export default function PerfilUsuario() {
         setReviews(receivedReviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener reviews recibidas: " + error,
+        ]);
       }
     };
     fetchReviews();
   }, [userId, perfilId, createdReviews]); // Agregar createdReviews como dependencia
-  
+
   useEffect(() => {
     const fetchCreatedReviews = async () => {
       try {
         const response = await axios.get(`/api/admin/user/${perfilId}`);
-  
+
         const createdReviews = response.data.reviews.filter(
           (review) => review.hidden === false
         );
@@ -58,6 +64,10 @@ export default function PerfilUsuario() {
         setCreatedReviews(createdReviews);
       } catch (error) {
         console.error("Error fetching createdReviews:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener reviews creadas: " + error,
+        ]);
       }
     };
     fetchCreatedReviews();
@@ -77,6 +87,10 @@ export default function PerfilUsuario() {
         setAuthors(fetchedAuthors.map((response) => response.data)); // Convertir la respuesta en un array de datos
       } catch (error) {
         console.error("Error fetching authors:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener autores: " + error,
+        ]);
       }
     };
 
@@ -111,6 +125,10 @@ export default function PerfilUsuario() {
         setUserOrders(orderDetails);
       } catch (error) {
         console.error("Error fetching user orders:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener las ordenes: " + error,
+        ]);
       }
     };
 
@@ -162,15 +180,54 @@ export default function PerfilUsuario() {
     }
   };
 
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const reportSubmit = async () => {
+    setModalIsOpen(false);
+    try {
+      let config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userEmail: user.email,
+          reason: `Autor del reporte: ${userData.firstname} ${userData.lastname} \n\n Razón del reporte: ${reportMessagges}`,
+        }),
+      };
+
+      let response = await fetch("/api/admin/report", config);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <section>
         <Back />
-        {!user.firstname && (
+        {errorsMessages.length > 0 ? (
           <div className="grid justify-center items-center fixed w-screen h-3/6">
-            <LoaderRadial />
+            <p>Ha courrido los siguientes errores:</p>
+            {errorsMessages.map((error, index) => {
+              return <p key={index}>{error}</p>;
+            })}
           </div>
+        ) : (
+          !user.firstname && (
+            <div className="grid justify-center items-center fixed w-screen h-3/6">
+              <LoaderRadial />
+            </div>
+          )
         )}
+
         {user.firstname && (
           <>
             <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
@@ -222,21 +279,76 @@ export default function PerfilUsuario() {
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <Link
-                  href={`perfil/${userId}/edit`}
-                  className={styles.editButton}
+                {userId === perfilId ? (
+                  <Link
+                    href={`perfil/${userId}/edit`}
+                    className={styles.editButton}
+                  >
+                    Editar perfil
+                  </Link>
+                ) : (
+                  <button className={styles.editButton} onClick={openModal}>
+                    Reportar usuario
+                  </button>
+                )}
+                <Modal
+                  isOpen={modalIsOpen}
+                  onRequestClose={closeModal}
+                  className={styles.customModal}
+                  overlayClassName={styles.customOverlay}
+                  contentLabel="Purchased Items Modal"
                 >
-                  Editar perfil
-                </Link>
+                  {modalIsOpen && (
+                    <>
+                      <div className={styles.modalheader}>
+                        <div className={styles.modaltitle}>
+                          <h2>Reportar usuario</h2>
+                        </div>
+                        <AiFillCloseCircle
+                          size={25}
+                          color="var(--red)"
+                          onClick={closeModal}
+                          className={styles.modalbuttonClose}
+                        />
+                      </div>
+                      <form onSubmit={reportSubmit}>
+                        <div className="flex flex-col mb-8">
+                          <label htmlFor="email">Tú Email:</label>
+                          <input
+                            name="email"
+                            type="email"
+                            disabled
+                            value={userData.email}
+                          />
+                        </div>
+                        <div className="flex flex-col mb-8">
+                          <label htmlFor="rason">Motivo del reporte:</label>
+                          <textarea
+                            name="rason"
+                            type="text"
+                            value={reportMessagges}
+                            onChange={(event) =>
+                              setReportMessagges(event.target.value)
+                            }
+                          />
+                        </div>
+                        <div className="flex justify-center">
+                          <button>enviar reporte</button>
+                        </div>
+                      </form>
+                    </>
+                  )}
+                </Modal>
               </div>
             </section>
-            <div className={styles.titlesSections}>
-              <h3 className={styles.sectionTitleH3}>Herramientas Publicadas</h3>
-              <h3 className={styles.sectionTitleH3}>Compras y Arriendos</h3>
+            <div className={`${styles.titlesSections} justify-center`}>
+              <h3 className={`${styles.sectionTitleH3Seller} text-center`}>
+                Herramientas Publicadas
+              </h3>
             </div>
             <div className={styles.sectionsContainer}>
-              <section>
-                <div className="grid grid-cols-4 gap-9">
+              <section className={styles.scrollInPosts}>
+                <div className={`flex flex-wrap gap-4 `}>
                   {user.posts ? (
                     user.posts.map((post) => {
                       return (
@@ -254,7 +366,7 @@ export default function PerfilUsuario() {
                       );
                     })
                   ) : (
-                    <div class="flex items-center justify-center ">
+                    <div className="flex items-center justify-center">
                       <p className="text-2xl text-center">
                         No tienes herramientas publicadas
                       </p>
@@ -265,32 +377,50 @@ export default function PerfilUsuario() {
               {user.id == userData?.id && (
                 <section>
                   <div className="w-full items-center ">
+                    <h3 className="text-center mb-8">
+                      Tus compras y arriendos
+                    </h3>
                     <CardsOrders userOrders={userOrders} />
                   </div>
                 </section>
               )}
             </div>
             <div className={styles.titleReviewContainer}>
-              <h3 className={styles.sectionTitleH3}>
-                Reseñas de tus herramientas
+              <h3 className={`${styles.sectionTitleH3Seller} text-center`}>
+                Reseñas
               </h3>
-              <h3 className={styles.sectionTitleH3}>Reseñas Enviadas</h3>
             </div>
-            <div className="flex gap-4">
-              <div className={styles.reviewContainer}>
-                <CardsReview
-                  reviews={reviews}
-                  authors={Object.values(authors)}
-                />
+            <div
+              className={`flex flex-col justify-center items-center  md:flex-row gap-4 ${styles.itemsStart}`}
+            >
+              <div
+                className={
+                  userId === perfilId
+                    ? styles.reviewContainer
+                    : styles.reviewContainerAutor
+                }
+              >
+                <h3 className="text-center mb-8">Recibidas</h3>
+                <div>
+                  <CardsReview
+                    reviews={reviews}
+                    authors={Object.values(authors)}
+                  />
+                </div>
               </div>
-              <div className={styles.reviewContainer}>
-                <CardsCreatedReviews
-                  createdReviews={createdReviews}
-                  setCreatedReviews={setCreatedReviews}
-                  author={user}
-                  onDeleteReview={handleDeleteReview}
-                />
-              </div>
+              {userId === perfilId && (
+                <div className={styles.reviewContainer}>
+                  <h3 className="text-center mb-8">Enviadas</h3>
+                  <div>
+                    <CardsCreatedReviews
+                      createdReviews={createdReviews}
+                      setCreatedReviews={setCreatedReviews}
+                      author={user}
+                      onDeleteReview={handleDeleteReview}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}

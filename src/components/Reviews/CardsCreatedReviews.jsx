@@ -4,13 +4,18 @@ import { TiDelete, TiPencil } from "react-icons/ti";
 import Image from "next/image";
 import styles from "./CardsCreatedReviews.module.css";
 import FormUpdateReview from "./FormUpdateReview";
-import axios from 'axios';
+import axios from "axios";
+
 import Swal from "sweetalert2";
 
-const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDeleteReview }) => {
+const CardsCreatedReviews = ({
+  createdReviews,
+  author,
+  setCreatedReviews,
+  onDeleteReview,
+}) => {
   const [selectedReview, setSelectedReview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
 
   const handleDeleteReview = (id) => {
     Swal.fire({
@@ -27,12 +32,18 @@ const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDele
         try {
           // Realiza una solicitud DELETE al servidor para eliminar la reseña con el ID proporcionado
           await axios.delete(`/api/admin/review/${id}`);
-      
+
           // Actualiza el estado de las reseñas creadas eliminando la reseña con el ID correspondiente
-          const updatedReviews = createdReviews.filter((review) => review.id !== id);
+          const updatedReviews = createdReviews.filter(
+            (review) => review.id !== id
+          );
           setCreatedReviews(updatedReviews);
 
-          Swal.fire("Eliminada", "La reseña ha sido eliminada correctamente", "success");
+          Swal.fire(
+            "Eliminada",
+            "La reseña ha sido eliminada correctamente",
+            "success"
+          );
         } catch (error) {
           console.error("Error al eliminar la reseña:", error);
           Swal.fire("Error", "No se pudo eliminar la reseña", "error");
@@ -40,7 +51,6 @@ const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDele
       }
     });
   };
-  
 
   const handleEdit = (review) => {
     setSelectedReview(review);
@@ -65,7 +75,7 @@ const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDele
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 bg-green-80 h-full">
+      <div className={`grid grid-cols-3 gap-4 bg-green-80 ${styles.flexbox}`}>
         {createdReviews.map((review) => {
           const starCount = 5;
           const rating = review.rating;

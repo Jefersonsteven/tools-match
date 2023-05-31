@@ -147,7 +147,8 @@ export default function Logout() {
           <div className={styles.inputContainer}>
             <label htmlFor="phoneNumber">celular *</label>
             <input
-              type="text"
+              className={styles.noArrows}
+              type="number"
               name="phoneNumber"
               onChange={handleChange}
               autoComplete="off"

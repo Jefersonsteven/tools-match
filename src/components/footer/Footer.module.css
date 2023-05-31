@@ -1,168 +1,179 @@
 /*----------------------FOOTER----------------------*/
-.footer{
-    margin-top: auto;
-    background: var(--black);
-    width: 100%;
-    height: 111px;
-    align-items: center;
-    display: flex;
-    justify-content: space-around;
+.footer {
+  margin-top: auto;
+  background: var(--black);
+  width: 100%;
+  height: 111px;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
 }
-.footerRights, .footerTerms{
-    color:#DCF1D9; 
+.footerRights,
+.footerTerms {
+  color: #dcf1d9;
 }
 
-.footerLogo{
-    color: var(--white);
+.footerLogo {
+  color: var(--white);
 }
 
 .footerTerms a:hover,
 .footerLogo:hover {
-    color: yellow;
-    cursor: pointer;
-    border-bottom: 1px solid var(--orange);
+  color: yellow;
+  cursor: pointer;
+  border-bottom: 1px solid var(--orange);
 }
 
-.contact{
-    display: flex;
-    color: #fff;
-    padding: auto;
-    align-items: center;
+.contact {
+  display: flex;
+  color: #fff;
+  padding: auto;
+  align-items: center;
 }
-.contactInfo{
-    display: flex;
-    padding: 0 1rem;
+.contactInfo {
+  display: flex;
+  padding: 0 1rem;
 }
-.contactTwitter{
-    margin-left: 20px;
+.contactTwitter {
+  margin-left: 20px;
 }
-.contactMail, .contactTwitter{
-    height: 35px;
-    width: 30px;
-    color: var(--white-dark);
+.contactMail,
+.contactTwitter {
+  height: 35px;
+  width: 30px;
+  color: var(--white-dark);
 }
-.contactMail:hover, .contactTwitter:hover{
-    color: var(--orange);
-    cursor: pointer;
+.contactMail:hover,
+.contactTwitter:hover {
+  color: var(--orange);
+  cursor: pointer;
+}
+.contactMail:hover,
+.contactTwitter:hover {
+  color: var(--orange);
+  cursor: pointer;
 }
 
 /* ----------- RESPONSIVE ---------- */
-@media screen and (max-width: 3000px){
-    .footerInfo, .contact{
-        font-size: 2rem;
-   }
-       .footerInfo{
-           display: flex;
-           
-       }
-       .footerRights, .footerTerms{
-           margin-left: 40px;
-       }
-       .footerLogo{
-           margin-left: 80px;
-       }
-       .contact{
-           margin-right: 70px;
-       }
-   }
-@media screen and (max-width: 1600px){
-    .footerInfo, .contact{
-        font-size: 2rem;
-   }
-       .footerInfo{
-           display: flex;
-           
-       }
-       .footerRights, .footerTerms{
-           margin-left: 40px;
-       }
-       .footerLogo{
-           margin-left: 80px;
-       }
-       .contact{
-           margin-right: 70px;
-       }
-   }
-@media screen and (max-width: 1200px){
- .footerInfo, .contact{
-     font-size: 1.5rem;
+@media screen and (max-width: 3000px) {
+  .footerInfo,
+  .contact {
+    font-size: 2rem;
+  }
+  .footerInfo {
+    display: flex;
+  }
+  .footerRights,
+  .footerTerms {
+    margin-left: 40px;
+  }
+  .footerLogo {
+    margin-left: 80px;
+  }
+  .contact {
+    margin-right: 70px;
+  }
 }
-    .footerInfo{
-        display: flex;
-        
-    }
-    .footerRights, .footerTerms{
-        margin-left: 40px;
-    }
-    .footerLogo{
-        margin-left: 80px;
-    }
-    .contact{
-        margin-right: 70px;
-    }
+@media screen and (max-width: 1600px) {
+  .footerInfo,
+  .contact {
+    font-size: 2rem;
+  }
+  .footerInfo {
+    display: flex;
+  }
+  .footerRights,
+  .footerTerms {
+    margin-left: 40px;
+  }
+  .footerLogo {
+    margin-left: 80px;
+  }
+  .contact {
+    margin-right: 70px;
+  }
 }
-@media screen and (max-width: 900px){
-    .footer{
-        justify-content: space-between;
-    }
-    .footerInfo{
-        display: flex;
-        font-size: 1.5rem;
-    }
-    .contactTitle{
-        font-size: 1.5rem;
-    }
+@media screen and (max-width: 1200px) {
+  .footerInfo,
+  .contact {
+    font-size: 1.5rem;
+  }
+  .footerInfo {
+    display: flex;
+  }
+  .footerRights,
+  .footerTerms {
+    margin-left: 40px;
+  }
+  .footerLogo {
+    margin-left: 80px;
+  }
+  .contact {
+    margin-right: 70px;
+  }
 }
-@media  (min-width: 391px) and (max-width: 800px){
-    .footer{
-        justify-content: space-between;
-    }
-    .footerRights{
-        padding: 0;
-    }
-    .contact{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 20px;
-    }
-   
-    .contactMail, .contactTwitter{
-        height: 30px;
-        width: 25px;
-        
-    }
-    .footerInfo{
-        display: inline-block;
-        
-    }
+@media screen and (max-width: 900px) {
+  .footer {
+    justify-content: space-between;
+  }
+  .footerInfo {
+    display: flex;
+    font-size: 1.5rem;
+  }
+  .contactTitle {
+    font-size: 1.5rem;
+  }
 }
-@media  (max-width: 390px){
-    .footer{
-        justify-content: space-between;
-    }
-    .contact{
-        flex-direction: column;
-    }
-   
-    .contactMail, .contactTwitter{
-        height: 30px;
-        width: 25px;
-    }
-    .footerInfo{
-        display: inline-block;
-        
-    }
-    .footerLogo, .footerRights{
-       display: none;
-    }
-    .contactTitle{
-        display: none;
-    }
-    .contactMail{
-        margin-left: auto;
-    }
-    .contactTwitter{
-        margin-left: 20px;
-    }
+@media (min-width: 391px) and (max-width: 800px) {
+  .footer {
+    justify-content: space-between;
+  }
+  .footerRights {
+    padding: 0;
+  }
+  .contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+  }
+
+  .contactMail,
+  .contactTwitter {
+    height: 30px;
+    width: 25px;
+  }
+  .footerInfo {
+    display: inline-block;
+  }
+}
+@media (max-width: 390px) {
+  .footer {
+    justify-content: space-between;
+  }
+  .contact {
+    flex-direction: column;
+  }
+
+  .contactMail,
+  .contactTwitter {
+    height: 30px;
+    width: 25px;
+  }
+  .footerInfo {
+    display: inline-block;
+  }
+  .footerLogo,
+  .footerRights {
+    display: none;
+  }
+  .contactTitle {
+    display: none;
+  }
+  .contactMail {
+    margin-left: auto;
+  }
+  .contactTwitter {
+    margin-left: 20px;
+  }
 }

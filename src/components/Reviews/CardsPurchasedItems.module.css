@@ -1,20 +1,39 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  max-height: calc(100vh - 49rem);
+  height: auto;
   overflow: auto;
   margin: 1rem;
+  gap: 30px;
 }
+
+.containerTwo::-webkit-scrollbar {
+  width: 8px;
+}
+
+.containerTwo::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.containerTwo::-webkit-scrollbar-thumb {
+  background-color: orange;
+}
+
+.containerTwo::-webkit-scrollbar-thumb:hover {
+  background-color: darkorange;
+}
+
 .containerTwo {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   max-height: calc(100vh - 59rem);
   overflow: auto;
   margin: 1rem;
+  gap: 30px;
 }
 
 .header {
@@ -29,27 +48,27 @@
   font-weight: bold;
   font-size: 1.875rem;
 }
-.buttonClose:hover{
+.buttonClose:hover {
   cursor: pointer;
 }
-.containerProduct{
+.containerProduct {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 80%;
 }
 
 .product {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 0.2rem;
   background-color: #ffffff;
   border-radius: 0.3rem;
   box-shadow: 0 0.4rem 0.6px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
-  width: 35rem;
 }
 
 .product h3 {
@@ -59,14 +78,14 @@
   margin-top: 1rem;
 }
 
-.img{
+.img {
   width: 48%;
 }
 
-.opinion{
-  border-radius: 0.4rem; 
-  padding-left: 0.4rem; 
-  padding-right: 0.4rem;  
+.opinion {
+  border-radius: 0.4rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }
@@ -123,16 +142,16 @@
   }
 }
 
-@media (max-width: 390px){
-	.container {
-		margin: 0;
-		max-height: calc(100vh - 39rem);
-	}
-  .containerTwo{
+@media (max-width: 390px) {
+  .container {
     margin: 0;
-		max-height: calc(100vh - 49rem);
+    max-height: calc(100vh - 39rem);
   }
-	.title{
-		font-size: 1.5rem	
-	}
+  .containerTwo {
+    margin: 0;
+    max-height: calc(100vh - 49rem);
+  }
+  .title {
+    font-size: 1.5rem;
+  }
 }
