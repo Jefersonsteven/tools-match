@@ -11,6 +11,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
 import { CiUnlock } from "react-icons/ci";
+import LoaderRadial from "@/components/Loader/LoaderRadial";
 
 import Loader from "@/components/Loader/Loader";
 
@@ -114,9 +115,10 @@ function UsersBan() {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#01d3f8",
-      cancelButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
       confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
         axios.put("/api/admin/hidden/user", {
@@ -177,10 +179,11 @@ function UsersBan() {
         text: `Sacaras el veto a los usuarios ${userEmails}?`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
+        confirmButtonColor: "#01d3f8",
+        cancelButtonColor: "#d33",
         confirmButtonText: "Sí, borrar",
         cancelButtonText: "Cancelar",
+        reverseButtons: true,
         onBeforeOpen: ()=> {
           Swal.showLoading();
         }
@@ -256,8 +259,8 @@ function UsersBan() {
       {loading ? (
 
 
-<div className="loader-container">
-  <Loader className="loader" />
+<div className={style.loaderContainer}>
+  <LoaderRadial />
 </div>
       
     ) : ( <div>

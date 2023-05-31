@@ -214,3 +214,8 @@
     height: 100vh; /* Ajusta la altura según tus necesidades */
   }
   
+  .loaderContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 13rem; 
+  }

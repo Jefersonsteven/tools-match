@@ -14,6 +14,7 @@ import { TiDelete, TiPencil } from "react-icons/ti";
 
 import Loader from "@/components/Loader/Loader";
 import Link from "next/link";
+import LoaderRadial from "@/components/Loader/LoaderRadial";
 
 
 
@@ -64,7 +65,7 @@ function Users() {
 
 
   const filteredUsuarios = records.filter((usuario) => {
-    return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
+    return usuario.email.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   /*---------- PAGINATED ----------*/
@@ -117,7 +118,7 @@ function Users() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const updatedUser = {
-      country: formData.get("country"),
+      country: editingUser.country,
 
       admin: editingUser.admin,
     };
@@ -149,6 +150,7 @@ console.log(updatedUser)
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, guardar cambios",
       cancelButtonText: "Cancelar",
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
         setLoadingModal(true);
@@ -192,6 +194,7 @@ console.log(updatedUser)
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Sí, borrar",
       cancelButtonText: "Cancelar",
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -319,38 +322,38 @@ console.log(updatedUser)
 
 
 
-  const handleAdminClick = (firstname, id) => {
-    Swal.fire({
-      title: "¿Estás seguro de asignar el rol de administrador?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, asignar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(`/api/admin/user/${id}`, { admin: true })
-          .then((response) => {
-            // Actualizar la lista de usuarios en el estado local
-            setRecords((prevRecords) =>
-              prevRecords.map((user) =>
-                user.id === id ? { ...user, admin: true } : user
-              )
-            );
+  // const handleAdminClick = (firstname, id) => {
+  //   Swal.fire({
+  //     title: "¿Estás seguro de asignar el rol de administrador?",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#d33",
+  //     cancelButtonColor: "#3085d6",
+  //     confirmButtonText: "Sí, asignar",
+  //     cancelButtonText: "Cancelar",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axios
+  //         .put(`/api/admin/user/${id}`, { admin: true })
+  //         .then((response) => {
+  //           // Actualizar la lista de usuarios en el estado local
+  //           setRecords((prevRecords) =>
+  //             prevRecords.map((user) =>
+  //               user.id === id ? { ...user, admin: true } : user
+  //             )
+  //           );
   
-            Swal.fire({
-              title: "¡Rol de administrador asignado correctamente!",
-              icon: "success",
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    });
-  };
+  //           Swal.fire({
+  //             title: "¡Rol de administrador asignado correctamente!",
+  //             icon: "success",
+  //           });
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //         });
+  //     }
+  //   });
+  // };
 
 
   const [loadingModal, setLoadingModal] = useState(false);
@@ -372,11 +375,16 @@ console.log(updatedUser)
       {loading ? (
 
 
-<div className="loader-container">
-  <Loader className="loader" />
+<div className={style.loaderContainer}>
+  <LoaderRadial />
 </div>
       
-    ) : ( <div>
+    ) : ( 
+    
+
+
+    <div>
+
 
    
       
@@ -484,10 +492,11 @@ console.log(updatedUser)
 
 
           <Modal show={showModal} onClose={() => setShowModal(false)}>
-
-
-
 {loadingModal ? (
+    <div className={style.loader_radial}>
+      <LoaderRadial />
+    </div>
+  ) : (
     <div>
       <UserForm
         admin={admin}
@@ -496,28 +505,9 @@ console.log(updatedUser)
         handleSubmit={handleSubmit}
         setEditingUser={setEditingUser}
       />
-      <div className={style.contenedor_delLoader}>
-
-      <Loader /> {/* Renderiza el loader mientras se está cargando */}
-      </div>
     </div>
-  ) : (
-    <div>
-    <UserForm
-      admin={admin}
-      setAdmin={setAdmin}
-      editingUser={editingUser}
-      handleSubmit={handleSubmit}
-      setEditingUser={setEditingUser}
-    />
-   
-    
-    </div>
-    
   )}
-
-
-          </Modal>
+</Modal>
         )}
 
 

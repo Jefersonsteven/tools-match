@@ -21,6 +21,7 @@ const CardsCreatedReviews = ({ createdReviews, author, setCreatedReviews, onDele
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
+      reverseButtons: true,
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
