@@ -52,6 +52,16 @@ export const getDataFromDB = async (
     false
   );
 
+  if (dbUserData.hidden) {
+    Swal.fire({
+      position: "center",
+      title: `Su cuenta se encuentra baneada.`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+    return;
+  }
+
   if (!dbUserData || dbUserData.error) {
     Swal.fire({
       position: "center",
