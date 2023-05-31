@@ -60,9 +60,16 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
     <div className={posts?.length > 1 ? styles.containerTwo : styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>
-          {multipleItems ? "¿Qué te parecieron tus productos?" : "¿Qué te pareció tu producto?"}
+          {multipleItems
+            ? "¿Qué te parecieron tus productos?"
+            : "¿Qué te pareció tu producto?"}
         </div>
-        <AiFillCloseCircle size={25} color="var(--red)" onClick={onClose} className={styles.buttonClose} />
+        <AiFillCloseCircle
+          size={25}
+          color="var(--red)"
+          onClick={onClose}
+          className={styles.buttonClose}
+        />
       </div>
       <div className={styles.containerProduct}>
         {isLoading || posts.length === 0 ? (
@@ -72,37 +79,51 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
         ) : (
           posts.map((post) => (
             <div
-              key={post.id}
+              key={post?.id}
               className={styles.product}
               style={{ minHeight: "270px" }}
             >
-              <h3>{post.title}</h3>
+              <h3>{post?.title}</h3>
               <img
-                src={post.photo[0]}
-                alt={post.title}
+                src={post?.photo[0]}
+                alt={post?.title}
                 className={styles.img}
                 style={{ paddingBottom: "40px" }}
               />
               <div className={styles.reviewContainer}>
-                {hasUserReviewed(post.id) ? (
+                {hasUserReviewed(post?.id) ? (
                   <>
-                    <FaCheckCircle size={20} color="green" className={styles.checkIcon} />
-                    <label className={styles.reviewLabel}>Ya publicamos tu reseña</label>
+                    <FaCheckCircle
+                      size={20}
+                      color="green"
+                      className={styles.checkIcon}
+                    />
+                    <label className={styles.reviewLabel}>
+                      Ya publicamos tu reseña
+                    </label>
                   </>
+                ) : !reviewSubmitted ? (
+                  <button
+                    className={`${styles.opinion} ${
+                      isReviewModalOpen && styles.disabled
+                    }`}
+                    onClick={() => handleReviewModalOpen(post)}
+                  >
+                    {isReviewModalOpen
+                      ? "Dejar Reseña"
+                      : "Opina sobre tu producto"}
+                  </button>
                 ) : (
-                  !reviewSubmitted ? (
-                    <button
-                      className={`${styles.opinion} ${isReviewModalOpen && styles.disabled}`}
-                      onClick={() => handleReviewModalOpen(post)}
-                    >
-                      {isReviewModalOpen ? "Dejar Reseña" : "Opina sobre tu producto"}
-                    </button>
-                  ) : (
-                    <>
-                      <FaCheckCircle size={20} color="green" className={styles.checkIcon} />
-                      <label className={styles.reviewLabel}>Ya publicamos tu reseña</label>
-                    </>
-                  )
+                  <>
+                    <FaCheckCircle
+                      size={20}
+                      color="green"
+                      className={styles.checkIcon}
+                    />
+                    <label className={styles.reviewLabel}>
+                      Ya publicamos tu reseña
+                    </label>
+                  </>
                 )}
               </div>
             </div>

@@ -11,7 +11,7 @@
 
 .customModal {
   width: 30%;
-  max-height: calc(100% - 46rem);
+  height: auto;
   margin: auto;
   background-color: rgb(211, 231, 211);
   margin-top: 20rem;
@@ -20,7 +20,7 @@
 }
 .customModalTwo {
   width: 30%;
-  max-height: calc(100% - 56rem);
+  height: auto;
   margin: auto;
   background-color: rgb(211, 231, 211);
   margin-top: 20rem;
@@ -48,14 +48,14 @@
 
 @media screen and (max-width: 390px) {
   .customModal {
-    width: 70%;
-    height: calc(100% - 60rem);
+    width: 90%;
+    height: 39rem;
     margin-top: 30rem;
     padding: 1rem;
   }
   .customModalTwo {
-    width: 70%;
-    height: calc(100% - 70rem);
+    width: 90%;
+    height: 39rem;
     margin-top: 30rem;
     padding: 1rem;
   }

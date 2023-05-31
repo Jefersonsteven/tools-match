@@ -188,6 +188,27 @@ export default function PerfilUsuario() {
     setModalIsOpen(false);
   };
 
+  const reportSubmit = async () => {
+    setModalIsOpen(false);
+    try {
+      let config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userEmail: user.email,
+          reason: `Autor del reporte: ${userData.firstname} ${userData.lastname} \n\n Razón del reporte: ${reportMessagges}`,
+        }),
+      };
+
+      let response = await fetch("/api/admin/report", config);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <section>
@@ -290,7 +311,7 @@ export default function PerfilUsuario() {
                           className={styles.modalbuttonClose}
                         />
                       </div>
-                      <form>
+                      <form onSubmit={reportSubmit}>
                         <div className="flex flex-col mb-8">
                           <label htmlFor="email">Tú Email:</label>
                           <input
