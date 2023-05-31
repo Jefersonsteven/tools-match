@@ -236,7 +236,7 @@ function PostDetail({}) {
                       </b>
                       @{pd.author.firstname}
                     </h5>
-                    <h5>⭐{pd2.author.rating}.0</h5>
+                    <h5>⭐{pd.author.rating}.0</h5>
                   </div>
                 </Link>
                 <div className={styles.reviews}>
