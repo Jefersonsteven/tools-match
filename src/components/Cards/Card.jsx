@@ -5,9 +5,16 @@ import styles from "./Card.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
+<<<<<<< HEAD
+import { RiStarFill, RiStarLine } from "react-icons/ri";
+import { calcularPromedioDeRatings } from "./assets/calculateAverage";
+
+const Card = ({ title, photo, price, type, perDay, id,reviews }) => {
+=======
 import { calcularPromedioDeRatings } from "./assets/calculateAverage";
 
 const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
+>>>>>>> d2af8c8e6be4ec3c967b726591fd0407eb09dc19
   const { favorites, setFavorites, favorite, setFavorite, userData } =
     useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -16,6 +23,11 @@ const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
   if (reviews) {
     promedio = calcularPromedioDeRatings(reviews);
   }
+
+  let promedio  
+    if(reviews){
+      promedio = calcularPromedioDeRatings(reviews)
+    }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +75,25 @@ const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
   };
 
   return (
+<<<<<<< HEAD
+    <div
+      className={`${styles.cardContainer} bg-white rounded-md p-4`}
+      popovertarget="title"
+    >      
+         <div className="rating flex items-center">
+                  {Array.from({ length: 5 }, (_, index) => (
+                <div key={index} className="mr-1">
+                 {index < promedio ? (
+                  <RiStarFill className="text-yellow-500" />
+                   ) : (
+                  <RiStarLine className="text-gray-400" />
+                   )}
+                </div>
+                 ))}               
+      </div>
+=======
     <div className={`${styles.cardContainer} bg-white rounded-md p-4`}>
+>>>>>>> d2af8c8e6be4ec3c967b726591fd0407eb09dc19
       <div className={styles.favoriteContainer}>
         <FaHeart
           className={
@@ -114,7 +144,11 @@ const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
               >
                 {type}
               </p>
+<<<<<<< HEAD
+           
+=======
               <p>${promedio}</p>
+>>>>>>> d2af8c8e6be4ec3c967b726591fd0407eb09dc19
               <p>{perDay}</p>
             </div>
           </div>

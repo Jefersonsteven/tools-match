@@ -5,7 +5,6 @@ export  function calcularPromedioDeRatings(reviews) {
 
   const sumatoria = reviews.reduce((total, review) => total + review.rating, 0);
   const promedio = sumatoria / reviews.length;
-
   const promedioRound = promedio.toFixed(2);
 
   return promedioRound;
