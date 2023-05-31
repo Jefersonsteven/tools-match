@@ -72,6 +72,7 @@ const Cards = () => {
                 price={tool.price}
                 id={tool.id}
                 type={tool.type === "RENTAL" ? "Arriendo" : "Venta"}
+                reviews={tool.reviews}
               />
             </div>
           ))}
