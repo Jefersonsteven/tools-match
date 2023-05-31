@@ -243,9 +243,11 @@ function PostDetail({}) {
                   <h3>Reseñas: </h3>
                   {pd.reviews.length === 0 && <h4>No hay reseñas.</h4>}
                   <div>
-                    {pd.reviews?.map((review) => (
-                      <Review key={review.id} review={review} />
-                    ))}
+                    {pd.reviews?.map((review) => {
+                      if (!review.hidden) {
+                        return <Review key={review.id} review={review} />;
+                      }
+                    })}
                   </div>
                 </div>
               </section>
