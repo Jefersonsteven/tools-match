@@ -80,7 +80,7 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
         ) : (
           posts.map((post) => (
             <div
-              key={post.id}
+              key={post?.id}
               className={styles.product}
               style={{ minHeight: "270px" }}
             >
@@ -92,7 +92,7 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
                 style={{ paddingBottom: "40px" }}
               />
               <div className={styles.reviewContainer}>
-                {hasUserReviewed(post.id) ? (
+                {hasUserReviewed(post?.id) ? (
                   <>
                     <FaCheckCircle
                       size={20}
