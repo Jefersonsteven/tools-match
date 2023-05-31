@@ -95,7 +95,39 @@ button.selected {
   font-size: 3rem;
 }
 
+.filterContainer{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.filterDistance {
+  display: flex;
+  justify-content: center;
+}
+
+.filterDistance{
+  width: 100%;
+}
+
+.searchBar{
+  
+}
+
 /* /////////////////////////////////////////////////////////// */
+
+@media (max-width: 1400px){
+  .filterContainer {
+    padding: 0 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .filterContainer div:hover {
+    z-index: 1;
+  }
+}
 
 /* .window,
 .window2 {

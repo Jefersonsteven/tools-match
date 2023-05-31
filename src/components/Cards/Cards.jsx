@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Card from "./Card";
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useContext, useState } from "react";
@@ -10,15 +10,23 @@ import styles from "./Cards.module.css";
 import LoaderRadial from "../Loader/LoaderRadial";
 
 const Cards = () => {
-  const { cards, setCards, setFilteredCards, currentPage, setCurrentPage,userId,isLoading,setIsLoading} =
-    useContext(AppContext);//userId agregado por jean 
+  const {
+    cards,
+    setCards,
+    setFilteredCards,
+    currentPage,
+    setCurrentPage,
+    userId,
+    isLoading,
+    setIsLoading,
+  } = useContext(AppContext); //userId agregado por jean
   /* const [isLoading, setIsLoading] = useState(false); */
 
   /*----------PAGINATED----------*/
 
   const cardsPerPage = 12;
   /*-------------------------------*/
- /*  // modificado por jean heyller para que cuando inicie sesion cargue las publicaciones que estan en su pais
+  /*  // modificado por jean heyller para que cuando inicie sesion cargue las publicaciones que estan en su pais
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -58,7 +66,6 @@ const Cards = () => {
   const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`; */
 
   /* --------------------------------- */
-  console.log(cards)
   return (
     <AppProvider>
       <div className="p-4 px-2 grid justify-items-center">

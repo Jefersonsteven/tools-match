@@ -17,8 +17,6 @@ const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
     promedio = calcularPromedioDeRatings(reviews);
   }
 
-  console.log(reviews);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
