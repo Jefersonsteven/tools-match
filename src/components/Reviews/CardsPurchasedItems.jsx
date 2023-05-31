@@ -86,6 +86,8 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
             >
               <h3>{post.title}</h3>
               <Image
+                width={200}
+                height={200}
                 src={post.photo[0]}
                 alt={post.title}
                 className={styles.img}
