@@ -7,9 +7,9 @@ export const handleTitleChange = (newTitle, setTitle, setSelected,selected) => {
 
 export const handleTitleButtonChange = async (title, setCards,setSelected,selected,userId) => {
   setSelected({ ...selected, title: title });
-  const response = await fetch(`/api/filters/title?id=${userId}&name=${title}`);
+/*   const response = await fetch(`/api/filters/title?id=${userId}&name=${title}`);
   const data = await response.json();
-  setCards(data || []);
+  setCards(data || []); */
 };
 export const handleCategoryChange = (event, setSelected, setCategoryFilter) => {
   const categoryValue = event.target.value;
@@ -55,14 +55,24 @@ export const handleOrderChange = (type, order, setSelected, setOrderFilter) => {
 };
 
 // filtrar por handle Km - Jeffer
-export const handleKmChange = (setSelected, km, coorde1, coorde2) => {
-  setSelected((prevSelected) => ({
-    ...prevSelected,
-    coorde1,
-    coorde2,
-    km,
-  }));
-}
+export const handleKmChange = (setSelected, km, coorde1, coorde2, range) => {
+  if (km == "0") {
+    setSelected((prevSelected) => ({
+      ...prevSelected,
+      coorde1: "",
+      coorde2: "",
+      km: "",
+    }));
+  } else {
+    setSelected((prevSelected) => ({
+      ...prevSelected,
+      coorde1,
+      coorde2,
+      km,
+    }));
+  }
+  console.log(km)
+};
 
 export const handleClearFilters = (
   setSelected,
