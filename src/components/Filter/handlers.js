@@ -7,7 +7,7 @@ export const handleTitleChange = (newTitle, setTitle, setSelected,selected) => {
 
 export const handleTitleButtonChange = async (title, setCards,setSelected,selected,userId) => {
   setSelected({ ...selected, title: title });
-  const response = await fetch(`/api/filters/title?${userId}&${title}`);
+  const response = await fetch(`/api/filters/title?id=${userId}&name=${title}`);
   const data = await response.json();
   setCards(data || []);
 };
