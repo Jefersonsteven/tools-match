@@ -103,16 +103,10 @@ button.selected {
 
 .filterDistance {
   display: flex;
-  justify-content: center;
-}
-
-.filterDistance{
+  justify-content: flex-start;
   width: 100%;
 }
 
-.searchBar{
-  
-}
 
 /* /////////////////////////////////////////////////////////// */
 
@@ -126,6 +120,10 @@ button.selected {
 
   .filterContainer div:hover {
     z-index: 1;
+  }
+
+  .filterDistance {
+    justify-content: center;
   }
 }
 
