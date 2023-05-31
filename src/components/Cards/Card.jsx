@@ -8,16 +8,16 @@ import axios from "axios";
 import { RiStarFill, RiStarLine } from "react-icons/ri";
 import { calcularPromedioDeRatings } from "./assets/calculateAverage";
 
-const Card = ({ title, photo, price, type, perDay, id,reviews }) => {
+const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
   const { favorites, setFavorites, favorite, setFavorite, userData } =
     useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
-  let promedio  
-    if(reviews){
-      promedio = calcularPromedioDeRatings(reviews)
-    }
+  let promedio;
+  if (reviews) {
+    promedio = calcularPromedioDeRatings(reviews);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,18 +75,17 @@ const Card = ({ title, photo, price, type, perDay, id,reviews }) => {
     <div
       className={`${styles.cardContainer} bg-white rounded-md p-4`}
       popovertarget="title"
-    >      
-                                                                        {/* ---- Estrellitas ---- */}
-         <div className="rating flex items-center"> 
-                  {Array.from({ length: 5 }, (_, index) => (
-                <div key={index} className="mr-1">
-                 {index < promedio ? (
-                  <RiStarFill className="text-yellow-500" />
-                   ) : (
-                  <RiStarLine className="text-gray-400" />
-                   )}
-                </div>
-                 ))}               
+    >
+      <div className="rating flex items-center">
+        {Array.from({ length: 5 }, (_, index) => (
+          <div key={index} className="mr-1">
+            {index < promedio ? (
+              <RiStarFill className="text-yellow-500" />
+            ) : (
+              <RiStarLine className="text-gray-400" />
+            )}
+          </div>
+        ))}
       </div>
       <div className={styles.favoriteContainer}>
         <FaHeart
@@ -138,7 +137,6 @@ const Card = ({ title, photo, price, type, perDay, id,reviews }) => {
               >
                 {type}
               </p>
-           
               <p>{perDay}</p>
             </div>
           </div>

@@ -68,7 +68,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   background-color: var(--white-dark);
   height: 400px;
   overflow: auto;

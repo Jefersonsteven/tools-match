@@ -12,7 +12,8 @@ export default async function handler(req, res) {
       const URL_BASE = process.env.DEPLOY_BACK || "http://localhost:3000";
       const response = await fetch(`${URL_BASE}/api/user/${email}`);
       const user = await response.json();
-      if (user) {
+
+      if (user && !user.error) {
         if (password == user.password) {
           if (!user.hidden) {
             const response = await fetch(
