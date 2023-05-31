@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { MdAddShoppingCart } from "react-icons/md";
 
 const Favorites = () => {
+  const router = useRouter();
   const [visibleCards, setVisibleCards] = useState(4);
   const {
     userData,
@@ -47,11 +48,18 @@ const Favorites = () => {
     const selectedCard = favoriteArray.find((card) => card.id === id);
 
     if (cart.items.some((cartItem) => cartItem.id === id)) {
-      Swal.fire(
-        "Ya agregado al carrito",
-        "Este elemento ya ha sido agregado al carrito.",
-        "warning"
-      );
+      Swal.fire({
+        title: "¡Producto ya agregado!",
+        text: "Este artículo ya se encuentra en tu carrito.",
+        icon: "warning",
+        showCancelButton: false,
+        timer: 2000,
+        didOpen: () => {
+          setTimeout(() => {
+            Swal.close();
+          }, 2000);
+        },
+      });
       return;
     }
 
@@ -60,11 +68,20 @@ const Favorites = () => {
       items: [...items, selectedCard],
     }));
 
-    Swal.fire(
-      "Agregado al carrito",
-      "Los favoritos seleccionados han sido agregados al carrito.",
-      "success"
-    );
+    Swal.fire({
+      title: "¡Agregado al carrito!",
+      text: "El artículo se ha agregado al carrito correctamente.",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonText: "Ir al carrito",
+      cancelButtonText: "Seguir comprando",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push("/cart");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        router.push("/home");
+      }
+    });
   };
 
   const handleSeeMoreClick = () => {
