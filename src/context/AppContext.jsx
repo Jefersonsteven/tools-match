@@ -129,6 +129,7 @@ function AppProvider({ children }) {
   }, []);
 
   // * Favorite *//
+  const [favoriteArray, setFavoriteArray] = useState([]);
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (!localStorage.getItem("favorite")) {
@@ -201,6 +202,8 @@ function AppProvider({ children }) {
         setFavorite,
         isFavorite,
         setIsFavorite,
+        favoriteArray,
+        setFavoriteArray,
         isLoading,
         setIsLoading,
         range,

@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "@/context/AppContext";
@@ -10,14 +9,20 @@ import Back from "@/components/back/Back";
 import Swal from "sweetalert2";
 
 const Favorites = () => {
-  const [favoriteArray, setFavoriteArray] = useState([]);
   const [visibleCards, setVisibleCards] = useState(4);
-  const { userData, favorite, setFavorite, cart, setCart } = useContext(AppContext);
+  const {
+    userData,
+    favorite,
+    setFavorite,
+    favoriteArray,
+    setFavoriteArray,
+    cart,
+    setCart,
+  } = useContext(AppContext);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect");
     const fetchData = async () => {
       const user = await axios.get(`api/user/${userData.email}`);
       if (userData && userData.email) {
@@ -41,7 +46,7 @@ const Favorites = () => {
 
   const handleCheckboxChange = (event, cardId) => {
     const { checked } = event.target;
-  
+
     setSelectedCards((prevSelectedCards) => {
       if (checked) {
         return [...prevSelectedCards, cardId];
@@ -49,7 +54,7 @@ const Favorites = () => {
         return prevSelectedCards.filter((id) => id !== cardId);
       }
     });
-  
+
     setFavoriteArray((prevFavoriteArray) => {
       return prevFavoriteArray.map((card) => {
         if (card.id === cardId) {
@@ -62,13 +67,10 @@ const Favorites = () => {
       });
     });
   };
-  
-  
 
   const handleCheckboxChangeAddToCart = (event) => {
-    console.log("handleCheckboxChangeAddToCart");
     const { checked } = event.target;
-    console.log("Check");
+
     setFavoriteArray((prevFavoriteArray) => {
       return prevFavoriteArray.map((card) => {
         return {
@@ -82,29 +84,24 @@ const Favorites = () => {
   const handleSelectAllChange = (event) => {
     const { checked } = event.target;
     setSelectAllChecked(checked);
-  
+
     setFavoriteArray((prevFavoriteArray) => {
       return prevFavoriteArray.map((card) => ({
         ...card,
         checked: checked,
       }));
     });
-  
+
     if (checked) {
       setSelectedCards(favoriteArray.map((card) => card.id));
     } else {
       setSelectedCards([]);
     }
   };
-  
-
-
 
   const handleSeeMoreClick = () => {
-    console.log("handleSeeMoreClick");
     setVisibleCards((prevVisibleCards) => prevVisibleCards + 4);
   };
-
 
   const addToCard = () => {
     let count;
@@ -112,73 +109,67 @@ const Favorites = () => {
     const updatedFavoriteArray = favoriteArray.filter(
       (card) => !selectedCards.includes(card.id)
     );
-  
+
     const selectedItems = favoriteArray.filter((card) =>
       selectedCards.includes(card.id)
     );
-  
+
     setFavoriteArray(updatedFavoriteArray);
     setSelectedCards([]);
-  
+
     setFavorite((prevFavorite) => ({
       ...prevFavorite,
       count: updatedFavoriteArray.length,
     }));
-  
-    localStorage.setItem(
-      "favorite",
-      JSON.stringify({
-        count: updatedFavoriteArray.length,
-      })
-    );
-  
+
+    // localStorage.setItem(
+    //   "favorite",
+    //   JSON.stringify({
+    //     count: updatedFavoriteArray.length,
+    //   })
+    // );
+
     selectedItems.forEach((item) => {
       if (!cart.items.some((cartItem) => cartItem.id === item.id)) {
         setCart(({ count, items }) => ({
           count: count + 1,
           items: [...items, item],
         }));
-  
-        if (typeof window !== "undefined") {
-          localStorage.setItem(
-            "cart",
-            JSON.stringify({
-              count: count + 1,
-              items: [...items, item],
-            })
-          );
-        }
+
+        // if (typeof window !== "undefined") {
+        //   localStorage.setItem(
+        //     "cart",
+        //     JSON.stringify({
+        //       count: count + 1,
+        //       items: [...items, item],
+        //     })
+        //   );
+        // }
       }
     });
-  
+
     Swal.fire(
       "Agregado al carrito",
       "Los favoritos seleccionados han sido agregados al carrito.",
       "success"
     );
   };
-  
-  
-  
 
   return (
     <div>
       <Back />
       <h1 className={styles.favTitle}>Favoritos</h1>
       <div className={styles.checkboxContainer1}>
-      <input
-        type="checkbox"
-        id="select-all"
-        checked={selectAllChecked}
-        onChange={handleSelectAllChange}
-      />
-      <label htmlFor="select-all">Select All</label>
-                <button
-            className={styles.checkboxLabel}
-            onClick={addToCard}
-          >
-            Agregar Al Carrito
-          </button>
+        <input
+          type="checkbox"
+          id="select-all"
+          checked={selectAllChecked}
+          onChange={handleSelectAllChange}
+        />
+        <label htmlFor="select-all">Select All</label>
+        <button className={styles.checkboxLabel} onClick={addToCard}>
+          Agregar Al Carrito
+        </button>
       </div>
       <div className={styles.favContainer}>
         {favoriteArray.length > 0 ? (
