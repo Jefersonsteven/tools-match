@@ -17,6 +17,7 @@ import Modal from "react-modal";
 import Back from "@/components/back/Back";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
 import { AiFillCloseCircle } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 export default function PerfilUsuario() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -186,8 +187,41 @@ export default function PerfilUsuario() {
       };
 
       let response = await fetch("/api/admin/report", config);
-      console.log(response);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+          toast.style.fontSize = "16px";
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "Reporte enviado correctamente.",
+      });
     } catch (error) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+          toast.style.fontSize = "16px";
+        },
+      });
+
+      Toast.fire({
+        icon: "error",
+        title: "Error al enviar el reporte. Intenta nuevamente",
+      });
       console.log(error);
     }
   };
