@@ -54,16 +54,28 @@ function Page() {
           .catch((error) => console.log(error));
       });
 
-      // se notifica al comprador
+      // * se notifica al comprador
       axios.post(`/api/sendEmail/confirm`, {
         email: userData.email,
         id: userData.id,
       });
 
-      // se aplica el borrado logico a los post de venta
-      // y se cambia el estado con los de arriendo
+      //* se aplica el borrado logico a los post de venta
+      //* y se cambia el estado con los de arriendo
+      const items = cart.items.map((item) => {
+        if (item.type === "RENTAL") {
+          return axios.put(`/api/admin/post/${item.id}`, {
+            status: "Arrendado",
+          });
+        } else {
+          return axios.put(`/api/admin/post/${item.id}`, {
+            hidden: true,
+          });
+        }
+      });
+      axios.all(items);
 
-      // se setea el carrito
+      //* se setea el carrito
       if (typeof window !== "undefined" && status === "approved") {
         setCart({
           count: 0,
