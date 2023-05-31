@@ -8,6 +8,22 @@
   position: relative;
 }
 
+.title {
+  display: none;
+  position: absolute;
+  bottom: -25px;
+  padding: 5px 10px;
+  background-color: var(--black);
+  border-radius: 10px;
+  color: var(--white);
+  width: auto;
+  left: 0;
+}
+
+.cardContainer:hover .title{
+  display: flex;
+}
+
 .imageContainer {
   width: 100%;
   display: flex;

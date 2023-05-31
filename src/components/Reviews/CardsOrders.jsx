@@ -6,7 +6,6 @@ import axios from "axios";
 import styles from "./CardsOrders.module.css";
 import CardsPurchasedItems from "./CardsPurchasedItems";
 
-
 const CardsOrders = ({ userOrders }) => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -35,23 +34,32 @@ const CardsOrders = ({ userOrders }) => {
               <FaShoppingCart className="text-black text-5xl" />
               <h4 className="text-black text-1000 ml-14">
                 {order.types && order.types.length > 0
-                  ? order.types.includes("SALE") && order.types.includes("RENTAL")
+                  ? order.types.includes("SALE") &&
+                    order.types.includes("RENTAL")
                     ? "Compra y Arriendo de varios productos"
                     : order.types.includes("RENTAL")
                     ? `Arriendo de ${order.qItems} ${
                         order.qItems > 1 ? "productos" : "producto"
                       }`
                     : `Compra de ${
-                        order.qItems > 1 ? `${order.qItems} productos` : "1 producto"
+                        order.qItems > 1
+                          ? `${order.qItems} productos`
+                          : "1 producto"
                       }`
                   : `Compra de ${
-                      order.qItems > 1 ? `${order.qItems} productos` : "1 producto"
+                      order.qItems > 1
+                        ? `${order.qItems} productos`
+                        : "1 producto"
                     }`}
               </h4>
             </div>
             <div className="flex flex-col items-end">
-              <h3 className="text-black font-bold text-5xl">$ {order.amount}</h3>
-              <h4 className="text-gray-800 text-lg mt-2">{formatDate(order.date)}</h4>
+              <h3 className="text-black font-bold text-5xl">
+                $ {order.amount}
+              </h3>
+              <h4 className="text-gray-800 text-lg mt-2">
+                {formatDate(order.date)}
+              </h4>
             </div>
           </div>
         ))}
@@ -59,7 +67,11 @@ const CardsOrders = ({ userOrders }) => {
       <Modal
         isOpen={selectedOrder !== null}
         onRequestClose={closeModal}
-        className={selectedOrder?.postId?.length > 1 ? styles.customModalTwo : styles.customModal}
+        className={
+          selectedOrder?.postId?.length > 1
+            ? styles.customModalTwo
+            : styles.customModal
+        }
         overlayClassName={styles.customOverlay}
         contentLabel="Purchased Items Modal"
       >
