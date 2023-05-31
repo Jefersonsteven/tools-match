@@ -87,14 +87,16 @@ const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
           </div>
         ))}
       </div>
-      <div className={styles.favoriteContainer}>
-        <FaHeart
-          className={
-            isFavorite ? styles.favoriteIconActive : styles.favoriteIcon
-          }
-          onClick={() => handleFavoriteClick(`${id}`)}
-        />
-      </div>
+      {userData && (
+        <div className={styles.favoriteContainer}>
+          <FaHeart
+            className={
+              isFavorite ? styles.favoriteIconActive : styles.favoriteIcon
+            }
+            onClick={() => handleFavoriteClick(`${id}`)}
+          />
+        </div>
+      )}
       <Link href={`/post/${id}`}>
         <div className={styles.imageContainer}>
           <Image
