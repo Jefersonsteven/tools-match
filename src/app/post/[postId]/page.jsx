@@ -11,6 +11,7 @@ import Back from "@/components/back/Back";
 import Review from "./Review";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
 import { BsCartPlusFill } from "react-icons/bs";
+import { calcularPromedioDeRatings } from "@/components/Cards/assets/calculateAverage";
 
 function PostDetail({}) {
   const { postId } = useParams();
@@ -236,7 +237,7 @@ function PostDetail({}) {
                       </b>
                       @{pd.author.firstname}
                     </h5>
-                    <h5>⭐{pd.author.rating}.0</h5>
+                    <h5>⭐{calcularPromedioDeRatings(pd.reviews)}.0</h5>
                   </div>
                 </Link>
                 <div className={styles.reviews}>
