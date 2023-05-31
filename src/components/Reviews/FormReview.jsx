@@ -2,17 +2,22 @@ import React, { useState, useEffect } from "react";
 import { RiStarFill } from "react-icons/ri";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useParams, useRouter } from "next/navigation";
-import styles from './FormReview.module.css';
+import styles from "./FormReview.module.css";
 
-const FormReview = ({ selectedPost, onCloseModal, onReviewSubmitted }) => {
+const FormReview = ({
+  selectedPost,
+  onCloseModal,
+  onReviewSubmitted
+}) => {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const currentDate = new Date().toISOString().split("T")[0];
   const [receivedId, setReceivedId] = useState("");
-  const [title, setTitle] = useState(""); 
+  const [title, setTitle] = useState("");
   const { perfilId } = useParams();
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     const fetchReceivedId = async () => {
       try {
@@ -38,6 +43,13 @@ const FormReview = ({ selectedPost, onCloseModal, onReviewSubmitted }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Evitar envío duplicado si ya se está enviando la reseña
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
 
     const reviewData = {
       rating,
@@ -70,6 +82,8 @@ const FormReview = ({ selectedPost, onCloseModal, onReviewSubmitted }) => {
     } catch (error) {
       console.error("Error al enviar la reseña", error);
     }
+
+    setIsSubmitting(false);
   };
 
   const handleClose = () => {
@@ -116,7 +130,13 @@ const FormReview = ({ selectedPost, onCloseModal, onReviewSubmitted }) => {
               maxLength={500}
             ></textarea>
           </div>
-          <div style={{ marginBottom: "1rem", display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              marginBottom: "1rem",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             {[1, 2, 3, 4, 5].map((value) => (
               <RiStarFill
                 key={value}
@@ -132,7 +152,7 @@ const FormReview = ({ selectedPost, onCloseModal, onReviewSubmitted }) => {
               type="submit"
               className={styles.public}
               style={{ maxWidth: "200px" }}
-              disabled={rating === 0 || content === ""}
+              disabled={rating === 0 || content === "" || isSubmitting}
             >
               Publicar Reseña
             </button>

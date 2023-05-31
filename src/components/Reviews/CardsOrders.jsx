@@ -26,13 +26,13 @@ const CardsOrders = ({ userOrders }) => {
         {userOrders.map((order) => (
           <div
             key={order.id}
-            className="p-4 my-2 bg-white rounded-md shadow-md cursor-pointer flex items-center justify-between"
+            className="p-4 my-2 bg-white rounded-md shadow-md cursor-pointer flex items-center justify-between h-40"
             onClick={() => setSelectedOrder(order)}
           >
             <div className="flex items-center">
-              <AiFillCheckCircle className="text-green-500 mr-2 ml-2 text-4xl" />
-              <FaShoppingCart className="text-black text-4xl" />
-              <h4 className="text-black text-lg ml-6">
+              <AiFillCheckCircle className="text-green-500 mr-2 ml-2 text-5xl" />
+              <FaShoppingCart className="text-black text-5xl" />
+              <h4 className="text-black text-1000 ml-14">
                 {order.types && order.types.length > 0
                   ? order.types.includes("SALE") &&
                     order.types.includes("RENTAL")
@@ -54,10 +54,10 @@ const CardsOrders = ({ userOrders }) => {
               </h4>
             </div>
             <div className="flex flex-col items-end">
-              <h3 className="text-black font-bold text-3xl">
+              <h3 className="text-black font-bold text-5xl">
                 $ {order.amount}
               </h3>
-              <h4 className="text-gray-400 text-lg mt-2">
+              <h4 className="text-gray-800 text-lg mt-2">
                 {formatDate(order.date)}
               </h4>
             </div>

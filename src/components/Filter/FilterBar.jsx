@@ -135,6 +135,13 @@ export default function FilterBar() {
               >
                 Venezuela 
               </button>
+              <button
+               value="alls"
+                onClick={handleCountry}
+                className={orderFilter === "alpha-desc" ? style.selected : ""}
+              >
+                Todos 
+              </button>
             </div>
           </div>
           <div className={`mr-2 relative ${style.button}`}>

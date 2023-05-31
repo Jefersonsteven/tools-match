@@ -15,6 +15,7 @@ import { TiDelete, TiPencil } from "react-icons/ti";
 import PublicationForm from "../components/PublicationForm";
 import Loader from "@/components/Loader/Loader";
 import Link from "next/link";
+import LoaderRadial from "@/components/Loader/LoaderRadial";
 
 
 export function SearchBar({ searchTerm, setSearchTerm }) {
@@ -56,27 +57,7 @@ function Posts() {
   const publicationsPerPage = 5;
   /*-------------------------------*/
 
-  // const handleDeleteUser = useCallback(async (id) => {
-  //   try {
-  //     const userDelete = await axios.delete(`/api/admin/post/${id}`);
-  //     console.log(userDelete.data);
-  //     Swal.fire({
-  //       title: "Usuario eliminado",
-  //       text: "El usuario ha sido eliminado exitosamente",
-  //       icon: "success",
-  //       confirmButtonText: "Aceptar",
-  //     });
-  //     fetchUsers();
-  //   } catch (error) {
-  //     console.error(error);
-  //     Swal.fire({
-  //       title: "Error al Eliminar el Usuario",
-  //       text: "Ha ocurrido un error al eliminar el usuario, por favor intenta de nuevo",
-  //       icon: "error",
-  //       confirmButtonText: "Aceptar",
-  //     });
-  //   }
-  // }, []);
+
 
   const fetchUsers = async () => {
     try {
@@ -110,32 +91,7 @@ function Posts() {
     return usuario.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  // const handleClick = (userId) => {
-  //   const userToEdit = filteredUsuarios.find((user) => user.id === userId);
-  //   setEditingUser(userToEdit);
-  //   setShowModal(true);
-  // };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData(event.target);
-  //   const updatedUser = {
-  //     title: formData.get("title"),
-  //     lastname: formData.get("lastname"),
-  //     email: formData.get("email"),
-  //     phoneNumber: formData.get("phonenumber"),
-  //     reports: formData.get("reports"),
-  //   };
-  //   axios
-  //     .put(`/api/admin/post/${editingUser.id}`, updatedUser)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setEditingUser(null);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   const handleDeleteClick = (title, id, emailAutor) => {
     Swal.fire({
@@ -146,6 +102,7 @@ function Posts() {
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Sí, borrar",
       cancelButtonText: "Cancelar",
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -193,6 +150,7 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Sí, borrar",
         cancelButtonText: "Cancelar",
+        reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
 
@@ -211,11 +169,7 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
 
 
             .then((response) => {
-              // Actualizar la lista de publicaciones en el estado local o cualquier otra acción necesaria
-              // const updatedPublications = currentPublications.filter(
-              //   (publication) => !userIds.includes(publication.id)
-              // );
-              // setCurrentPublications(updatedPublications);
+
 
               Swal.fire({
                 title: "¡Publicaciones eliminadas correctamente!",
@@ -274,7 +228,11 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
       </div>
 
       {loading ? (
-        <Loader />
+        
+<div className={style.loaderContainer}>
+<LoaderRadial />
+</div>
+
       ) : (
         <div>
           {selectedItems.length > 1 && (
@@ -305,7 +263,7 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
                     <th>MARCA</th>
                     <th>CREADA</th>
                     <th>MODIFICADA</th>
-                    <th>ACCIONES</th>
+                    <th>ELIMINAR</th>
                   </tr>
                 </thead>
 
@@ -322,20 +280,14 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
                       <td><Link className={style.nombrePerfil} href={`/post/${d.id}`}>{d.title}</Link></td>
                       <td>{d.category}</td>
                       <td>{d.price}</td>
-                      <td>{d.type}</td>
+                      <td>{d.type === "SALE" ? "Venta " : "Renta "}</td>
                       <td>{d.author.email}</td>
                       <td>{d.brand}</td>
                       <td>{d.createdAt.slice(0, 10)}</td>
                       <td>{d.updatedAt.slice(0, 10)}</td>
 
                       <td className={style.td_button}>
-                        {/* <button
-                      className={`${style.botonEditar} ${buttonClass}`}
-                      onClick={() => handleClick(d.id)}
-                      disabled={selectedUserCount > 0}                      
-                    >
-                      <TiPencil size={30}/>
-                    </button> */}
+                    
                         <button
                           className={`${style.botonDelete} ${buttonClass} ${
                             isDeleteButtonDisabled ? style.disabledButton : ""
