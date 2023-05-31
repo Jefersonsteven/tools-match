@@ -22,7 +22,6 @@ export default function PerfilUsuario() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { push } = useRouter();
   const { perfilId } = useParams();
-  const [errorsMessages, setErrorsMessages] = useState([]);
   const [reportMessagges, setReportMessagges] = useState("");
   const { userId, userData, countries } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
@@ -43,10 +42,6 @@ export default function PerfilUsuario() {
         setReviews(receivedReviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
-        setErrorsMessages((prev) => [
-          ...prev,
-          "Error al obtener reviews recibidas: " + error,
-        ]);
       }
     };
     fetchReviews();
@@ -64,10 +59,6 @@ export default function PerfilUsuario() {
         setCreatedReviews(createdReviews);
       } catch (error) {
         console.error("Error fetching createdReviews:", error);
-        setErrorsMessages((prev) => [
-          ...prev,
-          "Error al obtener reviews creadas: " + error,
-        ]);
       }
     };
     fetchCreatedReviews();
@@ -87,10 +78,6 @@ export default function PerfilUsuario() {
         setAuthors(fetchedAuthors.map((response) => response.data)); // Convertir la respuesta en un array de datos
       } catch (error) {
         console.error("Error fetching authors:", error);
-        setErrorsMessages((prev) => [
-          ...prev,
-          "Error al obtener autores: " + error,
-        ]);
       }
     };
 
@@ -125,10 +112,6 @@ export default function PerfilUsuario() {
         setUserOrders(orderDetails);
       } catch (error) {
         console.error("Error fetching user orders:", error);
-        setErrorsMessages((prev) => [
-          ...prev,
-          "Error al obtener las ordenes: " + error,
-        ]);
       }
     };
 
@@ -213,19 +196,10 @@ export default function PerfilUsuario() {
     <>
       <section>
         <Back />
-        {errorsMessages.length > 0 ? (
+        {!user.firstname && (
           <div className="grid justify-center items-center fixed w-screen h-3/6">
-            <p>Ha courrido los siguientes errores:</p>
-            {errorsMessages.map((error, index) => {
-              return <p key={index}>{error}</p>;
-            })}
+            <LoaderRadial />
           </div>
-        ) : (
-          !user.firstname && (
-            <div className="grid justify-center items-center fixed w-screen h-3/6">
-              <LoaderRadial />
-            </div>
-          )
         )}
 
         {user.firstname && (
@@ -375,7 +349,7 @@ export default function PerfilUsuario() {
                 </div>
               </section>
               {user.id == userData?.id && (
-                <section>
+                <section className={styles.scrollInPosts}>
                   <div className="w-full items-center ">
                     <h3 className="text-center mb-8">
                       Tus compras y arriendos

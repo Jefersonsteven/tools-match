@@ -30,7 +30,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  max-height: calc(100vh - 59rem);
+  height: 360px;
   overflow: auto;
   margin: 1rem;
   gap: 30px;
@@ -142,14 +142,14 @@
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 576px) {
   .container {
     margin: 0;
     max-height: calc(100vh - 39rem);
   }
   .containerTwo {
     margin: 0;
-    max-height: calc(100vh - 49rem);
+    height: 370px;
   }
   .title {
     font-size: 1.5rem;
