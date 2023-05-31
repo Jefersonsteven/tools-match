@@ -3,6 +3,7 @@
   font-weight: 600;
   margin-top: 5rem;
   text-align: center;
+  margin-bottom: 5rem;
 }
 .favContainer {
   display: flex;
@@ -33,19 +34,64 @@
   width: 100%;
   text-align: center;
 }
-/* .favSeeMore {
+.favToAddCart{
+  margin: auto;
+  margin-bottom: 30px;
+  text-align: center;
+  
+}
+.favSeeMore {
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 2rem;
   cursor: pointer;
   margin: 15px 15px;
-  width: 30%;
-} */
+  width: 20%;
+  margin: auto;
+  margin-bottom: 30px;
+}
+.checkbox1{
+  margin: 10px;
+  margin-left: 60px;
+}
+.checkboxContainer1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  margin-left: 20px;
+}
+.checkboxLabel{
+  margin-left: 20px;
+height: 20px;
+}
 
-@media (max-width: 80%) {
+@media (max-width: 767px) {
+  .favCards {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+
+  .favCards > div {
+    flex: 0 0 auto;
+    width: 250px;
+  }
+}
+
+
+@media (max-width: 399px) {
   .favContainer {
-    flex-direction: column;
-    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .favSeeMore {
+    width: 100%;
+  }
+
+  .favCards {
+    width: 100%;
   }
 }
