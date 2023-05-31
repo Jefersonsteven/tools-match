@@ -130,4 +130,4 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
   );
 };
 
-export default Card;
+export default React.memo(Card);

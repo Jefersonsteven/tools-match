@@ -21,6 +21,7 @@ const Favorites = () => {
   } = useContext(AppContext);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [deletedCards, setDeletedCards] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,32 +93,53 @@ const Favorites = () => {
     );
   };
 
-  const handleRemoveFromFavorites = (cardId) => {
-    const updatedFavoriteArray = favoriteArray.filter(
-      (card) => card.id !== cardId
+  const handleRemoveFromFavorites = () => {
+    const updatedFavoriteArray = favoriteArray.map((card) => {
+      if (selectedCards.includes(card.id)) {
+        return {
+          ...card,
+          checked: false,
+          deleted: true,
+        };
+      }
+      return card;
+    });
+
+    const deletedCardsList = favoriteArray.filter((card) =>
+      selectedCards.includes(card.id)
     );
 
     setFavoriteArray(updatedFavoriteArray);
-    setSelectedCards((prevSelectedCards) =>
-      prevSelectedCards.filter((id) => id !== cardId)
-    );
+    setSelectedCards([]);
+    setDeletedCards((prevDeletedCards) => [
+      ...prevDeletedCards,
+      ...deletedCardsList,
+    ]);
 
     setFavorite((prevFavorite) => ({
       ...prevFavorite,
-      count: prevFavorite.count - 1,
+      count: prevFavorite.count - deletedCardsList.length,
     }));
-
-    Swal.fire(
-      "Eliminado de favoritos",
-      "La tarjeta seleccionada ha sido eliminada de tus favoritos.",
-      "success"
-    );
   };
 
   const addToCart = () => {
     const selectedItems = favoriteArray.filter((card) =>
       selectedCards.includes(card.id)
     );
+
+    const updatedFavoriteArray = favoriteArray.map((card) => {
+      if (selectedCards.includes(card.id)) {
+        return {
+          ...card,
+          checked: false,
+        };
+      }
+      return card;
+    });
+
+    setFavoriteArray(updatedFavoriteArray);
+
+    setSelectedCards([]);
 
     setFavorite((prevFavorite) => ({
       ...prevFavorite,
@@ -144,7 +166,6 @@ const Favorites = () => {
       }
     });
   };
-
   return (
     <div>
       <Back />
@@ -164,6 +185,12 @@ const Favorites = () => {
           <button className={styles.checkboxLabel} onClick={addToCart}>
             Agregar Al Carrito
           </button>
+          <button
+            className={styles.removeButton}
+            onClick={handleRemoveFromFavorites}
+          >
+            Eliminar de Favoritos
+          </button>
         </div>
       )}
       <div className={styles.favContainer}>
@@ -172,12 +199,7 @@ const Favorites = () => {
             .filter((card) => !card.deleted)
             .slice(0, visibleCards)
             .map((card) => (
-              <div
-                className={`${styles.favInfo} ${
-                  card.deleted ? styles.fadeOut : ""
-                }`}
-                key={card.id}
-              >
+              <div className={styles.favInfo} key={card.id}>
                 <div className={styles.checkboxContainer}>
                   <input
                     type="checkbox"
@@ -195,7 +217,6 @@ const Favorites = () => {
                   id={card.id}
                   typeStyle={{ width: "100%", textAlign: "center" }}
                   type={card.type === "RENTAL" ? "Arriendo" : "Venta"}
-                  onRemove={() => handleRemoveFromFavorites(card.id)}
                 />
               </div>
             ))
@@ -215,7 +236,6 @@ const Favorites = () => {
 };
 
 export default Favorites;
-// FUNCIONAL
 // "use client";
 // import React, { useState, useEffect, useContext } from "react";
 // import { AppContext } from "@/context/AppContext";
