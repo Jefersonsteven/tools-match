@@ -4,7 +4,7 @@ import { calcularDistancia } from '../../filters/distance/assets/calculateDistan
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const { category, type, brand, title, coorde1, coorde2, km, order ,id, country} = req.query;
+      const { category, type, brand, title, coorde1, coorde2, km, order, id, country } = req.query;
       const intcoorde1 = parseFloat(coorde1);
       const intcoorde2 = parseFloat(coorde2);
       const intKm = parseFloat(km);
@@ -14,34 +14,37 @@ export default async function handler(req, res) {
       }
 
       let where = { hidden: false };
+      const include = {
+        reviews: true
+      };
 
-      if(id && country!=="alls" || !country) {
+      if (id && country !== "alls" || !country) {
         const postCountry = await prisma.user.findUnique({
           where: {
             id: id,
-            },
-            select:{
-              country: true
-            }
+          },
+          select: {
+            country: true
+          }
         });
-        const {country} = postCountry
-        if(country){
+        const { country } = postCountry
+        if (country) {
           where.author = {
             country: country
           }
         }
       }
 
-  
-      if(country ) {
-        if(country!=="alls"){
+
+      if (country) {
+        if (country !== "alls") {
           where.author = {
             country: country
-            }
-        }else {
+          }
+        } else {
           delete where.author;
         }
-      } 
+      }
 
       if (category) {
         where.category = category;
@@ -65,9 +68,7 @@ export default async function handler(req, res) {
       if (coorde1 && coorde2 && km) {
         const posts = await prisma.post.findMany({
           where,
-          include: {
-            author: true
-          }
+          include,
         });
 
         const filteredPosts = posts.filter((post) => {
@@ -88,7 +89,7 @@ export default async function handler(req, res) {
         return res.status(200).json(filteredPosts);
       }
 
-      const posts = await prisma.post.findMany({ where });
+      const posts = await prisma.post.findMany({ where, include });
 
       posts.sort((a, b) => a.title.localeCompare(b.title, "es", { sensitivity: "base" }));
 
