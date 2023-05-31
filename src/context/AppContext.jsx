@@ -57,9 +57,8 @@ function AppProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState(cards);
   const [filter, setFilter] = useState("");
-  const [isLoading, setIsLoading] = useState(false);//agregado por jean heyller
-  const [range, setRange] = useState(6000) // agregado por jean 
-  
+  const [isLoading, setIsLoading] = useState(false); //agregado por jean heyller
+  const [range, setRange] = useState(6000); // agregado por jean
 
   const [selected, setSelected] = useState({
     category: "",
@@ -130,6 +129,8 @@ function AppProvider({ children }) {
   }, []);
 
   // * Favorite *//
+  const [favoriteArray, setFavoriteArray] = useState([]);
+
   const [favorite, setFavorite, isFavorite, setIsFavorite] = useState([]);
 
   // *---------------------------------------* //
@@ -189,11 +190,12 @@ function AppProvider({ children }) {
         setFavorite,
         isFavorite,
         setIsFavorite,
+        favoriteArray,
+        setFavoriteArray,
         isLoading,
         setIsLoading,
         range,
-        setRange
-
+        setRange,
       }}
     >
       {children}

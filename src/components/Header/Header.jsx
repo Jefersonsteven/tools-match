@@ -103,7 +103,7 @@ function Header() {
           {pathname !== "/favorite" && pathname !== "/" && userData && (
             <Link href="/favorite" className={styles.cart}>
               <FaHeart size="25" color="white" />
-              {favorite?.count > 0 && (
+              {favorite.count !== 0 && (
                 <span className={styles.cartCount}>{favorite.count}</span>
               )}
               <span className={styles.cartText}>Favoritos</span>
