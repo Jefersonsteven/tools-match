@@ -1,5 +1,6 @@
 .filter,
-.order {
+.order,
+.country {
   position: absolute;
   left: 0;
   top: 43px;
@@ -10,7 +11,8 @@
 }
 
 .filter button,
-.order button {
+.order button,
+.country button {
   width: 100%;
   border-radius: 0px;
   border-bottom: 1px solid var(--white);
@@ -30,15 +32,22 @@
 }
 
 .button:hover .filter,
-.button:hover .order {
+.button:hover .order,
+.button:hover .country {
   display: flex;
   flex-direction: column;
 }
 
 .type,
 .category,
-.brand {
+.brand,
+.country {
   display: none;
+}
+
+.button:hover .country {
+  display: flex;
+  flex-direction: column;
 }
 
 .subButton:hover .type,

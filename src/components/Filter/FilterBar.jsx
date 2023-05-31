@@ -27,6 +27,7 @@ export default function FilterBar() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderFilter, setOrderFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
+  const [countryFilter, setCountryFilter] = useState("");
 
   useEffect(() => {
     fetchCards(selected, setCards, title,userId,setIsLoading,setCurrentPage);
@@ -70,7 +71,7 @@ export default function FilterBar() {
   };
 
   const handleCountry = (event) => {
-    handleCountryChange(event,setSelected);
+    handleCountryChange(event,setSelected, setCountryFilter);
   };
 
   const handleCleanFilters = () => {
@@ -80,6 +81,7 @@ export default function FilterBar() {
       setTypeFilter,
       setBrandFilter,
       setOrderFilter,
+      setCountryFilter,
     );
   };
 
@@ -105,39 +107,39 @@ export default function FilterBar() {
             <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ">
               Pais <FaGlobeAmericas className="ml-2" />
             </div>
-            <div className={style.order}>
+            <div className={style.country}>
               <button
                 value=""
                 onClick={handleCountry}
-                className={orderFilter === "" ? style.selected : ""}
+                className={countryFilter === "" ? style.selected : ""}
               >
                 {userId ? "Default" : "Todos"}
-              </button>
+              </button>              
               <button
                 value="CO"
                 onClick={handleCountry}
-                className={orderFilter === "alpha-asc" ? style.selected : ""}
+                className={countryFilter === "CO" ? style.selected : ""}
               >
                 Colombia
               </button>
               <button
                 value="MX"
                 onClick={handleCountry}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
+                className={countryFilter === "MX" ? style.selected : ""}
               >
                 Mexico
               </button>
               <button
                value="AR"
                 onClick={handleCountry}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
+                className={countryFilter === "AR" ? style.selected : ""}
               >
                 Argentina 
               </button>
               <button
                value="VE"
                 onClick={handleCountry}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
+                className={countryFilter === "VE" ? style.selected : ""}
               >
                 Venezuela 
               </button>
@@ -284,9 +286,9 @@ export default function FilterBar() {
                     </button>
                     <button
                       onClick={handleBrand}
-                      value="philips"
+                      value="phillips"
                       className={
-                        brandFilter === "Phillips" ? style.selected : ""
+                        brandFilter === "phillips" ? style.selected : ""
                       }
                     >
                       Phillips
@@ -310,14 +312,14 @@ export default function FilterBar() {
                     <button
                       onClick={handleBrand}
                       value="dewalt"
-                      className={brandFilter === "Dewalt" ? style.selected : ""}
+                      className={brandFilter === "dewalt" ? style.selected : ""}
                     >
                       Dewalt
                     </button>
                     <button
                       onClick={handleBrand}
                       value="skil"
-                      className={brandFilter === "Skil" ? style.selected : ""}
+                      className={brandFilter === "skil" ? style.selected : ""}
                     >
                       Skil
                     </button>
@@ -387,20 +389,20 @@ export default function FilterBar() {
             </div>
             <div className={style.order}>
               <button
-                onClick={() => handleOrder("", "")}
+                onClick={() => handleOrder("")}
                 className={orderFilter === "" ? style.selected : ""}
               >
                 Default
               </button>
               <button
                 onClick={() => handleOrder("alpha", "A-Z")}
-                className={orderFilter === "alpha-asc" ? style.selected : ""}
+                className={orderFilter === "alpha-A-Z" ? style.selected : ""}
               >
                 Nombre (A-Z)
               </button>
               <button
                 onClick={() => handleOrder("alpha", "Z-A")}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
+                className={orderFilter === "alpha-Z-A" ? style.selected : ""}
               >
                 Nombre (Z-A)
               </button>

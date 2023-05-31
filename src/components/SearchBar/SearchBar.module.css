@@ -15,16 +15,15 @@
   height: 45px;
 }
 
-.searchbar div {
+/* .searchbar div {
   border-radius: 0 8px 8px 0;
   background-color: var(--green);
   width: 49px;
   display: grid;
   place-items: center;
-}
-
+} */
 .searchButton {
-  background: none;
+  background: var(--green);
   border: none;
   outline: none;
   cursor: pointer;
@@ -32,7 +31,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
+  width: 49px;
   height: 30px;
   color: whitesmoke; /* color del icono */
+  transition: background-color 0.3s ease;
+}
+
+.searchButton:hover,
+.searchButton:focus {
+  background-color: var(--green-hover); /* color de fondo en hover y focus */
+}
+
+.searchButton:focus {
+  outline: none;
+}
+
+.searchButton svg {
+  fill: currentColor;
 }

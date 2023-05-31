@@ -58,7 +58,7 @@ const Cards = () => {
   const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`; */
 
   /* --------------------------------- */
-
+  console.log(cards)
   return (
     <AppProvider>
       <div className="p-4 px-2 grid justify-items-center">
@@ -72,6 +72,7 @@ const Cards = () => {
                 price={tool.price}
                 id={tool.id}
                 type={tool.type === "RENTAL" ? "Arriendo" : "Venta"}
+                reviews={tool.reviews}
               />
             </div>
           ))}

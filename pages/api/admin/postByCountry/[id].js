@@ -20,6 +20,9 @@ export default async function handler(req,res) {
               country: country
             }
           },
+          include:{
+            reviews: true
+          }
         });
         res.status(200).json(posts);
       }

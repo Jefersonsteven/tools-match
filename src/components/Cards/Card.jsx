@@ -5,10 +5,19 @@ import styles from "./Card.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
+import { calcularPromedioDeRatings } from "./assets/calculateAverage";
 
-const Card = ({ title, photo, price, type, perDay, id }) => {
-  const { userData } = useContext(AppContext);
+const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
+  const { favorites, setFavorites, favorite, setFavorite, userData } =
+    useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  let promedio;
+  if (reviews) {
+    promedio = calcularPromedioDeRatings(reviews);
+  }
+
+  console.log(reviews);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,6 +116,7 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
               >
                 {type}
               </p>
+              <p>${promedio}</p>
               <p>{perDay}</p>
             </div>
           </div>
