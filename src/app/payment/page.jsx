@@ -60,6 +60,9 @@ function Page() {
         id: userData.id,
       });
 
+      // se aplica el borrado logico a los post de venta
+      // y se cambia el estado con los de arriendo
+
       // se setea el carrito
       if (typeof window !== "undefined" && status === "approved") {
         setCart({

@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   try {
     let where = { hidden: false };
 
-    if(id && !country) {
+    if(id && country!=="alls" || !country) {
       const postCountry = await prisma.user.findUnique({
         where: {
           id: id,
@@ -29,17 +29,23 @@ export default async function handler(req, res) {
           }
       });
       const {country} = postCountry
-        if(country){
-          where.author = {
-            country: country,
-          };
+      if(country){
+        where.author = {
+          country: country
         }
+      }
     }
-    if (country) {
-      where.author = {
-        country: country,
-      };
-    }
+
+
+    if(country ) {
+      if(country!=="alls"){
+        where.author = {
+          country: country
+          }
+      }else {
+        delete where.author;
+      }
+    }  
 
     if (category) where.category = category;
     if (type) where.type = type;
@@ -79,11 +85,20 @@ export default async function handler(req, res) {
       avgRating: post.reviews.length > 0
         ? post.reviews.reduce((total, review) => total + review.rating, 0) / post.reviews.length
         : 0
-    })).filter((post) => post.reviews.length > 0)
-      .sort((a, b) => (order === 'desc' ? b.avgRating - a.avgRating : a.avgRating - b.avgRating));
+    })).sort((a, b) => {
+      if (a.reviews.length === 0 && b.reviews.length === 0) {
+        return 0;
+      } else if (a.reviews.length === 0) {
+        return order === 'asc' ? -1 : 1;
+      } else if (b.reviews.length === 0) {
+        return order === 'asc' ? 1 : -1;
+      } else {
+        return order === 'asc' ? a.avgRating - b.avgRating : b.avgRating - a.avgRating;
+      }
+    });
 
     return res.status(200).json(sortedPosts);
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: error.message });
   }
 }

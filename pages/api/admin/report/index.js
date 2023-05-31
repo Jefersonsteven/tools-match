@@ -17,6 +17,7 @@ export default async function handler(req, res) {
       }
 
       const updatedUser = await prisma.user.update({
+        
         where: {
           email: userEmail
         },

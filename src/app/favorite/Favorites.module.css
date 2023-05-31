@@ -3,49 +3,143 @@
   font-weight: 600;
   margin-top: 5rem;
   text-align: center;
+  margin-bottom: 5rem;
 }
+
 .favContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 3rem;
+  margin: -1.5rem;
   width: 100%;
   margin-top: 6rem;
   margin-bottom: 50px;
 }
+
 .favInfo {
   flex: 1 1 250px;
   max-width: 250px;
   margin: 20px;
 }
+
 .favSubTitle {
   font-size: 2rem;
   font-weight: 600;
   margin-top: 5rem;
   text-align: center;
 }
+
 .custom-button {
   width: 100px;
   text-align: center;
 }
+
 .typeClass {
   width: 100%;
   text-align: center;
 }
-/* .favSeeMore {
+
+.favToAddCart {
+  margin: auto;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.favSeeMore {
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 2rem;
   cursor: pointer;
   margin: 15px 15px;
-  width: 30%;
-} */
+  width: 18%;
+  margin: auto;
+  margin-bottom: 30px;
+}
 
-@media (max-width: 80%) {
+
+/* ---------- add to cart icon ----------*/
+.addToCartButton {
+  position: relative;
+}
+
+.addToCartIcon {
+  background-color: var(--orange);
+  border-radius: 50%;
+  width: 10%;
+  color: #000;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.cartText {
+  position: absolute;
+  bottom: -30px;
+  left: 100%;
+  transform: translateX(-50%);
+  background-color: var(--white-light);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #000;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  top: 100%;
+  width: 50%;
+  text-align: center;
+  font-weight: 800;
+}
+
+.addToCartButton:hover .cartText {
+  opacity: 1;
+}
+
+
+
+
+
+
+
+@media (max-width: 399px) {
   .favContainer {
+    justify-content: center;
+  }
+
+  .favSeeMore {
+    width: 100%;
+  }
+
+  .favCards {
+    width: 100%;
+  }
+  .checkboxContainer1 {
     flex-direction: column;
-    align-items: center;
+  }
+  .checkboxLabel, .removeButton {
+    font-size: 1rem;
+    width: 40%;
+    height: 20px;
+    
+  }
+  .favSelectCheck{
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 799px) {
+ 
+  .checkboxLabel, .removeButton {
+    font-size: 1.5rem;
+    width: 18%;
+    height: 20px;
+    
+  }
+  .favSelectCheck{
+    width: 18%;
+    font-size: 1.5rem;
   }
 }

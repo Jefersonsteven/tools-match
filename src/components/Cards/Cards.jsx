@@ -18,7 +18,7 @@ const Cards = () => {
 
   const cardsPerPage = 12;
   /*-------------------------------*/
-  // modificado por jean heyller para que cuando inicie sesion cargue las publicaciones que estan en su pais
+ /*  // modificado por jean heyller para que cuando inicie sesion cargue las publicaciones que estan en su pais
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -37,8 +37,9 @@ const Cards = () => {
   
     fetchData();
   }, [userId, setCards, setFilteredCards]);
-
+ */
   /* ----------PAGINATED ----------- */
+  //comentado por jean para arreglar el paginado
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -52,9 +53,9 @@ const Cards = () => {
 
   const isPageEmpty = currentCards.length === 0;
 
-  const totalPages = Math.ceil(setFilteredCards.length / cardsPerPage);
+  /* const totalPages = Math.ceil(setFilteredCards.length / cardsPerPage);
 
-  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
+  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`; */
 
   /* --------------------------------- */
 
@@ -83,7 +84,7 @@ const Cards = () => {
           <p>No hay herramientas disponibles</p>
         ) : (
           <Paginated
-            url={paginatedUrl}
+            /* url={paginatedUrl} */
             currentPage={currentPage}
             itemsPerPage={cardsPerPage}
             totalPagesProp={Math.ceil(cards.length / cardsPerPage)}

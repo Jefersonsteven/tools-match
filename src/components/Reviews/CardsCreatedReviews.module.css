@@ -35,3 +35,12 @@
 .button-container .edit-button {
   margin-top: 10px;
 }
+
+@media (max-width: 768px) {
+  .flexbox {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 16px;
+  }
+}

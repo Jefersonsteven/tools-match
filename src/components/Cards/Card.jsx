@@ -65,7 +65,10 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
   };
 
   return (
-    <div className={`${styles.cardContainer} bg-white rounded-md p-4`}>
+    <div
+      className={`${styles.cardContainer} bg-white rounded-md p-4`}
+      popovertarget="title"
+    >
       <div className={styles.favoriteContainer}>
         <FaHeart
           className={
@@ -121,8 +124,10 @@ const Card = ({ title, photo, price, type, perDay, id }) => {
           </div>
         </div>
       </div>
+
+      <span className={styles.title}>{title}</span>
     </div>
   );
 };
 
-export default Card;
+export default React.memo(Card);

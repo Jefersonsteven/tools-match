@@ -1,63 +1,62 @@
-
 .container {
-display: flex;
-flex-direction: column;
-gap: 30px;
-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
 }
 
 .card {
-  height: 150px; 
+  height: 150px;
 }
 
 .customModal {
-    width: 30%;
-    max-height: calc(100% - 46rem);
-    margin: auto;
-    background-color: rgb(211, 231, 211);
-     margin-top: 20rem;
-    padding: 10px;
-    padding-top: 10px;
-  }
+  width: 30%;
+  height: auto;
+  margin: auto;
+  background-color: rgb(211, 231, 211);
+  margin-top: 20rem;
+  padding: 10px;
+  padding-top: 10px;
+}
 .customModalTwo {
-    width: 30%;
-    max-height: calc(100% - 56rem);
-    margin: auto;
-    background-color: rgb(211, 231, 211);
-     margin-top: 20rem;
-    padding: 10px;
-    padding-top: 10px;
-  }
+  width: 30%;
+  height: auto;
+  margin: auto;
+  background-color: rgb(211, 231, 211);
+  margin-top: 20rem;
+  padding: 10px;
+  padding-top: 10px;
+}
 
-  .closeButton {
-    background-color: transparent;
-    border: none;
-    color: #999999;
-    cursor: pointer;
-    padding: 5px;
-    margin-left: auto;
-    margin-right: 28px;
-    height: 30px;
-    width: 30px;
-  }
-  
-  .closeButton:hover {
-    color: #090909;
-    background-color: transparent;
-    border: none;
-  }
+.closeButton {
+  background-color: transparent;
+  border: none;
+  color: #999999;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: 28px;
+  height: 30px;
+  width: 30px;
+}
 
-  @media screen and (max-width: 390px) {
-    .customModal{
-      width: 70%;
-      height: calc(100% - 60rem);
-		  margin-top: 30rem;
-		  padding: 1rem
-    }
-    .customModalTwo{
-      width: 70%;
-      height: calc(100% - 70rem);
-		  margin-top: 30rem;
-		  padding: 1rem
-    }
+.closeButton:hover {
+  color: #090909;
+  background-color: transparent;
+  border: none;
+}
+
+@media screen and (max-width: 390px) {
+  .customModal {
+    width: 90%;
+    height: 39rem;
+    margin-top: 30rem;
+    padding: 1rem;
   }
+  .customModalTwo {
+    width: 90%;
+    height: 39rem;
+    margin-top: 30rem;
+    padding: 1rem;
+  }
+}

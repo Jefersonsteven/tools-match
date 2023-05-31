@@ -13,6 +13,7 @@ import { TfiPencilAlt } from "react-icons/tfi";
 import { TiDelete, TiPencil } from "react-icons/ti";
 import Loader from "@/components/Loader/Loader";
 import Paginated from "@/components/paginated/Paginated";
+import LoaderRadial from "@/components/Loader/LoaderRadial";
 
 
 
@@ -55,35 +56,6 @@ function Reviews() {
 
 
   
-
-
-
-
-
-
-  // const handleDeleteUser = async (id) => {
-  //   try {
-  //     const userDelete = await axios.delete(`/api/admin/review/${id}`);
-  //     console.log(userDelete.data);
-  //     Swal.fire({
-  //       title: 'Reseña eliminada',
-  //       text: 'La reseña ha sido eliminada exitosamente',
-  //       icon: 'success',
-  //       confirmButtonText: 'Aceptar'
-  //     });
-  //     fetchUsers();
-  //   } catch (error) {
-  //     console.error(error);
-  //     Swal.fire({
-  //       title: 'Error al Eliminar la reseña',
-  //       text: 'Ha ocurrido un error al eliminar la reseña, porfavor intenta de nuevo',
-  //       icon: 'error',
-  //       confirmButtonText: 'Aceptar',
-  //     })
-
-  //   }
-  // };
-
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -195,6 +167,7 @@ function Reviews() {
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Sí, borrar",
         cancelButtonText: "Cancelar",
+        reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
   
@@ -256,7 +229,13 @@ function Reviews() {
 
 
       {loading ? (
-      <Loader />
+
+<div className={style.loaderContainer}>
+<LoaderRadial />
+</div>
+      
+
+
     ) : ( <div>
 
 
@@ -287,6 +266,7 @@ function Reviews() {
                 <th>USUARIO</th>
                 <th>CREADA</th>
                 <th>AUTOR PUBLICACION</th>
+                <th>ELIMINAR</th>
               </tr>
             </thead>
 
@@ -305,7 +285,7 @@ function Reviews() {
                   <td>{d.author.email}</td>
                   <td>{d.createdAt.slice(0, 10)}</td>
                   <td>{d.received.email}</td>
-                  <td>
+                  <td className={style.td_button}>
                   <button
                     className={`${style.botonDelete} ${buttonClass} ${isDeleteButtonDisabled ? style.disabledButton : ''}`}
                     onClick={() => handleDeleteClick(d.title, d.id, d.author.email)}

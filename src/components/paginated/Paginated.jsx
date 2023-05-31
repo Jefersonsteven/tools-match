@@ -16,7 +16,7 @@ export default function Paginated({
   const [isLeftArrowClicked, setIsLeftArrowClicked] = useState(false);
   const [isRightArrowClicked, setIsRightArrowClicked] = useState(false);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(url);
@@ -29,7 +29,7 @@ export default function Paginated({
     };
 
     fetchData();
-  }, [url, currentPage]);
+  }, [url, currentPage]); */
 
   const handlePreviousPage = () => {
     setCurrentPage(currentPage - 1);

@@ -6,22 +6,28 @@ import axios from "axios";
 import Card from "@/components/Cards/Card";
 import styles from "./Favorites.module.css";
 import Back from "@/components/back/Back";
+import Swal from "sweetalert2";
+import { MdAddShoppingCart } from "react-icons/md";
 
-const Favorites = ({ title, price, type }) => {
-  const router = useRouter();
-  const [favoriteArray, setFavoriteArray] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-  const { userData, favorite, setFavorite } = useContext(AppContext);
+const Favorites = () => {
+  const [visibleCards, setVisibleCards] = useState(4);
+  const {
+    userData,
+    favorite,
+    setFavorite,
+    favoriteArray,
+    setFavoriteArray,
+    cart,
+    setCart,
+  } = useContext(AppContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch user data
       const user = await axios.get(`api/user/${userData.email}`);
-
-      // Update favoriteArray with the data from the response
       if (userData && userData.email) {
-        setFavoriteArray(user.data.favorites);
-        setRefresh(!refresh);
+        setFavoriteArray(
+          user.data.favorites.map((card) => ({ ...card, checked: false }))
+        );
         setFavorite((prevFavorite) => ({
           ...prevFavorite,
           count: user.data.favorites.length,
@@ -35,18 +41,44 @@ const Favorites = ({ title, price, type }) => {
         count: 0,
       });
     }
-  }, []); // Empty dependency array to run the effect only once on component mount
+  }, []);
+
+  const addToCard = (id) => {
+    const selectedCard = favoriteArray.find((card) => card.id === id);
+
+    if (cart.items.some((cartItem) => cartItem.id === id)) {
+      Swal.fire(
+        "Ya agregado al carrito",
+        "Este elemento ya ha sido agregado al carrito.",
+        "warning"
+      );
+      return;
+    }
+
+    setCart(({ count, items }) => ({
+      count: count + 1,
+      items: [...items, selectedCard],
+    }));
+
+    Swal.fire(
+      "Agregado al carrito",
+      "Los favoritos seleccionados han sido agregados al carrito.",
+      "success"
+    );
+  };
+
+  const handleSeeMoreClick = () => {
+    setVisibleCards((prevVisibleCards) => prevVisibleCards + 4);
+  };
 
   return (
     <div>
       <Back />
-      <div className={styles.favTitle}>
-        <h1>Favoritos</h1>
-      </div>
+      <h1 className={styles.favTitle}>Favoritos</h1>
       <div className={styles.favContainer}>
         {favoriteArray.length > 0 ? (
-          favoriteArray.map((card) => (
-            <div className={styles.favCards} key={card.id}>
+          favoriteArray.slice(0, visibleCards).map((card) => (
+            <div className={styles.favInfo} key={card.id}>
               <Card
                 photo={card.photo[0]}
                 title={card.title}
@@ -55,14 +87,134 @@ const Favorites = ({ title, price, type }) => {
                 typeStyle={{ width: "100%", textAlign: "center" }}
                 type={card.type === "RENTAL" ? "Arriendo" : "Venta"}
               />
+              <div
+                className={styles.addToCartButton}
+                onClick={() => addToCard(card.id)}
+              >
+                <MdAddShoppingCart className={styles.addToCartIcon} />
+                <span className={styles.cartText}>Agregar al Carrito</span>
+              </div>
             </div>
           ))
         ) : (
           <h2 className={styles.favSubTitle}>No Tiene Ningún Favorito</h2>
         )}
       </div>
+      {favoriteArray.length > visibleCards && (
+        <div>
+          <button className={styles.favSeeMore} onClick={handleSeeMoreClick}>
+            Ver Más
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Favorites;
+
+// "use client";
+// import React, { useState, useEffect, useContext } from "react";
+// import { AppContext } from "@/context/AppContext";
+// import { useRouter } from "next/navigation";
+// import axios from "axios";
+// import Card from "@/components/Cards/Card";
+// import styles from "./Favorites.module.css";
+// import Back from "@/components/back/Back";
+// import Swal from "sweetalert2";
+
+// const Favorites = () => {
+//   const [visibleCards, setVisibleCards] = useState(4);
+//   const {
+//     userData,
+//     favorite,
+//     setFavorite,
+//     favoriteArray,
+//     setFavoriteArray,
+//     cart,
+//     setCart,
+//   } = useContext(AppContext);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const user = await axios.get(`api/user/${userData.email}`);
+//       if (userData && userData.email) {
+//         setFavoriteArray(
+//           user.data.favorites.map((card) => ({ ...card, checked: false }))
+//         );
+//         setFavorite((prevFavorite) => ({
+//           ...prevFavorite,
+//           count: user.data.favorites.length,
+//         }));
+//       }
+//     };
+
+//     fetchData();
+//     if (!favorite) {
+//       setFavorite({
+//         count: 0,
+//       });
+//     }
+//   }, []);
+
+//   const addToCard = (id) => {
+//     const selectedCard = favoriteArray.find((card) => card.id === id);
+
+//     if (!cart.items.some((cartItem) => cartItem.id === id)) {
+//       setCart(({ count, items }) => ({
+//         count: count + 1,
+//         items: [...items, selectedCard],
+//       }));
+//     }
+
+//     Swal.fire(
+//       "Agregado al carrito",
+//       "Los favoritos seleccionados han sido agregados al carrito.",
+//       "success"
+//     );
+//   };
+
+//   const handleSeeMoreClick = () => {
+//     setVisibleCards((prevVisibleCards) => prevVisibleCards + 4);
+//   };
+
+//   return (
+//     <div>
+//       <Back />
+//       <h1 className={styles.favTitle}>Favoritos</h1>
+//       <div className={styles.favContainer}>
+//         {favoriteArray.length > 0 ? (
+//           favoriteArray.slice(0, visibleCards).map((card) => (
+//             <div className={styles.favInfo} key={card.id}>
+//               <Card
+//                 photo={card.photo[0]}
+//                 title={card.title}
+//                 price={card.price}
+//                 id={card.id}
+//                 typeStyle={{ width: "100%", textAlign: "center" }}
+//                 type={card.type === "RENTAL" ? "Arriendo" : "Venta"}
+//               />
+//               <button
+//                 className={styles.addToCartButton}
+//                 onClick={() => addToCard(card.id)}
+//               >
+//                 Agregar al Carrito
+//               </button>
+//             </div>
+//           ))
+//         ) : (
+//           <h2 className={styles.favSubTitle}>No Tiene Ningún Favorito</h2>
+//         )}
+//       </div>
+//       {favoriteArray.length > visibleCards && (
+//         <div>
+//           <button className={styles.favSeeMore} onClick={handleSeeMoreClick}>
+//             Ver Más
+//           </button>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Favorites;

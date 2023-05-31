@@ -178,6 +178,7 @@ function CreatePost() {
         <section className={style.form2}>
           <h2>Publica una herramienta</h2>
         </section>
+        <label>Tipo de publicación:</label>
         <button
           className={form.type === "RENTAL" ? style.active : style.desactived}
           onClick={handleForm}
