@@ -4,6 +4,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import styles from "./CardsPurchasedItems.module.css";
 import { useParams } from "next/navigation";
 import { FaCheckCircle } from "react-icons/fa";
+import Image from "next/image";
 import LoaderRadial from "../Loader/LoaderRadial";
 
 const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
@@ -83,10 +84,10 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
               className={styles.product}
               style={{ minHeight: "270px" }}
             >
-              <h3>{post?.title}</h3>
-              <img
-                src={post?.photo[0]}
-                alt={post?.title}
+              <h3>{post.title}</h3>
+              <Image
+                src={post.photo[0]}
+                alt={post.title}
                 className={styles.img}
                 style={{ paddingBottom: "40px" }}
               />
