@@ -101,6 +101,19 @@ button.selected {
   justify-content: space-between;
 }
 
+.filterDistance {
+  display: flex;
+  justify-content: center;
+}
+
+.filterDistance{
+  width: 100%;
+}
+
+.searchBar{
+  
+}
+
 /* /////////////////////////////////////////////////////////// */
 
 @media (max-width: 1400px){

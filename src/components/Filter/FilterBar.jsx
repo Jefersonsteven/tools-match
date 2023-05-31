@@ -96,11 +96,11 @@ export default function FilterBar() {
   return (
     <AppProvider>
       <div className="w-full mb-10">
-        <div className="mr-10 ml-2 w-full">
+        <div className={style.filterDistance}>
           <FilterRangeDistance handleKm={handleKm} />
         </div>
         <div className={style.filterContainer}>
-          <div className="mr-10" style={{ width: "400px" }}>
+          <div className={style.searchBar}>
             <SearchBar
               title={title}
               onTitleChange={handleTitle}
