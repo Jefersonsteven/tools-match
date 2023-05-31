@@ -115,11 +115,9 @@ function Header() {
               <div
                 className={styles.perfil}
                 onClick={() => {
-                  if (window.innerWidth < 900) {
-                    submenu === "none" || submenu === ""
-                      ? setSubmenu("flex")
-                      : setSubmenu("none");
-                  }
+                  submenu === "none" || submenu === ""
+                    ? setSubmenu("flex")
+                    : setSubmenu("none");
                 }}
               >
                 {userData && userData.photo ? (
@@ -138,10 +136,7 @@ function Header() {
                   />
                 )}
 
-                <ul
-                  className={styles.openSubmenu}
-                  style={{ display: window.innerWidth < 900 ? submenu : "" }}
-                >
+                <ul className={styles.openSubmenu} style={{ display: submenu }}>
                   {userData && (
                     <li>
                       <Link href={`/perfil/${userId}`}>Ver Perfil</Link>

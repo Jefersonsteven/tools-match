@@ -115,9 +115,28 @@
   height: fit-content;
 }
 
+/* ---------- RESPONSIVE ----------*/
+
+@media (max-width: 390px) {
+  .cardContainer{
+    margin-top: 20px;
+    height: 50%;
+  }
+  .imageContainer img {
+    max-width: 70%;
+    height: auto;
+    padding-top: 30px;
+  }
+  .cardPrice{
+    font-size: 2.5rem;
+  }
+  .cardName{
+    font-size: 2rem;
+  }
+}
+
 @media (max-width: 700px) {
   .cardContainer {
-    width: 50%;
     height: 100%;
     margin: 0 auto;
   }
@@ -126,7 +145,7 @@
     height: 100%;
   }
   .cardContent {
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: space-between;
   }
   .cardName {
