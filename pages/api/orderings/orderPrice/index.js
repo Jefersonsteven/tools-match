@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   try {
     const where = { hidden: false };
 
-    if(id && !country) {
+    if(id && country!=="alls" || !country) {
       const postCountry = await prisma.user.findUnique({
         where: {
           id: id,
@@ -31,17 +31,23 @@ export default async function handler(req, res) {
           }
       });
       const {country} = postCountry
-        if(country){
-          where.author = {
-            country: country,
-          };
+      if(country){
+        where.author = {
+          country: country
         }
+      }
     }
-    if (country) {
-      where.author = {
-        country: country,
-      };
-    }
+
+
+    if(country ) {
+      if(country!=="alls"){
+        where.author = {
+          country: country
+          }
+      }else {
+        delete where.author;
+      }
+    } 
 
     if (type) where.type = type;
     if (category) where.category = category;
