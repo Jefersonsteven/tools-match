@@ -2,7 +2,7 @@
 import { AppContext } from "@/context/AppContext";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./post.module.css";
 import Link from "next/link";
 import Swal from "sweetalert2";
@@ -13,6 +13,7 @@ import LoaderRadial from "@/components/Loader/LoaderRadial";
 
 function PostDetail({}) {
   const { postId } = useParams();
+  const [rentalDays, setRentalDays] = useState("1");
   const { postDetail, setPostDetail, userId, cart, setCart } =
     useContext(AppContext);
   const pd = postDetail;
@@ -24,11 +25,22 @@ function PostDetail({}) {
     },
   };
 
+  function handleDaysRental(event) {
+    const value = event.target.value;
+    setRentalDays(value);
+  }
+
   function addCart() {
     if (!cart.items.some((item) => item.id === postDetail.id)) {
       setCart({
         count: cart.count + 1,
-        items: [...cart.items, postDetail],
+        items:
+          pd.type === "SALE"
+            ? [...cart.items, postDetail]
+            : [
+                ...cart.items,
+                { ...postDetail, price: postDetail.price * rentalDays },
+              ],
       });
 
       if (typeof window !== "undefined")
@@ -36,7 +48,13 @@ function PostDetail({}) {
           "cart",
           JSON.stringify({
             count: cart.count + 1,
-            items: [...cart.items, postDetail],
+            items:
+              pd.type === "SALE"
+                ? [...cart.items, postDetail]
+                : [
+                    ...cart.items,
+                    { ...postDetail, price: postDetail.price * rentalDays },
+                  ],
           })
         );
 
@@ -154,8 +172,7 @@ function PostDetail({}) {
                 <div className={styles.description_title}>
                   <h2>{pd.title}</h2>
                   <div>
-                    {pd.type === "SALE" && <h3>${pd.price}</h3>}
-                    {pd.type === "LEASE" && <h3>${pd.pricePerDay}</h3>}
+                    <h3>${pd.price}</h3>
                   </div>
                 </div>
                 <p>{pd.content}</p>
@@ -228,6 +245,19 @@ function PostDetail({}) {
                 )}
                 {userId !== pd.author.id && (
                   <button onClick={addCart}>Agregar al carrito</button>
+                )}
+                {pd.type === "RENTAL" && (
+                  <select
+                    name="daysRental"
+                    id=""
+                    className={styles.input}
+                    onChange={handleDaysRental}
+                  >
+                    <option value="1">Dias de Arriendo</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
                 )}
               </section>
             </>
