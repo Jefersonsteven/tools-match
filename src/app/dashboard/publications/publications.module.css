@@ -218,3 +218,10 @@
 .nombrePerfil:hover {
     color: #f0960e;
 }
+
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 13rem; 
+  }
