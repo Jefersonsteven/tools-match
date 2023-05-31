@@ -29,12 +29,13 @@ export const handleTypeChange = (event, setSelected, setTypeFilter) => {
   setTypeFilter(typeValue);
 };
 
-export const handleCountryChange = (event, setSelected) => {
-  const typeValue = event.target.value;
+export const handleCountryChange = (event, setSelected, setCountryFilter) => {
+  const countryValue = event.target.value;
   setSelected((prevSelected) => ({
     ...prevSelected,
-    country: typeValue,
+    country: countryValue,
   }));
+  setCountryFilter(countryValue)
 };
 
 export const handleBrandChange = (event, setSelected, setBrandFilter) => {
@@ -80,6 +81,7 @@ export const handleClearFilters = (
   setTypeFilter,
   setBrandFilter,
   setOrderFilter,
+  setCountryFilter,
 ) => {
   const event = { target: { value: "" } };
   handleCategoryChange(event, setSelected, setCategoryFilter);
@@ -87,6 +89,6 @@ export const handleClearFilters = (
   handleBrandChange(event,setSelected,setBrandFilter)
   handleOrderChange("","",setSelected,setOrderFilter);
   handleKmChange(setSelected, "", "", "");
-  handleCountryChange(event,setSelected);
+  handleCountryChange(event,setSelected, setCountryFilter);
 };
 
