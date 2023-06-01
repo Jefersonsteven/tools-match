@@ -35,7 +35,8 @@ function PostDetail({}) {
   function addCart() {
     if (
       !cart.items.some((item) => item.id === postDetail.id) &&
-      pd.status !== "Arrendado"
+      pd.status !== "Arrendado" &&
+      !pd.hidden
     ) {
       setCart({
         count: cart.count + 1,
@@ -78,24 +79,39 @@ function PostDetail({}) {
         }
       });
     } else {
-      Swal.fire({
-        title:
-          pd.status !== "Arrendado"
-            ? "¡Producto ya agregado!"
-            : "Esta en arriendo",
-        text:
-          pd.status !== "Arrendado"
-            ? "Este artículo ya se encuentra en tu carrito."
-            : "Esta producto ya esta arrendado, espera a que este disponible",
-        icon: "warning",
-        showCancelButton: false,
-        timer: 2000,
-        didOpen: () => {
-          setTimeout(() => {
-            Swal.close();
-          }, 2000);
-        },
-      });
+      if (pd.hidden) {
+        Swal.fire({
+          title: "Sin Stock!",
+          text: "¡No hay mas unidades, de este producto!",
+          icon: "warning",
+          showCancelButton: false,
+          timer: 2000,
+          didOpen: () => {
+            setTimeout(() => {
+              Swal.close();
+            }, 2000);
+          },
+        });
+      } else {
+        Swal.fire({
+          title:
+            pd.status !== "Arrendado"
+              ? "¡Producto ya agregado!"
+              : "Esta en arriendo",
+          text:
+            pd.status !== "Arrendado"
+              ? "Este artículo ya se encuentra en tu carrito."
+              : "Esta producto ya esta arrendado, espera a que este disponible",
+          icon: "warning",
+          showCancelButton: false,
+          timer: 2000,
+          didOpen: () => {
+            setTimeout(() => {
+              Swal.close();
+            }, 2000);
+          },
+        });
+      }
     }
   }
 
@@ -237,7 +253,7 @@ function PostDetail({}) {
                       </b>
                       @{pd.author.firstname}
                     </h5>
-                    <h5>⭐{calcularPromedioDeRatings(pd.reviews)}.0</h5>
+                    <h5>⭐{calcularPromedioDeRatings(pd.reviews)}{calcularPromedioDeRatings(pd.reviews) === 0 && ".0"}</h5>
                   </div>
                 </Link>
                 <div className={styles.reviews}>
