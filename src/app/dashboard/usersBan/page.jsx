@@ -1,20 +1,15 @@
 "use client";
 import style from "./usersBan.module.css";
-
 import Modal from "../components/Modal";
 import { Fragment, useEffect, useState, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
-
 import UserForm from "../components/Form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { icons } from "react-icons";
 import { CiUnlock } from "react-icons/ci";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
-
-import Loader from "@/components/Loader/Loader";
-
 
 /*PARA PAGINATED*/
 import Paginated from "@/components/paginated/Paginated";
@@ -43,24 +38,13 @@ function UsersBan() {
   const [searchTerm, setSearchTerm] = useState("");
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
-
-
   const [editingUser, setEditingUser] = useState(null);
-
-
   const [showModal, setShowModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedUserCount, setSelectedUserCount] = useState(0);
   const [areButtonsDisabled, setAreButtonsDisabled] = useState(true);
-
   const [loading, setLoading] = useState(false);
-
-
-
   const[admin, setAdmin] = useState(false);
-
-  
-
 
   const filteredUsuarios = records.filter((usuario) => {
     return usuario.firstname.toLowerCase().includes(searchTerm.toLowerCase());
@@ -69,6 +53,7 @@ function UsersBan() {
   /*---------- PAGINATED ----------*/
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
+  const publicationsPerPage = 5;
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -79,12 +64,11 @@ function UsersBan() {
   /*-------------------------------*/
 
 
-  const fetchUsers = async () => {
+const fetchUsers = async () => {
     try {
       setLoading(true);
       const response = await axios("/api/admin/hidden/user"); //PAGINATED
       const users = await response.data;
-
       if (users.length > 0) {
         const columns = Object.keys(users[0]).map((column) =>
           column.toUpperCase()
@@ -98,16 +82,13 @@ function UsersBan() {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchUsers();
   }, []);
 
-
-
 // Funcion de eliminar usuario ----------------------------------------
 
-  const handleDeleteClick = (firstname, id, email) => {
+const handleDeleteClick = (firstname, id, email) => {
     const userId = [id]
     console.log(userId)
     Swal.fire({
@@ -128,11 +109,9 @@ function UsersBan() {
             // Actualizar la lista de usuarios en el estado local
             const updatedUsers = records.filter((user) => user.id !== id);
             setRecords(updatedUsers);
-
             axios
             .post('/api/sendEmail/desbaneo', { 
-              email: email })
-            
+              email: email })        
             Swal.fire({
               title: "¡Se ha quitado el veto correctamente!",
               icon: "success",
@@ -147,9 +126,8 @@ function UsersBan() {
 
   // CheckBox   ---------------------------------------------------------
 
-  const handleCheckboxChange = (event) => {
-    const { name , checked } = event.target;
-    
+const handleCheckboxChange = (event) => {
+    const { name , checked } = event.target; 
     setSelectedUsers((prevSelectedUsers) => {
       if (checked) {
         return [...prevSelectedUsers, name];
@@ -157,7 +135,6 @@ function UsersBan() {
         return prevSelectedUsers.filter((userId) => userId !== name);
       }
     });
-    
     setSelectedUserCount((prevCount) => {
       if (checked) {
         return prevCount + 1;
@@ -168,7 +145,7 @@ function UsersBan() {
   };
   
 
-  const handleUnbanUsers = () => {
+const handleUnbanUsers = () => {
     if (selectedUserCount > 0) {
       const userIds = selectedUsers;
       const userEmails = records
@@ -189,44 +166,21 @@ function UsersBan() {
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          
-          
-        
-
-
           axios
             .put("/api/admin/hidden/user", {
                 userIds: selectedUsers 
             })
-
-            
-            
-            
-            
-            
             .then((response) => {
-
               axios.post("/api/sendEmail/desbaneo", {
                 email: userEmails
               })
-            
-              
-
-            
-              
-
               // Actualizar la lista de usuarios en el estado local
               const updatedUsers = records.filter(
                 (user) => !userIds.includes(user.id)
               );
               setRecords(updatedUsers);
-
               setSelectedUserCount(0);
-
-
               Swal.close();
-
-
               Swal.fire({
                 title: "¡Los usuarios ya no estan vetados",
                 icon: "success",
@@ -242,32 +196,19 @@ function UsersBan() {
 
   const buttonClass = selectedUserCount > 1 ? style.disabledButton : '';
 
-
-
 //  -------------------------------------------------------------------------------------------
      
   return (
     <div className={style.contenedorPadre}>
-
-
       <div className={style.searchbarContainer}>
         <h2>Usuarios vetados</h2>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
-
-    
       {loading ? (
-
-
 <div className={style.loaderContainer}>
   <LoaderRadial />
 </div>
-      
     ) : ( <div>
-
-   
-      
-        
       {selectedUserCount > 1 && (
       <div className={style.checkbox_padre}>
       <h2>Hay {selectedUserCount} usuarios seleccionados</h2>
@@ -279,8 +220,6 @@ function UsersBan() {
               </button>
       </div>
       )}
-
-    
       <div className={style.contenedorTable}>
         {filteredUsuarios.length > 0 ? (
           <table className={style.table}>
@@ -296,16 +235,10 @@ function UsersBan() {
                 <th>TELEFONO</th>
                 <th>RANGO</th>
                 <th>REPORTES</th>
-                {/* <th>PUBLICACIONES</th>
-                <th>ORDENES</th>
-                <th>RESEÑAS</th>
-                <th>RECIBOS</th> */}
                 <th>PAIS</th>                
                 <th>ACCION</th>               
               </tr>
             </thead>
-
-
             <tbody className={style.bodyTabla}>
               {displayedUsers.map((d) => (
                 <tr className={style.namesTable} key={d.id}>
@@ -323,23 +256,8 @@ function UsersBan() {
                   <td>{d.phoneNumber}</td>
                   <td>{d.admin ? "Admin" : "Usuario"}</td>
                   <td>{d.reports.length}</td>
-                  {/* <td>{d.posts.length}</td>
-                  <td>{d.orders.length}</td>
-                  <td>{d.reviews.length}</td>
-                  <td>{d.received.length}</td> */}
                   <td>{d.country ? d.country : "?"}</td>
-                  {/* <td><button onClick={()=> handleAdminClick(d.firstname, d.id)}></button></td> */}
-
-
-                  <td className={style.td_button}>
-                    {/* <button
-                      className={`${style.botonEditar} ${buttonClass}`}
-                      onClick={() => handleClick(d.id)}
-                      disabled={selectedUserCount > 1}
-                      
-                    >
-                      <TiPencil size={30}/>
-                    </button> */}
+                  <td className={style.td_button}>               
                     <button
                       className={`${style.botonDelete} ${buttonClass}`}
                       onClick={() => handleDeleteClick(d.firstname, d.id, d.email)}
@@ -347,10 +265,7 @@ function UsersBan() {
                     >
                       <CiUnlock size={30}/>
                     </button>
-                  </td>  
-
-
-                
+                  </td>          
                 </tr>
               ))}
             </tbody>
@@ -361,11 +276,7 @@ function UsersBan() {
           </div>
         )}
         {editingUser && (
-
-
-
           <Modal show={showModal} onClose={() => setShowModal(false)}>
-
             <UserForm
               admin={admin}
               setAdmin={setAdmin}
@@ -375,27 +286,20 @@ function UsersBan() {
             />
           </Modal>
         )}
-
-
-
-
       </div>
       {/*--------- PAGINATED ---------- */}
-      {filteredUsuarios.length > 0 && (
-        <Paginated
-          url={`/api/admin/paginatedUser?page=${currentPage}&limit=${perPage}`}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          perPage={perPage}
-          onPageChange={handlePageChange}
-          totalPagesProp={Math.ceil(perPage.length / perPage)}
-        />
-      )}
- </div>)}
-
-
-
- 
+      {filteredUsuarios.length > publicationsPerPage && (
+            <Paginated
+              currentPage={currentPage}
+              publicationsPerPage={publicationsPerPage}
+              totalPagesProp={Math.ceil(
+                filteredUsuarios.length / publicationsPerPage
+              )}
+              onPageChange={handlePageChange}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
+ </div>)} 
       {/*------------------------------ */}
     </div>
   );

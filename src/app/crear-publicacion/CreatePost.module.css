@@ -35,7 +35,7 @@
   gap: 20px;
 }
 
-.form form div {
+.form form > div {
   max-width: 534px;
   display: flex;
   flex-direction: column;
@@ -92,6 +92,7 @@
   margin: 32px 0;
   gap: 16px;
 }
+
 .loaderContainer > span {
   height: 32px;
 }
@@ -101,76 +102,18 @@
   height: 24px;
 }
 
-.form {
+.form form .button {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
   gap: 30px;
-}
-
-.form h2 {
-  font-size: 4rem;
-  font-weight: bold;
-}
-
-.form form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form form div {
-  max-width: 534px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form form div input,
-.form form div select {
-  height: 48px;
-  padding-left: 10px;
-  border-radius: 5px;
-}
-
-.form form div label {
+  width: 100%;
   font-weight: 700;
 }
 
-.form form div textarea {
-  border-radius: 5px;
-  padding: 10px;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.buttons button {
-  width: 265px;
-  height: 66px;
-  border-radius: 5px;
-  color: var(--white);
-}
-
-.buttons button:hover {
-  background-color: var(--green);
-}
-
-.desactived {
-  background-color: var(--black-light);
-}
-
-.active {
-  background-color: var(--green);
-}
-
-.button {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  width: 100%;
+.form form .button a:hover {
+  color: var(--red);
 }
 
 .button button {
@@ -249,5 +192,10 @@
     grid-row: 2 / 3;
     grid-column: 1 / 3;
   }
-  
+}
+
+@media(max-width: 700px) {
+  .form form .button {
+    flex-direction: column;
+  }
 }

@@ -15,33 +15,47 @@ import {
   handleOrderChange,
   handleClearFilters,
   handleKmChange,
-  handleCountryChange
+  handleCountryChange,
 } from "./handlers";
 import FilterRangeDistance from "../FilterRangeDistance/FilterRangeDistance";
 import { AiOutlineClear } from "react-icons/ai";
 
 export default function FilterBar() {
-  const { setCards, title, setTitle, selected, setSelected,userId,setIsLoading } =
-    useContext(AppContext);
+  const {
+    setCards,
+    title,
+    setTitle,
+    selected,
+    setSelected,
+    userId,
+    setIsLoading,
+    setCurrentPage,
+  } = useContext(AppContext);
   const [typeFilter, setTypeFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [orderFilter, setOrderFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState(""); // Nuevo estado para el filtro de marca
+  const [countryFilter, setCountryFilter] = useState("");
 
   useEffect(() => {
-    fetchCards(selected, setCards, title,userId,setIsLoading);
-    return ()=> {
+    fetchCards(selected, setCards, title, userId, setIsLoading, setCurrentPage);
+    return () => {
       setCards([]);
     };
   }, [selected]);
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleTitleButtonChange(title, setCards, setSelected, selected, userId);
+    }
+  };
 
   const handleTitle = (newTitle) => {
     handleTitleChange(newTitle, setTitle, setSelected, selected);
   };
 
   const handleTitleButton = () => {
-    handleTitleButtonChange(title, setCards, setSelected, selected,userId);
+    handleTitleButtonChange(title, setCards, setSelected, selected, userId);
   };
 
   const handleCategory = (event) => {
@@ -60,12 +74,12 @@ export default function FilterBar() {
   };
 
   // handleKm - Jeffer
-  const handleKm = (km, coorde1, coorde2) => {
-    handleKmChange(setSelected, km, coorde1, coorde2);
+  const handleKm = (km, coorde1, coorde2, range) => {
+    handleKmChange(setSelected, km, coorde1, coorde2, range);
   };
 
   const handleCountry = (event) => {
-    handleCountryChange(event,setSelected);
+    handleCountryChange(event, setSelected, setCountryFilter);
   };
 
   const handleCleanFilters = () => {
@@ -75,78 +89,78 @@ export default function FilterBar() {
       setTypeFilter,
       setBrandFilter,
       setOrderFilter,
+      setCountryFilter
     );
   };
 
   return (
     <AppProvider>
       <div className="w-full mb-10">
-        <div className="mr-10 ml-2 w-full" style={{ width: "400px" }}>
+        <div className={style.filterDistance}>
           <FilterRangeDistance handleKm={handleKm} />
         </div>
-        <div className="w-full flex-1 flex flex-row items-center justify-between px-2">
-          <div className="mr-10" style={{ width: "400px" }}>
-            {/* // filter per distance - Jeffer */}
-
+        <div className={style.filterContainer}>
+          <div className={style.searchBar}>
             <SearchBar
               title={title}
               onTitleChange={handleTitle}
               onTitleButton={handleTitleButton}
               style={{ width: "150px" }}
+              handleKeyPress={handleKeyPress}
             />
           </div>
           <div className={`flex relative mr-2 ${style.button}`}>
-            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl ">
+            <div className="py-4 px-40 bg-black text-white flex items-center rounded-xl z-1">
               Pais <FaGlobeAmericas className="ml-2" />
             </div>
-            <div className={style.order}>
+            <div className={style.country}>
               <button
                 value=""
                 onClick={handleCountry}
-                className={orderFilter === "" ? style.selected : ""}
+                className={countryFilter === "" ? style.selected : ""}
               >
                 {userId ? "Default" : "Todos"}
               </button>
               <button
                 value="CO"
                 onClick={handleCountry}
-                className={orderFilter === "alpha-asc" ? style.selected : ""}
+                className={countryFilter === "CO" ? style.selected : ""}
               >
                 Colombia
               </button>
               <button
                 value="MX"
                 onClick={handleCountry}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
+                className={countryFilter === "MX" ? style.selected : ""}
               >
                 Mexico
               </button>
               <button
-               value="AR"
+                value="AR"
                 onClick={handleCountry}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
+                className={countryFilter === "AR" ? style.selected : ""}
               >
-                Argentina 
+                Argentina
               </button>
               <button
-               value="VE"
+                value="VE"
                 onClick={handleCountry}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
+                className={countryFilter === "VE" ? style.selected : ""}
               >
-                Venezuela 
+                Venezuela
               </button>
               <button
-               value="alls"
+                value="alls"
                 onClick={handleCountry}
                 className={orderFilter === "alpha-desc" ? style.selected : ""}
               >
-                Todos 
+                Todos
               </button>
             </div>
           </div>
           <div className={`mr-2 relative ${style.button}`}>
             <div
-              className={`py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl`}
+              className={`py-4 px-40 bg-black text-white flex items-center rounded-xl`}
             >
               Filtrar <FaFilter className="ml-2" />
             </div>
@@ -278,9 +292,9 @@ export default function FilterBar() {
                     </button>
                     <button
                       onClick={handleBrand}
-                      value="philips"
+                      value="phillips"
                       className={
-                        brandFilter === "Phillips" ? style.selected : ""
+                        brandFilter === "phillips" ? style.selected : ""
                       }
                     >
                       Phillips
@@ -304,14 +318,14 @@ export default function FilterBar() {
                     <button
                       onClick={handleBrand}
                       value="dewalt"
-                      className={brandFilter === "Dewalt" ? style.selected : ""}
+                      className={brandFilter === "dewalt" ? style.selected : ""}
                     >
                       Dewalt
                     </button>
                     <button
                       onClick={handleBrand}
                       value="skil"
-                      className={brandFilter === "Skil" ? style.selected : ""}
+                      className={brandFilter === "skil" ? style.selected : ""}
                     >
                       Skil
                     </button>
@@ -376,25 +390,25 @@ export default function FilterBar() {
             </div>
           </div>
           <div className={`flex relative  mr-2 ${style.button}`}>
-            <div className="py-4 px-40 bg-black text-white hover:bg-gray-800 flex items-center rounded-xl">
+            <div className="py-4 px-40 bg-black text-white  flex items-center rounded-xl">
               Ordenar <FaSort className="ml-2" />
             </div>
             <div className={style.order}>
               <button
-                onClick={() => handleOrder("", "")}
+                onClick={() => handleOrder("")}
                 className={orderFilter === "" ? style.selected : ""}
               >
                 Default
               </button>
               <button
                 onClick={() => handleOrder("alpha", "A-Z")}
-                className={orderFilter === "alpha-asc" ? style.selected : ""}
+                className={orderFilter === "alpha-A-Z" ? style.selected : ""}
               >
                 Nombre (A-Z)
               </button>
               <button
                 onClick={() => handleOrder("alpha", "Z-A")}
-                className={orderFilter === "alpha-desc" ? style.selected : ""}
+                className={orderFilter === "alpha-Z-A" ? style.selected : ""}
               >
                 Nombre (Z-A)
               </button>
@@ -426,13 +440,13 @@ export default function FilterBar() {
           </div>
           <div className={` flex relative ${style.clearBbutton}`}>
             {/* <div className={style.clear}> */}
-            <button
+            <div
               onClick={handleCleanFilters}
-              className="bg-black text-white hover:bg-gray-800 flex items-center rounded-xl"
+              className="bg-black text-white flex items-center rounded-xl"
               style={{ height: "46px", padding: "0 40px" }}
             >
               <AiOutlineClear className="mr-2 text-4xl" />
-            </button>
+            </div>
             {/* </div> */}
           </div>
         </div>

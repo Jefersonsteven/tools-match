@@ -69,6 +69,21 @@ export default async function confirmPurchase(userData, cart, setCart) {
         Swal.fire('¡Fallo el pedido!', 'El pedido no se pudo realizar.', 'error')
       }
 
+      //* se aplica el borrado logico a los post de venta
+      //* y se cambia el estado con los de arriendo
+      const items = cart.items.map((item) => {
+        if (item.type === "RENTAL") {
+          return axios.put(`/api/admin/post/${item.id}`, {
+            status: "Arrendado",
+          });
+        } else {
+          return axios.put(`/api/admin/post/${item.id}`, {
+            hidden: true,
+          });
+        }
+      });
+      axios.all(items);
+
       // se setea el carrito
       if (typeof window !== "undefined") {
         setCart({

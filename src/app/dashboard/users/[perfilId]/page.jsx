@@ -1,9 +1,12 @@
 "use client";
 
+import styles from "../../../perfil/[perfilId]/perfil.module.css"
+
+
 import { useState, useContext, useEffect } from "react";
 import Card from "@/components/Cards/Card";
 
-import styles from "./perfil.module.css";
+
 import { AppContext } from "@/context/AppContext";
 
 import Link from "next/link";
@@ -17,12 +20,12 @@ import Modal from "react-modal";
 import Back from "@/components/back/Back";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
 import { AiFillCloseCircle } from "react-icons/ai";
-import Swal from "sweetalert2";
 
 export default function PerfilUsuario() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { push } = useRouter();
   const { perfilId } = useParams();
+  const [errorsMessages, setErrorsMessages] = useState([]);
   const [reportMessagges, setReportMessagges] = useState("");
   const { userId, userData, countries } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
@@ -43,6 +46,10 @@ export default function PerfilUsuario() {
         setReviews(receivedReviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener reviews recibidas: " + error,
+        ]);
       }
     };
     fetchReviews();
@@ -60,6 +67,10 @@ export default function PerfilUsuario() {
         setCreatedReviews(createdReviews);
       } catch (error) {
         console.error("Error fetching createdReviews:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener reviews creadas: " + error,
+        ]);
       }
     };
     fetchCreatedReviews();
@@ -79,6 +90,10 @@ export default function PerfilUsuario() {
         setAuthors(fetchedAuthors.map((response) => response.data)); // Convertir la respuesta en un array de datos
       } catch (error) {
         console.error("Error fetching authors:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener autores: " + error,
+        ]);
       }
     };
 
@@ -113,6 +128,10 @@ export default function PerfilUsuario() {
         setUserOrders(orderDetails);
       } catch (error) {
         console.error("Error fetching user orders:", error);
+        setErrorsMessages((prev) => [
+          ...prev,
+          "Error al obtener las ordenes: " + error,
+        ]);
       }
     };
 
@@ -187,57 +206,32 @@ export default function PerfilUsuario() {
       };
 
       let response = await fetch("/api/admin/report", config);
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-          toast.style.fontSize = "16px";
-        },
-      });
-
-      Toast.fire({
-        icon: "success",
-        title: "Reporte enviado correctamente.",
-      });
+      console.log(response);
     } catch (error) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-          toast.style.fontSize = "16px";
-        },
-      });
-
-      Toast.fire({
-        icon: "error",
-        title: "Error al enviar el reporte. Intenta nuevamente",
-      });
       console.log(error);
     }
   };
 
   return (
     <>
+    <div className="flex flex-col w-full h-full gap-4 pl-12 pr-12">
       <section>
         <Back />
-        {!user.firstname && (
-          <div className="grid justify-center items-center fixed w-screen h-3/6">
-            <LoaderRadial />
-          </div>
+        {errorsMessages.length > 0 ? (
+          
+            <p></p>          
+          
+        ) : (
+          !user.firstname && (
+            <div className="grid justify-center items-center fixed w-10/12 h-3/6">
+              <LoaderRadial />
+            </div>
+          )
         )}
 
         {user.firstname && (
           <>
+         
             <h2 className={styles.sectionTitle}>Perfil de toolmatch</h2>
             <section className={styles.section}>
               <div className={styles.imageContainer}>
@@ -295,9 +289,7 @@ export default function PerfilUsuario() {
                     Editar perfil
                   </Link>
                 ) : (
-                  <button className={styles.editButton} onClick={openModal}>
-                    Reportar usuario
-                  </button>
+                  <p></p>
                 )}
                 <Modal
                   isOpen={modalIsOpen}
@@ -383,7 +375,7 @@ export default function PerfilUsuario() {
                 </div>
               </section>
               {user.id == userData?.id && (
-                <section className={styles.scrollInPosts}>
+                <section>
                   <div className="w-full items-center ">
                     <h3 className="text-center mb-8">
                       Tus compras y arriendos
@@ -433,6 +425,7 @@ export default function PerfilUsuario() {
           </>
         )}
       </section>
+      </div>
     </>
   );
 }

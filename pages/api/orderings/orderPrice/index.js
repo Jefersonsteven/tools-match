@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  const { type, category, order, brand, title, coorde1, coorde2, km ,id, country} = req.query;
+  const { type, category, order, brand, title, coorde1, coorde2, km, id, country } = req.query;
   const intcoorde1 = parseFloat(coorde1);
   const intcoorde2 = parseFloat(coorde2);
   const intKm = parseFloat(km);
@@ -20,34 +20,37 @@ export default async function handler(req, res) {
 
   try {
     const where = { hidden: false };
+    const include = {
+      reviews: true,
+      author: true
+    };
 
-    if(id && country!=="alls" || !country) {
+    if (id && country !== "alls" || !country) {
       const postCountry = await prisma.user.findUnique({
         where: {
           id: id,
-          },
-          select:{
-            country: true
-          }
+        },
+        select: {
+          country: true
+        }
       });
-      const {country} = postCountry
-      if(country){
+      const { country } = postCountry
+      if (country) {
         where.author = {
           country: country
         }
       }
     }
 
-
-    if(country ) {
-      if(country!=="alls"){
+    if (country) {
+      if (country !== "alls") {
         where.author = {
           country: country
-          }
-      }else {
+        }
+      } else {
         delete where.author;
       }
-    } 
+    }
 
     if (type) where.type = type;
     if (category) where.category = category;
@@ -57,9 +60,7 @@ export default async function handler(req, res) {
     if (coorde1 && coorde2 && km) {
       const posts = await prisma.post.findMany({
         where,
-        include: {
-          author: true
-        }
+        include,
       });
 
       const filteredPosts = posts.filter((post) => {
@@ -82,6 +83,7 @@ export default async function handler(req, res) {
 
     const posts = await prisma.post.findMany({
       where,
+      include,
       orderBy
     });
 
@@ -90,4 +92,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ message: 'Error getting data' });
   }
 }
-

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Card from "./Card";
 import { AppContext, AppProvider } from "@/context/AppContext";
 import React, { useEffect, useContext, useState } from "react";
@@ -10,15 +10,23 @@ import styles from "./Cards.module.css";
 import LoaderRadial from "../Loader/LoaderRadial";
 
 const Cards = () => {
-  const { cards, setCards, setFilteredCards, currentPage, setCurrentPage,userId,isLoading,setIsLoading} =
-    useContext(AppContext);//userId agregado por jean 
+  const {
+    cards,
+    setCards,
+    setFilteredCards,
+    currentPage,
+    setCurrentPage,
+    userId,
+    isLoading,
+    setIsLoading,
+  } = useContext(AppContext); //userId agregado por jean
   /* const [isLoading, setIsLoading] = useState(false); */
 
   /*----------PAGINATED----------*/
 
   const cardsPerPage = 12;
   /*-------------------------------*/
-  // modificado por jean heyller para que cuando inicie sesion cargue las publicaciones que estan en su pais
+  /*  // modificado por jean heyller para que cuando inicie sesion cargue las publicaciones que estan en su pais
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -37,8 +45,9 @@ const Cards = () => {
   
     fetchData();
   }, [userId, setCards, setFilteredCards]);
-
+ */
   /* ----------PAGINATED ----------- */
+  //comentado por jean para arreglar el paginado
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -52,12 +61,11 @@ const Cards = () => {
 
   const isPageEmpty = currentCards.length === 0;
 
-  const totalPages = Math.ceil(setFilteredCards.length / cardsPerPage);
+  /* const totalPages = Math.ceil(setFilteredCards.length / cardsPerPage);
 
-  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`;
+  const paginatedUrl = `/api/paginated?page=${currentPage}&limit=${cardsPerPage}`; */
 
   /* --------------------------------- */
-
   return (
     <AppProvider>
       <div className="p-4 px-2 grid justify-items-center">
@@ -71,6 +79,7 @@ const Cards = () => {
                 price={tool.price}
                 id={tool.id}
                 type={tool.type === "RENTAL" ? "Arriendo" : "Venta"}
+                reviews={tool.reviews}
               />
             </div>
           ))}
@@ -83,7 +92,7 @@ const Cards = () => {
           <p>No hay herramientas disponibles</p>
         ) : (
           <Paginated
-            url={paginatedUrl}
+            /* url={paginatedUrl} */
             currentPage={currentPage}
             itemsPerPage={cardsPerPage}
             totalPagesProp={Math.ceil(cards.length / cardsPerPage)}

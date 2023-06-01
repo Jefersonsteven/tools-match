@@ -45,7 +45,7 @@ export default async function handler(req, res) {
       }else {
         delete where.author;
       }
-    } 
+    }  
 
     if (category) where.category = category;
     if (type) where.type = type;
@@ -53,7 +53,8 @@ export default async function handler(req, res) {
     if (title) where.title = { contains: title, mode: 'insensitive' };
 
     const include = {
-      reviews: true
+      reviews: true,
+      author: true
     };
 
     let posts;
@@ -85,11 +86,20 @@ export default async function handler(req, res) {
       avgRating: post.reviews.length > 0
         ? post.reviews.reduce((total, review) => total + review.rating, 0) / post.reviews.length
         : 0
-    })).filter((post) => post.reviews.length > 0)
-      .sort((a, b) => (order === 'desc' ? b.avgRating - a.avgRating : a.avgRating - b.avgRating));
+    })).sort((a, b) => {
+      if (a.reviews.length === 0 && b.reviews.length === 0) {
+        return 0;
+      } else if (a.reviews.length === 0) {
+        return order === 'asc' ? -1 : 1;
+      } else if (b.reviews.length === 0) {
+        return order === 'asc' ? 1 : -1;
+      } else {
+        return order === 'asc' ? a.avgRating - b.avgRating : b.avgRating - a.avgRating;
+      }
+    });
 
     return res.status(200).json(sortedPosts);
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: error.message });
   }
 }

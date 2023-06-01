@@ -10,6 +10,8 @@ import axios from "axios";
 import Back from "@/components/back/Back";
 import Review from "./Review";
 import LoaderRadial from "@/components/Loader/LoaderRadial";
+import { BsCartPlusFill } from "react-icons/bs";
+import { calcularPromedioDeRatings } from "@/components/Cards/assets/calculateAverage";
 
 function PostDetail({}) {
   const { postId } = useParams();
@@ -31,7 +33,10 @@ function PostDetail({}) {
   }
 
   function addCart() {
-    if (!cart.items.some((item) => item.id === postDetail.id)) {
+    if (
+      !cart.items.some((item) => item.id === postDetail.id) &&
+      pd.status !== "Arrendado"
+    ) {
       setCart({
         count: cart.count + 1,
         items:
@@ -74,8 +79,14 @@ function PostDetail({}) {
       });
     } else {
       Swal.fire({
-        title: "¡Producto ya agregado!",
-        text: "Este artículo ya se encuentra en tu carrito.",
+        title:
+          pd.status !== "Arrendado"
+            ? "¡Producto ya agregado!"
+            : "Esta en arriendo",
+        text:
+          pd.status !== "Arrendado"
+            ? "Este artículo ya se encuentra en tu carrito."
+            : "Esta producto ya esta arrendado, espera a que este disponible",
         icon: "warning",
         showCancelButton: false,
         timer: 2000,
@@ -226,16 +237,18 @@ function PostDetail({}) {
                       </b>
                       @{pd.author.firstname}
                     </h5>
-                    <h5>⭐{pd2.author.rating}.0</h5>
+                    <h5>⭐{calcularPromedioDeRatings(pd.reviews)}.0</h5>
                   </div>
                 </Link>
                 <div className={styles.reviews}>
                   <h3>Reseñas: </h3>
                   {pd.reviews.length === 0 && <h4>No hay reseñas.</h4>}
                   <div>
-                    {pd.reviews?.map((review) => (
-                      <Review key={review.id} review={review} />
-                    ))}
+                    {pd.reviews?.map((review) => {
+                      if (!review.hidden) {
+                        return <Review key={review.id} review={review} />;
+                      }
+                    })}
                   </div>
                 </div>
               </section>
@@ -244,7 +257,12 @@ function PostDetail({}) {
                   <button onClick={handleDeletePost}>Eliminar</button>
                 )}
                 {userId !== pd.author.id && (
-                  <button onClick={addCart}>Agregar al carrito</button>
+                  <button
+                    onClick={addCart}
+                    disabled={pd.status === "arriendo" ? true : false}
+                  >
+                    Agregar al carrito <BsCartPlusFill />
+                  </button>
                 )}
                 {pd.type === "RENTAL" && (
                   <select
