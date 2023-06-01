@@ -362,6 +362,7 @@ export default function PerfilUsuario() {
                       return (
                         <Card
                           key={post.id}
+                          hidden={post.hidden}
                           photo={post.photo[0]}
                           title={post.title}
                           price={post.price}
