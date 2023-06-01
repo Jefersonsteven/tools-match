@@ -237,7 +237,7 @@ function PostDetail({}) {
                       </b>
                       @{pd.author.firstname}
                     </h5>
-                    <h5>⭐{calcularPromedioDeRatings(pd.reviews)}.0</h5>
+                    <h5>⭐{calcularPromedioDeRatings(pd.reviews)}{calcularPromedioDeRatings(pd.reviews) === 0 && ".0"}</h5>
                   </div>
                 </Link>
                 <div className={styles.reviews}>
