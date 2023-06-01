@@ -292,9 +292,9 @@ export default function FilterBar() {
                     </button>
                     <button
                       onClick={handleBrand}
-                      value="phillips"
+                      value="philips"
                       className={
-                        brandFilter === "phillips" ? style.selected : ""
+                        brandFilter === "philips" ? style.selected : ""
                       }
                     >
                       Phillips
