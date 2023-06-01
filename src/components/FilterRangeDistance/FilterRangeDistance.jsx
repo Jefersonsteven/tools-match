@@ -3,8 +3,10 @@ import styles from "./FilterRangeDistance.module.css";
 import { AppContext } from "@/context/AppContext";
 import axios from "axios";
 import { getLocation } from "@/app/crear-publicacion/asset/getLocation";
+import { useRouter } from "next/navigation";
 
 function FilterRangeDistance({ handleKm }) {
+  const route = useRouter();
   const { userData, range, setRange } = useContext(AppContext);
   const [coorders, setCoorders] = useState({
     coorde1: "",
@@ -51,7 +53,11 @@ function FilterRangeDistance({ handleKm }) {
   }, [userData]);
 
   function exitInput() {
-    handleKm(range, coorders.coorde1, coorders.coorde2);
+    if (userData) {
+      handleKm(range, coorders.coorde1, coorders.coorde2);
+    } else {
+      route.push("/form/login");
+    }
   }
 
   function handleRange(e) {
