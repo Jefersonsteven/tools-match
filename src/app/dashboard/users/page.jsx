@@ -336,7 +336,8 @@ function Users() {
                 <th>EMAIL</th>
                 <th>TELEFONO</th>
                 <th>RANGO</th>               
-                <th>PUBLICACIONES</th>               
+                <th>PUBLICACIONES</th>
+                <th>REPORTES</th>               
                 <th>PAIS</th>                
                 <th>ACCIONES</th>               
               </tr>
@@ -362,6 +363,7 @@ function Users() {
                   <td>{d.phoneNumber}</td>
                   <td>{d.admin ? "Admin" : "Usuario"}</td>
                   <td>{d.posts.length}</td>
+                  <td>{d.reports.length}</td>
                   <td>{d.country ? d.country : "?"}</td>                  
                   <td className={style.td_button}>
                     <button
