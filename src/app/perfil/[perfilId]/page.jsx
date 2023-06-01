@@ -46,7 +46,7 @@ export default function PerfilUsuario() {
       }
     };
     fetchReviews();
-  }, [userId, perfilId, createdReviews]); // Agregar createdReviews como dependencia
+  }, [userId, perfilId]); // Agregar createdReviews como dependencia
 
   useEffect(() => {
     const fetchCreatedReviews = async () => {
@@ -63,7 +63,7 @@ export default function PerfilUsuario() {
       }
     };
     fetchCreatedReviews();
-  }, [userId, perfilId, reviews]); // Agregar reviews como dependencia
+  }, [perfilId]); // Agregar reviews como dependencia
 
   useEffect(() => {
     const fetchAuthors = async () => {
@@ -421,6 +421,8 @@ export default function PerfilUsuario() {
                   <h3 className="text-center mb-8">Enviadas</h3>
                   <div>
                     <CardsCreatedReviews
+                      perfilId={perfilId}
+                      setUser={setUser}
                       createdReviews={createdReviews}
                       setCreatedReviews={setCreatedReviews}
                       author={user}
