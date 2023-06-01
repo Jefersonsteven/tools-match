@@ -136,7 +136,7 @@ function Reviews() {
       const userEmails = selectedItemsEmails.map((item) => item.email);
       Swal.fire({
         title: `Eliminar ${selectedItems.length} reseñas`,
-        text: `¿Estás seguro de eliminar las ${userEmails} reseñas seleccionadas?`,
+        text: `¿Estás seguro de eliminar las ${selectedItems.length} reseñas seleccionadas?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -154,12 +154,13 @@ function Reviews() {
               axios.post("/api/sendEmail/deleteReviews",{
                 email: userEmails
               })
-              const updatedReviews = records.filter((review) => !userIds.includes(review.id));
-            setRecords(updatedReviews);
+
+            setSelectedUserCount(0);
               Swal.fire({
                 title: "¡Reseñas eliminadas correctamente!",
                 icon: "success",
               });
+              fetchUsers();
             })
             .catch((error) => {
               console.log(error);

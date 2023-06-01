@@ -125,7 +125,7 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
       const titlePost = selectedItemsTitles.map((item) => item.title);
       Swal.fire({
         title: `Eliminar ${selectedItems.length} publicaciones`,
-        text: `¿Estás seguro de eliminar las ${userIds} publicaciones seleccionadas?`,
+        text: `¿Estás seguro de eliminar las ${selectedItems.length} publicaciones seleccionadas?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -142,9 +142,11 @@ const [selectedItemsEmails, setSelectedItemsEmails] = useState([]);
               axios.post("/api/sendEmail/deletePost", {
                 email: userEmails,
                 title: titlePost
-              })
+              });
+              fetchUsers();
             })
             .then((response) => {
+              setSelectedItems([]);
               Swal.fire({
                 title: "¡Publicaciones eliminadas correctamente!",
                 icon: "success",

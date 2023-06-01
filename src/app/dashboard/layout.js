@@ -32,7 +32,7 @@ export default function DashboardLayout({ children }) {
       <div className={styles.body}>
         <div className={styles.contenedor}>
           <div className={styles.title}>
-            <p>Admin Panel</p>
+            <p>Panel de Admin</p>
           </div>
           <div>
             <div

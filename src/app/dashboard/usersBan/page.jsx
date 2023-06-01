@@ -153,7 +153,7 @@ const handleUnbanUsers = () => {
       .map((user) => user.email);
       Swal.fire({
         title: `Sacar el veto a ${selectedUserCount} usuarios`,
-        text: `Sacaras el veto a los usuarios ${userEmails}?`,
+        text: `Sacaras el veto a los ${selectedUserCount} usuarios?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#01d3f8",
