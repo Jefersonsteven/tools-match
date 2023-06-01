@@ -301,17 +301,17 @@ export default function FilterBar() {
                     </button>
                     <button
                       onClick={handleBrand}
-                      value="Stanley"
+                      value="stanley"
                       className={
-                        brandFilter === "Stanley" ? style.selected : ""
+                        brandFilter === "stanley" ? style.selected : ""
                       }
                     >
                       Stanley
                     </button>
                     <button
                       onClick={handleBrand}
-                      value="Bosch"
-                      className={brandFilter === "Bosch" ? style.selected : ""}
+                      value="bosch"
+                      className={brandFilter === "bosch" ? style.selected : ""}
                     >
                       Bosch
                     </button>

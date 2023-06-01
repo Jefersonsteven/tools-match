@@ -60,8 +60,9 @@ export default async function handler(req, res) {
       }
 
       if (title) {
+        const titleTrim = title.trim();
         where.title = {
-          contains: title,
+          contains: titleTrim,
           mode: "insensitive",
         };
       }
