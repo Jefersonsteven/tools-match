@@ -388,7 +388,10 @@ export default function PerfilUsuario() {
                     <h3 className="text-center mb-8">
                       Tus compras y arriendos
                     </h3>
-                    <CardsOrders userOrders={userOrders} />
+                    <CardsOrders
+                      setCreatedReviews={setCreatedReviews}
+                      userOrders={userOrders}
+                    />
                   </div>
                 </section>
               )}
