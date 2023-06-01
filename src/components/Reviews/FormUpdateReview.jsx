@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { RiStarFill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 import { useParams } from "next/navigation";
+import axios from "axios";
 
-const FormUpdateReview = ({ selectedPost, onClose }) => {
+const FormUpdateReview = ({ selectedPost, onClose, setCreatedReviews }) => {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(true);
@@ -33,6 +34,19 @@ const FormUpdateReview = ({ selectedPost, onClose }) => {
     }
   };
 
+  const fetchCreatedReviews = async () => {
+    try {
+      const response = await axios.get(`/api/admin/user/${perfilId}`);
+
+      const createdReviews = response.data.reviews.filter(
+        (review) => review.hidden === false
+      );
+      setCreatedReviews(createdReviews);
+    } catch (error) {
+      console.error("Error fetching createdReviews:", error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,6 +67,7 @@ const FormUpdateReview = ({ selectedPost, onClose }) => {
         body: JSON.stringify(reviewData),
       });
 
+      const reviews = await fetchCreatedReviews();
       if (response.ok) {
         console.log("Reseña actualizada correctamente");
         onClose();
@@ -105,10 +120,7 @@ const FormUpdateReview = ({ selectedPost, onClose }) => {
             </div>
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="content"
-              className="block mb-1 text-sm font-medium"
-            >
+            <label htmlFor="content" className="block mb-1 text-sm font-medium">
               Reseña:
             </label>
             <textarea

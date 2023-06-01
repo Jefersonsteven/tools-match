@@ -16,6 +16,7 @@ export default async function handler(req,res) {
       if(country) {
         const posts = await prisma.post.findMany({
           where: {
+            hidden: false,
             author :{
               country: country
             }

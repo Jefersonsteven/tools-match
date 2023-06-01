@@ -7,7 +7,12 @@ import { FaCheckCircle } from "react-icons/fa";
 import Image from "next/image";
 import LoaderRadial from "../Loader/LoaderRadial";
 
-const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
+const CardsPurchasedItems = ({
+  orderPosts,
+  orderDate,
+  onClose,
+  setCreatedReviews,
+}) => {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -135,6 +140,7 @@ const CardsPurchasedItems = ({ orderPosts, orderDate, onClose }) => {
       </div>
       {isReviewModalOpen && (
         <FormReview
+          setCreatedReviews={setCreatedReviews}
           selectedPost={selectedPost}
           onCloseModal={() => setIsReviewModalOpen(false)}
           onReviewSubmitted={handleReviewSubmitted}

@@ -1,7 +1,7 @@
 .loader {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   background: transparent;
   border-radius: 50%;
   box-shadow: 25px 25px 75px rgba(0,0,0,0.55);

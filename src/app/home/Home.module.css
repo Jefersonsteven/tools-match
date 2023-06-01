@@ -19,6 +19,11 @@
   justify-content: flex-end;
 }
 
+.containerTwo {
+  min-height: 50vh;
+  align-items: center;
+}
+
 .card-container {
   position: relative;
   z-index: 1;

@@ -6,7 +6,7 @@ import axios from "axios";
 import styles from "./CardsOrders.module.css";
 import CardsPurchasedItems from "./CardsPurchasedItems";
 
-const CardsOrders = ({ userOrders }) => {
+const CardsOrders = ({ userOrders, setCreatedReviews }) => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { day: "numeric", month: "long" };
@@ -79,6 +79,7 @@ const CardsOrders = ({ userOrders }) => {
           <>
             <div className={styles.modalContent}>
               <CardsPurchasedItems
+                setCreatedReviews={setCreatedReviews}
                 orderPosts={selectedOrder.postId}
                 orderDate={selectedOrder.date}
                 onClose={closeModal}

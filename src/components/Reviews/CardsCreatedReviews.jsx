@@ -149,6 +149,7 @@ const CardsCreatedReviews = ({
       {/* Modal */}
       {selectedReview && (
         <FormUpdateReview
+          setCreatedReviews={setCreatedReviews}
           selectedPost={selectedReview}
           isOpen={isModalOpen}
           onClose={handleCloseModal}

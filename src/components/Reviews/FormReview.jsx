@@ -3,11 +3,13 @@ import { RiStarFill } from "react-icons/ri";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useParams, useRouter } from "next/navigation";
 import styles from "./FormReview.module.css";
+import axios from "axios";
 
 const FormReview = ({
   selectedPost,
   onCloseModal,
-  onReviewSubmitted
+  onReviewSubmitted,
+  setCreatedReviews,
 }) => {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
@@ -68,7 +70,9 @@ const FormReview = ({
         },
         body: JSON.stringify(reviewData),
       });
-
+      const data = await response.json();
+      const reviews = await axios.get(`/api/user/${data.review.author.email}`);
+      setCreatedReviews(reviews.data.reviews);
       if (response.ok) {
         console.log("Reseña enviada correctamente");
         onReviewSubmitted();
