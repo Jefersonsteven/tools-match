@@ -74,6 +74,7 @@ const Cards = () => {
           {currentCards.map((tool) => (
             <div className="w-full" key={tool.id}>
               <Card
+                hidden={tool.hidden}
                 photo={tool.photo[0]}
                 title={tool.title}
                 price={tool.price}

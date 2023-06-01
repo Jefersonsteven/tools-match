@@ -8,7 +8,7 @@ import axios from "axios";
 import { RiStarFill, RiStarLine } from "react-icons/ri";
 import { calcularPromedioDeRatings } from "./assets/calculateAverage";
 
-const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
+const Card = ({ title, photo, price, type, perDay, id, reviews, hidden }) => {
   const { favorites, setFavorites, favorite, setFavorite, userData } =
     useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -137,7 +137,7 @@ const Card = ({ title, photo, price, type, perDay, id, reviews }) => {
                     : "bg-green-500 p-2 rounded text-white"
                 }
               >
-                {type}
+                {hidden ? "Vendido" : type}
               </p>
               <p>{perDay}</p>
             </div>
