@@ -35,14 +35,19 @@ function Home({ cards, currentPage, setCards, setCurrentPage }) {
         Renta o Compra Herramientas en Tu Comunidad
       </h2>
       <div className="container mx-auto w-full">
-        <div className=" w-full bg-green-80" style={{ position: 'relative', zIndex: 2 }}>
+        <div
+          className=" w-full bg-green-80"
+          style={{ position: "relative", zIndex: 2 }}
+        >
           <FilterBar />
         </div>
         {/* <div className="flex-grow"> */}
-          <div className=" w-full flex justify-center flex-wrap my-4 mx-0">
+        <div
+          className={`w-full flex justify-center flex-wrap my-4 mx-0 min-h-full ${styles.containerTwo}`}
+        >
           <div className="card-container">
             <Cards className="mb-1" />
-            </div>
+          </div>
           {/* </div> */}
         </div>
       </div>
