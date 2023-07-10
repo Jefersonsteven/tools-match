@@ -1,34 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ToolsMatch👷‍♀️
 
-## Getting Started
+ToolsMatch una app para ventas y arriendo de herramientas con participación en equipo de desarrollo ágil con sprints de una semana presentándole a un Product Owner avances sobre el desarrollo de este proyecto. 💼🔧
 
-First, run the development server:
+## Tabla de Contenidos📑
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- [Descripción](#descripción)
 
-Open []() with your browser to see the result.
+- [Características](#características)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- [Guía de Instalación](#guía-de-instalación---proyecto-toolsmatch)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [Uso](#uso)
 
-## Learn More
+## Descripción📄
 
-To learn more about Next.js, take a look at the following resources:
+ToolsMatch es una aplicación innovadora que se centra en satisfacer las necesidades de la comunidad para la compra y el arriendo de herramientas usadas. Ofrecemos una solución práctica para aquellos que buscan compartir recursos y ahorrar dinero en la compra de herramientas costosas. Esto no solo ayuda a los vecinos a ahorrar dinero, sino que también fomenta una cultura de colaboración y compartición.🤝
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Características🚀
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Funcionalidades de la aplicación:
 
-## Deploy on Vercel
+- **Deploy 🚀**: Deploy de nuestra aplicación en Vercell utlizando Next Js 13 con turbopack.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Almacenamiento en la nube ☁️**: Almacenamiento de imagenes en Cloudinary.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details. ✒️
+- **Pasarela de Pago 💳💰**: Paga las herramientas que has comprado con MercadoPago o con el método de contraentrega.
+
+- **Sistema de Notificaciones 📩📦**: Mantente siempre al tanto de tus compras, pedidos y estado de la cuenta con nuestro sistema de gestión de envíos y notificaciones en tu correo a través de Nodemailer.
+
+- **Sistema de LogIn/SignIn/LogOut y autenticación de terceros 🔐✉️**: Implementación de formularios y autenticación de google Gmail con Firebase Auth.
+
+## Guía de Instalación - Proyecto ToolsMatch🛠️
+
+A continuación, se presenta una guía paso a paso para la instalación del proyecto ToolsMatch desde GitHub utilizando `npm`.
+
+### Requisitos Previos✅
+
+- Git: Asegúrate de tener Git instalado en tu sistema. Si no lo tienes, puedes descargarlo e instalarlo desde [https://git-scm.com/downloads](https://git-scm.com/downloads).
+
+- Node.js: Asegúrate de tener Node.js instalado en tu sistema. Puedes descargarlo e instalarlo desde [https://nodejs.org](https://nodejs.org).
+
+### Pasos de Instalación📝
+
+1. Abre una terminal o línea de comandos en tu sistema.
+
+2. Navega hasta la ubicación deseada donde deseas clonar el proyecto.
+
+3. Ejecuta el siguiente comando para clonar el repositorio desde GitHub: `git clone https://github.com/Jefersonsteven/tools-match.git `
+4. Instala las dependencias utilizando npm: `npm i` `npm install`
+
+5. Crea un archivo de configuración `.env` en la raíz del proyecto y configura las variables de entorno necesarias. Puedes consultar el archivo `.env.example` para obtener una plantilla de las variables requeridas.
+
+6. Inicia la aplicación en modo de desarrollo: `npm run dev`
+
+Esto iniciará el servidor de desarrollo y podrás acceder a la aplicación en [http://localhost:3000](http://localhost:3000).
+¡Listo! Ahora deberías tener el proyecto ToolsMatch instalado y en ejecución en tu sistema.
